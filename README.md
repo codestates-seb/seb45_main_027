@@ -79,33 +79,30 @@
 
 <details>
 <summary> 사용자 요구사항 정의서</summary>
-<div markdown="1">
-
-<img src="">
-
-</div>
+<ul>
+  <li>
+    <a href="https://docs.google.com/spreadsheets/d/1Cq4gmcb3omQu3MQUWMOc1XeIsJIoR1QVwar9BUNeyKY/edit?usp=sharing"> 사용자 요구사항 정의서 보러가기 </a>
+</ul>
 </details>
 
 <br>
 
 <details>
 <summary> User Flow </summary>
-<div markdown="1">
-
-<img src="">
-
-</div>
+<ul>
+  <li>
+    <a href="https://www.figma.com/file/ccPMHNAJGxBvzXw5efDpHd/%5B%EC%82%90%EC%82%90%5D-User-Flow?type=whiteboard&node-id=0%3A1&t=TDKMpEfcYube2vXF-1"> User Flow 보러가기 </a>
+</ul>
 </details>
 
 <br>
 
 <details>
 <summary> 테이블 설계도 </summary>
-<div markdown="1">
-
-<img src="">
-
-</div>
+<ul>
+  <li>
+    <a href="https://docs.google.com/spreadsheets/d/13aEWm6ivfhtiLjdQsT6h7vzbVAprHeEO2y9OVaC-GpQ/edit?usp=sharing"> 테이블 설계도 보러가기 </a>
+</ul>
 </details>
 
 <br>
