@@ -1,10 +1,11 @@
-export const backgrounMain = `flex justify-center w-full`;
-export const backgrounWrap = `flex w-full max-w-[1440px]`;
+import React from "react";
 
-const Background = () => {
+const Background = ({ background, height, children }) => {
   return (
-    <main className={backgrounMain}>
-      <div className={backgrounWrap}></div>
+    <main className="flex justify-center w-full">
+      <div className={`flex w-full max-w-[1440px] ${background} ${height}`}>
+        {children}
+      </div>
     </main>
   );
 };

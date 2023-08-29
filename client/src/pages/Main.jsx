@@ -1,13 +1,11 @@
 import React from "react";
-import {backgrounMain} from '../components/common/Background'
-import { backgrounWrap } from "../components/common/Background";
+import Background from "../components/common/Background";
 
 const Main = () => {
-
   return (
-    <main className={backgrounMain}>
-      <div className={backgrounWrap}>메인</div>
-    </main>
+    <Background background="bg-red-400">
+      <div className="">메인입니다.</div>
+    </Background>
   );
 };
 
