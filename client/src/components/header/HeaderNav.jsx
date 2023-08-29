@@ -5,7 +5,6 @@ export const HeaderNav = () => {
     return (
       <div className="flex">
         <ul className="flex text-[#F5634A] text-xl font-bold">
-          
           {/* 홈 */}
           <Link to="/">
             <li>
@@ -18,13 +17,25 @@ export const HeaderNav = () => {
           </Link>
 
           {/* 쇼룸 */}
-          <li><span>Show room</span></li>
+          <Link to="/showroom">
+            <li>
+              <span>Show room</span>
+            </li>
+          </Link>
 
           {/* 팁 */}
-          <li className="px-8"><span>Tips</span></li>
+          <Link to="/tips">
+            <li className="px-8">
+              <span>Tips</span>
+            </li>
+          </Link>
 
           {/* 맵 */}
-          <li><span>Map</span></li>
+          <Link to="/map">
+            <li>
+              <span>Map</span>
+            </li>
+          </Link>
         </ul>
       </div>
     );
