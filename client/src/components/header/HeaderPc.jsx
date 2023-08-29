@@ -1,31 +1,23 @@
 import React from "react";
-import { backgrounMain } from "../common/Background";
-import { backgrounWrap } from "../common/Background";
-import { HeaderNav } from "../common/HeaderNav";
+import Background from "../common/Background";
+import HeaderNav from "./HeaderNav";
+import HeaderOff from "./HeaderOff";
+// import HeaderOn from "./HeaderOn";
 
 const HeaderPc = () => {
   return (
-    <div>헤더</div>
-    // <header className={`${backgrounMain} h-10 p-8 border-b`}>
-    //   <div className={`${backgrounWrap} justify-between items-center`}>
-    //     <div>{HeaderNav()}</div>
-    //     <div>
-    //       <ul className="flex text-[#F5634A] text-lg font-bold">
-    //         <li className="flex items-center">
-    //           <img
-    //             className="flex pr-2.5 h-4"
-    //             src="/images/vector.png"
-    //             alt=""
-    //           />
-    //           <span className="pr-8">Login</span>
-    //         </li>
-    //         <li>
-    //           <span>Signup</span>
-    //         </li>
-    //       </ul>
-    //     </div>
-    //   </div>
-    // </header>
+    <Background
+      mainclassName="h-10 p-8 shadow"
+      divclassName="justify-between items-center"
+    >
+      <HeaderNav />
+
+      {/* 로그인 전 */}
+      <HeaderOff />
+
+      {/* 로그인 후 */}
+      {/* <HeaderOn /> */}
+    </Background>
   );
 };
 

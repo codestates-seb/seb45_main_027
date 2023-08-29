@@ -1,11 +1,12 @@
 import React from "react";
 import Background from "../components/common/Background";
+import SignupLayout from "../components/signup/SignupLayout";
 
 const Signup = () => {
   return (
     <Background
-      mainclassName="h-10 p-8 border-b"
-      divclassName="justify-between items-center"
+      mainclassName=""
+      divclassName="justify-center items-center"
       style={{
         background: "url('/images/SignupBackground.png')",
         backgroundPosition: "center", // 이미지 위치
@@ -14,7 +15,7 @@ const Signup = () => {
         height: "100vh",
       }}
     >
-      <div>가입페이지</div>
+      <SignupLayout />
     </Background>
   );
 };
