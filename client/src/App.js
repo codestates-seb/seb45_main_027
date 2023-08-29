@@ -1,4 +1,4 @@
-import "./App.css";
+import "./index.css";
 import { Routes, Route } from "react-router-dom";
 import HeaderPc from "./components/header/HeaderPc";
 import FooterPc from "./components/footer/FooterPc";
