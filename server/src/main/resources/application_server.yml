@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/bbibbi
+    username: root
+    password: ${DB_PW}
+  jpa:
+    hibernate:
+    #  dialect: org.hibernate.dialect.MySQL8Dialect
+    #   ddl-auto: create    이거 있으면 mysql 해당 스키마에 테이블들 생성된다.
+    show-sql: true      # (2) SQL 쿼리 출력
+    properties:
+      hibernate:
+        format_sql: true  # (3) SQL pretty print
+        highlight_sql: true
+        color-codes: true
+        use_sql_comments: true
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+      hibernate:
+        type: trace
