@@ -1,9 +1,9 @@
 import React from "react";
 
-const Background = ({ background, height, children }) => {
+const Background = ({ mainclassName, divclassName, children }) => {
   return (
-    <main className="flex justify-center w-full">
-      <div className={`flex w-full max-w-[1440px] ${background} ${height}`}>
+    <main className={`flex justify-center w-full ${mainclassName}`}>
+      <div className={`flex w-full max-w-[1440px] ${divclassName}`}>
         {children}
       </div>
     </main>

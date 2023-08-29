@@ -3,7 +3,10 @@ import Background from "../components/common/Background";
 
 const Main = () => {
   return (
-    <Background background="bg-red-400">
+    <Background
+      mainclassName="h-10 p-8 border-b"
+      divclassName="justify-between items-center"
+    >
       <div className="">메인입니다.</div>
     </Background>
   );
