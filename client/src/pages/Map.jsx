@@ -1,7 +1,7 @@
-const Map = () => {
-    return (
-        <></>
-    )
-}
+import React from "react";
 
-export default Map; 
+const Map = () => {
+  return <div>Map</div>;
+};
+
+export default Map;

@@ -1,7 +1,7 @@
+import React from "react";
+
 const ShowRoom = () => {
-    return (
-        <></>
-    )
-}
+  return <div>ShowRoom</div>;
+};
 
 export default ShowRoom;
