@@ -2,6 +2,7 @@ import React from "react";
 
 const Background = ({ mainclassName, divclassName, style, children }) => {
   return (
+
     <main
       className={`flex justify-center w-full ${mainclassName}`}
       style={style}
