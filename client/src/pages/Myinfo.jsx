@@ -1,7 +1,7 @@
-const Myinfo = () => {
-    return (
-        <></>
-    )
-}
+import React from "react";
 
-export default Myinfo; 
+const Myinfo = () => {
+  return <div>Myinfo</div>;
+};
+
+export default Myinfo;
