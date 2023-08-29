@@ -78,7 +78,7 @@ public class Member extends BaseEntity {
 
 
     @Builder
-    private Member(Long memberId, String email, String nickname, String password, MyInfo myInfo) { // 빌더 패턴 사용하기 위해서
+    private Member(Long memberId, String email, String nickname, String password, MyInfo myInfo) { // 빌더 패턴 사용
         this.memberId = memberId;
         this.email = email;
         this.nickname = nickname;
@@ -92,6 +92,7 @@ public class Member extends BaseEntity {
                 .email(email)
                 .nickname(nickname)
                 .password(password)
+                //myinfo정보도 받아와야할듯 빌더로
                 .build();
     }
 }
