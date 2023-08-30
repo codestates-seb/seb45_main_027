@@ -1,6 +1,7 @@
 import "./index.css";
 import { Routes, Route, useLocation } from "react-router-dom";
 import HeaderPc from "./components/header/HeaderPc";
+// import HeaderMobile from "./components/header/HeaderMobile";
 import HiddenFooter from "./components/footer/HiddenFooter";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -9,6 +10,8 @@ import Main from "./pages/Main";
 import ShowRoom from "./pages/ShowRoom";
 import Tips from "./pages/Tips";
 import Map from "./pages/Map";
+import WriteShowRoom from "./pages/WriteShowRoom";
+import WriteTips from "./pages/WriteTips";
 
 const headerPaths = [
   "myinfo",
@@ -17,9 +20,11 @@ const headerPaths = [
   "map",
   "login",
   "signup",
-  "",
+  "showroom/write",
+  "tips/write",
+  ""
 ];
-const footerPaths = ["myinfo", "showroom", "tips", ""];
+const footerPaths = ["myinfo", "showroom", "tips", "showroom/write", "tips/write", ""];
 
 function App() {
   const location = useLocation();
@@ -38,6 +43,8 @@ function App() {
         <Route path={"/showroom"} element={<ShowRoom />} />
         <Route path={"/tips"} element={<Tips />} />
         <Route path={"/map"} element={<Map />} />
+        <Route path={"/showroom/write"} element={<WriteShowRoom />} />
+        <Route path={"/tips/write"} element={<WriteTips />} />
       </Routes>
 
       {isFooter && <HiddenFooter />}
