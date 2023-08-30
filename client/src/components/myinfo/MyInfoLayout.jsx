@@ -5,9 +5,10 @@ import UserProfile from './UserProfile';
 
 const MyInfoLayout = () => {
     return (
-        <div>
+        <div className='flex justify-center w-[90%]'>
             <UserProfile />
             <MyInfoContentList />
+            
         </div>
     );
 }
