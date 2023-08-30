@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FollowList = () => {
+const UserInfoFollowList = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const FollowList = () => {
     );
 }
 
-export default FollowList
+export default UserInfoFollowList

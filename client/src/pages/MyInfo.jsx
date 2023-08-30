@@ -1,5 +1,6 @@
 import React from "react";
 import Background from "../components/common/Background";
+import MyInfoLayout from "../components/myinfo/MyInfoLayout";
 
 const Myinfo = () => {
   return (
@@ -13,7 +14,9 @@ const Myinfo = () => {
         backgroundRepeat: "no-repeat", // 이미지 반복 지정
         height: "100vh",
       }}
-    ></Background>
+    >
+      <MyInfoLayout />
+    </Background>
   );
 };
 
