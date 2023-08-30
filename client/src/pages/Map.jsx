@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Background from "../components/common/Background";
 import KakaoMap from "../components/map/KakaoMap";
 
