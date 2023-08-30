@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Background from "../components/common/Background";
 
 const Tips = () => {
   return (
-    <div>
+    <Background mainclassName="" divclassName="">
       <Link to="/tips/write">
         <button>글쓰기</button>
       </Link>
-    </div>
+    </Background>
   );
 };
 
