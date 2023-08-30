@@ -1,0 +1,53 @@
+/* #map {
+  > div {
+    > div {
+      > div {
+        border: 0px solid rgb(0, 0, 0);
+        > div {
+          border-radius: 5px;
+
+          > div {
+            border: none;
+            border-radius: 5px;
+            width: 270px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 100, 123, 0.8);
+          }
+        }
+      }
+    }
+  }
+} */
+
+#map {
+  border-radius: 5px;
+}
+.custom-overlay {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: rgba(0, 100, 123, 0.92);
+  padding: 25px 15px 20px 15px;
+  > button {
+    background-color: #f5634a;
+    border-radius: 5px;
+    height: 35px;
+  }
+}
+
+#search-results {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+#search-results::-webkit-scrollbar {
+  width: 6px; /* Adjust as needed */
+  background-color: transparent; /* Make the track transparent */
+}
+
+#search-results::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Make the thumb transparent */
+}
