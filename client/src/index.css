@@ -7,6 +7,8 @@ html {
   font-size: 12px;
   line-height: 1.2;
   background: none repeat scroll 0 0 #fff;
+  position: relative;
+  height: 100%;
 }
 h1,
 h2,
