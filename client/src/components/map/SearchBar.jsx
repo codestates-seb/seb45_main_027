@@ -1,13 +1,33 @@
 import React from "react";
 
-const SearchBar = ({ returnToCurrentLocation }) => {
+const SearchBar = ({
+  returnToCurrentLocation,
+  onSearch,
+  inputText,
+  setInputText,
+}) => {
+  const handleInputChange = (e) => {
+    onSearch(e.target.value);
+    setInputText(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  };
+  console.log(inputText);
   return (
-    <div className="flex absolute z-10 top-5 left-1/2 transform -translate-x-1/2">
+    <form className="flex absolute z-10 top-5 left-1/2 transform -translate-x-1/2">
       <div className="flex justify-start bg-white p-2 w-full h-1/8 text-center mr-4 shadow-xl rounded-3xl">
         <img src="./images/Search.png" alt="searchimg" />
         <input
           className="bg-transparent w-80 focus:outline-none pl-4 text-[14px]"
           type="text"
+          onChange={handleInputChange}
+          onKeyDown={handleKeyPress}
+          value={inputText}
+          placeholder="검색어를 입력하세요"
         />
       </div>
       <button
@@ -20,7 +40,7 @@ const SearchBar = ({ returnToCurrentLocation }) => {
           alt="CurrentLocation"
         />
       </button>
-    </div>
+    </form>
   );
 };
 
