@@ -11,7 +11,7 @@ const SearchBar = ({ returnToCurrentLocation }) => {
         />
       </div>
       <button
-        className="shadow-xl rounded-xl bg-white w-[55px]"
+        className="shadow-xl rounded-xl bg-white w-[50px]"
         onClick={returnToCurrentLocation}
       >
         <img

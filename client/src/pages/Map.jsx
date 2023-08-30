@@ -5,11 +5,11 @@ import KakaoMap from "../components/map/KakaoMap";
 const Map = () => {
   return (
     <Background
-      mainclassName="bg-[#FFFAEE]"
-      divclassName="border-2 border-rose-500"
+      mainclassName="h-full bg-[#FFFAEE] "
+      divclassName="border-2 border-rose-500 "
     >
       <div className="p-5 flex-col w-full">
-        <h1 className="text-4xl text-[#F5634A] py-5">Map</h1>
+        <h1 className="text-4xl text-[#F5634A] py-5 font-bold">Map</h1>
         <KakaoMap></KakaoMap>
       </div>
     </Background>
