@@ -4,7 +4,7 @@ import FollowList from './FollowList';
 
 const UserProfile = () => {
     return (
-        <div>
+        <div className='bg-white border rounded'>
             <UserInfoDetails />
             <FollowList />
         </div>
