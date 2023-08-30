@@ -1,9 +1,8 @@
 import React from "react";
 import Background from "../components/common/Background";
-import SignupLayout from "../components/signup/SignupLayout";
+import SignupLoginLayout from "../components/signup/SignupLoginLayout";
 
 const Signup = () => {
-  
   return (
     <Background
       mainclassName=""
@@ -14,8 +13,9 @@ const Signup = () => {
         backgroundSize: "cover", // 이미지 꽉차게
         backgroundRepeat: "no-repeat", // 이미지 반복 지정
         height: "100vh",
-      }}>
-      <SignupLayout />
+      }}
+    >
+      <SignupLoginLayout />
     </Background>
   );
 };
