@@ -1,7 +1,7 @@
 import "./index.css";
 import { Routes, Route, useLocation } from "react-router-dom";
 import HeaderPc from "./components/header/HeaderPc";
-import FooterPc from "./components/footer/FooterPc";
+import HiddenFooter from "./components/footer/HiddenFooter";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Myinfo from "./pages/Myinfo";
@@ -40,7 +40,7 @@ function App() {
         <Route path={"/map"} element={<Map />} />
       </Routes>
 
-      {isFooter && <FooterPc />}
+      {isFooter && <HiddenFooter />}
     </>
   );
 }
