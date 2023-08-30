@@ -3,6 +3,7 @@ import Background from "../components/common/Background";
 import SignupLayout from "../components/signup/SignupLayout";
 
 const Signup = () => {
+  
   return (
     <Background
       mainclassName=""
