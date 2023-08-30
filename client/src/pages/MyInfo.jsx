@@ -1,8 +1,8 @@
 import React from "react";
 import Background from "../components/common/Background";
-import SignupLoginLayout from "../components/signup/SignupLoginLayout";
+import MyInfoLayout from "../components/myinfo/MyInfoLayout";
 
-const Signup = () => {
+const Myinfo = () => {
   return (
     <Background
       mainclassName=""
@@ -15,9 +15,9 @@ const Signup = () => {
         height: "100vh",
       }}
     >
-      <SignupLoginLayout />
+      <MyInfoLayout />
     </Background>
   );
 };
 
-export default Signup;
+export default Myinfo;
