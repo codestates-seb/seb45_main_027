@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MyInfoContentListBox = () => {
+const MyInfoContentList = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const MyInfoContentListBox = () => {
     );
 }
 
-export default MyInfoContentListBox
+export default MyInfoContentList

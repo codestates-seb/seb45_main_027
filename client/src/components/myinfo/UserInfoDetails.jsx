@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FollowBox = () => {
+const UserInfoDetails = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const FollowBox = () => {
     );
 }
 
-export default FollowBox
+export default UserInfoDetails
