@@ -7,7 +7,7 @@ const liPoint= "flex flex-col items-center w-12"
 const FooterMobileWrite = () => {
   return (
     <footer>
-      <div className="flex justify-center border py-4 absolute bottom-0 w-full bg-white">
+      <div className="flex justify-center border py-4 fixed bottom-0 w-full bg-white">
         <ul className="flex items-center justify-around w-11/12 text-gray-400 font-medium">
           {/* 좋아요*/}
           <li className={liPoint}>
