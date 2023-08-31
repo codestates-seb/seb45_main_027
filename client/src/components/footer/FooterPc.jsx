@@ -20,10 +20,10 @@ const FooterPc = () => {
             src="/images/삐삐Logo.png"
             alt="삐삐로고"
           />
-
           <span className="py-5 text-xl font-semibold text-white">
             © Copyright ⓒ 2023 삐삐
           </span>
+
 
           <ul className="flex text-xl font-semibold text-white">
             {Members.map((member, index) => (
@@ -35,6 +35,7 @@ const FooterPc = () => {
             ))}
           </ul>
         </div>
+
       </div>
     </footer>
   );
