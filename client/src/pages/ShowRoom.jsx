@@ -1,13 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Background from "../components/common/Background";
+import BestInterior from "../components/showroom/BestInterior";
+import All from "../components/showroom/All";
 
 const ShowRoom = () => {
   return (
-    <div>
-      <Link to="/showroom/write">
-        <button>글쓰기</button>
-      </Link>
-    </div>
+    <Background mainclassName="h-full h-screen bg-[#FFFAEE]">
+      <div className="flex-col  w-full">
+        <BestInterior />
+        <All />
+      </div>
+    </Background>
   );
 };
 
