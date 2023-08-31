@@ -3,9 +3,21 @@ import MyInfoContent from './MyInfoContent';
 
 const MyInfoShowroom = () => {
     return (
-        <div>
-            <div className='text-[#F5634A] text-4xl font-bold'>Show Room</div>
+        <div className=' '>
+            <div className='text-[#F5634A] text-4xl font-bold mb-[2%]'>Show Room</div>
+            <div className='flex flex-wrap justify-center items-start'>
             <MyInfoContent />
+            <MyInfoContent />
+            <MyInfoContent />
+            <MyInfoContent />
+            <MyInfoContent />
+            <MyInfoContent />
+            <MyInfoContent />
+
+
+
+            </div>
+
         </div>
     );
 }
