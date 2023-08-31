@@ -7,18 +7,18 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+//@Entity
+//@Getter
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class MyInfo extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long MyInfoId;
-
-    private String MyIntro;
-
-    @Lob
-    private String image;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long MyInfoId;
+//
+//    private String myIntro;
+//
+//    @Lob
+//    private String image;
 }
