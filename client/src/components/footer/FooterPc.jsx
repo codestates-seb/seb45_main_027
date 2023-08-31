@@ -5,7 +5,8 @@ const FooterPc = () => {
   return (
     <Background
       mainclassName="h-52 p-8 shadow bg-[#00647B] absolute bottom-0 w-full"
-      divclassName="justify-center items-center">
+      divclassName="justify-center items-center"
+    >
       <div className="flex flex-col items-center">
         <img className="w-12 h-12" src="/images/삐삐Logo.png" alt="삐삐로고" />
 
@@ -18,7 +19,8 @@ const FooterPc = () => {
             <a
               href="https://github.com/YebinYun"
               target="_blank"
-              rel="noreferrer">
+              rel="noreferrer"
+            >
               윤 예빈
             </a>
           </li>
@@ -26,7 +28,8 @@ const FooterPc = () => {
             <a
               href="https://github.com/greatjobcat"
               target="_blank"
-              rel="noreferrer">
+              rel="noreferrer"
+            >
               이 원호
             </a>
           </li>
@@ -34,7 +37,8 @@ const FooterPc = () => {
             <a
               href="https://github.com/WONHO22"
               target="_blank"
-              rel="noreferrer">
+              rel="noreferrer"
+            >
               최 유리
             </a>
           </li>
@@ -42,7 +46,8 @@ const FooterPc = () => {
             <a
               href="https://github.com/seonhoshin"
               target="_blank"
-              rel="noreferrer">
+              rel="noreferrer"
+            >
               신 선호
             </a>
           </li>
@@ -55,7 +60,8 @@ const FooterPc = () => {
             <a
               href="https://github.com/Ernest45"
               target="_blank"
-              rel="noreferrer">
+              rel="noreferrer"
+            >
               임 한준
             </a>
           </li>
@@ -63,7 +69,8 @@ const FooterPc = () => {
             <a
               href="https://github.com/PeterAhnn"
               target="_blank"
-              rel="noreferrer">
+              rel="noreferrer"
+            >
               안 형섭
             </a>
           </li>

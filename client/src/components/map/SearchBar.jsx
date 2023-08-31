@@ -5,20 +5,26 @@ const SearchBar = ({
   onSearch,
   inputText,
   setInputText,
+  viewportWidth,
 }) => {
   const handleInputChange = (e) => {
-    onSearch(e.target.value);
     setInputText(e.target.value);
   };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
+      onSearch(e.target.value);
       e.preventDefault();
     }
   };
-  console.log(inputText);
   return (
-    <form className="flex absolute z-10 top-5 left-1/2 transform -translate-x-1/2">
+    <form
+      className={`flex ${
+        viewportWidth < 720
+          ? "mb-4"
+          : "absolute z-10 top-5 left-1/2 transform -translate-x-1/2"
+      }`}
+    >
       <div className="flex justify-start bg-white p-2 w-full h-1/8 text-center mr-4 shadow-xl rounded-3xl">
         <img src="./images/Search.png" alt="searchimg" />
         <input
