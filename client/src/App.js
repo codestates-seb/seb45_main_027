@@ -12,6 +12,8 @@ import Tips from "./pages/Tips";
 import Map from "./pages/Map";
 import WriteShowRoom from "./pages/WriteShowRoom";
 import WriteTips from "./pages/WriteTips";
+import ViewShowRoom from "./pages/ViewShowRoom";
+import ViewTips from "./pages/ViewTips";
 
 const headerPaths = [
   "myinfo",
@@ -22,9 +24,11 @@ const headerPaths = [
   "signup",
   "showroom/write",
   "tips/write",
+  "showroom/:id/view",
+  "tips/:id/view",
   ""
 ];
-const footerPaths = ["myinfo", "showroom", "tips", "showroom/write", "tips/write", ""];
+const footerPaths = ["login", "signup", "myinfo", "showroom", "tips", "showroom/write", "tips/write", "showroom/:id/view", "tips/:id/view", ""];
 
 function App() {
   const location = useLocation();
@@ -33,7 +37,7 @@ function App() {
   const isFooter = footerPaths.includes(path);
 
   return (
-    <>
+    <> 
       {isHeader && <HeaderPc />}
       <Routes>
         <Route path={"/"} element={<Main />} />
@@ -44,8 +48,10 @@ function App() {
         <Route path={"/tips"} element={<Tips />} />
         <Route path={"/map"} element={<Map />} />
         <Route path={"/showroom/write"} element={<WriteShowRoom />} />
+        <Route path={"/showroom/:id/view"} element={<ViewShowRoom />} />
         <Route path={"/tips/write"} element={<WriteTips />} />
-      </Routes>
+        <Route path={"/tips/:id/view"} element={<ViewTips />} />
+      </Routes> 
 
       {isFooter && <HiddenFooter />}
     </>
