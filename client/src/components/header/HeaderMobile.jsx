@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const HeaderMobile = ({ buttonBgColor }) => {
   return (
-    <div className="md:hidden w-full fixed ">
+    <div className="md:hidden w-full fixed z-50">
       <div className="p-7 shadow bg-white flex justify-center w-full h-full">
         <div className="flex justify-between items-center h-full w-full max-w-[1440px] ">
           <ul className="flex items-center justify-between w-full">

@@ -5,7 +5,7 @@ import HeaderOff from "./HeaderOff";
 
 const HeaderPc = () => {
   return (
-    <div className="hidden md:block fixed w-full ">
+    <div className="hidden md:block fixed w-full z-50">
       <div className="flex justify-center w-full h-full p-8 shadow bg-white">
         <div className="flex justify-between items-center h-full w-full max-w-[1440px]">
           <HeaderNav />
