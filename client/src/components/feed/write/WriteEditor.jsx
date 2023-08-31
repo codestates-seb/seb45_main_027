@@ -53,25 +53,25 @@ const WriteEditor = () => {
   }, [tags]);
 
   return (
-    <div className="mt-10 mb-20 p-4 bg-white w-full h-[500px]">
-      <div className="mb-4">
-        <label
-          htmlFor="title"
-          className="block text-sm font-medium text-gray-600">
-          타이틀
-        </label>
+    <div className="mt-10 mb-20 p-4 bg-white w-full h-full">
+      {/* 타이틀 입력창 */}
+      <div className="mb-4 border-b">
         <input
           id="title"
           type="text"
           value={title}
           onChange={handleTitleChange}
-          className="mt-1 p-2 w-full border rounded-md"
+          placeholder="제목을 입력해주세요."
+          className="my-4 p-2 w-full focus:border-none focus:ring-0 text-2xl"
         />
       </div>
+
+      {/* 이미지추가 버튼 */}
       <div className="mb-2 w-full">
         <label htmlFor="imageUpload" className="cursor-pointer">
-          이미지 업로드
+          <img className="p-2" src="/images/gallery.png" alt="" />
         </label>
+
         <input
           id="imageUpload"
           type="file"
@@ -80,18 +80,19 @@ const WriteEditor = () => {
           onChange={handleImageUpload}
         />
       </div>
+
+      {/* 입력창 */}
       <textarea
         value={editor}
         onChange={handleTextChange}
-        rows="10"
-        className="w-full p-2 border rounded"></textarea>
+        rows="30"
+        placeholder="내용을 입력해주세요."
+        className="w-full p-2 border-b"
+      />
+
+      {/* 태그 */}
       <div className="mt-4">
-        <label
-          htmlFor="tags"
-          className="block text-sm font-medium text-gray-600">
-          태그
-        </label>
-        <div className="flex flex-wrap items-center">
+        <div className="flex flex-wrap items-center ">
           {tags.map((tag, index) => (
             <span
               key={index}
