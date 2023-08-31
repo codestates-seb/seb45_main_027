@@ -2,14 +2,18 @@ import { useEffect, useState } from "react";
 import MyInfoShowroom from "./MyInfoShowroom";
 import MyInfoTips from "./MyInfoTips";
 
+import MyInfoDummy from "./MyInfoDummy";
+
 const MyInfoContentList = () => {
+
+  const myinfoData = MyInfoDummy;
+
   const [activeTab, setActiveTab] = useState(1);
 
   useEffect(() => {}, [activeTab]);
 
   const handleTabs = (tabIdx) => {
     setActiveTab(tabIdx);
-    console.log(activeTab);
   };
 
   const tabStyle = (tabIndex) =>
@@ -19,15 +23,20 @@ const MyInfoContentList = () => {
         : "text-neutral-600"
     } text-xl font-semibold border-b-4 border-transparent cursor-pointer px-4 py-2 mb-[3%] mr-[6%] md:text-2xl`;
 
+    const postsByType = {
+      1: "post",
+      2: "bookmark",
+      3: "like",
+    };
+
+    const selectedFilter = myinfoData[postsByType[activeTab]];
+
   return (
     <div className="flex-col bg-white rounded-md w-full shadow-md mb-6 pl-[4%] pr-[1.5%] pt-[2%] md:w-[70%] md:my-[2%]">
       <ul className="flex md:mb-[2%]">
         <li className={tabStyle(1)} onClick={() => handleTabs(1)}>
           게시글
         </li>
-        {/* <li className={tabStyle(2)} onClick={() => handleTabs(2)}>
-          댓글
-        </li> */}
         <li className={tabStyle(2)} onClick={() => handleTabs(2)}>
           북마크
         </li>
@@ -36,8 +45,20 @@ const MyInfoContentList = () => {
         </li>
       </ul>
       <div className="flex flex-wrap">
-        <MyInfoShowroom />
-        <MyInfoTips />
+      {selectedFilter && (
+          <div>
+            {selectedFilter.map((item) => (
+              <div key={item.type}>
+                {item.type === "showroom" && (
+                  <MyInfoShowroom showroomData={item.posts} />
+                )}
+                {item.type === "tips" && (
+                  <MyInfoTips tipsData={item.posts} />
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
