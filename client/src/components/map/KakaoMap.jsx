@@ -168,7 +168,7 @@ const KakaoMap = ({ viewportWidth }) => {
   //     clearPreviousSearchResults(); // 이전 결과 제거
   //   }, 1000);
   // };
-  console.log(viewportWidth);
+
   return (
     <div className="flex flex-col relative  rounded-[20px]">
       <SearchBar
