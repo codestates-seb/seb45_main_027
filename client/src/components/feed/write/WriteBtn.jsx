@@ -18,7 +18,7 @@ const WriteBtn = ({buttonBgColor,buttonBorderColor,buttonTextColor,Title}) => {
             임시저장
           </button>
           <button className={`${buttonBgColor} text-white ${btn}`}>
-            작성하기{" "}
+            작성하기
           </button>
         </div>
       </div>

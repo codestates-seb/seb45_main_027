@@ -9,7 +9,7 @@ const HiddenFooter = () => {
     const path = location.pathname;
 
     const isWrite =
-      path.includes("/tips/write") || path.includes("/showroom/write");
+      path.includes("/tips/:id/view") || path.includes("/showroom/:id/view");
 
     return (
       <>
