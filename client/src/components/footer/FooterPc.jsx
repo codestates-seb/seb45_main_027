@@ -12,7 +12,7 @@ const FooterPc = () => {
   ];
 
   return (
-    <footer className="flex flex-col h-52 py-8 bg-[#00647B] absolute bottom-0 w-full">
+    <footer className="flex flex-col h-52 py-8 bg-[#00647B] relative bottom-0 w-full">
       <div className="flex justify-center items-center">
         <div className="flex flex-col items-center">
           <img
