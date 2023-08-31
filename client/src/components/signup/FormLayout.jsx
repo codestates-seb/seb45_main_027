@@ -29,7 +29,7 @@ const FormLayout = ({ path }) => {
       <input className={`${inputStyle}`} id="password" type="password" />
 
       <button className={`${buttonStyle}`} type="submit">
-        SIGN UP
+        {path === "signup" ? `SIGN UP` : `LOGIN`}
       </button>
     </form>
   );

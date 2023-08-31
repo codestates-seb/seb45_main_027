@@ -5,7 +5,7 @@ import UserProfile from './UserProfile';
 
 const MyInfoLayout = () => {
     return (
-        <div className='flex justify-center w-[90%]'>
+        <div className='flex flex-col items-start w-[90%] md:flex-row md:'>
             <UserProfile />
             <MyInfoContentList />
             
