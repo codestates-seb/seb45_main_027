@@ -7,11 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 @Entity
 @Getter
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class Member extends BaseEntity {
 
@@ -28,9 +29,13 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "my_info_id")
-    private MyInfo myInfo;
+    private String myIntro;
+
+    @Lob
+    private String image;
+
+
+
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Tip> tips = new ArrayList<>();
@@ -57,7 +62,7 @@ public class Member extends BaseEntity {
     private List<FeedReply> feedReplies = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<FeedComment> tfeedComments = new ArrayList<>();
+    private List<FeedComment> feedComments = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<FeedBookmark> feedBookmarks = new ArrayList<>();
@@ -78,12 +83,17 @@ public class Member extends BaseEntity {
 
 
     @Builder
-    private Member(Long memberId, String email, String nickname, String password, MyInfo myInfo) { // 빌더 패턴 사용
+    private Member(Long memberId, String email, String nickname, String password, String myIntro, String image) { // 빌더 패턴 사용
         this.memberId = memberId;
         this.email = email;
         this.nickname = nickname;
         this.password = password;
-        this.myInfo = myInfo;
+        this.myIntro = myIntro;
+        this.image = image;
+
+        // 이미지를 같이 취급할꺼냐 따로 취급 할꺼냐 ?
+
+
     }
 
 
@@ -92,7 +102,22 @@ public class Member extends BaseEntity {
                 .email(email)
                 .nickname(nickname)
                 .password(password)
-                //myinfo정보도 받아와야할듯 빌더로
+                .myIntro(null)
+                .image(null) // 나중에 수정 ?
                 .build();
     }
+
+    public void updateMyInfo(String nickname,String myIntro, String image) {
+        this.nickname = nickname == null ? this.nickname : nickname;
+        this.myIntro = myIntro == null ? this.myIntro : myIntro;
+        this.image = image == null ? this.image : image;
+
+    }
+
+    public void updatePassword(String newPassword) {
+
+        this.password = newPassword;
+    }
+
+
 }
