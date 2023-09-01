@@ -7,11 +7,13 @@ const MyInfoDummy = {
           id: 1,
           imgSrc: "./images/Yuri.png",
           title: "게시글-쇼룸1",
+          bookmarked: true,
         },
         {
           id: 2,
           imgSrc: "./images/Yuri.png",
           title: "게시글-쇼룸2",
+          bookmarked: false,
         },
         {
           id: 3,
@@ -79,6 +81,7 @@ const MyInfoDummy = {
           id: 3,
           imgSrc: "./images/Yuri.png",
           title: "북마크-쇼룸3",
+          bookmarked: true,
         },
         {
           id: 4,
