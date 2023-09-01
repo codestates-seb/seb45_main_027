@@ -6,6 +6,7 @@ import WriteGuide from "../components/feed/write/WriteGuide";
 import WriteCoverImg from '../components/feed/write/WriteCoverImg';
 import WriteTitle from "../components/feed/write/WriteTitle";
 import WriteForm from "../components/feed/write/WriteForm";
+import WriteInput from '../components/feed/write/WriteInput';
 
 const WriteShowRoom = () => { 
     return (
@@ -23,6 +24,7 @@ const WriteShowRoom = () => {
             />
           </div>
           <WriteGuide Title="Show room " />
+          <WriteInput/>
           <WriteCoverImg bgColor="bg-[#f5644a16]" btnColor="bg-[#F5634A]" />
           <div className="mt-10 mb-20 p-4 bg-white w-full h-full">
             <WriteTitle />
