@@ -38,6 +38,7 @@ const WriteCoverImg = ({ bgColor, btnColor }) => {
           id="hiddenFileInput"
           onChange={imageUpload}
         />
+        
         <button
           className={`${btnColor} text-white px-10 py-2 rounded-3xl shadow mt-10`}
           onClick={() => document.getElementById("hiddenFileInput").click()}>
