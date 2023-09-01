@@ -2,11 +2,17 @@ import React from "react";
 import AllHeader from "./AllHeader";
 import Allcontent from "./Allcontent";
 
-const All = () => {
+const All = ({ viewportWidth, setViewportWidth }) => {
   return (
     <div className="flex-col mt-10">
-      <AllHeader />
-      <Allcontent />
+      <AllHeader
+        viewportWidth={viewportWidth}
+        setViewportWidth={setViewportWidth}
+      />
+      <Allcontent
+        viewportWidth={viewportWidth}
+        setViewportWidth={setViewportWidth}
+      />
     </div>
   );
 };
