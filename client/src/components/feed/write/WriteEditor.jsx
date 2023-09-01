@@ -7,7 +7,6 @@ const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요";
 const WriteEditor = () => {
   const [title, setTitle] = useState("");
   const [editor, setEditor] = useState(DEFAULT_EDITOR_TEXT);
-  const [isComposing, setIsComposing] = useState(false);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -61,8 +60,6 @@ const WriteEditor = () => {
       <WriteForm
         editor={editor}
         setEditor={setEditor}
-        isComposing={isComposing}
-        setIsComposing={setIsComposing}
       />
 
       {/* 태그 작성창 */}
