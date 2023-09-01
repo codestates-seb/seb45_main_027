@@ -19,13 +19,16 @@ const ShowRoom = () => {
     };
   }, []);
   return (
-    <Background mainclassName="h-full h-screen bg-[#FFFAEE]">
-      <div className="flex-col  w-full">
+    <Background mainclassName="h-full bg-[#FFFAEE]">
+      <div className="flex-col w-full">
         <BestInterior
           viewportWidth={viewportWidth}
           setViewportWidth={setViewportWidth}
         />
-        <All />
+        <All
+          viewportWidth={viewportWidth}
+          setViewportWidth={setViewportWidth}
+        />
       </div>
     </Background>
   );

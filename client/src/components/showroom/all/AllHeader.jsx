@@ -1,7 +1,7 @@
 import React from "react";
 import useInput from "../../../hooks/useInput";
 
-const AllHeader = () => {
+const AllHeader = ({ viewportWidth, setViewportWidth }) => {
   const [inputValue, handleInputChange, clearInput] = useInput("");
 
   const handleSearch = (e) => {
@@ -10,11 +10,13 @@ const AllHeader = () => {
       clearInput();
     }
   };
+
+  const isMobileView = viewportWidth < 720; // viewportWidth가 720보다 작으면 모바일 화면으로 간주
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between flex-wrap">
       <div className="flex">
-        <h1 className="pt-1 text-5xl text-[#F5634A] font-semibold">all</h1>
-        <div className="pl-4 pt-6 text-xl">
+        <h1 className="pt-1 text-5xl text-[#F5634A] font-semibold">All</h1>
+        <div className="pl-4 pt-6 text-xl  flex-nowrap">
           <span className="pr-3 text-[16px]">최신순</span>
           <span className="pr-3 text-[16px]">인기순</span>
           <span className="pr-3 text-[16px]">공간별</span>
@@ -22,14 +24,14 @@ const AllHeader = () => {
           <span className="pr-3 text-[16px]">주거형태별</span>
         </div>
       </div>
-      <div className="relative ">
+      <div className={`relative ${isMobileView ? "mx-auto pr-5" : ""}`}>
         <img
           className="absolute w-[28px] top-[13px] left-4"
           src="./images/Search_gray.png"
           alt="searchIamge"
         />
         <input
-          className="w-[300px] mt-3 py-3 pl-14 pr-4 rounded-3xl border border-[#BBBBBB] "
+          className="w-[330px] mt-3 mr-3 py-3 pl-14 pr-4 rounded-3xl border border-[#BBBBBB]"
           type="text"
           value={inputValue}
           onChange={handleInputChange}
