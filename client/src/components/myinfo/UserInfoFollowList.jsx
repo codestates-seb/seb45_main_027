@@ -1,30 +1,42 @@
 import React from "react";
 
-const UserInfoFollowList = () => {
+const UserInfoFollowList = ({ userList }) => {
+  const handleFollow = (userId) => {
+    console.log(`Follow user with ID ${userId}`);
+  };
+
+  const handleUnfollow = (userId) => {
+    console.log(`Unfollow user with ID ${userId}`);
+  };
+
   return (
-    <div className="">
-      <div className="flex flex-row md:justify-center mb-10">
-        <div className='flex'>
-          <button className="mx-1">Following</button>
-          <div>1</div>
-        </div>
-        <div className='flex'>
-          <button className="ml-4 mr-1">Followers</button>
-          <div>1</div>
-        </div>
-      </div>
-      <div className="flex justify-between mx-3">
-        <div className="flex">
-          <img className="h-12 rounded-full" src="./images/Hanjun.png" alt="" />
-          <button className="mx-2.5 font-md truncate overflow-hidden max-w-[85px]">
-            Nick
-            namefffffffffffffffffffffffvvvvvvvvvvvvvvvfffffffffffffffffffffffffffffffffffffffff
+    <div>
+      {userList.map((user) => (
+        <div key={user.id} className="flex justify-between mx-3 mb-1.5">
+          <div className="flex">
+            <img
+              className="h-12 w-12 object-cover rounded-full"
+              src={user.profileImage}
+              alt={user.username}
+            />
+            <button className="mx-2.5 font-md truncate overflow-hidden max-w-[85px]">
+              {user.username}
+            </button>
+          </div>
+          <button
+            className="text-xs text-white font-bold"
+            onClick={() => {
+              if (user.isFollowing) {
+                handleUnfollow(user.id);
+              } else {
+                handleFollow(user.id);
+              }
+            }}
+          >
+            <span className="bg-[#5AB0C3] rounded-full p-1.5">{user.isFollowing ? "Following" : "Follow"}</span>
           </button>
         </div>
-        <button className="text-xs text-white font-bold">
-          <span className="bg-[#5AB0C3] rounded-full p-1.5">Following</span>
-        </button>
-      </div>
+      ))}
     </div>
   );
 };

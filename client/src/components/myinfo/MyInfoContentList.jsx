@@ -7,7 +7,7 @@ import MyInfoDummy from "./MyInfoDummy";
 const MyInfoContentList = () => {
 
   const myinfoData = MyInfoDummy;
-
+  
   const [activeTab, setActiveTab] = useState(1);
 
   useEffect(() => {}, [activeTab]);
@@ -19,7 +19,7 @@ const MyInfoContentList = () => {
   const tabStyle = (tabIndex) =>
     `${
       activeTab === tabIndex
-        ? "text-[#F5634A] border-[#F5634A]/50"
+        ? "text-[#F5634A] border-[#e26959]/50"
         : "text-neutral-600"
     } text-xl font-semibold border-b-4 border-transparent cursor-pointer px-4 py-2 mb-[3%] mr-[6%] md:text-2xl`;
 
@@ -30,9 +30,10 @@ const MyInfoContentList = () => {
     };
 
     const selectedFilter = myinfoData[postsByType[activeTab]];
+    
 
   return (
-    <div className="flex-col bg-white rounded-md w-full shadow-md mb-6 pl-[4%] pr-[1.5%] pt-[2%] md:w-[75%] md:my-[2%]">
+    <div className="flex-col bg-white rounded-md w-full shadow-md mb-6 pl-[4%] pr-[1.5%] pt-[2%] md:w-[70%] md:min-h-[800px] md:my-[2%]">
       <ul className="flex md:mb-[2%]">
         <li className={tabStyle(1)} onClick={() => handleTabs(1)}>
           게시글
@@ -50,7 +51,7 @@ const MyInfoContentList = () => {
             {selectedFilter.map((item) => (
               <div key={item.type}>
                 {item.type === "showroom" && (
-                  <MyInfoShowroom showroomData={item.posts} />
+                  <MyInfoShowroom showroomData={item.posts} type={item.type} />
                 )}
                 {item.type === "tips" && (
                   <MyInfoTips tipsData={item.posts} />
