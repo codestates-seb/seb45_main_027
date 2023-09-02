@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Background from "../components/common/Background";
 import MainFirst from "../components/main/MainFirst";
 import MainSecond from "../components/main/MainSecond";
 import MainThird from "../components/main/MainThird";
+import MainSlogan from "../components/main/MainSlogan";
 
 const Main = () => {
   // 스크롤 초기 값 0
@@ -19,18 +19,22 @@ const Main = () => {
   }, []);
 
   return (
-    <Background mainclassName="" divclassName="">
-      <div className="w-full">
-        {/* 메인1 */}
-        <MainFirst/>
+    <div className="w-full overscroll-x-none">
+      {/* 메인1 */}
+      <MainFirst />
 
-        {/* 메인2 */}
-        <MainSecond/>
+      {/* 슬로건 */}
+      <MainSlogan />
 
-        {/* 메인3 */}
-        <MainThird/>
-      </div>
-    </Background>
+      {/* 메인2 */}
+      <MainSecond />
+
+      {/* 슬로건 */}
+      <MainSlogan />
+
+      {/* 메인3 */}
+      <MainThird />
+    </div>
   );
 };
 
