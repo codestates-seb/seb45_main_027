@@ -10,6 +10,8 @@ import com.project.bbibbi.global.exception.businessexception.memberexception.Mem
 import com.project.bbibbi.global.exception.businessexception.memberexception.MemberNotFoundException;
 import com.project.bbibbi.global.exception.businessexception.memberexception.MemberPasswordException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,6 +105,34 @@ public class MemberService {
             throw new MemberNotFoundException();
         }
         // 후에 만약 계정을 삭제하지 않고 unabled로 한다면 member.unabled로 바꾸는 로직만 추가하자 diable로직 추가
+    }
+
+    public Page<MemberResponse.MemberFeed> getMemberFeedPageResponse(Long memberId, Integer page, Integer size) {
+
+        Page<MemberFeedData> memberFeedData = memberRepository.findFeedByMemberId(memberId, PageRequest.of(page, size));
+
+        return memberFeedData.map(MemberResponse.MemberFeed::of);
+    }
+
+    public Page<MemberResponse.MemberTip> getMemberTipPageResponse(Long memberId, Integer page, Integer size) {
+
+        Page<MemberTipData> memberTipData = memberRepository.findTipByMemberId(memberId, PageRequest.of(page, size));
+
+        return memberTipData.map(MemberResponse.MemberTip::of);
+    }
+
+    public Page<MemberResponse.MemberFeedBookmark> getMemberFeedBookmarkPageResponse(Long memberId, Integer page, Integer size) {
+
+        Page<MemberFeedBookmarkData> memberFeedBookmarkData = memberRepository.findFeedBookmarkByMemberId(memberId, PageRequest.of(page, size));
+
+        return memberFeedBookmarkData.map(MemberResponse.MemberFeedBookmark::of);
+    }
+
+    public Page<MemberResponse.MemberFeedBookmark> getMemberFeedBookmarkPageResponse(Long memberId, Integer page, Integer size) {
+
+        Page<MemberFeedBookmarkData> memberFeedBookmarkData = memberRepository.findFeedBookmarkByMemberId(memberId, PageRequest.of(page, size));
+
+        return memberFeedBookmarkData.map(MemberResponse.MemberFeedBookmark::of);
     }
 
     private void checkPassword(String password, String savedPassword) {

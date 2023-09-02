@@ -6,6 +6,7 @@ import com.project.bbibbi.domain.member.controller.dto.MemberUpdatePasswordApiRe
 import com.project.bbibbi.domain.member.service.MemberService;
 import com.project.bbibbi.domain.member.service.dto.response.MemberResponse;
 import com.project.bbibbi.global.response.ApiSingleResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -74,6 +75,29 @@ public class MemberController {
 
     // 비밀번호 찾기, 아이디 찾기, 로그인, 이미지 관련 이미지 업로드 이미지 수정 이미지 삭제
 
+    @GetMapping("/{member-id}/tips")
+    public ResponseEntity<ApiPageResponse<MemberResponse.MemberTip>> getMemberTip(
+            @PathVariable("member-id") @Positive Long memberId,
+            @RequestParam(value = "page", defaultValue = "5") @Positive int page
+    ) {
+
+        Page<MemberResponse.MemberTip> memberTipPage
+                = memberService.getMemberTip(memberId, page - 1, 5);
+
+        return ResponseEntity.ok(ApiPageResponse.ok(memberTipPage));
+    }
+
+    @GetMapping("/{member-id}/feeds")
+    public ResponseEntity<ApiPageResponse<MemberResponse.MemberFeed>> getMemberFeed(
+            @PathVariable("member-id") @Positive Long memberId,
+            @RequestParam(value = "page", defaultValue = "5") @Positive int page
+    ) {
+
+        Page<MemberResponse.MemberFeed> memberFeedPage
+                = memberService.getMemberFeed(memberId, page - 1, 5);
+
+        return ResponseEntity.ok(ApiPageResponse.ok(memberFeedPage));
+    }
 }
 
 

@@ -29,3 +29,8 @@ server:
   servlet:
     encoding:
       force-response: true
+
+jwt:
+  access-token-expire-time: 7200000
+  refresh-token-expire-time: 604800000
+
