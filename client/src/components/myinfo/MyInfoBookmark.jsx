@@ -1,24 +1,26 @@
-//import React from 'react';
-import { useEffect, useState } from "react";
-import MyInfoDummy from "./MyInfoDummy";
+//import { useEffect, useState } from "react";
 
-
-const MyInfoBookmark = ({itemId}) => {
-  const myinfoData = MyInfoDummy;
-
-  const [isBookmarked, setIsBookmarked] = useState(); 
-
-  useEffect(() => {
-  }, [itemId]);
-
-  const toggleBookmark = () => {
-    setIsBookmarked((prevIsBookmarked) => !prevIsBookmarked);
-    console.log(isBookmarked)
+const MyInfoBookmark = ({
+  itemId,
+  imgSrc,
+  title,
+  isBookmarked,
+  toggleBookmark,
+}) => {
+  const handleToggleBookmark = () => {
+    toggleBookmark(itemId);
   };
 
-    return (
+  return (
+    <div className="m-4 h-full w-[140px] md:w-[180px] ">
+      <div className="relative">
+        <img
+          className="rounded-lg object-cover w-[140px] h-[130px] md:w-[180px] md:h-[170px]"
+          src={imgSrc}
+          alt="content"
+        />
         <button
-          onClick={toggleBookmark}
+          onClick={handleToggleBookmark}
           className="absolute bottom-3 right-3 cursor-pointer"
         >
           <img
@@ -34,7 +36,12 @@ const MyInfoBookmark = ({itemId}) => {
             }}
           />
         </button>
-    );
-}
+      </div>
+      <div className="flex flex-col items-center md:mb-4">
+        <div className="text-2xl p-2 mx-1 break-all">{title}</div>
+      </div>
+    </div>
+  );
+};
 
-export default MyInfoBookmark
+export default MyInfoBookmark;

@@ -5,9 +5,10 @@ import MyInfoTips from "./MyInfoTips";
 import MyInfoDummy from "./MyInfoDummy";
 
 const MyInfoContentList = () => {
-
   const myinfoData = MyInfoDummy;
-  
+  const myinfoShowroomData = myinfoData.showroom;
+  const myinfoTipsData = myinfoData.tips;
+
   const [activeTab, setActiveTab] = useState(1);
 
   useEffect(() => {}, [activeTab]);
@@ -19,18 +20,17 @@ const MyInfoContentList = () => {
   const tabStyle = (tabIndex) =>
     `${
       activeTab === tabIndex
-        ? "text-[#F5634A] border-[#e26959]/50"
+        ? "text-[#F5634A] border-[#F5634A]/50"
         : "text-neutral-600"
     } text-xl font-semibold border-b-4 border-transparent cursor-pointer px-4 py-2 mb-[3%] mr-[6%] md:text-2xl`;
 
-    const postsByType = {
-      1: "post",
-      2: "bookmark",
-      3: "like",
-    };
+  // const postsByType = {
+  //   1: "post",
+  //   2: "bookmark",
+  //   3: "like",
+  // };
 
-    const selectedFilter = myinfoData[postsByType[activeTab]];
-    
+  // const selectedFilter = myinfoData[postsByType[activeTab]];
 
   return (
     <div className="flex-col bg-white rounded-md w-full shadow-md mb-6 pl-[4%] pr-[1.5%] pt-[2%] md:w-[70%] md:min-h-[800px] md:my-[2%]">
@@ -46,20 +46,28 @@ const MyInfoContentList = () => {
         </li>
       </ul>
       <div className="flex flex-wrap">
-      {selectedFilter && (
-          <div>
-            {selectedFilter.map((item) => (
-              <div key={item.type}>
-                {item.type === "showroom" && (
-                  <MyInfoShowroom showroomData={item.posts} type={item.type} />
-                )}
-                {item.type === "tips" && (
-                  <MyInfoTips tipsData={item.posts} />
-                )}
-              </div>
-            ))}
-          </div>
-        )}
+        {myinfoShowroomData &&
+          myinfoShowroomData.map((item, idx) => (
+            <div key={idx}>
+              <MyInfoShowroom
+                postData={item.post}
+                bookmarkData={item.bookmark}
+                likeData={item.like}
+                activeTab={activeTab}
+              />
+            </div>
+          ))}
+        {myinfoTipsData &&
+          myinfoTipsData.map((item, idx) => (
+            <div key={idx}>
+              <MyInfoTips
+                postData={item.post}
+                bookmarkData={item.bookmark}
+                likeData={item.like}
+                activeTab={activeTab}
+              />
+            </div>
+          ))}
       </div>
     </div>
   );
