@@ -65,59 +65,59 @@ public class FeedService {
         return findVerifiedFeed(feedId);
     }
 
-    public List<Feed> findFeeds(){
-
-        return feedRepository.findAll();
-
-    }
-
-    // 필터기능 예시
-//    public List<Feed> findFeeds(String searchcode){
+//    public List<Feed> findFeeds(){
 //
-//        String whereCode = searchcode.substring(0, searchcode.length() - 2);
-//
-//        List<Feed> selectedFeeds = new ArrayList<>();
-//
-//        if(whereCode.equals("LOCATION")){
-//
-//
-//            selectedFeeds = feedRepository.findByLocation(searchcode);
-//        }
-//        else if(whereCode.equals("COUNT")){
-//
-//
-//            selectedFeeds = feedRepository.findByRoomCount(searchcode);
-//        }
-//        else if(whereCode.equals("INFO")){
-//
-//
-//            selectedFeeds = feedRepository.findByRoomInfo(searchcode);
-//        }
-//        else if(whereCode.equals("SIZE")){
-//
-//
-//            selectedFeeds = feedRepository.findByRoomSize(searchcode);
-//        }
-//        else if(whereCode.equals("TYPE")){
-//
-//
-//            selectedFeeds = feedRepository.findByRoomType(searchcode);
-//        }
-//        // 좋아요 "LIKE00" -> "LIKE"
-//        else if(whereCode.equals("LIKE")){
-//
-////            selectedFeeds = feedRepository.findByOrderByLike();
-//        }
-//        // 최신순 "RECENT00" -> "RECENT"
-//        else if(whereCode.equals("RECENT")){
-//
-//
-//            selectedFeeds = feedRepository.findByOrderByCreatedDateTimeDesc();
-//        }
-//
-//        return selectedFeeds;
+//        return feedRepository.findAll();
 //
 //    }
+
+    // 필터기능 예시
+    public List<Feed> findFeeds(String searchcode){
+
+        String whereCode = searchcode.substring(0, searchcode.length() - 2);
+
+        List<Feed> selectedFeeds = new ArrayList<>();
+
+        if(whereCode.equals("LOCATION")){
+
+
+            selectedFeeds = feedRepository.findByLocation(searchcode);
+        }
+        else if(whereCode.equals("COUNT")){
+
+
+            selectedFeeds = feedRepository.findByRoomCount(searchcode);
+        }
+        else if(whereCode.equals("INFO")){
+
+
+            selectedFeeds = feedRepository.findByRoomInfo(searchcode);
+        }
+        else if(whereCode.equals("SIZE")){
+
+
+            selectedFeeds = feedRepository.findByRoomSize(searchcode);
+        }
+        else if(whereCode.equals("TYPE")){
+
+
+            selectedFeeds = feedRepository.findByRoomType(searchcode);
+        }
+        // 좋아요 "LIKE00" -> "LIKE"
+        else if(whereCode.equals("LIKE")){
+
+//            selectedFeeds = feedRepository.findByOrderByLike();
+        }
+        // 최신순 "RECENT00" -> "RECENT"
+        else if(whereCode.equals("RECENT")){
+
+
+            selectedFeeds = feedRepository.findByOrderByCreatedDateTimeDesc();
+        }
+
+        return selectedFeeds;
+
+    }
 
     public void deleteFeed(Long feedId){
         Feed feed = findVerifiedFeed(feedId);

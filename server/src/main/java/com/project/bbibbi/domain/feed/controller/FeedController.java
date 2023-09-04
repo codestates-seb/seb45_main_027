@@ -71,25 +71,25 @@ public class FeedController {
         return new ResponseEntity<>(new SingleResponseDto<>(feedResponseDto), HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity getFeeds() {
-        List<Feed> feeds = feedService.findFeeds();
-
-        List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(feeds);
-
-        return new ResponseEntity<>(new MultiResponseDto<>(feedResponseDtos), HttpStatus.OK);
-
-    }
-
-//    @GetMapping("/filter/{search-code}")
-//    public ResponseEntity getFeeds(@PathVariable("search-code") String searchCode) {
-//        List<Feed> feeds = feedService.findFeeds(searchCode);
+//    @GetMapping
+//    public ResponseEntity getFeeds() {
+//        List<Feed> feeds = feedService.findFeeds();
 //
 //        List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(feeds);
 //
 //        return new ResponseEntity<>(new MultiResponseDto<>(feedResponseDtos), HttpStatus.OK);
 //
 //    }
+
+    @GetMapping("/filter/{search-code}")
+    public ResponseEntity getFeeds(@PathVariable("search-code") String searchCode) {
+        List<Feed> feeds = feedService.findFeeds(searchCode);
+
+        List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(feeds);
+
+        return new ResponseEntity<>(new MultiResponseDto<>(feedResponseDtos), HttpStatus.OK);
+
+    }
 
     @DeleteMapping("/{feed-id}")
     public ResponseEntity deleteFeed(@PathVariable("feed-id") @Positive long feedId){
