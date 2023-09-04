@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TipsInfo from "./TipsInfo";
+import { Link } from "react-router-dom";
 
 const data = [
   { url: "./asset/image.png", isBookmarked: true },
@@ -38,27 +39,30 @@ const TipsContent = ({ viewportWidth }) => {
   return (
     <div className="flex-col mt-4">
       <div className="flex pt-5 justify-center flex-wrap">
-        {image.map((item, idx) => (
-          <div key={idx} className="flex-col relative mx-3 mb-3 ">
-            <img src={item.url} alt="tipsimg" className={imageClassName} />
-            <p>
-              <img
-                src={
-                  item.isBookmarked
-                    ? "./images/isBookmarked.png"
-                    : "./images/Bookmark.png"
-                }
-                alt="Bookmark"
-                className="absolute bottom-32 right-4 cursor-pointer"
-                style={{
-                  width: "30px",
-                  height: "30px",
-                }}
-              />
-            </p>
-            <TipsInfo></TipsInfo>
-          </div>
-        ))}
+        
+          {image.map((item, idx) => (
+            <div key={idx} className="flex-col relative mx-3 mb-3 ">
+              <Link to="/tips/:id/view">
+              <img src={item.url} alt="tipsimg" className={imageClassName} />
+              <p>
+                <img
+                  src={
+                    item.isBookmarked
+                      ? "./images/isBookmarked.png"
+                      : "./images/Bookmark.png"
+                  }
+                  alt="Bookmark"
+                  className="absolute bottom-32 right-4 cursor-pointer"
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                  }}
+                />
+              </p>
+              <TipsInfo></TipsInfo>
+        </Link>
+            </div>
+          ))}
       </div>
     </div>
   );
