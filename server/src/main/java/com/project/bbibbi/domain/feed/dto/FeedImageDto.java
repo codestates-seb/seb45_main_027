@@ -10,9 +10,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FeedImageDto {
-    private String imageUrl;
-    private String x;
-    private String y;
+    private Long feedImageId;
+    private String image;
+    private Double x;
+    private Double y;
     private String tag;
+    private Long feedId;
+    private LocalDateTime createdDateTime;
+    private LocalDateTime modifiedDateTime;
 
 }

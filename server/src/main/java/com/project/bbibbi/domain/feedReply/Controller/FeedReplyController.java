@@ -1,10 +1,12 @@
 package com.project.bbibbi.domain.feedReply.Controller;
 
 
+import com.project.bbibbi.domain.feed.dto.FeedResponseDto;
 import com.project.bbibbi.domain.feed.entity.Feed;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyRequestDto;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyResponseDto;
 import com.project.bbibbi.domain.feedReply.entity.FeedReply;
+import com.project.bbibbi.domain.feedReply.repository.FeedReplyRepository;
 import com.project.bbibbi.domain.feedReply.service.FeedReplyService;
 import com.project.bbibbi.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;
