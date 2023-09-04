@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const WriteAccordion = ({ Title }) => {
+const WriteGuide = ({ Title }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -49,4 +49,4 @@ const WriteAccordion = ({ Title }) => {
   );
 };
 
-export default WriteAccordion;
+export default WriteGuide;

@@ -14,7 +14,6 @@ import WriteShowRoom from "./pages/WriteShowRoom";
 import WriteTips from "./pages/WriteTips";
 import ViewShowRoom from "./pages/ViewShowRoom";
 import ViewTips from "./pages/ViewTips";
-import AccountSetting from "./pages/AccountSetting";
 
 const headerPaths = [
   "myinfo",
@@ -27,7 +26,6 @@ const headerPaths = [
   "tips/write",
   "showroom/:id/view",
   "tips/:id/view",
-  "account",
   "",
 ];
 const footerPaths = [
@@ -57,7 +55,6 @@ function App() {
         <Route path={"/login"} element={<Login />} />
         <Route path={"/signup"} element={<Signup />} />
         <Route path={"/myinfo"} element={<MyInfo />} />
-        <Route path={"/account"} element={<AccountSetting />} />
         <Route path={"/showroom"} element={<ShowRoom />} />
         <Route path={"/tips"} element={<Tips />} />
         <Route path={"/map"} element={<Map />} />
@@ -67,7 +64,7 @@ function App() {
         <Route path={"/tips/:id/view"} element={<ViewTips />} />
       </Routes>
 
-      {/* {isFooter && <HiddenFooter />} */}
+      {isFooter && <HiddenFooter />}
     </>
   );
 }
