@@ -28,6 +28,7 @@ const headerPaths = [
   "showroom/:id/view",
   "tips/:id/view",
   "account",
+  ""
 ];
 const footerPaths = ["login", "signup", "myinfo", "showroom", "tips", "showroom/write", "tips/write", "showroom/:id/view", "tips/:id/view", ""];
 
@@ -55,7 +56,7 @@ function App() {
         <Route path={"/tips/:id/view"} element={<ViewTips />} />
       </Routes> 
 
-      {/* {isFooter && <HiddenFooter />} */}
+      {isFooter && <HiddenFooter />}
     </>
   );
 }

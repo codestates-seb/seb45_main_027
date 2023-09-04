@@ -2,9 +2,11 @@ import React from 'react';
 import HeaderMobile from "../components/header/HeaderMobile";
 import Background from "../components/common/Background";
 import WriteBtn from '../components/feed/write/WriteBtn';
-import WriteAccordion from '../components/feed/write/WriteAccordion';
+import WriteAccordion from '../components/feed/write/WriteGuide';
 import WriteCoverImg from '../components/feed/write/WriteCoverImg';
-import WriteEditor from '../components/feed/write/WriteEditor';
+import WriteTitle from "../components/feed/write/WriteTitle";
+import WriteForm from "../components/feed/write/WriteForm";
+import WriteTag from "../components/feed/write/WriteTag";
 
 const WriteTips = () => {
   return (
@@ -23,7 +25,11 @@ const WriteTips = () => {
         </div>
         <WriteAccordion Title="Tips " />
         <WriteCoverImg bgColor="bg-[#00647b1c]" btnColor="bg-[#00647B]" />
-        <WriteEditor />
+        <div className="mt-10 mb-20 p-4 bg-white w-full h-full">
+          <WriteTitle />
+          <WriteForm />
+          <WriteTag />
+        </div>
       </Background>
     </>
   );

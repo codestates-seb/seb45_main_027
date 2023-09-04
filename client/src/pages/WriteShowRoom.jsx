@@ -2,8 +2,11 @@ import React from 'react';
 import HeaderMobile from "../components/header/HeaderMobile";
 import Background from "../components/common/Background";
 import WriteBtn from '../components/feed/write/WriteBtn';
-import WriteAccordion from '../components/feed/write/WriteAccordion';
+import WriteGuide from "../components/feed/write/WriteGuide";
 import WriteCoverImg from '../components/feed/write/WriteCoverImg';
+import WriteTitle from "../components/feed/write/WriteTitle";
+import WriteForm from "../components/feed/write/WriteForm";
+import WriteInput from '../components/feed/write/WriteInput';
 
 const WriteShowRoom = () => { 
     return (
@@ -20,8 +23,13 @@ const WriteShowRoom = () => {
               Title="Show room"
             />
           </div>
-          <WriteAccordion Title="Show room " />
+          <WriteGuide Title="Show room " />
+          <WriteInput/>
           <WriteCoverImg bgColor="bg-[#f5644a16]" btnColor="bg-[#F5634A]" />
+          <div className="mt-10 mb-20 p-4 bg-white w-full h-full">
+            <WriteTitle />
+            <WriteForm />
+          </div>
         </Background>
       </>
     );
