@@ -26,9 +26,20 @@ const headerPaths = [
   "tips/write",
   "showroom/:id/view",
   "tips/:id/view",
-  ""
+  "",
 ];
-const footerPaths = ["login", "signup", "myinfo", "showroom", "tips", "showroom/write", "tips/write", "showroom/:id/view", "tips/:id/view", ""];
+const footerPaths = [
+  "login",
+  "signup",
+  "myinfo",
+  "showroom",
+  "tips",
+  "showroom/write",
+  "tips/write",
+  "showroom/:id/view",
+  "tips/:id/view",
+  "",
+];
 
 function App() {
   const location = useLocation();
@@ -37,7 +48,7 @@ function App() {
   const isFooter = footerPaths.includes(path);
 
   return (
-    <> 
+    <>
       {isHeader && <HeaderPc />}
       <Routes>
         <Route path={"/"} element={<Main />} />
@@ -51,7 +62,7 @@ function App() {
         <Route path={"/showroom/:id/view"} element={<ViewShowRoom />} />
         <Route path={"/tips/write"} element={<WriteTips />} />
         <Route path={"/tips/:id/view"} element={<ViewTips />} />
-      </Routes> 
+      </Routes>
 
       {isFooter && <HiddenFooter />}
     </>
