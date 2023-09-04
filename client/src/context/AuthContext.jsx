@@ -9,7 +9,7 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null); //유저정보 여기에 담을거임
   const navigate = useNavigate();
 
   useEffect(() => {
