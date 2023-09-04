@@ -25,7 +25,6 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
 
   // const shouldShowPagination = showroomData.length > itemsPerPage;
 
-  
   const [isPostDeleted, setIsPostDeleted] = useState(postData);
   const [isBookmarked, setIsBookmarked] = useState(bookmarkData);
   const [isLiked, setIsLiked] = useState(likeData);
@@ -51,8 +50,8 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
   return (
     <div className="md:min-h-[380px]">
       <div className="text-[#F5634A] text-4xl font-bold mb-[2%]">Show Room</div>
-        <div className="flex flex-wrap justify-center items-start">
-          {/* {visibleData.map((item) => (
+      <div className="flex flex-wrap">
+        {/* {visibleData.map((item) => (
             <div key={item.id}>
               <MyInfoContent
                 imgSrc={item.imgSrc}
@@ -62,18 +61,19 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
               />
             </div>
           ))} */}
-          {activeTab === 1 && isPostDeleted.map((item) => (
+        {activeTab === 1 &&
+          isPostDeleted.map((item) => (
             <div key={item.id}>
               <MyInfoPost
                 imgSrc={item.imgSrc}
                 title={item.title}
                 itemId={item.id}
                 deletePost={deletePost}
-
               />
             </div>
           ))}
-          {activeTab === 2 && isBookmarked.map((item) => (
+        {activeTab === 2 &&
+          isBookmarked.map((item) => (
             <div key={item.id}>
               <MyInfoBookmark
                 imgSrc={item.imgSrc}
@@ -84,7 +84,8 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
               />
             </div>
           ))}
-          {activeTab === 3 && isLiked.map((item) => (
+        {activeTab === 3 &&
+          isLiked.map((item) => (
             <div key={item.id}>
               <MyInfoLike
                 imgSrc={item.imgSrc}
@@ -95,8 +96,8 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
               />
             </div>
           ))}
-        </div>
-        {/* {shouldShowPagination && (
+      </div>
+      {/* {shouldShowPagination && (
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

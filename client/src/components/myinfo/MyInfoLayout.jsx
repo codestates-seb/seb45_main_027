@@ -21,7 +21,7 @@ const MyInfoLayout = () => {
 
   return (
     <div>
-      <div className="flex flex-col items-start mb-[10%] w-[90%] md:w-[95%] md:flex-row">
+      <div className="flex flex-col justify-center mb-[10%] mx-4 md:w-[95%] md:flex-row">
         {!showAccountSettings && (
           <>
             <UserProfile

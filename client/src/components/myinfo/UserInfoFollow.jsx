@@ -36,7 +36,7 @@ const UserInfoFollow = () => {
           <div className="p-2 hover:rounded-full">
             Following
           </div>
-          <div>1</div>
+          <div>{followingList.length}</div>
         </button>
         <button className={`flex items-center text-base ${
             activeTab === "followers" ? "text-[#00647B]" : ""
@@ -45,7 +45,7 @@ const UserInfoFollow = () => {
           <div className="ml-4 p-2 hover:rounded-full">
             Followers
           </div>
-          <div>1</div>
+          <div>{followersList.length}</div>
         </button>
       </div>
       <div

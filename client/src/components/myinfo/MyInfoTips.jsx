@@ -28,7 +28,7 @@ const MyInfoTips = ({ postData, bookmarkData, likeData, activeTab }) => {
   const [isPostDeleted, setIsPostDeleted] = useState(postData);
   const [isBookmarked, setIsBookmarked] = useState(bookmarkData);
   const [isLiked, setIsLiked] = useState(likeData);
- 
+
   const deletePost = (itemId) => {
     const updatedPosts = isPostDeleted.filter((item) => item.id !== itemId);
     setIsPostDeleted(updatedPosts);
@@ -50,7 +50,7 @@ const MyInfoTips = ({ postData, bookmarkData, likeData, activeTab }) => {
   return (
     <div className="md:min-h-[380px]">
       <div className="text-[#F5634A] text-4xl font-bold mb-[2%]">Tips</div>
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap">
         {/* {visibleData.map((item) => (
             <div key={item.id}>
               <MyInfoContent
