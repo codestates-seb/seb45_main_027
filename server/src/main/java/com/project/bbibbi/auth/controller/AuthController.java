@@ -1,16 +1,24 @@
 package com.project.bbibbi.auth.controller;
 
 
+import com.project.bbibbi.auth.controller.dto.OauthJoinApiRequest;
+import com.project.bbibbi.auth.jwt.dto.Token;
 import com.project.bbibbi.auth.oauth.OauthService;
 import com.project.bbibbi.domain.member.controller.dto.MemberCreateApiRequest;
 import com.project.bbibbi.domain.member.controller.dto.MemberFindPasswordApiRequest;
-import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.member.service.MemberService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
+
+//import static com.project.bbibbi.auth.utils.AuthBasic.BEARER;
+
 
 @RestController
 @RequestMapping("/auth")
@@ -33,6 +41,24 @@ public class AuthController {
 
         return ResponseEntity.created(uri).build();
     }
+
+//    @GetMapping("/oauth")
+//    public ResponseEntity<String> login(@ModelAttribute @Valid OauthJoinApiRequest request) {
+//        Token token = oauthService.login(request.getProvider(), request.getCode());
+//
+//        HttpHeaders tokenHeader = getHttpHeaders(token);
+//
+//        String jsonResponse = "{\"memberId\":" + token.getMemberId() + "}";
+//
+//        return ResponseEntity.ok().headers(tokenHeader).body(jsonResponse);
+//    }
+//
+//    private HttpHeaders getHttpHeaders(Token token) {
+//        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+//        map.put("Authorization", List.of(BEARER + token.getAccessToken()));
+//        map.put("Refresh", List.of(BEARER + token.getRefreshToken()));
+//        HttpHeaders tokenHeader = new HttpHeaders(map);
+//        return tokenHeader;}
 
     @PatchMapping("/password")
     private ResponseEntity<Void> findPassword(@RequestBody @Valid MemberFindPasswordApiRequest request) {

@@ -1,5 +1,7 @@
 package com.project.bbibbi.domain.tipReplyLike.entity;
 
+import com.project.bbibbi.domain.member.entity.Member;
+import com.project.bbibbi.domain.tipReply.entity.TipReply;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.tip.entity;
 
+import com.project.bbibbi.domain.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
