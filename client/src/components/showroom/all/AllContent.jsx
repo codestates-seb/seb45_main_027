@@ -27,12 +27,12 @@ const data = [
   { url: "./asset/image4.png", isBookmarked: false },
 ];
 
-const Allcontent = ({ viewportWidth, setViewportWidth }) => {
-  const [image2, setImage2] = useState(data); // 이미지데이터를 상태로 저장
+const AllContent = ({ viewportWidth, setViewportWidth }) => {
+  const [image, setImage2] = useState(data); // 이미지데이터를 상태로 저장
 
   // 북마크 상태를 변경시켜주는 함수
   const toggleBookmark = (idx) => {
-    const updatedBookmarks = [...image2];
+    const updatedBookmarks = [...image];
     updatedBookmarks[idx].isBookmarked = !updatedBookmarks[idx].isBookmarked;
     setImage2(updatedBookmarks);
     console.log(updatedBookmarks);
@@ -44,7 +44,7 @@ const Allcontent = ({ viewportWidth, setViewportWidth }) => {
   return (
     <div className="flex-col ">
       <div className="flex pt-5 justify-between flex-wrap">
-        {data.map((item, idx) => (
+        {image.map((item, idx) => (
           <div
             key={idx}
             className={`flex-col relative mx-3 mb-3 ${
@@ -96,4 +96,4 @@ const Allcontent = ({ viewportWidth, setViewportWidth }) => {
   );
 };
 
-export default Allcontent;
+export default AllContent;

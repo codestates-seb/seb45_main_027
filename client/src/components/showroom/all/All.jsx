@@ -1,6 +1,6 @@
 import React from "react";
 import AllHeader from "./AllHeader";
-import Allcontent from "./Allcontent";
+import AllContent from "./AllContent";
 
 const All = ({ viewportWidth, setViewportWidth }) => {
   return (
@@ -9,7 +9,7 @@ const All = ({ viewportWidth, setViewportWidth }) => {
         viewportWidth={viewportWidth}
         setViewportWidth={setViewportWidth}
       />
-      <Allcontent
+      <AllContent
         viewportWidth={viewportWidth}
         setViewportWidth={setViewportWidth}
       />
