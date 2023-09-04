@@ -2,7 +2,7 @@ package com.project.bbibbi.auth.utils;
 
 import java.util.Random;
 
-public class PasswordUtil {
+public class PasswordUtil { // 소셜 시 랜덤 부여
     public static String generateRandomPassword() {
         int index = 0;
         char[] charSet = new char[] {

@@ -1,7 +1,7 @@
 package com.project.bbibbi.auth.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.bbibbi.auth.jwt.filter.JsonUsernamePasswordAuthenticationFilter;
+import com.project.bbibbi.auth.jwt.filter.CustomJsonUsernamePasswordAuthenticationFilter;
 import com.project.bbibbi.auth.jwt.handler.LoginFailureHandler;
 import com.project.bbibbi.auth.jwt.handler.LoginSuccessJwtProvideHandler;
 import com.project.bbibbi.auth.jwt.service.CustomJwtUserDetailsService;
@@ -46,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     // 컨트롤러 보고 추가하기 !
                 .anyRequest().authenticated();
 
-        http.addFilterAfter(jsonUsernamePasswordLoginFilter(), LogoutFilter.class);
+        //http.addFilterAfter(CustomJsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class);
 
     }
 
@@ -74,8 +74,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JsonUsernamePasswordAuthenticationFilter jsonUsernamePasswordLoginFilter(){
-        JsonUsernamePasswordAuthenticationFilter jsonUsernamePasswordLoginFilter = new JsonUsernamePasswordAuthenticationFilter(objectMapper);
+    public CustomJsonUsernamePasswordAuthenticationFilter jsonUsernamePasswordLoginFilter(){
+        CustomJsonUsernamePasswordAuthenticationFilter jsonUsernamePasswordLoginFilter = new CustomJsonUsernamePasswordAuthenticationFilter(objectMapper);
         jsonUsernamePasswordLoginFilter.setAuthenticationManager(authenticationManager());
         jsonUsernamePasswordLoginFilter.setAuthenticationSuccessHandler(loginSuccessJWTProvideHandler());
         jsonUsernamePasswordLoginFilter.setAuthenticationFailureHandler(loginFailureHandler());
