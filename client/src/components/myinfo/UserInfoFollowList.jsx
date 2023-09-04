@@ -33,7 +33,7 @@ const UserInfoFollowList = ({ userList }) => {
               }
             }}
           >
-            <span className="bg-[#5AB0C3] rounded-full p-1.5">{user.isFollowing ? "Following" : "Follow"}</span>
+            <span className="bg-[#00647B]/80 rounded-full p-1.5">{user.isFollowing ? "Following" : "Follow"}</span>
           </button>
         </div>
       ))}

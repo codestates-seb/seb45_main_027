@@ -29,30 +29,29 @@ const UserInfoFollow = () => {
       <div className="flex flex-row md:justify-center p-2 mb-6 text-[#525252] font-medium">
         <button
           className={`flex items-center text-base ${
-            activeTab === "following" ? "text-[#074654]" : ""
+            activeTab === "following" ? "text-[#00647B]" : ""
           }`}
           onClick={() => handleTabChange("following")}
         >
-          <div className="p-2 hover:bg-[#5AB0C3]/50 hover:rounded-full">
+          <div className="p-2 hover:rounded-full">
             Following
           </div>
-          <div>1</div>
+          <div>{followingList.length}</div>
         </button>
         <button className={`flex items-center text-base ${
-            activeTab === "followers" ? "text-[#074654]" : ""
+            activeTab === "followers" ? "text-[#00647B]" : ""
           }`}
           onClick={() => handleTabChange("followers")}>
-          <div className="ml-4 p-2 hover:bg-[#5AB0C3]/50 hover:rounded-full">
+          <div className="ml-4 p-2 hover:rounded-full">
             Followers
           </div>
-          <div>1</div>
+          <div>{followersList.length}</div>
         </button>
       </div>
       <div
         className="md:mb-10 md:h-[300px] overflow-auto xl:w-[250px]"
         style={{
           scrollbarWidth: "thin",
-          //scrollbarColor: "#5AB0C3 #E5E7EB",
         }}
       >
         {activeTab === "following" && <UserInfoFollowList userList={followingList} />}
