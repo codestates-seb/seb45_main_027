@@ -1,6 +1,7 @@
 package com.project.bbibbi.domain.feedReply.dto;
 
 
+import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.global.entity.BaseEntity;
 import lombok.*;
 
