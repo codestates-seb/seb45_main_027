@@ -8,7 +8,7 @@ const HeaderOn = () => {
       <div className="flex">
         <ul className="flex text-[#F5634A] text-xl font-bold">
           {/* 유저정보 */}
-          <Link to="/login">
+          <Link to="/myinfo">
             <li className="flex items-center">
               <div className="w-8 h-8 mr-2.5 bg-yellow-200" />
               <span className="pr-8 text-gray-700">닉네임</span>
@@ -23,7 +23,7 @@ const HeaderOn = () => {
                 src="/images/logout.png"
                 alt=""
               />
-              <span>Logout</span>
+              <span className="Showcard-Gothic">Logout</span>
             </li>
           </Link>
         </ul>

@@ -11,14 +11,14 @@ const HeaderOff = () => {
         <Link to="/login">
           <li className="flex items-center">
             <img className="flex pr-2.5 h-5" src="/images/vector.png" alt="" />
-            <span className="pr-8">Login</span>
+            <span className="Showcard-Gothic pr-8">Login</span>
           </li>
         </Link>
 
         {/* 회원가입 */}
         <Link to="/signup">
           <li>
-            <span>signup</span>
+            <span className="Showcard-Gothic">signup</span>
           </li>
         </Link>
       </ul>
