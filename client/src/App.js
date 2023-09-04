@@ -14,6 +14,7 @@ import WriteShowRoom from "./pages/WriteShowRoom";
 import WriteTips from "./pages/WriteTips";
 import ViewShowRoom from "./pages/ViewShowRoom";
 import ViewTips from "./pages/ViewTips";
+import { AuthProvider } from "./context/AuthContext";
 
 const headerPaths = [
   "myinfo",
@@ -48,7 +49,7 @@ function App() {
   const isFooter = footerPaths.includes(path);
 
   return (
-    <>
+    <AuthProvider>
       {isHeader && <HeaderPc />}
       <Routes>
         <Route path={"/"} element={<Main />} />
@@ -65,7 +66,7 @@ function App() {
       </Routes>
 
       {isFooter && <HiddenFooter />}
-    </>
+    </AuthProvider>
   );
 }
 

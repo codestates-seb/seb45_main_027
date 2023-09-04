@@ -10,11 +10,11 @@ const AuthNavigation = ({path}) => {
           </div>
           {path === "signup" ? (
             <Link to="/login">
-              <div className="text-red-700 ">Login</div>
+              <div className="text-red-600 ">Login</div>
             </Link>
           ) : (
             <Link to="/signup">
-              <div className="text-red-700 ">Sign Up</div>
+              <div className="text-red-600 ">Sign Up</div>
             </Link>
           )}
         </div>
