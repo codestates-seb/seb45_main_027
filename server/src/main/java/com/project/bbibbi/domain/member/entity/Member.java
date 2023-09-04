@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.member.entity;
 
+import com.project.bbibbi.domain.feed.entity.Feed;
 import com.project.bbibbi.global.entity.BaseEntity;
 import com.project.bbibbi.global.entity.Role;
 import com.project.bbibbi.global.entity.SocialType;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.persistence.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter

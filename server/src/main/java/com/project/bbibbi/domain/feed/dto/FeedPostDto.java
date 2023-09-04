@@ -17,7 +17,7 @@ public class FeedPostDto {
 
     private String content;
 
-    private String coverPhote;
+    private String coverPhoto;
 
     @NotBlank
     private String roomType;

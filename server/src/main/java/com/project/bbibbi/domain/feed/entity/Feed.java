@@ -1,5 +1,9 @@
 package com.project.bbibbi.domain.feed.entity;
 
+//import com.project.bbibbi.domain.member.entity.Member;
+import com.project.bbibbi.domain.feedReply.entity.FeedReply;
+import com.project.bbibbi.domain.member.entity.Member;
+import com.project.bbibbi.global.entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Feed {
+public class Feed extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,42 +28,49 @@ public class Feed {
     private String title;
 
     @Column(length = 3000, nullable = false)
+    @Lob
     private String content;
 
     @Column
     private Integer views = 0;
 
     @Column(length = 3000)
+    @Lob
     private String coverPhoto;
 
-    // enum 확인되면 아래 내용들 이렇게 변환
-//    @Enumerated(value = EnumType.STRING)
-//    @Column(length = 4, nullable = false)
-//    private RoomType roomType;
+    @Enumerated(value = EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private RoomType roomType;
 
-    @Column(length = 4, nullable = false)
-    private String roomType;
+    @Enumerated(value = EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private RoomSize roomSize;
 
-    @Column(length = 4, nullable = false)
-    private String roomSize;
+    @Enumerated(value = EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private RoomCount roomCount;
 
-    @Column(length = 4, nullable = false)
-    private String roomCount;
+    @Enumerated(value = EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private RoomInfo roomInfo;
 
-    @Column(length = 4, nullable = false)
-    private String roomInfo;
+    @Enumerated(value = EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private Location location;
 
-    @Column(length = 4, nullable = false)
-    private String location;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    // 멤버 확인시 주석 해제
-//    @ManyToOne
-//    @JoinColumn(name = "member_id")
-//    private Member member;
+//    @Column
+//    private Long memberId;
 
-    @OneToMany(mappedBy = "feed")
+    @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
     private List<FeedImage> images = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "feed", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    //게시글 UI에서 댓글을 바로 보여주기 위해 FetchType을 EAGER로 설정,펼쳐보기 같은 UI라면 Lazy로 설정
+    @OrderBy("id asc") // OrderBy 어노테이션을 이용하여 간단히 정렬 처리. asc 오름차순 정렬
+    private List<FeedReply> replies;
 
 }
