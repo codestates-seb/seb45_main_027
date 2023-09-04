@@ -1,4 +1,4 @@
-package com.project.bbibbi.auth.jwt;
+package com.project.bbibbi.auth.jwt.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

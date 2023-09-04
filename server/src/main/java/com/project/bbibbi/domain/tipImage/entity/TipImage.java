@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.tipImage.entity;
 
+import com.project.bbibbi.domain.tip.entity.Tip;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package com.project.bbibbi.auth.oauth;
 
-import com.project.bbibbi.auth.jwt.Token;
+import com.project.bbibbi.auth.jwt.dto.Token;
 import com.project.bbibbi.domain.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

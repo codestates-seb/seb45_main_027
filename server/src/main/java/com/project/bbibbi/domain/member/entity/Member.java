@@ -1,10 +1,13 @@
 package com.project.bbibbi.domain.member.entity;
 
 import com.project.bbibbi.global.entity.BaseEntity;
+import com.project.bbibbi.global.entity.Role;
+import com.project.bbibbi.global.entity.SocialType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.awt.*;
@@ -12,7 +15,7 @@ import java.util.ArrayList;
 
 @Entity
 @Getter
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 public class Member extends BaseEntity {
 
@@ -34,62 +37,74 @@ public class Member extends BaseEntity {
     @Lob
     private String image;
 
+    private String refreshToken; // 리프레시 토큰
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType; // KAKAO, NAVER
+
+    private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
 
 
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Tip> tips = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<TipReply> tipReplies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<TipComment> tipComments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<tipBookmark> tipBookmarks = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<TipLike> tipLikes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<TipReplyLike> tipReplyLikes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Feed> feeds = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<FeedReply> feedReplies = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<FeedComment> feedComments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<FeedBookmark> feedBookmarks = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<FeedLike> feedLikes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<FeedReplyLike> feedReplyLikes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Follow> follows = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Follower> followers = new ArrayList<>();
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<Tip> tips = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<TipReply> tipReplies = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<TipComment> tipComments = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<tipBookmark> tipBookmarks = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<TipLike> tipLikes = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<TipReplyLike> tipReplyLikes = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<Feed> feeds = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<FeedReply> feedReplies = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<FeedComment> feedComments = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<FeedBookmark> feedBookmarks = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<FeedLike> feedLikes = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<FeedReplyLike> feedReplyLikes = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<Follow> follows = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<Follower> followers = new ArrayList<>();
 
 
 
 
     @Builder
-    private Member(Long memberId, String email, String nickname, String password, String myIntro, String image) { // 빌더 패턴 사용
+    private Member(Long memberId, String email, String nickname, String password, String myIntro, String image, Role role) { // 빌더 패턴 사용
         this.memberId = memberId;
         this.email = email;
         this.nickname = nickname;
         this.password = password;
         this.myIntro = myIntro;
         this.image = image;
+        this.role = role;
 
         // 이미지를 같이 취급할꺼냐 따로 취급 할꺼냐 ?
 
@@ -102,8 +117,9 @@ public class Member extends BaseEntity {
                 .email(email)
                 .nickname(nickname)
                 .password(password)
-                .myIntro(null)
-                .image(null) // 나중에 수정 ?
+                .role(Role.USER)
+//                .myIntro(null)
+//                .image(null) // 나중에 수정 ?
                 .build();
     }
 
@@ -117,6 +133,19 @@ public class Member extends BaseEntity {
     public void updatePassword(String newPassword) {
 
         this.password = newPassword;
+    }
+
+    public void authorizeUser() {
+        this.role = Role.USER;
+    }
+
+    // 비밀번호 암호화 메소드
+    public void passwordEncode(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+    }
+
+    public void updateRefreshToken(String updateRefreshToken) {
+        this.refreshToken = updateRefreshToken;
     }
 
 

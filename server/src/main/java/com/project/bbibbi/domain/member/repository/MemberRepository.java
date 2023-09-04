@@ -13,17 +13,21 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findByEmail(String email);
 
-    Page<MemberFeedData> findFeedByMemberId(Long memberId, Pageable pageable);
+    Optional<Member> findByNickname(String nickname);
 
-    Page<MemberTipData> findTipByMemberId(Long memberId, Pageable pageable);
+    Optional<Member> findByRefreshToken(String refreshToken);
 
-    Page<MemberFeedBookmarkData> findFeedBookmarkByMemberId(Long memberId, Pageable pageable);
-
-    Page<MemberTipBookmarkData> findTipBookmarkByMemberId(Long memberId, Pageable pageable);
-
-    page<MemberFeedLikeData> findFeedLikeByMemberId(Long memberId, Pageable pageable);
-
-    page<MemberTipLikeData> findTipLikeByMemberId(Long memberId, Pageable pageable);
+//    Page<MemberFeedData> findFeedByMemberId(Long memberId, Pageable pageable);
+//
+//    Page<MemberTipData> findTipByMemberId(Long memberId, Pageable pageable);
+//
+//    Page<MemberFeedBookmarkData> findFeedBookmarkByMemberId(Long memberId, Pageable pageable);
+//
+//    Page<MemberTipBookmarkData> findTipBookmarkByMemberId(Long memberId, Pageable pageable);
+//
+//    page<MemberFeedLikeData> findFeedLikeByMemberId(Long memberId, Pageable pageable);
+//
+//    page<MemberTipLikeData> findTipLikeByMemberId(Long memberId, Pageable pageable);
 
 
 }
