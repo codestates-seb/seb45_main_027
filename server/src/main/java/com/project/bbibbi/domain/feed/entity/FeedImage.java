@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.feed.entity;
 
+import com.project.bbibbi.global.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,13 +13,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class FeedImage {
+public class FeedImage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long feed_image_id;
+    private Long feedImageId;
 
     @Column(length = 3000)
+    @Lob
     private String image;
 
     @Column

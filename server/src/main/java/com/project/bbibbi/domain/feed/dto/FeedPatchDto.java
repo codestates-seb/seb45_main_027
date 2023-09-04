@@ -19,7 +19,7 @@ public class FeedPatchDto {
 
     private String content;
 
-    private String coverPhote;
+    private String coverPhoto;
 
     @NotBlank
     private String roomType;
@@ -37,9 +37,9 @@ public class FeedPatchDto {
     private String location;
 
     // jwt 처리하면 안 받음.
-    private Long member_id;
+    private Long memberId;
 
     // feed_image 내용
-    private List<FeedImageDto> images;
+    private List<FeedImageDto> feedImages;
 
 }
