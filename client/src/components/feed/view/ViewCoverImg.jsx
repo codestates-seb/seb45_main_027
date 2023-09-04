@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const coverImg =
+  "flex items-center justify-center aspectRatioImage md:max-h-[calc(100vh-350px)]";
+
 const ViewCoverImg = () => {
   const [coverPhoto, setCoverPhoto] = useState(null);
 
@@ -16,13 +19,13 @@ const ViewCoverImg = () => {
   }, []);
 
   return (
-    <div className="pt-0 md:pt-24 w-full max-h-[calc(100vh-350px)] h-96 md:h-[787px] bg-red-500">
-          {coverPhoto
-              ? (
-        <img src={coverPhoto} alt="Cover" className="w-full h-full" />
-              )
-              : (
-        <div className="w-full h-full"> 커버 이미지 예정 </div>
+    <div className="pt-0 md:pt-24 max-h-[calc(100vh-350px)] aspectRatioImage bg-white">
+      {coverPhoto ? (
+        <img src={coverPhoto} alt="Cover" className={coverImg} />
+      ) : (
+          <div className={coverImg}>
+            <img src="/images/loading.gif" alt="로딩중" />
+        </div>
       )}
     </div>
   );
