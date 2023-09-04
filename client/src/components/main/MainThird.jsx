@@ -4,7 +4,7 @@ import Background from "../common/Background";
 
 const MainThird = () => {
   return (
-      <Background
+    <Background
       mainclassName=""
       divclassName=""
       style={{
@@ -14,7 +14,6 @@ const MainThird = () => {
         backgroundRepeat: "no-repeat", // 이미지 반복 지정
       }}>
       <MainWrap
-        wrap="float-right"
         mainTitle="가까운 인테리어 가게 찾기"
         subTitle="Map"
         intro1="내 위치를 기반으로 장소를 알려드립니다."
@@ -24,7 +23,7 @@ const MainThird = () => {
         linkTo="/map"
       />
     </Background>
-    );
+  );
 };
 
 export default MainThird;

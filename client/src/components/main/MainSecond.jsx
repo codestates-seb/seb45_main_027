@@ -14,6 +14,7 @@ const MainSecond = () => {
         backgroundRepeat: "no-repeat", // 이미지 반복 지정
       }}>
       <MainWrap
+        wrap="md:flex-row-reverse "
         mainTitle="유용한 꿀팁 모아보기"
         subTitle="Tips"
         intro1="살림에 유용한 정보들이 가득합니다."

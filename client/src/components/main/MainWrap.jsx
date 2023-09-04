@@ -15,13 +15,15 @@ const MainWrap = ({ style, wrap, mainTitle, subTitle, intro1, intro2, intro3, pa
   }, [currentIndex]);
 
   return (
-    <div className="h-screen w-full" style={style}>
-      <div className={`flex flex-col justify-center w-max h-full ${wrap}`}>
-        <div className="flex flex-col bg-[#ffffffc2] w-full h-auto rounded-3xl shadow p-20">
-          <span className="text-3xl font-semibold text-gray-800">
+    <div
+      className={`h-screen w-full flex justify-center md:justify-normal ${wrap}`}
+      style={style}>
+      <div className="p-8 flex flex-col justify-end md:justify-center w-max h-full">
+        <div className="flex flex-col items-center bg-[#ffffffc2] w-full h-auto rounded-3xl shadow p-20">
+          <span className="text-3xl font-semibold text-gray-700">
             {mainTitle}
           </span>
-          <span className="text-3xl font-semibold text-gray-800 py-8">
+          <span className="Showcard-Gothic text-5xl font-semibold text-[#00647bbd] py-8">
             {subTitle}
           </span>
           <ul className="text-xl font-semibold text-gray-600 animate-slideOut">
@@ -30,8 +32,10 @@ const MainWrap = ({ style, wrap, mainTitle, subTitle, intro1, intro2, intro3, pa
         </div>
         <Link to={linkTo}>
           <button
-            className={`bg-[#ffffffc2] hover:bg-[#F5634A] text-gray-800 hover:text-white w-full h-auto rounded-full shadow py-5 ${paddingX} mt-12`}>
-            <span className="text-3xl font-semibold  px-2">{subTitle} 바로가기</span>
+            className={`bg-[#ffffffc2] hover:bg-[#F5634A] text-[#00647bbd] hover:text-white w-full h-auto rounded-full shadow py-5 mt-12 mb-24 ${paddingX}`}>
+            <span className="Showcard-Gothic text-3xl font-semibold px-2">
+              Go! {subTitle}!
+            </span>
           </button>
         </Link>
       </div>

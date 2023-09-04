@@ -14,7 +14,6 @@ const MainFirst = () => {
         backgroundRepeat: "no-repeat", // 이미지 반복 지정
       }}>
       <MainWrap
-        wrap="float-right"
         mainTitle="공간별 인테리어 모아보기"
         subTitle="Show room"
         intro1="베스트 10곳을 모아서 볼 수 있는!"
