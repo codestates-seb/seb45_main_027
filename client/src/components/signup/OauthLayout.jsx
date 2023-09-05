@@ -10,7 +10,7 @@ const OauthLayout = () => {
             preserveAspectRatio="xMidYMid meet"
             className="mr-10"
           >
-            <g fill="none" fill-rule="evenodd">
+            <g fill="none" fillRule="evenodd">
               <path
                 fill="#FFEB00"
                 d="M0 24C0 10.745 10.745 0 24 0s24 10.745 24 24-10.745 24-24 24S0 37.255 0 24z"
@@ -28,7 +28,7 @@ const OauthLayout = () => {
             viewBox="0 0 48 48"
             preserveAspectRatio="xMidYMid meet"
           >
-            <g fill="none" fill-rule="evenodd">
+            <g fill="none" fillRule="evenodd">
               <path
                 fill="#00C63B"
                 d="M0 24C0 10.745 10.745 0 24 0s24 10.745 24 24-10.745 24-24 24S0 37.255 0 24z"

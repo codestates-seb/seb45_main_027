@@ -109,3 +109,9 @@ a {
   animation: slogan 30s linear;
   animation-iteration-count:infinite;
 }
+
+/* 커버사진 16/9 비율 */
+.aspectRatioImage {
+  aspect-ratio: 16 / 9;
+  width: 100%; 
+}
