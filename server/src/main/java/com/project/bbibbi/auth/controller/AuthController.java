@@ -57,6 +57,11 @@ public class AuthController {
         return ResponseEntity.ok().headers(tokenHeader).body(jsonResponse);
     }
 
+    @GetMapping("/jwt-test")
+    public String jwtTest() {
+        return "jwtTest 요청 성공";
+    }
+
 //    @GetMapping("/auth") // 일반
 //    public ResponseEntity<String> login(@ModelAttribute @Valid OauthJoinApiRequest request) {
 //        Token token = oauthService.login(request.getProvider(), request.getCode());
