@@ -16,6 +16,13 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+/**
+ * 스프링 시큐리티의 폼 기반의 UsernamePasswordAuthenticationFilter를 참고하여 만든 커스텀 필터
+ * 거의 구조가 같고, Type이 Json인 Login만 처리하도록 설정한 부분만 다르다. (커스텀 API용 필터 구현)
+ * Username : 회원 아이디 -> email로 설정
+ * "/login" 요청 왔을 때 JSON 값을 매핑 처리하는 필터
+ */
+
 public class CustomJsonUsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private static final String DEFAULT_LOGIN_REQUEST_URL = "/auth/login";  // /auth/login/ + ????? 로 오는 요청을 처리
@@ -34,9 +41,7 @@ public class CustomJsonUsernamePasswordAuthenticationFilter extends AbstractAuth
 
 
     public CustomJsonUsernamePasswordAuthenticationFilter(ObjectMapper objectMapper) {
-
-        super(DEFAULT_LOGIN_PATH_REQUEST_MATCHER);   // 위에서 설정한  /auth/login/* 의 요청에, GET으로 온 요청을 처리하기 위해 설정한다.
-
+        super(DEFAULT_LOGIN_PATH_REQUEST_MATCHER); // 위에서 설정한 "login" + POST로 온 요청을 처리하기 위해 설정
         this.objectMapper = objectMapper;
     }
 
@@ -63,7 +68,6 @@ public class CustomJsonUsernamePasswordAuthenticationFilter extends AbstractAuth
         if(request.getContentType() == null || !request.getContentType().equals(CONTENT_TYPE)  ) {
             throw new AuthenticationServiceException("Authentication Content-Type not supported: " + request.getContentType());
         }
-
 
         String messageBody = StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
 

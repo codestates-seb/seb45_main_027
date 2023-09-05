@@ -16,8 +16,6 @@ spring:
         color-codes: true
         use_sql_comments: true
     defer-datasource-initialization: true
-    profiles:
-      include: jwt
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
@@ -35,4 +33,10 @@ server:
 #jwt:
 #  access-token-expire-time: 7200000
 #  refresh-token-expire-time: 604800000
+---
+spring:
+  profiles:
+    group:
+      "local" : "local, jwt, oauth"
+    active : local
 

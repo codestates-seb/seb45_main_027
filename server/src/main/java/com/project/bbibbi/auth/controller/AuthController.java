@@ -17,6 +17,9 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+import static org.springframework.security.oauth2.core.OAuth2AccessToken.TokenType.BEARER;
+
+
 //import static com.project.bbibbi.auth.utils.AuthBasic.BEARER;
 
 
@@ -37,12 +40,24 @@ public class AuthController {
 
         Long memberId = memberService.signup(request.toCreateServiceRequest());
 
+
         URI uri = URI.create("/members" + memberId);
 
         return ResponseEntity.created(uri).build();
     }
 
-//    @GetMapping("/oauth")
+    @GetMapping("/oauth") // 오어스 로그인
+    public ResponseEntity<String> login(@ModelAttribute @Valid OauthJoinApiRequest request) {
+        Token token = oauthService.login(request.getProvider(), request.getCode());
+
+        HttpHeaders tokenHeader = getHttpHeaders(token);
+
+        String jsonResponse = "{\"memberId\":" + token.getMemberId() + "}";
+
+        return ResponseEntity.ok().headers(tokenHeader).body(jsonResponse);
+    }
+
+//    @GetMapping("/auth") // 일반
 //    public ResponseEntity<String> login(@ModelAttribute @Valid OauthJoinApiRequest request) {
 //        Token token = oauthService.login(request.getProvider(), request.getCode());
 //
@@ -52,13 +67,13 @@ public class AuthController {
 //
 //        return ResponseEntity.ok().headers(tokenHeader).body(jsonResponse);
 //    }
-//
-//    private HttpHeaders getHttpHeaders(Token token) {
-//        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-//        map.put("Authorization", List.of(BEARER + token.getAccessToken()));
-//        map.put("Refresh", List.of(BEARER + token.getRefreshToken()));
-//        HttpHeaders tokenHeader = new HttpHeaders(map);
-//        return tokenHeader;}
+
+    private HttpHeaders getHttpHeaders(Token token) {
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.put("Authorization", List.of(BEARER + token.getAccessToken()));
+        map.put("Refresh", List.of(BEARER + token.getRefreshToken()));
+        HttpHeaders tokenHeader = new HttpHeaders(map);
+        return tokenHeader;}
 
     @PatchMapping("/password")
     private ResponseEntity<Void> findPassword(@RequestBody @Valid MemberFindPasswordApiRequest request) {
