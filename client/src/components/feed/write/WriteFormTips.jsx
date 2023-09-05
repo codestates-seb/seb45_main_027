@@ -2,9 +2,10 @@ import React, { useRef, useEffect, useState } from "react";
 
 const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요";
 
-const WriteEditorInput = () => {
+const WriteFormTips = () => {
   const [editor, setEditor] = useState(DEFAULT_EDITOR_TEXT);
   const editorRef = useRef(null);
+  console.log(editor);
 
   useEffect(() => {
     if (editor === DEFAULT_EDITOR_TEXT) {
@@ -67,4 +68,4 @@ const WriteEditorInput = () => {
   );
 };
 
-export default WriteEditorInput;
+export default WriteFormTips;

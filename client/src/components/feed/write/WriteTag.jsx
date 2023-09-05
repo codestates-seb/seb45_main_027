@@ -21,30 +21,31 @@ const WriteTag = () => {
     setTags(newTags);
   };
 
-    return (
-      <div>
-        {/* 태그 */}
-        <div className="mt-4">
-          <div className="flex flex-wrap items-center ">
-            {tags.map((tag, index) => (
-              <span
-                key={index}
-                className="m-1 p-1 border rounded-md cursor-pointer"
-                onClick={() => handleTagClick(index)}>
-                {tag}
-              </span>
-            ))}
-            <input
-              id="tags"
-              type="text"
-              onKeyDown={handleTagKeyDown}
-              placeholder="#태그"
-              className="mt-1 p-1 border rounded-md text-xl"
-            />
-          </div>
+  return (
+    <div>
+      {/* 태그 */}
+      <div className="mt-4">
+        <div className="flex flex-wrap items-center ">
+          {tags.map((tag, index) => (
+            <span
+              key={index}
+              className="m-1 p-1 border rounded-md cursor-pointer"
+              onClick={() => handleTagClick(index)}
+            >
+              {tag}
+            </span>
+          ))}
+          <input
+            id="tags"
+            type="text"
+            onKeyDown={handleTagKeyDown}
+            placeholder="#태그"
+            className="mt-1 p-1 border rounded-md text-xl"
+          />
         </div>
       </div>
-    );
+    </div>
+  );
 };
 
 export default WriteTag;
