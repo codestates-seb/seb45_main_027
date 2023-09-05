@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Background from "../components/common/Background";
 import TipsHeader from "../components/tips/TipsHeader";
 import TipsContent from "../components/tips/TipsContent";
@@ -20,7 +19,6 @@ const Tips = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  console.log(viewportWidth);
 
   return (
     <>

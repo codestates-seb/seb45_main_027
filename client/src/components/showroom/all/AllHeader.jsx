@@ -15,9 +15,7 @@ const AllHeader = ({ viewportWidth, setViewportWidth }) => {
   return (
     <div className="flex justify-between flex-wrap">
       <div className="flex items-center">
-        <h1 className="pt-1 text-4xl text-[#F5634A] font-semibold">
-          All
-        </h1>
+        <h1 className="pt-1 text-4xl text-[#F5634A] font-semibold">All</h1>
         <div className="pl-4 pt-6 text-xl  flex-nowrap">
           <span className="pr-3 text-[16px]">최신순</span>
           <span className="pr-3 text-[16px]">인기순</span>
