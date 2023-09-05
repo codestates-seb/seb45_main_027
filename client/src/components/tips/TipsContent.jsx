@@ -56,7 +56,7 @@ const TipsContent = ({ viewportWidth }) => {
                 }}
               />
             </p>
-            <TipsInfo></TipsInfo>
+            <TipsInfo />
           </div>
         ))}
       </div>

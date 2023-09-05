@@ -1,5 +1,6 @@
 import React from "react";
 import useInput from "../../hooks/useInput";
+import { Link } from "react-router-dom";
 
 const TipsHeader = ({ viewportWidth }) => {
   const [inputValue, handleInputChange, clearInput] = useInput("");
@@ -12,7 +13,7 @@ const TipsHeader = ({ viewportWidth }) => {
   };
 
   const SearchAndPostButton = (
-    <div className="flex justify-center ml-5 mr-5 ">
+    <button className="flex justify-center ml-5 mr-5 ">
       <div className="relative mr-10">
         <img
           className="absolute w-[28px] top-[13px] left-4"
@@ -28,24 +29,24 @@ const TipsHeader = ({ viewportWidth }) => {
           placeholder="#잼"
         />
       </div>
-      <button className="bg-[#00647B] h-[36px] mt-4 px-4 pb-2 pt-1 text-2xl text-white rounded-3xl font-semibold">
-        Post
-      </button>
-    </div>
+      <Link to="/tips/write">
+        <button className="bg-[#00647B] h-[36px] mt-4 px-4 pb-2 pt-1 text-2xl text-white rounded-3xl font-semibold">
+          Post
+        </button>
+      </Link>
+    </button>
   );
 
   return (
     <div className="flex-col">
       <div className="flex pt-10 justify-between">
-        <h1 className="pt-1 pl-8 text-5xl text-[#F5634A] font-semibold">
+        <h1 className="pt-4 text-4xl text-[#F5634A] font-semibold">
           Interior Tips
         </h1>
         {viewportWidth >= 690 ? SearchAndPostButton : null}
       </div>
       <div className="flex-col">
-        <h2 className="text-[#786F6F] pl-8">
-          search keywords to improve your home
-        </h2>
+        <h2 className="text-[#786F6F]">search keywords to improve your home</h2>
         {viewportWidth < 690 ? SearchAndPostButton : null}
       </div>
     </div>

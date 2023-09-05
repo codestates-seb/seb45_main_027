@@ -12,7 +12,7 @@ const BestInteriorHeader = () => {
       </div>
 
       <Link to="/showroom/write">
-        <button className="bg-[#00647B] mt-4 px-4 pb-2 pt-1 text-2xl text-white rounded-2xl font-semibold">
+        <button className="bg-[#00647B]  h-[36px] mt-4 px-4 pb-2 pt-1 text-2xl text-white rounded-3xl font-semibold">
           Post
         </button>
       </Link>
