@@ -32,7 +32,13 @@ server:
     encoding:
       force-response: true
 
-#jwt:
-#  access-token-expire-time: 7200000
-#  refresh-token-expire-time: 604800000
-
+jwt:   # 에러 미발생용으로 임시로 넣음
+  secretKey: temp
+  access-token-expire-time: 7200000
+  refresh-token-expire-time: 604800000
+  access:
+    expiration: 3000
+    header: temp
+  refresh:
+    expiration: 3000
+    header: temp
