@@ -22,7 +22,7 @@ const MyInfoContentList = () => {
       activeTab === tabIndex
         ? "text-[#F5634A] border-[#F5634A]/50"
         : "text-neutral-600"
-    } text-xl font-semibold border-b-4 border-transparent cursor-pointer px-4 py-2 mb-[3%] mr-[6%] md:text-2xl`;
+    } text-xl font-bold border-b-4 border-transparent cursor-pointer px-4 py-2 mb-[3%] mr-[6%] md:text-xl`;
 
   // const postsByType = {
   //   1: "post",

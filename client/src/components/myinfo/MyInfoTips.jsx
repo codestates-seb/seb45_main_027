@@ -49,7 +49,7 @@ const MyInfoTips = ({ postData, bookmarkData, likeData, activeTab }) => {
 
   return (
     <div className="md:min-h-[380px]">
-      <div className="text-[#F5634A] text-4xl font-bold mb-[2%]">Tips</div>
+      <div className="text-[#F5634A] text-3xl font-bold mb-[2%]">Tips</div>
       <div className="flex flex-wrap">
         {/* {visibleData.map((item) => (
             <div key={item.id}>

@@ -8,7 +8,7 @@ const UserProfileDetails = ({ toggleAccountSettings, userDetails }) => {
         <>
             <div className="mt-10 mb-6">
               <img
-                className="rounded-full object-cover w-[130px] h-[130px] md:w-[150px] md:h-[150px] lg:w-[200px] lg:h-[200px]"
+                className="rounded-full object-cover w-[80px] h-[80px] md:w-[140px] md:h-[140px] xl:w-[160px] xl:h-[160px]"
                 src={userDetails[0].profilePicture ? userDetails[0].profilePicture : './images/user.png'}
                 alt="profile"
               />
