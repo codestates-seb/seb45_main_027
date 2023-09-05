@@ -2,6 +2,7 @@ package com.project.bbibbi.domain.tipReply.entity;
 
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tip.entity.Tip;
+import com.project.bbibbi.global.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,16 +14,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class TipReply {
+public class TipReply extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tipReplyId;
-
-    @Column(nullable = false)
-    private LocalDateTime createdDateTime = LocalDateTime.now();
-
-    @Column
-    private LocalDateTime modifiedDateTime = LocalDateTime.now();
 
     @Column(nullable = false)
     private String content;

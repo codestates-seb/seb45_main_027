@@ -1,23 +1,25 @@
-package com.project.bbibbi.domain.tipLike.entity;
+package com.project.bbibbi.domain.tipBookmark.entity;
 
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tip.entity.Tip;
 import com.project.bbibbi.global.entity.BaseEntity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 @Getter
 @Setter
-public class TipLike extends BaseEntity {
+public class TipBookmark extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tipLikeId;
+    private Long tipBookmarkId;
 
     @Column
-    private int likeCount;
+    private int bookmarkCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tip_id", nullable = false)
@@ -27,28 +29,14 @@ public class TipLike extends BaseEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    public TipLike() {
-        this.likeCount = 0;
-    }
-
     // Getter/Setter 메서드
 /*
-    // 좋아요 카운트 증가 메서드
-    public void increaseLikeCount() {
-        this.likeCount++;
+    public int getBookmarkCount() {
+        return bookmarkCount;
     }
 
-    // 좋아요 카운트 감소 메서드
-    public void decreaseLikeCount() {
-        this.likeCount--;
+    public void setBookmarkCount(int bookmarkCount) {
+        this.bookmarkCount = bookmarkCount;
     }
-
-    public int getLikeCount() {
-        return likeCount;
-    }
-
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
-    }
-    */
+*/
 }

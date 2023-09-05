@@ -1,29 +1,23 @@
-package com.project.bbibbi.domain.tipcomment.entity;
+package com.project.bbibbi.domain.tipComment.entity;
 
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tipReply.entity.TipReply;
+import com.project.bbibbi.global.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
 
-public class TipComment {
+public class TipComment extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tipCommentId;
-
-    @Column(nullable = false)
-    private LocalDateTime createdDateTime = LocalDateTime.now();
-
-    @Column
-    private LocalDateTime modifiedDateTime = LocalDateTime.now();
 
     @Column(nullable = false)
     private String content;
