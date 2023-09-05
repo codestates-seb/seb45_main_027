@@ -13,7 +13,7 @@ const WriteTips = () => {
     <>
       <HeaderMobile buttonBgColor="bg-[#00647B]" />
       <Background
-        mainclassName="min-h-screen bg-[#FFFAEE] w-full h-full px-14 md:px-56 "
+        mainclassName="bg-[#FFFAEE] h-full px-14 md:px-56 "
         divclassName="flex-col my-24 md:my-0">
         <div className="hidden md:block">
           <WriteBtn

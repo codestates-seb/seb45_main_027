@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import useInput from "../../hooks/useInput";
 
 const TipsHeader = ({ viewportWidth }) => {
@@ -28,9 +29,11 @@ const TipsHeader = ({ viewportWidth }) => {
           placeholder="#잼"
         />
       </div>
-      <button className="bg-[#00647B] h-[36px] mt-4 px-4 pb-2 pt-1 text-2xl text-white rounded-3xl font-semibold">
-        Post
-      </button>
+      <Link to="/tips/write">
+        <button className="bg-[#00647B] h-[36px] mt-4 px-4 pb-2 pt-1 text-2xl text-white rounded-3xl font-semibold">
+          Post
+        </button>
+      </Link>
     </div>
   );
 

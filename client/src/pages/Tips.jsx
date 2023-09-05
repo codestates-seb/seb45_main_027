@@ -29,9 +29,6 @@ const Tips = () => {
           <TipsHeader viewportWidth={viewportWidth}></TipsHeader>
           <TipsContent viewportWidth={viewportWidth}></TipsContent>
         </div>
-        {/* <Link to="/tips/write">
-          <button>글쓰기</button>
-        </Link> */}
       </Background>
       {viewportWidth < 720 && <FooterMobile />}
     </>
