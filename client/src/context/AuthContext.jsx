@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${storedAccessToken}`;
-        // 엑세스토큰을 매 요청시 헤더에 싣는부분(상의 필요함--토큰이 필요 없는 요청에서는 어떻게 되는지)
+        // 엑세스토큰을 매 요청시 헤더에 싣는부분
         
         try {
           // 가지고 있는 엑세스토큰이 유효한지 확인
@@ -33,10 +33,10 @@ export function AuthProvider({ children }) {
         } catch (error) {
           if (
             error.response &&
-            error.response.status === 401 &&
+            error.response.status === 400 &&
             storedRefreshToken
           ) {
-            // 엑세스토큰이 만료되었고 리프레시토큰만 있을때, 가지고 있는 리프레시 토큰으로 다시 엑세스토큰 받아옴(상의 필요)
+            // 엑세스토큰이 만료되었고 리프레시토큰만 있을때, 가지고 있는 리프레시 토큰으로 다시 엑세스토큰 받아옴
             try {
               const refreshResponse = await axios.post(
                 "/api/auth/refresh-token",
@@ -70,8 +70,8 @@ export function AuthProvider({ children }) {
 
   async function login(email, password) {
     try {
-      const response = await axios.post("/api/auth/login", { email, password });
-      setUser(response.data.user);  // user로 오는지 member로 오는지 확인 필요
+      const response = await axios.post("/api/auth/oauth", { email, password });
+      setUser(response.data.user);  // user로 오는지 member로 오는지 확인 필요//토큰만 옴. 정보는 안옴
 
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
@@ -85,7 +85,7 @@ export function AuthProvider({ children }) {
 
   async function register(nickname, email, password) {
     try {
-      const response = await axios.post("/api/auth/register", {
+      const response = await axios.post("/api/auth/oauth", {
         nickname,
         email,
         password,
