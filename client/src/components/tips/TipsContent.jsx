@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TipsInfo from "./TipsInfo";
+import { Link } from "react-router-dom";
 
 const data = [
   { url: "./asset/image.png", isBookmarked: true },
@@ -56,7 +57,9 @@ const TipsContent = ({ viewportWidth }) => {
                 }}
               />
             </p>
-            <TipsInfo />
+            <Link to=":id/view">
+              <TipsInfo />
+            </Link>
           </div>
         ))}
       </div>

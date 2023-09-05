@@ -1,37 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 const WriteTag = () => {
   const [tags, setTags] = useState([]);
 
-  // 태그 추가
+  // 태그추가
   const handleTagKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      if (e.target.value.trim() !== "") {
-        setTags([...tags, `#${e.target.value.trim()}`]);
+      const newTag = `#${e.target.value.trim()}`;
+      if (newTag !== "" && !tags.includes(newTag)) {
+        setTags([...tags, newTag]);
         e.target.value = "";
       }
     }
   };
-
-  // 태그 삭제
-  const handleTagClick = (index) => {
-    const newTags = [...tags];
-    newTags.splice(index, 1);
-    setTags(newTags);
-  };
+  // 태그삭제
+  const handleTagClick = useCallback(
+    (index) => {
+      const newTags = [...tags];
+      newTags.splice(index, 1);
+      setTags(newTags);
+    },
+    [tags]
+  );
 
   return (
     <div>
-      {/* 태그 */}
       <div className="mt-4">
         <div className="flex flex-wrap items-center ">
-          {tags.map((tag, index) => (
+          {tags.map((tag) => (
             <span
-              key={index}
+              key={tag}
               className="m-1 p-1 border rounded-md cursor-pointer"
-              onClick={() => handleTagClick(index)}
-            >
+              onClick={() => handleTagClick(tag)}>
               {tag}
             </span>
           ))}
