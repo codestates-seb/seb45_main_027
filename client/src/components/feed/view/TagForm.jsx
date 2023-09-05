@@ -21,8 +21,7 @@ const TagForm = () => {
         {tags.map((tag) => (
           <span
             key={tag} // 고유한 값으로 key 설정
-            className=" text-[#21A0CE] font-semibold text-xl mx-2"
-            >
+            className=" text-[#35c5f0] font-semibold text-xl mx-2">
             {tag}
           </span>
         ))}

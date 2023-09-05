@@ -4,7 +4,7 @@ import ViewCoverImg from '../components/feed/view/ViewCoverImg';
 import Sidebar from '../components/feed/view/Sidebar';
 import ViewTitle from '../components/feed/view/ViewTitle';
 import TipsUserTop from "../components/feed/view/TipsUserTop";
-import TipsUserBottom from "../components/feed/view/TipsUserBottom";
+import UserBottom from "../components/feed/view/UserBottom";
 import ViewForm from '../components/feed/view/ViewForm';
 import TagForm from '../components/feed/view/TagForm';
 import ViewPoint from "../components/feed/view/ViewPoint";
@@ -22,7 +22,7 @@ const ViewTips = () => {
           <ViewForm />
           <TagForm />
           <ViewPoint />
-          <TipsUserBottom />
+          <UserBottom />
         </Background>
       </div>
     );
