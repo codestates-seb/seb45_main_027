@@ -1,17 +1,26 @@
 package com.project.bbibbi.domain.member.entity;
 
+import com.project.bbibbi.domain.FeedComment.entity.FeedComment;
+import com.project.bbibbi.domain.FeedBookMark.entity.FeedBookMark;
 import com.project.bbibbi.domain.feed.entity.Feed;
+import com.project.bbibbi.domain.feedReply.entity.FeedReply;
+import com.project.bbibbi.domain.feedReplyLike.entity.FeedReplyLike;
+import com.project.bbibbi.domain.feedlike.entity.FeedLike;
+import com.project.bbibbi.domain.follow.entity.Follow;
+import com.project.bbibbi.domain.tip.entity.Tip;
+import com.project.bbibbi.domain.tipLike.entity.TipLike;
+import com.project.bbibbi.domain.tipReply.entity.TipReply;
+import com.project.bbibbi.domain.tipReplyLike.entity.TipReplyLike;
+import com.project.bbibbi.domain.tipcomment.entity.TipComment;
 import com.project.bbibbi.global.entity.BaseEntity;
 import com.project.bbibbi.global.entity.Role;
 import com.project.bbibbi.global.entity.SocialType;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,45 +62,45 @@ public class Member extends BaseEntity {
 
 
 
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<Tip> tips = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<TipReply> tipReplies = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<TipComment> tipComments = new ArrayList<>();
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Tip> tips = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<TipReply> tipReplies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<TipComment> tipComments = new ArrayList<>();
 //
 //    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
 //    private List<tipBookmark> tipBookmarks = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<TipLike> tipLikes = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<TipReplyLike> tipReplyLikes = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<Feed> feeds = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<FeedReply> feedReplies = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<FeedComment> feedComments = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<FeedBookmark> feedBookmarks = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<FeedLike> feedLikes = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<FeedReplyLike> feedReplyLikes = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<Follow> follows = new ArrayList<>();
-//
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<TipLike> tipLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<TipReplyLike> tipReplyLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Feed> feeds = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<FeedReply> feedReplies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<FeedComment> feedComments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<FeedBookMark> feedBookmarks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<FeedLike> feedLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<FeedReplyLike> feedReplyLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Follow> follows = new ArrayList<>();
+
 //    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
 //    private List<Follower> followers = new ArrayList<>();
 

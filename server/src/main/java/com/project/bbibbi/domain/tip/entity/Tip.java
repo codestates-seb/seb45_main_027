@@ -1,27 +1,24 @@
 package com.project.bbibbi.domain.tip.entity;
 
 import com.project.bbibbi.domain.member.entity.Member;
+import com.project.bbibbi.domain.tipImage.entity.TipImage;
+import com.project.bbibbi.global.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
-public class Tip {
+public class Tip extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tipId;
-
-    @Column(nullable = false)
-    private LocalDateTime createdDateTime = LocalDateTime.now();
-
-    @Column
-    private LocalDateTime modifiedDateTime = LocalDateTime.now();
 
     @Column(nullable = false)
     private String title;
@@ -38,24 +35,16 @@ public class Tip {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
-/*
-    @OneToMany(mappedBy = "Tip", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<TipLike> TipLike = new ArrayList<>();
-    @OneToMany(mappedBy = "Tip", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<TipImage> TipImage = new ArrayList<>();
-    @OneToMany(mappedBy = "Tip", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<TipTag> tipTag = new ArrayList<>();
-    @OneToMany(mappedBy = "Tip", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<Comment> comments = new ArrayList<>();
 
-    public void addTipLike(TipLike TipLike) {
-        tipLikes.add(TipLike);
-    }
+    @OneToMany(mappedBy = "tip", cascade = {CascadeType.ALL})
+    private List<TipImage> tipImages = new ArrayList<>();
 
-    public void setLikes() {
-        long upVotes = tipLikes.stream()
-                .filter(TipLike -> TipLike.getTipLikeStatus() == TipLike.TipLikeStatus.UPVOTE)
-                .count();
-    }
-*/
+//    @OneToMany(mappedBy = "tip", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<TipLike> tipLikes = new ArrayList<>();
+//    @OneToMany(mappedBy = "tip", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<TipReply> tipReplies = new ArrayList<>();
+//    @OneToMany(mappedBy = "tip", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<TipTag> tipTags = new ArrayList<>();
+//    @OneToMany(mappedBy = "tip", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<TipBookmark> tipBookmarks = new ArrayList<>();
 }
