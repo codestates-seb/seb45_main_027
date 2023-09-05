@@ -6,8 +6,6 @@ const WriteFormShowroom = () => {
   const [editor, setEditor] = useState(DEFAULT_EDITOR_TEXT);
   const editorRef = useRef(null);
   const [imageData, setImageData] = useState([]); // 이미지 url과 이미지내 tags 정보를 저장하는 상태
-  const [showInputBox, setShowInputBox] = useState(false); // 입력 상자 표시 여부 상태
-  const [inputText, setInputText] = useState(""); // 입력한 텍스트 상태
 
   useEffect(() => {
     if (editor === DEFAULT_EDITOR_TEXT) {
@@ -80,9 +78,9 @@ const WriteFormShowroom = () => {
     tagElement.style.top = newTag.y;
     tagElement.innerText = newTag.text;
 
-    tagElement.addEventListener("click", () => {
-      alert(`Tag Clicked: ${newTag.text}`);
-    }); //안됨
+    // tagElement.addEventListener("click", () => {
+    //   alert(`Tag Clicked: ${newTag.text}`);
+    // }); //안됨
 
     // img컨테이너의 요소로 추가
     parentDiv.appendChild(tagElement);
@@ -103,9 +101,58 @@ const WriteFormShowroom = () => {
     }
   };
 
-  const handleTagClick = (newTag) => {
-    alert(`Tag Clicked: ${newTag.text}`);
-  };
+  // const imagetagSelect = document.querySelector(".imagetag");
+  // if (imagetagSelect) {
+  //   imagetagSelect.addEventListener("click", (el) => {
+  //     alert(`Tag Clicked: ${el.text}`);
+  //   });
+  // }
+  // console.log(imagetagSelect);
+
+  useEffect(() => {
+    const imageTagElements = document.querySelectorAll(".imagetag");
+
+    imageTagElements.forEach((element, idx) => {
+      element.addEventListener("click", () => {
+        const editText = window.prompt("Enter tag text:", element.innerText);
+
+        if (editText !== null) {
+          // Find the clicked tag within imageData
+          let clickedImageIndex = -1;
+          let clickedTagIndex = -1;
+
+          for (let i = 0; i < imageData.length; i++) {
+            const image = imageData[i];
+            const tagIndex = image.tags.findIndex(
+              (tag) => tag.text === element.innerText
+            );
+            if (tagIndex !== -1) {
+              clickedImageIndex = i;
+              clickedTagIndex = tagIndex;
+              break; // Exit the loop once we find the tag
+            }
+          }
+
+          if (clickedImageIndex !== -1 && clickedTagIndex !== -1) {
+            // Update the tag's text within imageData
+            const updatedImageData = [...imageData];
+            updatedImageData[clickedImageIndex].tags[clickedTagIndex].text =
+              editText;
+            setImageData(updatedImageData);
+          }
+        }
+      });
+    });
+    console.log(imageData);
+
+    return () => {
+      imageTagElements.forEach((element) => {
+        element.removeEventListener("click", () => {
+          console.log(element.innerHTML);
+        });
+      });
+    };
+  }, [imageData]);
 
   return (
     <>
@@ -141,7 +188,6 @@ const WriteFormShowroom = () => {
               className="imagetag"
               key={tagIndex}
               style={{ position: "absolute", left: tag.x, top: tag.y }}
-              onClick={() => handleTagClick(tag)}
             >
               {tag.text}
             </span>
