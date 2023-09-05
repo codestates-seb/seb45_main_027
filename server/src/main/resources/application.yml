@@ -16,8 +16,6 @@ spring:
         color-codes: true
         use_sql_comments: true
     defer-datasource-initialization: true
-    profiles:
-      include: jwt
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
@@ -32,13 +30,13 @@ server:
     encoding:
       force-response: true
 
-jwt:   # 에러 미발생용으로 임시로 넣음
-  secretKey: temp
-  access-token-expire-time: 7200000
-  refresh-token-expire-time: 604800000
-  access:
-    expiration: 3000
-    header: temp
-  refresh:
-    expiration: 3000
-    header: temp
+#jwt:
+#  access-token-expire-time: 7200000
+#  refresh-token-expire-time: 604800000
+---
+spring:
+  profiles:
+    group:
+      "local" : "local, jwt, oauth"
+    active : local
+

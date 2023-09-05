@@ -34,13 +34,13 @@ public class Member extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true) // 고유 필드 지정
     private String nickname;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true) // 고유 필드 지정, error 처리
     private String email;
 
     private String myIntro;
@@ -108,7 +108,8 @@ public class Member extends BaseEntity {
 
 
     @Builder
-    private Member(Long memberId, String email, String nickname, String password, String myIntro, String image, Role role) { // 빌더 패턴 사용
+    private Member(Long memberId, String email, String nickname, String password,
+                   String myIntro, String image, Role role, SocialType socialType, String socialId) { // 빌더 패턴 사용
         this.memberId = memberId;
         this.email = email;
         this.nickname = nickname;
@@ -116,6 +117,8 @@ public class Member extends BaseEntity {
         this.myIntro = myIntro;
         this.image = image;
         this.role = role;
+        this.socialType = socialType;
+        this.socialId = socialId;
 
         // 이미지를 같이 취급할꺼냐 따로 취급 할꺼냐 ?
 

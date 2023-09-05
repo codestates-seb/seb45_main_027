@@ -19,8 +19,14 @@ public class CustomJwtUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("이메일이 없습니다"));
 
-        return User.builder().username(member.getEmail())
+//        return User.builder().username(member.getEmail())
+//                .password(member.getPassword())
+//                .build();
+
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(member.getEmail())
                 .password(member.getPassword())
+                .roles(member.getRole().name())
                 .build();
     }
 }

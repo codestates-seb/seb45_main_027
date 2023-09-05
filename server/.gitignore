@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+## .gitignore
+/src/main/resources/application-jwt.yml
+/src/main/resources/application-oauth.yml

@@ -8,6 +8,7 @@ import java.util.Collection;
 
 @Getter
 public class CustomJwtUserDetails extends User {
+    // 안쓸듯
 
     private final Long memberId;
 
