@@ -2,6 +2,7 @@ package com.project.bbibbi.domain.tipReplyLike.entity;
 
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tipReply.entity.TipReply;
+import com.project.bbibbi.global.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,16 +15,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 
-public class TipReplyLike {
+public class TipReplyLike extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tipReplyLikeId;
-
-    @Column(nullable = false)
-    private LocalDateTime createdDateTime = LocalDateTime.now();
-
-    @Column
-    private LocalDateTime modifiedDateTime = LocalDateTime.now();
 
     @Column
     private int likeCount;
