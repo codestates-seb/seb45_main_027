@@ -7,6 +7,7 @@ import WriteCoverImg from "../components/feed/write/WriteCoverImg";
 import WriteTitle from "../components/feed/write/WriteTitle";
 import WriteInput from "../components/feed/write/WriteInput";
 import WriteFormShowroom from "../components/feed/write/WriteFormShowroom";
+import WriteFormShowroomcopy from "../components/feed/write/WriteFormShowroomcopy";
 
 const WriteShowRoom = () => {
   return (
@@ -30,6 +31,7 @@ const WriteShowRoom = () => {
         <div className="mt-10 mb-20 p-4 bg-white w-full h-full">
           <WriteTitle />
           <WriteFormShowroom />
+          <WriteFormShowroomcopy />
         </div>
       </Background>
     </>
