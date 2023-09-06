@@ -38,10 +38,14 @@ const TipsContent = ({ viewportWidth }) => {
 
   return (
     <div className="flex-col mt-4">
-      <div className="flex pt-5 justify-center flex-wrap">
+      <div className="flex pt-5 md:justify-between justify-center flex-wrap">
         {image.map((item, idx) => (
           <div key={idx} className="flex-col relative mx-3 mb-3 ">
-            <img src={item.url} alt="tipsimg" className={imageClassName} />
+            <img
+              src={item.url}
+              alt="tipsimg"
+              className="aspectRatioImage_4_3"
+            />
             <p>
               <img
                 src={
