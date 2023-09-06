@@ -33,7 +33,7 @@ public class OAuthLoginSuccessHandler implements AuthenticationSuccessHandler {
             if(oAuth2User.getRole() == Role.GUEST) {
                 String accessToken = jwtService.createAccessToken(oAuth2User.getEmail());
                 response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
-                response.sendRedirect("auth/signup"); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
+                response.sendRedirect("/jwt-test"); // 성공 시 테스트 페이지로 리 다이렉트
                 //
                 jwtService.sendAccessAndRefreshToken(response, accessToken, null);
 

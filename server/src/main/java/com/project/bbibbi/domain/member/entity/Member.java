@@ -11,7 +11,6 @@ import com.project.bbibbi.domain.tip.entity.Tip;
 import com.project.bbibbi.domain.tipLike.entity.TipLike;
 import com.project.bbibbi.domain.tipReply.entity.TipReply;
 import com.project.bbibbi.domain.tipReplyLike.entity.TipReplyLike;
-import com.project.bbibbi.domain.tipcomment.entity.TipComment;
 import com.project.bbibbi.global.entity.BaseEntity;
 import com.project.bbibbi.global.entity.Role;
 import com.project.bbibbi.global.entity.SocialType;
@@ -68,8 +67,8 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<TipReply> tipReplies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<TipComment> tipComments = new ArrayList<>();
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+//    private List<TipComment> tipComments = new ArrayList<>();
 //
 //    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
 //    private List<tipBookmark> tipBookmarks = new ArrayList<>();

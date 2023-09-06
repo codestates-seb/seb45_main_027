@@ -61,17 +61,16 @@ public class AuthController {
     public String jwtTest() {
         return "jwtTest 요청 성공";
     }
+    @GetMapping("/oauth/code/naver")
+    public String naverTest() {
+        return "네이버 코드 완료";}
 
-//    @GetMapping("/auth") // 일반
-//    public ResponseEntity<String> login(@ModelAttribute @Valid OauthJoinApiRequest request) {
-//        Token token = oauthService.login(request.getProvider(), request.getCode());
-//
-//        HttpHeaders tokenHeader = getHttpHeaders(token);
-//
-//        String jsonResponse = "{\"memberId\":" + token.getMemberId() + "}";
-//
-//        return ResponseEntity.ok().headers(tokenHeader).body(jsonResponse);
-//    }
+        @GetMapping("/oauth/code/kakao")
+        public String cacaoTest() {
+            return "카카오 코드 완료";}
+
+
+
 
     private HttpHeaders getHttpHeaders(Token token) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
