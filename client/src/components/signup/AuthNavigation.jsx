@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 
 const AuthNavigation = ({path}) => {
     return (
-        <div className="flex flex-row text-black">
+      <>
+       {path === "login" && `Find password`}
+        <div className="flex flex-row text-black my-5">
+
           <div className="mr-2">
             {path === "signup"
               ? "Already have an account?"
@@ -18,6 +21,8 @@ const AuthNavigation = ({path}) => {
             </Link>
           )}
         </div>
+        <div className='text-black'>or</div>
+        </>
     );
 }
 

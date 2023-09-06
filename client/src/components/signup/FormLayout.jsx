@@ -13,13 +13,13 @@ const FormLayout = ({
 }) => {
 
   const inputStyle =
-    "text-2xl px-4 py-3.5 mb-2 border rounded-full focus:outline-none focus:ring focus:border-blue-300";
-  const labelStyle = "text-3xl font-medium mt-6 mb-2 ml-2";
+    "text-2xl px-4 py-3 mb-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300";
+  const labelStyle = "flex justify-start text-2xl font-medium mt-6 mb-2 ml-2";
   const buttonStyle =
-    "bg-[#00647B] text-white text-5xl font-medium rounded-full px-[5%] py-[5%] mt-[10%] mx-[8%] hover:bg-[#00647B]/80";
+    "flex self-center bg-[#00647B] text-white text-2xl font-medium rounded-md px-4 py-2 mt-[10%] hover:bg-[#00647B]/80";
   const errorMessageStyle = "text-xl text-red-600 mb-8 ml-2";
   return (
-    <form className="flex flex-col text-4xl mx-[10%] w-[290px] sm:w-[380px]" onSubmit={handleSubmit} noValidate>
+    <form className="flex flex-col justify-center items-start text-4xl mx-[10%] w-[320px]" onSubmit={handleSubmit} noValidate>
       {path === "signup" && (
         <>
           <label htmlFor="name" className={`${labelStyle}`}>

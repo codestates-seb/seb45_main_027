@@ -71,7 +71,7 @@ export function AuthProvider({ children }) {
   async function login(email, password) {
     try {
       const response = await axios.post(`${baseURL}/auth/oauth`, { email, password });
-      setUser(response.data.user); // user로 오는지 member로 오는지 확인 필요//토큰만 옴. 정보는 안옴
+      setUser(response.data.user); // user로 오는지 member로 오는지 확인 필요함
 
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
