@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
 
 const optionsData = [
@@ -61,12 +61,26 @@ const optionsData = [
 
 const WriteInformation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    // 반응형 조건부렌더링
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+
+    // 언마운트시 리스너제거
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const customStyles = {
     // 드랍다운 스타일
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused ? "rgba(245, 99, 74, 0.1)" : "white",
+      backgroundColor: state.isFocused ? "rgba(245, 99, 74, 0.05)" : "white",
       color: "black",
     }),
   };
@@ -96,10 +110,13 @@ const WriteInformation = () => {
       <div className={`py-5 ${isOpen ? "hidden" : ""}`}>
         <ul className="flex flex-wrap justify-start content-center text-xl font-semibold px-5">
           {optionsData.map((optionGroup) => (
-            <li key={optionGroup.name} className="flex p-3  w-[33.333%] ">
-              <span className="pt-5 w-[70px]">{optionGroup.label}</span>
+            <li
+              key={optionGroup.name}
+              className="flex p-3 2xl:w-1/3 xl:w-1/2 sm:w-full "
+            >
+              <span className="pt-5 min-w-[70px]">{optionGroup.label}</span>
               <Select
-                className="py-2  w-[300px]"
+                className="py-2 w-[80%] "
                 options={optionGroup.options.map((option) => ({
                   value: option,
                   label: option,
