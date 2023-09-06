@@ -49,7 +49,7 @@ public class FeedResponseDto {
     private String nickname;
 
     // feedImage와 합쳐보내
-    private List<FeedImageDto> feedimages;
+    private List<FeedImageDto> feedImages;
 
     // reply
     private List<FeedReplyResponseDto> replies;
