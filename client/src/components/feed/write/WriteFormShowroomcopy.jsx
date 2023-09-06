@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { styled } from "styled-components";
 import PhotoTagging from "./PhotoTagging";
 
 const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요";
@@ -60,14 +59,14 @@ const WriteFormShowroomcopy = () => {
     const combinedHTML = `<br/><div class="relative"><img src="${imageSrc}" alt="Uploaded Image" contentEditable="false" />${tagsData
       .map(
         (tag) =>
-          `<br/> <span class="bg-[#F5634A] p-2 rounded-xl text-white" style="position: absolute; left: ${tag.x}; top: ${tag.y}" contentEditable="false">${tag.text}</span> <div></div><br/>`
+          `<span class="bg-[#F5634A] p-2 rounded-xl text-white" style="position: absolute; left: ${tag.x}; top: ${tag.y}" contentEditable="false">${tag.text}</span>`
       )
-      .join("")}</div>`;
+      .join("")}</div><br/>`;
 
-    // Update the editor's content with the combined HTML
+    // 에디터 내용에 이미지삽입
     setEditorContent(editorContent + combinedHTML);
 
-    // Clear the imageSrc and tags for the next entry
+    // 이미지 및 태그정보 초기화
     setImageSrc(null);
     setTags([]);
   };
