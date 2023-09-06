@@ -61,20 +61,6 @@ const optionsData = [
 
 const WriteInformation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    // 반응형 조건부렌더링
-    const handleResize = () => {
-      setViewportWidth(window.innerWidth);
-    };
-    window.addEventListener("resize", handleResize);
-
-    // 언마운트시 리스너제거
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const customStyles = {
     // 드랍다운 스타일
@@ -112,11 +98,11 @@ const WriteInformation = () => {
           {optionsData.map((optionGroup) => (
             <li
               key={optionGroup.name}
-              className="flex p-3 2xl:w-1/3 xl:w-1/2 sm:w-full "
+              className="flex p-3 2xl:w-1/3 xl:w-1/2 sm:w-full w-full"
             >
               <span className="pt-5 min-w-[70px]">{optionGroup.label}</span>
               <Select
-                className="py-2 w-[80%] "
+                className="py-2 w-[70%] "
                 options={optionGroup.options.map((option) => ({
                   value: option,
                   label: option,
