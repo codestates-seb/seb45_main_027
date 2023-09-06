@@ -8,12 +8,12 @@ const OauthLayout = ({ path }) => {
   console.log("Code from URL:", code);
 
   const kakaoRestApiKey = process.env.REACT_APP_KAKAO_REST_API_KEY;
-  const kakaoRedirectUrl = `http://localhost:3000/${path}`; //process.env.REACT_APP_KAKAO_REDIRECT_URL;
+  const kakaoRedirectUrl = `http://localhost:3000/${path}`;
   const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoRestApiKey}&redirect_uri=${kakaoRedirectUrl}&response_type=code`;
 
   const naverRestApiKey = process.env.REACT_APP_NAVER_REST_API_KEY;
   const naverRedirectUrl = `http://localhost:3000/${path}`;
-  const naverState = "gS25x8fac3";
+  const naverState = process.env.REACT_APP_NAVER_SECRET_KEY;
   const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?client_id=${naverRestApiKey}&response_type=code&redirect_uri=${naverRedirectUrl}&state=${naverState}`;
 
   const handleKaKaologin = () => {
@@ -29,11 +29,11 @@ const OauthLayout = ({ path }) => {
   return (
     <div className="flex justify-center mt-[5%]">
       <svg
-        width="70"
-        height="70"
+        width="48"
+        height="48"
         viewBox="0 0 48 48"
         preserveAspectRatio="xMidYMid meet"
-        className="mr-10"
+        className="mr-6"
         onClick={handleKaKaologin}
       >
         <g fill="none" fillRule="evenodd">
@@ -49,8 +49,8 @@ const OauthLayout = ({ path }) => {
       </svg>
 
       <svg
-        width="70"
-        height="70"
+        width="48"
+        height="48"
         viewBox="0 0 48 48"
         preserveAspectRatio="xMidYMid meet"
         onClick={handleNaverLogin}

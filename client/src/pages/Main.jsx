@@ -66,12 +66,14 @@ const Main = () => {
   }
 
   function scrollToSection() {
-    window.scrollTo({
-      top:
-        document.getElementById(`main${index.current}`).getBoundingClientRect()
-          .top + window.scrollY,
-      behavior: "smooth",
-    });
+    setTimeout(() => {
+      window.scrollTo({
+        top:
+          document.getElementById(`main${index.current}`).getBoundingClientRect()
+            .top + window.scrollY,
+        behavior: "smooth",
+      });
+    },1000);
   }
 
   useEffect(() => {
