@@ -14,7 +14,7 @@ const ViewTips = () => {
         <ViewCoverImg />
         <Sidebar />
         <Background
-          mainclassName="bg-[#FFFAEE] h-full px-14 md:px-56 pb-20"
+          mainclassName="bg-[#FFFAEE] h-full px-14 md:px-56 pb-40"
           divclassName="flex-col my-24 md:my-0">
           <TipsContents />
           <Edit/>
