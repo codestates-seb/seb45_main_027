@@ -80,7 +80,7 @@ public class CustomOAuthUserService implements OAuth2UserService<OAuth2UserReque
 
     /**
      * SocialType과 attributes에 들어있는 소셜 로그인의 식별값 id를 통해 회원을 찾아 반환하는 메소드
-     * 만약 찾은 회원이 있다면, 그대로 반환하고 없다면 saveUser()를 호출하여 회원을 저장한다.
+     * 만약 찾은 회원이 있다면, 그대로 반환하고 없다면 saveMember()를 호출하여 회원을 저장한다.
      */
     private Member getMember(OAuthAttributes attributes, SocialType socialType) {
         Member findMember = memberRepository.findBySocialTypeAndSocialId(socialType,
