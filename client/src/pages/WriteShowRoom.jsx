@@ -30,7 +30,7 @@ const WriteShowRoom = () => {
         <WriteCoverImg bgColor="bg-[#f5644a16]" btnColor="bg-[#F5634A]" />
         <div className="mt-10 mb-20 p-4 bg-white w-full h-full">
           <WriteTitle />
-          <WriteFormShowroom />
+          {/* <WriteFormShowroom /> */}
           <WriteFormShowroomcopy />
         </div>
       </Background>

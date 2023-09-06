@@ -152,7 +152,9 @@ const WriteFormShowroom = () => {
         });
       });
     };
-  }, [imageData]);
+  });
+  const a = process.env.REACT_APP_API_KEY;
+  console.log(a);
 
   return (
     <>
