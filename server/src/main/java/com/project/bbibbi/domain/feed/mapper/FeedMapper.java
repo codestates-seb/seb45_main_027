@@ -157,7 +157,7 @@ public interface FeedMapper {
 
         }
 
-        feedResponseDto.setFeedimages(feedImageDtos);
+        feedResponseDto.setFeedImages(feedImageDtos);
         List<FeedReplyResponseDto> allReplies = new ArrayList<>();
         //피드에 댓글정보가 있으니 allReplies에 뿌려준다.
        for(FeedReply feedReply : feed.getReplies()){
@@ -202,7 +202,7 @@ public interface FeedMapper {
                                 .locationName(feed.getLocation().getDescription())
                                 .memberId(feed.getMember().getMemberId())
                                 .nickname(feed.getMember().getNickname())
-                                .feedimages(feed.getImages().stream().map(feedImage -> FeedImageDto.builder()
+                                .feedImages(feed.getImages().stream().map(feedImage -> FeedImageDto.builder()
                                         .feedImageId(feedImage.getFeedImageId())
                                         .image(feedImage.getImage())
                                         .x(feedImage.getX())
