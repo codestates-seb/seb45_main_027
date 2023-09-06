@@ -8,7 +8,7 @@ const Sidebar = () => {
     const [Bookmark, setBookmark] = useState(false);
   
     return (
-      <div className="hidden md:flex flex-col w-max h-0 sticky top-48 float-right mr-20">
+      <div className="hidden md:flex flex-col w-max h-0 sticky top-48 float-right mr-20 z-50">
         {/* 좋아요 */}
         <button className={display} onClick={() => setLike(!like)}>
           <img

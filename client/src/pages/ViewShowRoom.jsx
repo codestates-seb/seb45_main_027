@@ -2,18 +2,22 @@ import React from "react";
 import Background from "../components/common/Background";
 import ViewCoverImg from "../components/feed/view/ViewCoverImg";
 import Sidebar from "../components/feed/view/Sidebar";
-import ViewTitle from "../components/feed/view/ViewTitle";
+import ShowroomContents from "../components/feed/view/ShowroomContents";
+import Edit from "../components/feed/view/Edit";
+import Comment from "../components/feed/view/Comment";
 
 const ViewShowRoom = () => {
   return (
-    <div className=" ">
+    <div className="">
       <ViewCoverImg />
       <Sidebar />
       <Background
-        mainclassName="bg-[#FFFAEE] h-full px-14 md:px-56 "
+        mainclassName="bg-[#FFFAEE] h-full px-14 md:px-56 pb-20"
         divclassName="flex-col my-24 md:my-0">
-        <ViewTitle/>
-        </Background>
+        <ShowroomContents />
+        <Edit />
+        <Comment/>
+      </Background>
     </div>
   );
 };
