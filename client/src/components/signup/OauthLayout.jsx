@@ -13,7 +13,7 @@ const OauthLayout = ({ path }) => {
 
   const naverRestApiKey = process.env.REACT_APP_NAVER_REST_API_KEY;
   const naverRedirectUrl = `http://localhost:3000/${path}`;
-  const naverState = process.env.REACT_APP_NAVER_SECRET_KEY; //"gS25x8fac3";
+  const naverState = process.env.REACT_APP_NAVER_SECRET_KEY;
   const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?client_id=${naverRestApiKey}&response_type=code&redirect_uri=${naverRedirectUrl}&state=${naverState}`;
 
   const handleKaKaologin = () => {

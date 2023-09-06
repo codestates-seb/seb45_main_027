@@ -5,7 +5,7 @@ import WriteBtn from "../components/feed/write/WriteBtn";
 import WriteGuide from "../components/feed/write/WriteGuide";
 import WriteCoverImg from "../components/feed/write/WriteCoverImg";
 import WriteTitle from "../components/feed/write/WriteTitle";
-import WriteInput from "../components/feed/write/WriteInput";
+import WriteInformation from "../components/feed/write/WriteInformation";
 import WriteFormShowroom from "../components/feed/write/WriteFormShowroom";
 import WriteFormShowroomcopy from "../components/feed/write/WriteFormShowroomcopy";
 
@@ -26,7 +26,7 @@ const WriteShowRoom = () => {
           />
         </div>
         <WriteGuide Title="Show room " />
-        <WriteInput />
+        <WriteInformation />
         <WriteCoverImg bgColor="bg-[#f5644a16]" btnColor="bg-[#F5634A]" />
         <div className="mt-10 mb-20 p-4 bg-white w-full h-full">
           <WriteTitle />

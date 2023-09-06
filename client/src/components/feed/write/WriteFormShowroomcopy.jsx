@@ -4,15 +4,6 @@ import PhotoTagging from "./PhotoTagging";
 
 const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요";
 
-const StyleWrite = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  > div {
-    margin: 10px;
-  }
-`;
-
 const WriteFormShowroomcopy = () => {
   const editorRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(null);
@@ -69,7 +60,7 @@ const WriteFormShowroomcopy = () => {
     const combinedHTML = `<br/><div class="relative"><img src="${imageSrc}" alt="Uploaded Image" contentEditable="false" />${tagsData
       .map(
         (tag) =>
-          `<br/> <span style="position: absolute; left: ${tag.x}; top: ${tag.y}" contentEditable="false">${tag.text}</span> <div></div><br/>`
+          `<br/> <span class="bg-[#F5634A] p-2 rounded-xl text-white" style="position: absolute; left: ${tag.x}; top: ${tag.y}" contentEditable="false">${tag.text}</span> <div></div><br/>`
       )
       .join("")}</div>`;
 
@@ -105,9 +96,9 @@ const WriteFormShowroomcopy = () => {
         </button>
       </div>
 
-      <StyleWrite>
+      <div className="flex-col justify-center content-center">
         {imageSrc ? (
-          <div>
+          <div className="m-5">
             <PhotoTagging
               imageSrc={imageSrc}
               tags={tags}
@@ -125,7 +116,7 @@ const WriteFormShowroomcopy = () => {
           onBlur={handleBlur}
           className="h-full w-full min-h-[600px]"
         ></div>
-      </StyleWrite>
+      </div>
     </div>
   );
 };
