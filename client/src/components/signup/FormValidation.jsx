@@ -6,7 +6,7 @@ import { useAuth } from "../../context/AuthContext"
 const FormValidation = ({ path }) => {
   const [nickname, handleNameChange] = useInput("");
   const [email, handleEmailChange] = useInput("");
-  const [password, handlePasswordChange] = useInput("");
+  const [password, handlePasswordChange, clearInput] = useInput("");
   const { register, login } = useAuth();
 
 
@@ -68,6 +68,7 @@ const FormValidation = ({ path }) => {
         await login(email, password);
       } catch (error) {
         console.error('Login failed:', error);
+        clearInput(password);
       }
     }
   };
