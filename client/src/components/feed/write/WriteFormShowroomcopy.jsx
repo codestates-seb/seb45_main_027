@@ -3,12 +3,12 @@ import PhotoTagging from "./PhotoTagging";
 
 const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요";
 
-const WriteFormShowroomcopy = () => {
+const WriteFormShowroomcopy = ({ editorContent, setEditorContent }) => {
   const editorRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(null);
   const [tags, setTags] = useState([]); // 이미지 내 tags 들의 집합
   const [currentTag, setCurrentTag] = useState({ x: "0%", y: "0%", text: "" }); // 현재 추가하려는 tag
-  const [editorContent, setEditorContent] = useState(""); // Editor 내용을 관리
+  // const [editorContent, setEditorContent] = useState(""); // Editor 내용을 관리
 
   useEffect(() => {
     if (editorContent === DEFAULT_EDITOR_TEXT) {

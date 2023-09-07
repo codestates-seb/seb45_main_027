@@ -1,27 +1,28 @@
 import React, { useRef, useEffect, useState } from "react";
 
-const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요";
-
-const WriteFormTips = () => {
-  const [editor, setEditor] = useState(DEFAULT_EDITOR_TEXT);
+const WriteFormTips = ({
+  editorContent,
+  setEditorContent,
+  DEFAULT_EDITOR_TEXT,
+}) => {
   const editorRef = useRef(null);
-  console.log(editor);
+  console.log(editorContent);
 
   useEffect(() => {
-    if (editor === DEFAULT_EDITOR_TEXT) {
-      editorRef.current.innerHTML = editor;
+    if (editorContent === DEFAULT_EDITOR_TEXT) {
+      editorRef.current.innerHTML = editorContent;
     }
-  }, [editor]);
+  }, [editorContent]);
 
   const handleFocus = () => {
-    if (editor === DEFAULT_EDITOR_TEXT) {
-      setEditor("");
+    if (editorContent === DEFAULT_EDITOR_TEXT) {
+      setEditorContent("");
     }
   };
 
   const handleBlur = () => {
     const inputText = editorRef.current.innerHTML.trim();
-    setEditor(inputText || DEFAULT_EDITOR_TEXT);
+    setEditorContent(inputText || DEFAULT_EDITOR_TEXT);
   };
 
   const ImageUpload = (e) => {
@@ -34,7 +35,7 @@ const WriteFormTips = () => {
         const imageUrl = reader.result;
         const currentEditorContent = editorRef.current.innerHTML;
         const newEditorContent = `${currentEditorContent}<img src="${imageUrl}" alt="Uploaded Image"><br>`;
-        setEditor(newEditorContent);
+        setEditorContent(newEditorContent);
         e.target.value = null;
       };
     }
@@ -45,7 +46,7 @@ const WriteFormTips = () => {
       {/* 이미지 입력 버튼 */}
       <div className="mb-2 pb-2 border-b">
         <label htmlFor="imageUpload" className="cursor-pointer">
-          <img className="p-2" src="/images/gallery.png" alt="" />
+          <img className="p-2  mb-1" src="/images/gallery.png" alt="" />
         </label>
         <input
           id="imageUpload"
@@ -62,7 +63,7 @@ const WriteFormTips = () => {
         contentEditable={true}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        dangerouslySetInnerHTML={{ __html: editor }}
+        dangerouslySetInnerHTML={{ __html: editorContent }}
       />
     </>
   );
