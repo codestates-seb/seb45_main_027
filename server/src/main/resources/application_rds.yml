@@ -6,7 +6,7 @@ spring:
   jpa:
     hibernate:
     #  dialect: org.hibernate.dialect.MySQL8Dialect
-    #   ddl-auto: create    이거 있으면 mysql 해당 스키마에 테이블들 생성된다.
+    #   ddl-auto: create  #  이거 있으면 mysql 해당 스키마에 테이블들 생성된다.
     show-sql: true      # (2) SQL 쿼리 출력
     properties:
       hibernate:
@@ -14,6 +14,23 @@ spring:
         highlight_sql: true
         color-codes: true
         use_sql_comments: true
+#    defer-datasource-initialization: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: bbibbi503@gmail.com
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+    auth-code-expiration-millis: 600000  # 10분
+    email-complete-expiration-millis: 3600000  # 1시간
 logging:
   level:
     org:
@@ -22,3 +39,24 @@ logging:
           jpa: DEBUG
       hibernate:
         type: trace
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY}
+      secretKey: ${AWS_SECRET_KEY}
+    s3:
+      bucket: ${AWS_S3_BUCKET}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+#jwt:
+#  access-token-expire-time: 7200000
+#  refresh-token-expire-time: 604800000
+---
+spring:
+  profiles:
+    group:
+      "local" : "local, jwt, oauth"
+    active : local

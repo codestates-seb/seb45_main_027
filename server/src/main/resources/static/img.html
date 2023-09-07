@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip Post Form</title>
+</head>
+<body>
+<h1>게시물 작성</h1>
+<form id="tipForm" enctype="multipart/form-data">
+    <label for="title">제목:</label>
+    <input type="text" id="title" name="title" ><br>
+
+    <label for="coverPhoto">커버 사진:</label>
+    <input type="file" id="coverPhoto" name="coverPhoto" accept="image/*" ><br>
+
+    <label for="content">내용:</label><br>
+    <textarea id="content" name="content" rows="4" cols="50" ></textarea><br>
+
+    <label for="tipImages">팁 이미지들:</label>
+    <input type="file" id="tipImages" name="tipImages" accept="image/*" multiple><br>
+
+    <input type="submit" value="게시물 작성">
+</form>
+
+<script src="script2.js"></script>
+</body>
+</html>
