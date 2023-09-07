@@ -58,6 +58,8 @@ public class Member extends BaseEntity {
 
     private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
 
+    private boolean checkUser;
+
 
 
 
@@ -109,7 +111,7 @@ public class Member extends BaseEntity {
 
     @Builder
     private Member(Long memberId, String email, String nickname, String password,
-                   String myIntro, String image, Role role, SocialType socialType, String socialId) { // 빌더 패턴 사용
+                   String myIntro, String image, Role role, SocialType socialType, String socialId, boolean checkUser) { // 빌더 패턴 사용
         this.memberId = memberId;
         this.email = email;
         this.nickname = nickname;
@@ -119,6 +121,7 @@ public class Member extends BaseEntity {
         this.role = role;
         this.socialType = socialType;
         this.socialId = socialId;
+        this.checkUser = checkUser;
 
         // 이미지를 같이 취급할꺼냐 따로 취급 할꺼냐 ?
 
@@ -132,6 +135,7 @@ public class Member extends BaseEntity {
                 .nickname(nickname)
                 .password(password)
                 .role(Role.USER)
+                .checkUser(false)
 //                .myIntro(null)
 //                .image(null) // 나중에 수정 ?
                 .build();

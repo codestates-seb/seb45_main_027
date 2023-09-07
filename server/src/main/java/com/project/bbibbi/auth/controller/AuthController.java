@@ -1,7 +1,7 @@
 package com.project.bbibbi.auth.controller;
 
-
 import com.project.bbibbi.auth.controller.dto.OauthJoinApiRequest;
+import com.project.bbibbi.auth.controller.dto.AuthEmailCheckApiRequest;
 import com.project.bbibbi.auth.jwt.dto.Token;
 import com.project.bbibbi.auth.oauth.OauthService;
 import com.project.bbibbi.domain.member.controller.dto.MemberCreateApiRequest;
@@ -12,11 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
-
 import static org.springframework.security.oauth2.core.OAuth2AccessToken.TokenType.BEARER;
 
 
@@ -90,4 +88,12 @@ public class AuthController {
 
     }
     // 로그인 창에서 이메일 찾기 이메일 닉네임 패스워드
+
+    @PostMapping("/email")
+    public ResponseEntity<Void> sendEmail(@RequestBody @Valid AuthEmailCheckApiRequest request) {
+
+        memberService.sendSignupEmail(request.getEmail());
+
+        return ResponseEntity.noContent().build();
+    }
 }

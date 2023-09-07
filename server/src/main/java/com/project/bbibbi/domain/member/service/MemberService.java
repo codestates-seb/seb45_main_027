@@ -9,6 +9,7 @@ import com.project.bbibbi.domain.member.service.dto.response.MemberResponse;
 import com.project.bbibbi.global.exception.businessexception.memberexception.MemberDuplicateException;
 import com.project.bbibbi.global.exception.businessexception.memberexception.MemberNotFoundException;
 import com.project.bbibbi.global.exception.businessexception.memberexception.MemberPasswordException;
+import com.project.bbibbi.global.mail.service.MailService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,11 +25,14 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    private final MailService mailService;
+
     private final PasswordEncoder passwordEncoder; // config에서 bean으로 먼저 등록안해서 생긴 문제
 
-    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder,MailService mailService) {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
+        this.mailService = mailService;
     }
 
     public Long signup(MemberCreateServiceRequest request) {
@@ -107,6 +111,17 @@ public class MemberService {
         // 후에 만약 계정을 삭제하지 않고 unabled로 한다면 member.unabled로 바꾸는 로직만 추가하자 diable로직 추가
     }
 
+
+    public void sendSignupEmail(String email) {
+
+        checkcheckExistenceEmail(email);
+
+        String code = mailService.sendLoginEmail(email);
+
+
+
+    }
+
 //    public Page<MemberResponse.MemberFeed> getMemberFeedPageResponse(Long memberId, Integer page, Integer size) {
 //
 //        Page<MemberFeedData> memberFeedData = memberRepository.findFeedByMemberId(memberId, PageRequest.of(page, size));
@@ -151,6 +166,16 @@ public class MemberService {
             throw new MemberDuplicateException();
         }
     }
+
+    private void checkcheckExistenceEmail(String email) {
+
+        Member member = memberRepository.findByEmail(email).orElse(null);
+
+        if (!member.getEmail().equals(email)) {
+            throw new MemberNotFoundException();
+        }
+    }
+
 
     private Member verifiyMember(String email) {
         return memberRepository.findByEmail(email)
