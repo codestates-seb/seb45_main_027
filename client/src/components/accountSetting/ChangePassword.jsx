@@ -11,6 +11,14 @@ const ChangePassword = ({
       <div className="flex flex-col justify-center items-center h-[500px] pb-30">
         <input
           type="password"
+          name="currentPassword"
+          placeholder="Current Password"
+          value={updatedPassword.currentPassword}
+          onChange={handlePasswordChange}
+          className={inputStyle}
+        />
+        <input
+          type="password"
           name="newPassword"
           placeholder="New Password"
           value={updatedPassword.newPassword}

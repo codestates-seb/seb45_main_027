@@ -13,7 +13,7 @@ const FormLayout = ({
 }) => {
 
   const inputStyle =
-    "text-2xl px-4 py-3 mb-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300";
+    "text-2xl px-4 py-3 mb-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300 w-full";
   const labelStyle = "flex justify-start text-2xl font-medium mt-6 mb-2 ml-2";
   const buttonStyle =
     "flex self-center bg-[#00647B] text-white text-2xl font-medium rounded-md px-4 py-2 mt-[10%] hover:bg-[#00647B]/80";
