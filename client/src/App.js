@@ -16,6 +16,7 @@ import ViewShowRoom from "./pages/ViewShowRoom";
 import ViewTips from "./pages/ViewTips";
 import { AuthProvider } from "./context/AuthContext";
 import Verify from "./pages/Verify";
+import { Toaster } from "react-hot-toast";
 
 const headerPaths = [
   "myinfo",
@@ -53,6 +54,7 @@ function App() {
 
   return (
     <AuthProvider>
+      <Toaster />
       {isHeader && <HeaderPc />}
       <Routes>
         <Route path={"/"} element={<Main />} />

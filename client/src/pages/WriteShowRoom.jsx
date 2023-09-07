@@ -8,6 +8,7 @@ import WriteTitle from "../components/feed/write/WriteTitle";
 import WriteInformation from "../components/feed/write/WriteInformation";
 import WriteFormShowroom from "../components/feed/write/WriteFormShowroom";
 import WriteFormShowroomcopy from "../components/feed/write/WriteFormShowroomcopy";
+import { toast } from "react-hot-toast";
 
 const WriteShowRoom = () => {
   const [coverImage, setCoverImage] = useState(null); // 커버사진 상태
@@ -42,24 +43,38 @@ const WriteShowRoom = () => {
         setTitle(parsedData.title);
         setEditorContent(parsedData.editorContent);
         setSelectedValues(parsedData.selectedValues);
+        toast.success("작성중인 글을 불러왔습니다.");
       } else {
         // 취소시 삭제
         localStorage.removeItem("tempSaveShowroomData");
+        toast.error("작성중인 글을 삭제하였습니다.");
       }
     }
   }, []);
 
   // 임시저장 클릭했을때 실행되는 핸들러함수 = > 로컬스토리지에 저장
   const saveToLocalStorage = () => {
-    const tempSaveData = {
-      coverImage,
-      title,
-      editorContent,
-      selectedValues,
-      createdAt: new Date(), // 현재시간까지 저장
-    };
+    try {
+      const tempSaveData = {
+        coverImage,
+        title,
+        editorContent,
+        selectedValues,
+        createdAt: new Date(), // 현재시간까지 저장
+      };
 
-    localStorage.setItem("tempSaveShowroomData", JSON.stringify(tempSaveData));
+      localStorage.setItem(
+        "tempSaveShowroomData",
+        JSON.stringify(tempSaveData)
+      );
+
+      // 성공메세지
+      toast.success("임시저장이 완료되었습니다!");
+    } catch (error) {
+      //실패메세지
+      // Display an error toast notification if something went wrong
+      toast.error("임시저장에 실패하였습니다.");
+    }
   };
 
   return (
