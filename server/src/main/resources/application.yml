@@ -45,6 +45,17 @@ server:
   servlet:
     encoding:
       force-response: true
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY}
+      secretKey: ${AWS_SECRET_KEY}
+    s3:
+      bucket: ${AWS_S3_BUCKET}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
 
 #jwt:
 #  access-token-expire-time: 7200000
@@ -55,4 +66,3 @@ spring:
     group:
       "local" : "local, jwt, oauth"
     active : local
-
