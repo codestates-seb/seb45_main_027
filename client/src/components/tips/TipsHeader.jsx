@@ -13,24 +13,24 @@ const TipsHeader = ({ viewportWidth }) => {
   };
 
   const SearchAndPostButton = (
-    <button className="flex justify-center ml-5 mr-5 ">
-      <div className="relative mr-10">
+    <button className="flex justify-center items-center">
+      <div className="relative flex items-center mx-5">
         <img
-          className="absolute w-[28px] top-[13px] left-4"
+          className="absolute w-6 left-4"
           src="./images/Search_gray.png"
           alt="searchIamge"
         />
         <input
-          className="w-[300px] mt-3 py-3 pl-14 pr-4 rounded-3xl border border-[#BBBBBB] text-[14px]"
+          className="w-[300px] py-3 pl-14 pr-4 rounded-md border text-[14px]"
           type="text"
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleSearch}
-          placeholder="#잼"
+          placeholder="#Tag"
         />
       </div>
       <Link to="/tips/write">
-        <button className="bg-[#00647B] h-[36px] mt-4 px-4 pb-2 pt-1 text-2xl text-white rounded-3xl font-semibold">
+        <button className="bg-[#00647B] hover:bg-[#00647bb4] shadow py-2 px-6 text-2xl font-semibold text-white rounded-md">
           Post
         </button>
       </Link>
@@ -38,15 +38,17 @@ const TipsHeader = ({ viewportWidth }) => {
   );
 
   return (
-    <div className="flex-col">
-      <div className="flex pt-10 justify-between">
-        <h1 className="pt-4 text-4xl text-[#F5634A] font-semibold">
+    <div className="flex-col mx-8">
+      <div className="flex pt-10 justify-between items-center">
+        <h1 className="text-4xl text-[#F5634A] font-semibold Showcard-Gothic">
           Interior Tips
         </h1>
         {viewportWidth >= 690 ? SearchAndPostButton : null}
       </div>
       <div className="flex-col">
-        <h2 className="text-[#786F6F]">search keywords to improve your home</h2>
+        <h2 className="text-gray-500 font-medium text-lg">
+          search keywords to improve your home
+        </h2>
         {viewportWidth < 690 ? SearchAndPostButton : null}
       </div>
     </div>

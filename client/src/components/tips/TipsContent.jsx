@@ -37,14 +37,14 @@ const TipsContent = ({ viewportWidth }) => {
     : "w-[400px] h-[300px] rounded-xl"; // 모바일일경우 이미지 속성을 정의하는 cn
 
   return (
-    <div className="flex-col mt-4">
+    <div className="flex-col m-4">
       <div className="flex pt-5 md:justify-between justify-center flex-wrap">
         {image.map((item, idx) => (
           <div key={idx} className="flex-col relative mx-3 mb-3 ">
             <img
               src={item.url}
               alt="tipsimg"
-              className="aspectRatioImage_4_3"
+              className="aspectRatioImage_1_1 rounded-md"
             />
             <p>
               <img
