@@ -123,13 +123,12 @@ const KakaoMap = ({ viewportWidth }) => {
 
       const contentContainer = document.createElement("div");
       contentContainer.innerHTML = `
-        <div class="custom-overlay bg-[#00647B] p-2 custom-overlay">
+        <div class="custom-overlay bg-[#00647B] p-2 custom-overlay w-full">
           <h2 class='text-white text-[20px] mb-2'>${place.place_name}</h2>
           <h3 class='text-white text-[14px] mb-1'>${place.address_name}</h3>
           <h3 class='text-white text-[14px] mb-4''>${place.phone}</h3>
           <button class='text-white text-[20px]'>  <a href='${place.place_url}'target=_blank>Detail</a></button>
         </div>`;
-      console.log(place);
 
       kakao.maps.event.addListener(marker, "mouseover", () => {
         customOverlay.setContent(contentContainer);
@@ -170,7 +169,7 @@ const KakaoMap = ({ viewportWidth }) => {
   // };
 
   return (
-    <div className="flex flex-col relative  rounded-[20px]">
+    <div className="flex flex-col relative  rounded-md">
       <SearchBar
         returnToCurrentLocation={fetchCurrentPositionAndInitializeMap}
         onSearch={handleSearch}
@@ -184,17 +183,17 @@ const KakaoMap = ({ viewportWidth }) => {
       ></div>
       <div
         id="search-results"
-        className="mt-4  overflow-y-auto max-h-[300px]  rounded-xl "
+        className="mt-4  overflow-y-auto max-h-[300px]  rounded-md "
       >
         {viewportWidth < 720 && (
-          <div className="mb-5  rounded-xl p-4">
+          <div className="mb-5  rounded-md p-4">
             <h2 className="text-2xl text-[#f5634a] font-semibold  mb-5">
               업체목록
             </h2>
             {searchResults.map((result, index) => (
               <div
                 key={index}
-                className="mb-5 p-5 bg-[#f5634a] bg-opacity-25 rounded-xl shadow-[0px_0px_3px_rgba(3,102,214,0.3)]"
+                className="mb-5 p-5 bg-[#f5634a] bg-opacity-25 rounded-md shadow-[0px_0px_3px_rgba(3,102,214,0.3)]"
               >
                 <a href={result.place_url} target="_blank" rel="noreferrer">
                   {index + 1}. {result.place_name} - {result.address_name}
