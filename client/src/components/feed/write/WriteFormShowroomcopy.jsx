@@ -72,9 +72,9 @@ const WriteFormShowroomcopy = () => {
   };
 
   return (
-    <div>
-      <div className="flex">
-        <label htmlFor="imageUpload" className="cursor-pointer">
+    <>
+      <div className="flex border-b-[1px] pb-4">
+        <label htmlFor="imageUpload" className="cursor-pointer rounded-md">
           <img className="p-2" src="/images/gallery.png" alt="gallery" />
         </label>
         <input
@@ -84,12 +84,15 @@ const WriteFormShowroomcopy = () => {
           className="hidden"
           onChange={handleImageUpload}
         />
-        <button onClick={handlePost} className="p-2 border-2 m-2 rounded-xl">
+        <button
+          onClick={handlePost}
+          className="p-2 border-[1px] mx-2 rounded-md"
+        >
           이미지 등록
         </button>
         <button
           onClick={handleDeleteImageAndTags}
-          className="p-2 border-2 m-2 rounded-xl"
+          className="p-2 border-[1px] mx-2 rounded-md"
         >
           이미지 삭제
         </button>
@@ -113,10 +116,10 @@ const WriteFormShowroomcopy = () => {
           dangerouslySetInnerHTML={{ __html: editorContent }}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className="h-full w-full min-h-[600px]"
+          className="p-2 mt-6 h-full w-full min-h-[600px]"
         ></div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const WriteGuide = ({ Title }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-white shadow rounded-2xl p-5 mt-6 mx-2">
+    <div className="bg-white shadow rounded-md p-5 mt-6 mx-2">
       {/* 아코디언 */}
       <div className="flex justify-between w-full items-center">
         <div className="flex items-center py-2">

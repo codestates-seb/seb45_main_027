@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const btn = "rounded-3xl px-9 py-1 mx-2 shadow ";
+const btn = "rounded-md px-9 py-1 mx-2 shadow ";
 
 const WriteBtn = ({
   buttonBgColor,
@@ -29,7 +29,7 @@ const WriteBtn = ({
         <div className="flex">
           <div className={`${buttonBgColor} text-white ${btn}`}>주제</div>
           <div
-            className={`${buttonBorderColor} ${buttonTextColor} border bg-white ${btn}`}
+            className={`${buttonBorderColor} ${buttonTextColor} border bg-white ${btn} pt-[1px]`}
           >
             {Title}
           </div>
