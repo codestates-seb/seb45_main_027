@@ -58,7 +58,9 @@ public class Member extends BaseEntity {
 
     private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
 
-    private boolean checkUser;
+    private boolean checkUser; // 이메일 체크가 확인된 유저인 지
+
+    private String checkCode; // 새로만든 코드값
 
 
 
@@ -164,6 +166,14 @@ public class Member extends BaseEntity {
 
     public void updateRefreshToken(String updateRefreshToken) {
         this.refreshToken = updateRefreshToken;
+    }
+
+    public void updateCheckCode(String updateCheckCode){
+        this.checkCode = updateCheckCode;
+    }
+
+    public void updateCheckUser(boolean updateCheckUser) {
+        this.checkUser = updateCheckUser;
     }
 
 

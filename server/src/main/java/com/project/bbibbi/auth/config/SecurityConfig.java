@@ -135,4 +135,6 @@ public class SecurityConfig {
         JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(jwtService, memberRepository);
         return jwtAuthenticationFilter;
     }
+
+    // 회원가입(닉네임 이메일 비번) 시 로그인, 회원 가입 후 이메일 전송(이메일 치기), 이메일 비번치고 로그인
 }
