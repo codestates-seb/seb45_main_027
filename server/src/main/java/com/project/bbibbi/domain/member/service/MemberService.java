@@ -118,37 +118,37 @@ public class MemberService {
 
         String code = mailService.sendLoginEmail(email);
 
+    }
 
+    public boolean checkCode(String email, String code) {
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            String storedCode = member.getCheckCode();
+
+            // 저장된 코드와 들어온 코드를 비교하여 일치하는지 확인
+            if (storedCode.equals(code)) {
+                member.updateCheckUser(true);
+                System.out.println("true");
+                return true;
+            } else {
+                System.out.println("false");
+                return false; // 코드가 일치하지 않는 경우 false 반환
+            }
+        } else {
+            throw new MemberNotFoundException(); // 멤버가 존재하지 않는 경우 예외 던지기
+        }
+    }
+    public void sendFindPasswordCodeToEmail(String email) {
+
+        checkcheckExistenceEmail(email);
+
+        mailService.sendPasswordEmail(email);
 
     }
 
-//    public Page<MemberResponse.MemberFeed> getMemberFeedPageResponse(Long memberId, Integer page, Integer size) {
-//
-//        Page<MemberFeedData> memberFeedData = memberRepository.findFeedByMemberId(memberId, PageRequest.of(page, size));
-//
-//        return memberFeedData.map(MemberResponse.MemberFeed::of);
-//    }
-//
-//    public Page<MemberResponse.MemberTip> getMemberTipPageResponse(Long memberId, Integer page, Integer size) {
-//
-//        Page<MemberTipData> memberTipData = memberRepository.findTipByMemberId(memberId, PageRequest.of(page, size));
-//
-//        return memberTipData.map(MemberResponse.MemberTip::of);
-//    }
-//
-//    public Page<MemberResponse.MemberFeedBookmark> getMemberFeedBookmarkPageResponse(Long memberId, Integer page, Integer size) {
-//
-//        Page<MemberFeedBookmarkData> memberFeedBookmarkData = memberRepository.findFeedBookmarkByMemberId(memberId, PageRequest.of(page, size));
-//
-//        return memberFeedBookmarkData.map(MemberResponse.MemberFeedBookmark::of);
-//    }
-//
-//    public Page<MemberResponse.MemberFeedBookmark> getMemberFeedBookmarkPageResponse(Long memberId, Integer page, Integer size) {
-//
-//        Page<MemberFeedBookmarkData> memberFeedBookmarkData = memberRepository.findFeedBookmarkByMemberId(memberId, PageRequest.of(page, size));
-//
-//        return memberFeedBookmarkData.map(MemberResponse.MemberFeedBookmark::of);
-//    }
+
+
 
     private void checkPassword(String password, String savedPassword) {
         if (!passwordEncoder.matches(password, savedPassword)) {
@@ -186,4 +186,22 @@ public class MemberService {
         Member member = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
         return member;
     }
+
+    private boolean checkEmailCode(String email, String code) {
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            String storedCode = member.getCheckCode();
+
+            // 저장된 코드와 들어온 코드를 비교하여 일치하는지 확인
+            if (storedCode.equals(code)) {
+                return true;
+            } else {
+                return false; // 코드가 일치하지 않는 경우 false 반환
+            }
+        } else {
+            throw new MemberNotFoundException(); // 멤버가 존재하지 않는 경우 예외 던지기
+        }
+    }
+
 }

@@ -1,12 +1,15 @@
 package com.project.bbibbi.auth.controller;
 
-import com.project.bbibbi.auth.controller.dto.OauthJoinApiRequest;
 import com.project.bbibbi.auth.controller.dto.AuthEmailCheckApiRequest;
+import com.project.bbibbi.auth.controller.dto.AuthEmailSendPasswordApiRequest;
+import com.project.bbibbi.auth.controller.dto.OauthJoinApiRequest;
+import com.project.bbibbi.auth.controller.dto.AuthEmailSendApiRequest;
 import com.project.bbibbi.auth.jwt.dto.Token;
 import com.project.bbibbi.auth.oauth.OauthService;
 import com.project.bbibbi.domain.member.controller.dto.MemberCreateApiRequest;
 import com.project.bbibbi.domain.member.controller.dto.MemberFindPasswordApiRequest;
 import com.project.bbibbi.domain.member.service.MemberService;
+import com.project.bbibbi.global.response.ApiSingleResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -90,10 +93,30 @@ public class AuthController {
     // 로그인 창에서 이메일 찾기 이메일 닉네임 패스워드
 
     @PostMapping("/email")
-    public ResponseEntity<Void> sendEmail(@RequestBody @Valid AuthEmailCheckApiRequest request) {
+    public ResponseEntity<Void> sendEmail(@RequestBody @Valid AuthEmailSendApiRequest request) {
 
         memberService.sendSignupEmail(request.getEmail());
 
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/email/check")
+    public ResponseEntity<ApiSingleResponse<Boolean>> confirmEmail(
+            @RequestBody @Valid AuthEmailCheckApiRequest request) {
+
+        boolean result = memberService.checkCode(request.getEmail(), request.getCode());
+
+        return ResponseEntity.ok(ApiSingleResponse.ok(result));
+    }
+
+    @PostMapping("/email/password")
+    public ResponseEntity<Void> sendEmail(@RequestBody @Valid AuthEmailSendPasswordApiRequest request) {
+
+        memberService.sendFindPasswordCodeToEmail(request.getEmail());
+
+        return ResponseEntity.noContent().build();
+    }
+
+
 }
+
