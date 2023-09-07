@@ -64,9 +64,9 @@ function App() {
         <Route path={"/tips"} element={<Tips />} />
         <Route path={"/map"} element={<Map />} />
         <Route path={"/showroom/write"} element={<WriteShowRoom />} />
-        <Route path={"/showroom/:id/view"} element={<ViewShowRoom />} />
+        <Route path={"/showroom/:feedId"} element={<ViewShowRoom />} />
         <Route path={"/tips/write"} element={<WriteTips />} />
-        <Route path={"/tips/:id/view"} element={<ViewTips />} />
+        <Route path={"/tips/:tipId/"} element={<ViewTips />} />
       </Routes>
 
       {isFooter && <HiddenFooter />}

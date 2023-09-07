@@ -1,34 +1,36 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const data = [
-  { url: "./asset/image.png", isBookmarked: true },
-  { url: "./asset/image2.png", isBookmarked: false },
-  { url: "./asset/image3.png", isBookmarked: false },
-  { url: "./asset/image4.png", isBookmarked: false },
-  { url: "./asset/image.png", isBookmarked: false },
-  { url: "./asset/image2.png", isBookmarked: false },
-  { url: "./asset/image3.png", isBookmarked: false },
-  { url: "./asset/image4.png", isBookmarked: false },
-  { url: "./asset/image.png", isBookmarked: true },
-  { url: "./asset/image2.png", isBookmarked: false },
-  { url: "./asset/image3.png", isBookmarked: false },
-  { url: "./asset/image4.png", isBookmarked: false },
-  { url: "./asset/image.png", isBookmarked: false },
-  { url: "./asset/image2.png", isBookmarked: false },
-  { url: "./asset/image3.png", isBookmarked: false },
-  { url: "./asset/image4.png", isBookmarked: false },
-  { url: "./asset/image.png", isBookmarked: true },
-  { url: "./asset/image2.png", isBookmarked: false },
-  { url: "./asset/image3.png", isBookmarked: false },
-  { url: "./asset/image4.png", isBookmarked: false },
-  { url: "./asset/image.png", isBookmarked: false },
-  { url: "./asset/image2.png", isBookmarked: false },
-  { url: "./asset/image3.png", isBookmarked: false },
-  { url: "./asset/image4.png", isBookmarked: false },
+  { url: "./asset/image.png", isBookmarked: true, feedId: 1 },
+  { url: "./asset/image2.png", isBookmarked: false, feedId: 2 },
+  { url: "./asset/image3.png", isBookmarked: false, feedId: 3 },
+  { url: "./asset/image4.png", isBookmarked: false, feedId: 4 },
+  { url: "./asset/image.png", isBookmarked: false, feedId: 5 },
+  { url: "./asset/image2.png", isBookmarked: false, feedId: 6 },
+  { url: "./asset/image3.png", isBookmarked: false, feedId: 7 },
+  { url: "./asset/image4.png", isBookmarked: false, feedId: 8 },
+  { url: "./asset/image.png", isBookmarked: true, feedId: 9 },
+  { url: "./asset/image2.png", isBookmarked: false, feedId: 10 },
+  { url: "./asset/image3.png", isBookmarked: false, feedId: 11 },
+  { url: "./asset/image4.png", isBookmarked: false, feedId: 12 },
+  { url: "./asset/image.png", isBookmarked: false, feedId: 13 },
+  { url: "./asset/image2.png", isBookmarked: false, feedId: 14 },
+  { url: "./asset/image3.png", isBookmarked: false, feedId: 15 },
+  { url: "./asset/image4.png", isBookmarked: false, feedId: 16 },
+  { url: "./asset/image.png", isBookmarked: true, feedId: 17 },
+  { url: "./asset/image2.png", isBookmarked: false, feedId: 18 },
+  { url: "./asset/image3.png", isBookmarked: false, feedId: 19 },
+  { url: "./asset/image4.png", isBookmarked: false, feedId: 20 },
+  { url: "./asset/image.png", isBookmarked: false, feedId: 21 },
+  { url: "./asset/image2.png", isBookmarked: false, feedId: 22 },
+  { url: "./asset/image3.png", isBookmarked: false, feedId: 23 },
+  { url: "./asset/image4.png", isBookmarked: false, feedId: 24 },
 ];
 
 const AllContent = () => {
   const [image, setImage2] = useState(data); // 이미지데이터를 상태로 저장
+  const navigate = useNavigate();
 
   // 북마크 상태를 변경시켜주는 함수
   const toggleBookmark = (idx) => {
@@ -37,19 +39,26 @@ const AllContent = () => {
     setImage2(updatedBookmarks);
     console.log(updatedBookmarks);
   };
-  
+
+  // 게시글 클릭시 페이지 이동하는 핸들러 함수
+  const handleFeedClick = (feedId) => {
+    navigate(`/showroom/${feedId}`);
+  };
+
   return (
     <div className="flex-col mx-4">
       <div className="flex justify-between flex-wrap">
         {image.map((item, idx) => (
           <div
             key={idx}
-            className="flex-col mx-3 mb-3 w-full sm:w-[45%] lg:w-[30%] h-[20%]">
+            className="flex-col mx-3 mb-3 w-full sm:w-[45%] lg:w-[30%] h-[20%]"
+          >
             <div className="relative">
               <img
                 src={item.url}
                 alt="shroomimg"
-                className="aspectRatioImage_4_3 rounded-md"
+                className="aspectRatioImage_4_3 rounded-md cursor-pointer"
+                onClick={() => handleFeedClick(item.feedId)}
               />
               <p>
                 <img
@@ -65,14 +74,18 @@ const AllContent = () => {
               </p>
             </div>
             <div className="flex-col pt-2 mb-14">
-              <div className="flex justify-center my-3">
+              <div
+                className="flex justify-center my-3 cursor-pointer"
+                onClick={() => handleFeedClick(item.feedId)}
+              >
                 <span className="text-3xl font-semibold">Title.</span>
               </div>
               <div className="flex justify-center items-center mb-3 text-gray-800">
                 <img
                   src="./images/Wonho.png"
                   alt="프로필사진"
-                  className="w-6 h-6 rounded-full mr-2"></img>
+                  className="w-6 h-6 rounded-full mr-2"
+                ></img>
                 <span className="text-xl">user name</span>
               </div>
               <div className="flex justify-center text-lg text-gray-500">
