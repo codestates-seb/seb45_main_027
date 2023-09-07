@@ -28,7 +28,7 @@ const WriteShowRoom = () => {
         <WriteGuide Title="Show room " />
         <WriteInformation />
         <WriteCoverImg bgColor="bg-[#f5644a16]" btnColor="bg-[#F5634A]" />
-        <div className="mt-10 mb-20 p-4 bg-white w-full h-full">
+        <div className="mt-10 mb-20 p-4 bg-white w-full h-full rounded-md">
           <WriteTitle />
           {/* <WriteFormShowroom /> */}
           <WriteFormShowroomcopy />

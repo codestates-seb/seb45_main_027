@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
 
 const optionsData = [
@@ -66,13 +66,13 @@ const WriteInformation = () => {
     // 드랍다운 스타일
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused ? "rgba(245, 99, 74, 0.1)" : "white",
+      backgroundColor: state.isFocused ? "rgba(245, 99, 74, 0.05)" : "white",
       color: "black",
     }),
   };
 
   return (
-    <div className="bg-white shadow rounded-2xl p-5 mt-6 mx-2">
+    <div className="bg-white shadow rounded-md p-5 mt-6 mx-2">
       {/* 아코디언 */}
       <div className="flex justify-between w-full items-center">
         <div className="flex items-center py-2">
@@ -96,10 +96,13 @@ const WriteInformation = () => {
       <div className={`py-5 ${isOpen ? "hidden" : ""}`}>
         <ul className="flex flex-wrap justify-start content-center text-xl font-semibold px-5">
           {optionsData.map((optionGroup) => (
-            <li key={optionGroup.name} className="flex p-3  w-[33.333%] ">
-              <span className="pt-5 w-[70px]">{optionGroup.label}</span>
+            <li
+              key={optionGroup.name}
+              className="flex p-3 2xl:w-1/3 xl:w-1/2 sm:w-full w-full"
+            >
+              <span className="pt-5 min-w-[70px]">{optionGroup.label}</span>
               <Select
-                className="py-2  w-[300px]"
+                className="py-2 w-[70%] "
                 options={optionGroup.options.map((option) => ({
                   value: option,
                   label: option,

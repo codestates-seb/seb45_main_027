@@ -23,13 +23,13 @@ const WriteCoverImg = ({ bgColor, btnColor }) => {
   return (
     <div className="w-full h-full flex mt-10">
       <div
-        className={`${bgColor} w-full h-[500px] flex flex-col justify-center items-center text-xl rounded-2xl shadow`}
+        className={`${bgColor} w-full h-[500px] flex flex-col justify-center items-center text-xl rounded-md shadow`}
       >
         {image ? (
           <img
             src={image}
             alt="CoverImg"
-            className="w-full h-[100%] rounded-2xl object-cover"
+            className="w-full h-[100%] rounded-md object-cover"
             onClick={handleUpload}
           />
         ) : (
@@ -47,7 +47,7 @@ const WriteCoverImg = ({ bgColor, btnColor }) => {
 
         {!image ? (
           <button
-            className={`${btnColor} text-white px-10 py-2 rounded-3xl shadow mt-10`}
+            className={`${btnColor} text-white px-10 py-2 rounded-md shadow mt-10`}
             onClick={handleUpload}
           >
             커버사진 추가하기

@@ -28,7 +28,7 @@
 .custom-overlay {
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
+  border-radius: 6px;
   background-color: rgba(0, 100, 123, 0.92);
   padding: 25px 15px 20px 15px;
   > button {

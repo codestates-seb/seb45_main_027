@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { styled } from "styled-components";
 import PhotoTagging from "./PhotoTagging";
 
 const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요";
@@ -60,22 +59,22 @@ const WriteFormShowroomcopy = () => {
     const combinedHTML = `<br/><div class="relative"><img src="${imageSrc}" alt="Uploaded Image" contentEditable="false" />${tagsData
       .map(
         (tag) =>
-          `<br/> <span class="bg-[#F5634A] p-2 rounded-xl text-white" style="position: absolute; left: ${tag.x}; top: ${tag.y}" contentEditable="false">${tag.text}</span> <div></div><br/>`
+          `<span class="bg-[#F5634A] p-2 rounded-xl text-white" style="position: absolute; left: ${tag.x}; top: ${tag.y}" contentEditable="false">${tag.text}</span>`
       )
-      .join("")}</div>`;
+      .join("")}</div><br/>`;
 
-    // Update the editor's content with the combined HTML
+    // 에디터 내용에 이미지삽입
     setEditorContent(editorContent + combinedHTML);
 
-    // Clear the imageSrc and tags for the next entry
+    // 이미지 및 태그정보 초기화
     setImageSrc(null);
     setTags([]);
   };
 
   return (
-    <div>
-      <div className="flex">
-        <label htmlFor="imageUpload" className="cursor-pointer">
+    <>
+      <div className="flex border-b-[1px] pb-4">
+        <label htmlFor="imageUpload" className="cursor-pointer rounded-md">
           <img className="p-2" src="/images/gallery.png" alt="gallery" />
         </label>
         <input
@@ -85,12 +84,15 @@ const WriteFormShowroomcopy = () => {
           className="hidden"
           onChange={handleImageUpload}
         />
-        <button onClick={handlePost} className="p-2 border-2 m-2 rounded-xl">
+        <button
+          onClick={handlePost}
+          className="p-2 border-[1px] mx-2 rounded-md"
+        >
           이미지 등록
         </button>
         <button
           onClick={handleDeleteImageAndTags}
-          className="p-2 border-2 m-2 rounded-xl"
+          className="p-2 border-[1px] mx-2 rounded-md"
         >
           이미지 삭제
         </button>
@@ -114,10 +116,10 @@ const WriteFormShowroomcopy = () => {
           dangerouslySetInnerHTML={{ __html: editorContent }}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className="h-full w-full min-h-[600px]"
+          className="p-2 mt-6 h-full w-full min-h-[600px]"
         ></div>
       </div>
-    </div>
+    </>
   );
 };
 

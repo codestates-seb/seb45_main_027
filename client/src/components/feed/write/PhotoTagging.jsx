@@ -1,52 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import Tag from "./Tag";
-
-const StylePhotoTagging = styled.div`
-  display: inline-block;
-  position: relative; // 요소를 자기 기준으로 배치
-  margin-left: 100px;
-`;
-
-const StyledImage = styled.img`
-  max-width: 100%;
-  cursor: crosshair;
-
-  border-radius: 10px;
-`;
-
-const InputContainer = styled.div`
-  position: absolute; // 부모(조상) 요소를 기준으로 배치
-  // 부모를 기준으로 x축으로 x만큼 y축으로 y만큼 이동시키기
-  left: ${(props) => props.x};
-  top: ${(props) => props.y};
-`;
-
-const Input = styled.input`
-  padding: 4px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 5px;
-`;
-
-const Button = styled.button`
-  padding: 4px 8px;
-  background-color: #00647b;
-  border-radius: 5px;
-  color: white;
-  border: none;
-  cursor: pointer;
-`;
-
-const CloseInputButton = styled.button`
-  padding: 4px 8px;
-  background-color: #00647b;
-  border-radius: 5px;
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin-left: 5px;
-`;
 
 const PhotoTagging = ({
   imageSrc,
@@ -95,13 +48,20 @@ const PhotoTagging = ({
   const handleCloseInput = () => {
     setInputVisible(false);
   };
+  console.log(inputPosition);
 
   return (
-    <StylePhotoTagging
+    <div
+      className="inline-block relative"
       onMouseEnter={() => setPhotoHovered(true)}
       onMouseLeave={() => setPhotoHovered(false)}
     >
-      <StyledImage src={imageSrc} alt="Taggable" onClick={handleImageClick} />
+      <img
+        className="max-w-full cursor-crosshair rounded-[10px]"
+        src={imageSrc}
+        alt="Taggable"
+        onClick={handleImageClick}
+      />
       {tags.map((tag, index) => (
         <Tag
           key={index}
@@ -114,8 +74,15 @@ const PhotoTagging = ({
       ))}
       {photoHovered &&
         inputVisible && ( //사진에 호버, inputVisible이 true일때만 태그인풋 박스 렌더링
-          <InputContainer x={inputPosition.x} y={inputPosition.y}>
-            <Input
+          <div
+            className="absolute"
+            style={{
+              left: inputPosition.x,
+              top: inputPosition.y,
+            }}
+          >
+            <input
+              className="p-2 mr-5 border-none rounded-[5px]"
               autoFocus
               type="text"
               value={currentTag.text}
@@ -123,13 +90,21 @@ const PhotoTagging = ({
               placeholder="Enter tag"
               onKeyDown={handleEnterKey} //엔터클릭시 handleTagSubmit 동작
             />
-            <Button onClick={handleTagSubmit}>Add Tag</Button>
-            <CloseInputButton onClick={handleCloseInput}>
+            <button
+              className="py-2 px-4 bg-[#00647b] rounded-[5px] text-white border-none cursor-pointer"
+              onClick={handleTagSubmit}
+            >
+              Add Tag
+            </button>
+            <button
+              className="py-2 px-4 bg-[#00647b]  rounded-[5px] text-white border-none cursor-pointer ml-[5px] "
+              onClick={handleCloseInput}
+            >
               Close
-            </CloseInputButton>
-          </InputContainer>
+            </button>
+          </div>
         )}
-    </StylePhotoTagging>
+    </div>
   );
 };
 
