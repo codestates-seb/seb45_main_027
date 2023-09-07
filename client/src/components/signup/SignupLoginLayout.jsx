@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom";
 import OauthLayout from "./OauthLayout";
-//import FormLayout from "./FormLayout";
 import AuthNavigation from "./AuthNavigation";
 import FormValidation from "./FormValidation";
 

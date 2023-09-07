@@ -1,13 +1,13 @@
 import React from "react";
 
-const UserInfoFollowList = ({ userList }) => {
-  const handleFollow = (userId) => {
-    console.log(`Follow user with ID ${userId}`);
-  };
+const UserInfoFollowList = ({ userList, handleFollowingList, handleFollowersList }) => {
+  // const handleFollow = (userId) => {
+  //   console.log(`Follow user with ID ${userId}`);
+  // };
 
-  const handleUnfollow = (userId) => {
-    console.log(`Unfollow user with ID ${userId}`);
-  };
+  // const handleUnfollow = () => {
+  //   handleFollowingList(userId);
+  // };
 
   return (
     <div>
@@ -27,9 +27,9 @@ const UserInfoFollowList = ({ userList }) => {
             className="text-xs text-white font-bold"
             onClick={() => {
               if (user.isFollowing) {
-                handleUnfollow(user.id);
+                handleFollowingList(user.id);
               } else {
-                handleFollow(user.id);
+                handleFollowersList(user.id);
               }
             }}
           >

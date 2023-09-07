@@ -5,7 +5,7 @@ const OauthLayout = ({ path }) => {
   const { kakaoLogin, naverLogin } = useAuth();
   const params = new URLSearchParams(window.location.search);
   const code = params.get("code");
-  console.log("Code from URL:", code);
+  console.log("Code from URL:", code);//확인용 추후 삭제
 
   const kakaoRestApiKey = process.env.REACT_APP_KAKAO_REST_API_KEY;
   const kakaoRedirectUrl = `http://localhost:3000/${path}`;

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import axios from "axios";
 import ChangePassword from "./ChangePassword";
 import EditProfile from "./EditProfile";
 
 const UserAccount = ({ toggleAccountSettings, userDetails }) => {
+  const navigate = useNavigate();
+
   const [profileData, setProfileData] = useState({
     id: userDetails[0].id,
     username: userDetails[0].username,
@@ -12,6 +15,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
   });
 
   const [updatedPassword, setUpdatedPassword] = useState({
+    currentPassword: "",
     newPassword: "",
     confirmPassword: "",
   });
@@ -52,6 +56,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
       });
       console.log(response.data);
       alert("Profile updated!");
+      navigate("/myinfo");
     } catch (error) {
       console.error(error);
       alert("Error updating profile");
@@ -60,13 +65,34 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
   };
 
   const handlePasswordUpdate = async () => {
-    // axios.post("/api/password", { newPassword: profileData.newPassword });
-    alert("Password updated!");
+    if (updatedPassword.newPassword !== updatedPassword.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+    try {
+      // axios.post("/api/password", { currentPassword: updatedPassword.currentPassword, newPassword: updatedPassword.newPassword });
+      alert("Password updated!");
+      navigate("/myinfo");
+    } catch (error) {
+      console.error(error);
+      alert("Error updating password");
+    }
   };
 
   const handleAccountDeletion = async () => {
-    // axios.delete("/api/account");
-    alert("Account deleted!");
+    const confirmDeletion = window.confirm(
+      "Are you sure you want to delete your account? This action cannot be undone."
+    );
+
+    if (confirmDeletion) {
+      try {
+        // axios.delete("/api/account");
+        alert("Account deleted!");
+        navigate("/");
+      } catch (error) {
+        console.error("Account deletion failed:", error);
+      }
+    }
   };
 
   const inputStyle =
@@ -119,7 +145,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
           <li className={tabStyle} onClick={() => toggleTab("changePassword")}>
             Change Password
           </li>
-
+          {/* 소셜로그인일 경우 비밀번호 변경 불가능하게 추후 변경예정 */}
           {activeTab === "changePassword" && (
             <ChangePassword
               inputStyle={inputStyle}
