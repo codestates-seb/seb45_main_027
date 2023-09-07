@@ -77,6 +77,7 @@ export function AuthProvider({ children }) {
       localStorage.setItem("refreshToken", response.data.refreshToken);
       navigate("/");
     } catch (error) {
+      //인증완료되지 않은 이메일 처리도 해야됨
       console.error("Login failed:", error);
       alert("Login failed");
       throw error;
@@ -122,16 +123,13 @@ export function AuthProvider({ children }) {
 
   async function register(nickname, email, password) {
     try {
-      const response = await axios.post(`${baseURL}/auth/oauth`, {
+      await axios.post(`${baseURL}/auth/oauth`, {
         nickname,
         email,
         password,
       });
-      setUser(response.data.user); // user로 오는지 member로 오는지 확인 필요
-
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
-      navigate("/login");
+      
+      navigate("/verify");
     } catch (error) {
       console.error("Registration failed:", error);
       alert("Signup failed");

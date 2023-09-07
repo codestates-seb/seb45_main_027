@@ -15,6 +15,7 @@ import WriteTips from "./pages/WriteTips";
 import ViewShowRoom from "./pages/ViewShowRoom";
 import ViewTips from "./pages/ViewTips";
 import { AuthProvider } from "./context/AuthContext";
+import Verify from "./pages/Verify";
 
 const headerPaths = [
   "myinfo",
@@ -23,6 +24,7 @@ const headerPaths = [
   "map",
   "login",
   "signup",
+  "verify",
   "showroom/write",
   "tips/write",
   "showroom/:id/view",
@@ -32,6 +34,7 @@ const headerPaths = [
 const footerPaths = [
   "login",
   "signup",
+  "verify",
   "myinfo",
   "showroom",
   "tips",
@@ -55,6 +58,7 @@ function App() {
         <Route path={"/"} element={<Main />} />
         <Route path={"/login"} element={<Login />} />
         <Route path={"/signup"} element={<Signup />} />
+        <Route path={"/verify"} element={<Verify />} />
         <Route path={"/myinfo"} element={<MyInfo />} />
         <Route path={"/showroom"} element={<ShowRoom />} />
         <Route path={"/tips"} element={<Tips />} />

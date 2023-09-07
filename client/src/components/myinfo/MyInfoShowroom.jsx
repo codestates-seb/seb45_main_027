@@ -11,9 +11,14 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
   const [isLiked, setIsLiked] = useState(likeData);
 
   const deletePost = (itemId) => {
-    const updatedPosts = isPostDeleted.filter((item) => item.id !== itemId);
-    setIsPostDeleted(updatedPosts);
-    console.log(isPostDeleted);
+    const confirmDeletion = window.confirm(
+      "Are you sure you want to delete this post? This action cannot be undone."
+    );
+    if (confirmDeletion) {
+      const updatedPosts = isPostDeleted.filter((item) => item.id !== itemId);
+      setIsPostDeleted(updatedPosts);
+      console.log(isPostDeleted);
+    }
   };
 
   const toggleBookmark = (itemId) => {
@@ -28,8 +33,7 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
     console.log(isLiked);
   };
 
-
- // 페이지네이션 부분
+  // 페이지네이션 부분
   const [postPage, setPostPage] = useState(1);
   const [bookmarkPage, setBookmarkPage] = useState(1);
   const [likePage, setLikePage] = useState(1);
@@ -78,7 +82,7 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
             </div>
           ))}
         {activeTab === 2 &&
-           visibleBookmarks.map((item) => (
+          visibleBookmarks.map((item) => (
             <div key={item.id}>
               <MyInfoBookmark
                 imgSrc={item.imgSrc}
@@ -102,12 +106,16 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
             </div>
           ))}
       </div>
-         {activeTab === 1 && (
+      {activeTab === 1 && (
         <Pagination
           currentPage={postPage}
           totalPages={Math.ceil(postData.length / itemsPerPage)}
           onNextPage={() =>
-            handleNextPage(postPage, setPostPage, Math.ceil(postData.length / itemsPerPage))
+            handleNextPage(
+              postPage,
+              setPostPage,
+              Math.ceil(postData.length / itemsPerPage)
+            )
           }
           onPrevPage={() => handlePrevPage(postPage, setPostPage)}
         />
@@ -117,7 +125,11 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
           currentPage={bookmarkPage}
           totalPages={Math.ceil(bookmarkData.length / itemsPerPage)}
           onNextPage={() =>
-            handleNextPage(bookmarkPage, setBookmarkPage, Math.ceil(bookmarkData.length / itemsPerPage))
+            handleNextPage(
+              bookmarkPage,
+              setBookmarkPage,
+              Math.ceil(bookmarkData.length / itemsPerPage)
+            )
           }
           onPrevPage={() => handlePrevPage(bookmarkPage, setBookmarkPage)}
         />
@@ -127,7 +139,11 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
           currentPage={likePage}
           totalPages={Math.ceil(likeData.length / itemsPerPage)}
           onNextPage={() =>
-            handleNextPage(likePage, setLikePage, Math.ceil(likeData.length / itemsPerPage))
+            handleNextPage(
+              likePage,
+              setLikePage,
+              Math.ceil(likeData.length / itemsPerPage)
+            )
           }
           onPrevPage={() => handlePrevPage(likePage, setLikePage)}
         />
