@@ -1,18 +1,11 @@
 import React from "react";
 
-const UserInfoFollowList = ({ userList, handleFollowingList, handleFollowersList }) => {
-  // const handleFollow = (userId) => {
-  //   console.log(`Follow user with ID ${userId}`);
-  // };
-
-  // const handleUnfollow = () => {
-  //   handleFollowingList(userId);
-  // };
+const UserInfoFollowList = ({ userList, handleFollow, handleUnfollow }) => {
 
   return (
     <div>
       {userList.map((user) => (
-        <div key={user.id} className="flex justify-between mx-3 mb-1.5">
+        <div key={user.id} className="flex justify-between pl-5 pr-3 mb-1.5 ">
           <div className="flex">
             <img
               className="h-12 w-12 object-cover rounded-full"
@@ -26,10 +19,10 @@ const UserInfoFollowList = ({ userList, handleFollowingList, handleFollowersList
           <button
             className="text-xs text-white font-bold"
             onClick={() => {
-              if (user.isFollowing) {
-                handleFollowingList(user.id);
+              if (!user.isFollowing) {
+                handleFollow(user.id);
               } else {
-                handleFollowersList(user.id);
+                handleUnfollow(user.id);
               }
             }}
           >

@@ -3,6 +3,8 @@ import Pagination from "./Pagination";
 import MyInfoPost from "./MyInfoPost";
 import MyInfoBookmark from "./MyInfoBookmark";
 import MyInfoLike from "./MyInfoLike";
+import { toast } from "react-hot-toast";
+
 
 const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
   // 게시글, 북마크, 삭제 부분
@@ -17,6 +19,8 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
     if (confirmDeletion) {
       const updatedPosts = isPostDeleted.filter((item) => item.id !== itemId);
       setIsPostDeleted(updatedPosts);
+    toast.success("게시글이 삭제되었습니다!");
+
       console.log(isPostDeleted);
     }
   };
@@ -24,12 +28,16 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
   const toggleBookmark = (itemId) => {
     const updatedBookmarks = isBookmarked.filter((item) => item.id !== itemId);
     setIsBookmarked(updatedBookmarks);
+    toast.success("북마크가 해제되었습니다!");
+
     console.log(isBookmarked);
   };
 
   const toggleLike = (itemId) => {
     const updatedLikes = isLiked.filter((item) => item.id !== itemId);
     setIsLiked(updatedLikes);
+    toast.success("좋아요가 해제되었습니다!");
+
     console.log(isLiked);
   };
 
@@ -67,9 +75,9 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
   };
 
   return (
-    <div className="md:min-h-[380px]">
+    <div className="md:min-h-[300px]">
       <div className="text-[#F5634A] text-3xl font-bold mb-[2%]">Show Room</div>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap items-center">
         {activeTab === 1 &&
           visiblePosts.map((item) => (
             <div key={item.id}>
