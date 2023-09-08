@@ -33,15 +33,16 @@ const SignupAuth = () => {
   };
 
   const inputStyle =
-    "text-xl px-4 py-3 mb-2 border rounded-md focus:outline-none focus:ring focus:ring-[#00647B]/30";
+    "text-xl px-4 py-3 mb-2 border rounded-md focus:outline-none focus:ring focus:ring-[#00647b]/30";
   const labelStyle = "flex justify-start text-2xl font-medium mt-6 mb-2 ml-2";
-  const verifyButtonStyle = "bg-[#00647B] text-white text-xl font-medium px-4 py-3 mb-2 ml-1 rounded-md hover:bg-[#00647B]/80"
+  const verifyButtonStyle =
+    "ml-2 bg-[#00647B] hover:bg-[#00647bb4] shadow py-2.5 px-6 text-2xl font-semibold text-white rounded-md";
   const buttonStyle =
-    "flex self-center bg-[#00647B] text-white text-2xl font-medium rounded-md px-4 py-2 mt-[10%] hover:bg-[#00647B]/80";
+    "flex self-center justify-center w-full my-8 bg-[#00647B] hover:bg-[#00647bb4] shadow py-4 px-6 text-2xl font-semibold text-white rounded-md";
 
   return (
     <div className="flex flex-col justify-center items-center border bg-white opacity-[95%] text-[#00647B] min-w-[30%] mt-20 mb-40 py-14">
-      <div className='text-5xl font-medium mb-[5%]'>Activate Account</div>
+      <div className="text-5xl font-medium mb-[5%]">Activate Account</div>
       <div>
         <label className={labelStyle}>Verify your email address</label>
         <input
@@ -51,7 +52,9 @@ const SignupAuth = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <button className={verifyButtonStyle} onClick={handleEmailSubmit}>Verify</button>
+        <button className={verifyButtonStyle} onClick={handleEmailSubmit}>
+          Verify
+        </button>
 
         <label className={labelStyle}>Enter Verification Code</label>
         <input
@@ -61,11 +64,10 @@ const SignupAuth = () => {
           value={verificationCode}
           onChange={(e) => setVerificationCode(e.target.value)}
         />
+        <button className={buttonStyle} onClick={handleVerificationCodeSubmit}>
+          Login Now
+        </button>
       </div>
-
-      <button className={buttonStyle} onClick={handleVerificationCodeSubmit}>
-      Login Now
-      </button>
     </div>
   );
 };
