@@ -2,14 +2,14 @@ import React from "react";
 import BestInteriorHeader from "./BestInteriorHeader";
 import BestInteriorCarousel from "./BestInteriorCarousel";
 
-const BestInterior = ({ viewportWidth, setViewportWidth }) => {
+const BestInterior = ({ viewportWidth, showroomData }) => {
   return (
     <div className="flex-col">
       <BestInteriorHeader />
       <BestInteriorCarousel
         viewportWidth={viewportWidth}
-        setViewportWidth={setViewportWidth}
-      ></BestInteriorCarousel>
+        showroomData={showroomData}
+      />
     </div>
   );
 };
