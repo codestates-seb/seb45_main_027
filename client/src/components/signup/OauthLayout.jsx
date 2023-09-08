@@ -33,9 +33,8 @@ const OauthLayout = ({ path }) => {
         height="48"
         viewBox="0 0 48 48"
         preserveAspectRatio="xMidYMid meet"
-        className="mr-6"
-        onClick={handleKaKaologin}
-      >
+        className="mx-12"
+        onClick={handleKaKaologin}>
         <g fill="none" fillRule="evenodd">
           <path
             fill="#FFEB00"
@@ -53,8 +52,8 @@ const OauthLayout = ({ path }) => {
         height="48"
         viewBox="0 0 48 48"
         preserveAspectRatio="xMidYMid meet"
-        onClick={handleNaverLogin}
-      >
+        className="mx-12"
+        onClick={handleNaverLogin}>
         <g fill="none" fillRule="evenodd">
           <path
             fill="#00C63B"

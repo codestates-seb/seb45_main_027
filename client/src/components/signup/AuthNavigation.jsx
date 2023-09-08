@@ -21,7 +21,7 @@ const AuthNavigation = ({ path }) => {
           {showResetPassword && <ResetPassword />}
         </>
       )}
-      <div className="flex flex-row text-black my-5">
+      <div className="flex flex-row text-[#555] my-5">
         <div className="mr-2">
           {path === "signup"
             ? "Already have an account?"
@@ -37,7 +37,7 @@ const AuthNavigation = ({ path }) => {
           </Link>
         )}
       </div>
-      <div className="text-black">or</div>
+      <div className="text-[#555]">or</div>
     </>
   );
 };

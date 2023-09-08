@@ -54,29 +54,29 @@ const TipsContent = ({ viewportWidth }) => {
         {image.map((item, idx) => (
           <div
             key={idx}
-            className="flex-col mx-3 mb-3 w-full sm:w-[45%] lg:w-[30%] h-[20%]">
+            className="flex-col mx-3 mb-3 w-full sm:w-[45%] md:w-[30%] lg:w-[23%] h-[20%]">
             <div className="relative">
-            <img
-              src={item.url}
-              alt="tipsimg"
-              className="aspectRatioImage_1_1 rounded-md cursor-pointer"
-              onClick={() => handleTipClick(item.tipId)}
-            />
-            <p>
               <img
-                src={
-                  item.isBookmarked
-                    ? "./images/isBookmarked.png"
-                    : "./images/Bookmark.png"
-                }
-                alt="Bookmark"
-                className="absolute w-10 h-10 bottom-4 right-4 cursor-pointer"
-                onClick={() => toggleBookmark(idx)}
+                src={item.url}
+                alt="tipsimg"
+                className="aspectRatioImage_1_1 rounded-md cursor-pointer"
+                onClick={() => handleTipClick(item.tipId)}
               />
+              <p>
+                <img
+                  src={
+                    item.isBookmarked
+                      ? "./images/isBookmarked.png"
+                      : "./images/Bookmark.png"
+                  }
+                  alt="Bookmark"
+                  className="absolute w-10 h-10 bottom-4 right-4 cursor-pointer"
+                  onClick={() => toggleBookmark(idx)}
+                />
               </p>
             </div>
             <TipsInfo handleTipClick={handleTipClick} item={item} />
-        </div>
+          </div>
         ))}
       </div>
     </div>
