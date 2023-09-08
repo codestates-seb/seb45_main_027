@@ -1,36 +1,37 @@
 import React, { useState } from "react";
 import TipsInfo from "./TipsInfo";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const data = [
-  { url: "./asset/image.png", isBookmarked: true },
-  { url: "./asset/image2.png", isBookmarked: false },
-  { url: "./asset/image3.png", isBookmarked: false },
-  { url: "./asset/image4.png", isBookmarked: false },
-  { url: "./asset/image.png", isBookmarked: false },
-  { url: "./asset/image2.png", isBookmarked: false },
-  { url: "./asset/image3.png", isBookmarked: false },
-  { url: "./asset/image4.png", isBookmarked: false },
-  { url: "./asset/image.png", isBookmarked: true },
-  { url: "./asset/image2.png", isBookmarked: false },
-  { url: "./asset/image3.png", isBookmarked: false },
-  { url: "./asset/image4.png", isBookmarked: false },
-  { url: "./asset/image.png", isBookmarked: false },
-  { url: "./asset/image2.png", isBookmarked: false },
-  { url: "./asset/image3.png", isBookmarked: false },
-  { url: "./asset/image4.png", isBookmarked: false },
-  { url: "./asset/image.png", isBookmarked: true },
-  { url: "./asset/image2.png", isBookmarked: false },
-  { url: "./asset/image3.png", isBookmarked: false },
-  { url: "./asset/image4.png", isBookmarked: false },
-  { url: "./asset/image.png", isBookmarked: false },
-  { url: "./asset/image2.png", isBookmarked: false },
-  { url: "./asset/image3.png", isBookmarked: false },
-  { url: "./asset/image4.png", isBookmarked: false },
+  { url: "./asset/image.png", isBookmarked: true, tipId: 1 },
+  { url: "./asset/image2.png", isBookmarked: false, tipId: 2 },
+  { url: "./asset/image3.png", isBookmarked: false, tipId: 3 },
+  { url: "./asset/image4.png", isBookmarked: false, tipId: 4 },
+  { url: "./asset/image.png", isBookmarked: false, tipId: 5 },
+  { url: "./asset/image2.png", isBookmarked: false, tipId: 6 },
+  { url: "./asset/image3.png", isBookmarked: false, tipId: 7 },
+  { url: "./asset/image4.png", isBookmarked: false, tipId: 8 },
+  { url: "./asset/image.png", isBookmarked: true, tipId: 9 },
+  { url: "./asset/image2.png", isBookmarked: false, tipId: 10 },
+  { url: "./asset/image3.png", isBookmarked: false, tipId: 11 },
+  { url: "./asset/image4.png", isBookmarked: false, tipId: 12 },
+  { url: "./asset/image.png", isBookmarked: false, tipId: 13 },
+  { url: "./asset/image2.png", isBookmarked: false, tipId: 14 },
+  { url: "./asset/image3.png", isBookmarked: false, tipId: 15 },
+  { url: "./asset/image4.png", isBookmarked: false, tipId: 16 },
+  { url: "./asset/image.png", isBookmarked: true, tipId: 17 },
+  { url: "./asset/image2.png", isBookmarked: false, tipId: 18 },
+  { url: "./asset/image3.png", isBookmarked: false, tipId: 19 },
+  { url: "./asset/image4.png", isBookmarked: false, tipId: 20 },
+  { url: "./asset/image.png", isBookmarked: false, tipId: 21 },
+  { url: "./asset/image2.png", isBookmarked: false, tipId: 22 },
+  { url: "./asset/image3.png", isBookmarked: false, tipId: 23 },
+  { url: "./asset/image4.png", isBookmarked: false, tipId: 24 },
 ];
 
 const TipsContent = ({ viewportWidth }) => {
   const [image, setImage2] = useState(data); // 이미지데이터를 상태로 저장
+
 
   // 북마크 상태를 변경시켜주는 함수
   const toggleBookmark = (idx) => {
@@ -39,7 +40,14 @@ const TipsContent = ({ viewportWidth }) => {
     setImage2(updatedBookmarks);
     console.log(updatedBookmarks);
   };
+ 
+  const navigate = useNavigate();
+  
 
+  // 게시글 클릭시 페이지 이동하는 핸들러 함수
+  const handleTipClick = (tipId) => {
+    navigate(`/tips/${tipId}`);
+  };
   return (
     <div className="flex-col m-4">
       <div className="flex justify-between flex-wrap">
@@ -52,6 +60,7 @@ const TipsContent = ({ viewportWidth }) => {
               src={item.url}
               alt="tipsimg"
               className="aspectRatioImage_1_1 rounded-md"
+              onClick={() => handleTipClick(item.tipId)}
             />
             <p>
               <img
@@ -65,10 +74,8 @@ const TipsContent = ({ viewportWidth }) => {
                 onClick={() => toggleBookmark(idx)}
               />
             </p>
+            <TipsInfo handleTipClick={handleTipClick} item={item} />
           </div>
-          <Link to=":id/view">
-          <TipsInfo />
-          </Link>
         </div>
         ))}
       </div>

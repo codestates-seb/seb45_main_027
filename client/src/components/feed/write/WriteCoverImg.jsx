@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 
-const WriteCoverImg = ({ bgColor, btnColor }) => {
-  const [image, setImage] = useState(null);
-
+const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
   const imageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      setImage(reader.result);
+      setCoverImage(reader.result);
     };
 
     if (file) {
@@ -25,9 +23,9 @@ const WriteCoverImg = ({ bgColor, btnColor }) => {
       <div
         className={`${bgColor} w-full h-[500px] flex flex-col justify-center items-center text-xl rounded-md shadow`}
       >
-        {image ? (
+        {coverImage ? (
           <img
-            src={image}
+            src={coverImage}
             alt="CoverImg"
             className="w-full h-[100%] rounded-md object-cover"
             onClick={handleUpload}
@@ -45,7 +43,7 @@ const WriteCoverImg = ({ bgColor, btnColor }) => {
           onChange={imageUpload}
         />
 
-        {!image ? (
+        {!coverImage ? (
           <button
             className={`${btnColor} text-white px-10 py-2 rounded-md shadow mt-10`}
             onClick={handleUpload}

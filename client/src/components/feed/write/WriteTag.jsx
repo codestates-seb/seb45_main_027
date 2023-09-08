@@ -1,8 +1,6 @@
 import React, { useState, useCallback } from "react";
 
-const WriteTag = () => {
-  const [tags, setTags] = useState([]);
-
+const WriteTag = ({ tags, setTags }) => {
   // 태그추가
   const handleTagKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -32,7 +30,8 @@ const WriteTag = () => {
             <span
               key={tag}
               className="m-1 p-1 border rounded-md cursor-pointer"
-              onClick={() => handleTagClick(tag)}>
+              onClick={() => handleTagClick(tag)}
+            >
               {tag}
             </span>
           ))}
