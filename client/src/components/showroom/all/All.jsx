@@ -2,7 +2,7 @@ import React from "react";
 import AllHeader from "./AllHeader";
 import AllContent from "./AllContent";
 
-const All = ({ viewportWidth, setViewportWidth }) => {
+const All = ({ viewportWidth, setViewportWidth, showroomData }) => {
   return (
     <div className="flex-col mt-20">
       <AllHeader
@@ -12,6 +12,7 @@ const All = ({ viewportWidth, setViewportWidth }) => {
       <AllContent
         viewportWidth={viewportWidth}
         setViewportWidth={setViewportWidth}
+        showroomData={showroomData}
       />
     </div>
   );

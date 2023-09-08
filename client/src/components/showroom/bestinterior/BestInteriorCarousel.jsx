@@ -21,7 +21,7 @@ const data = [
   { url: "./asset/image4.png", isBookmarked: false },
 ];
 
-const BestInteriorCarousel = ({ viewportWidth, setViewportWidth }) => {
+const BestInteriorCarousel = ({ viewportWidth, showroomData }) => {
   const [numVisibleSlides, setNumVisibleSlides] = useState(20); // 캐러셀 사진 크기를 반응형으로 제어하기 위한 상태
   const [image, setImage] = useState(data); // 이미지데이터를 상태로 저장
 

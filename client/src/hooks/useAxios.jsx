@@ -1,35 +1,29 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-const useAxios = (url, method, parameter = null, config = {}) => {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
+const useAxios = (configParams) => {
+  // axios.defaults.baseURL = "https://5402-210-123-100-75.ngrok-free.app";
+  const [res, setRes] = useState("");
+  const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true)
-          try {
-            const res = await axios({
-              url: parameter
-                ? `${url}/${parameter}`
-                : url,
-              method,
-              ...config,
-            });
-            setData(res.data);
-          } catch (err) {
-            setError(err.message);
-          } finally {   
-            setLoading(false);
-          }
-        };
+  useEffect(() => {
+    fetchDataUsingAxios(configParams);
+  }, []);
 
-        fetchData();
+  const fetchDataUsingAxios = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.request(configParams);
+      setRes(response);
+    } catch (error) {
+      setErr(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  }, [url, method, parameter, JSON.stringify(config)]);
-
-  return { data, error, loading };
+  return [res, err, loading];
 };
 
 export default useAxios;
@@ -83,31 +77,3 @@ export default useAxios;
 // ---------------------------------------------------------------------------------------
 
 // 원호
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-
-// const useAxios = (configParams) => {
-//   axios.defaults.baseURL = "https://4ef7-210-123-100-75.ngrok-free.app/";
-//   const [res, setRes] = useState("");
-//   const [err, setErr] = useState("");
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     fetchDataUsingAxios(configParams);
-//   }, []);
-
-//   const fetchDataUsingAxios = async () => {
-//     try {
-//       const response = await axios.request(configParams);
-//       setRes(response);
-//     } catch (error) {
-//       setErr(error);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   return [res, err, loading];
-// };
-
-// export default useAxios;

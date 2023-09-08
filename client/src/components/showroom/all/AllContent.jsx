@@ -28,7 +28,7 @@ const data = [
   { url: "./asset/image4.png", isBookmarked: false, feedId: 24 },
 ];
 
-const AllContent = () => {
+const AllContent = ({ showroomData }) => {
   const [image, setImage2] = useState(data); // 이미지데이터를 상태로 저장
   const navigate = useNavigate();
 
@@ -48,20 +48,22 @@ const AllContent = () => {
   return (
     <div className="flex-col mx-4">
       <div className="flex justify-between flex-wrap">
-        {image.map((item, idx) => (
+        {showroomData.map((item, idx) => (
           <div
             key={idx}
             className="flex-col mx-3 mb-3 w-full sm:w-[45%] lg:w-[30%] h-[20%]"
           >
             <div className="relative">
               <img
-                src={item.url}
+                // 이미지 들어오면 수정 **
+                src="./asset/image.png"
                 alt="shroomimg"
                 className="aspectRatioImage_4_3 rounded-md cursor-pointer"
                 onClick={() => handleFeedClick(item.feedId)}
               />
               <p>
                 <img
+                  // isBookmarked 변수명 수정요함 **
                   src={
                     item.isBookmarked
                       ? "./images/isBookmarked.png"
@@ -78,10 +80,11 @@ const AllContent = () => {
                 className="flex justify-center my-3 cursor-pointer"
                 onClick={() => handleFeedClick(item.feedId)}
               >
-                <span className="text-3xl font-semibold">Title.</span>
+                <span className="text-3xl font-semibold">{item.title}</span>
               </div>
               <div className="flex justify-center items-center mb-3 text-gray-800">
                 <img
+                  // 멤버 이미지 수정 **
                   src="./images/Wonho.png"
                   alt="프로필사진"
                   className="w-6 h-6 rounded-full mr-2"
@@ -90,12 +93,13 @@ const AllContent = () => {
               </div>
               <div className="flex justify-center text-lg text-gray-500">
                 <div className="mr-10">
+                  {/* 스크랩 수정** */}
                   <span>스크랩 :</span>
                   <span className="ml-1">0</span>
                 </div>
                 <div>
                   <span>조회수 :</span>
-                  <span className="ml-1">0</span>
+                  <span className="ml-1">{item.views}</span>
                 </div>
               </div>
             </div>
