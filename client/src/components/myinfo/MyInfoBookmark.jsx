@@ -26,8 +26,8 @@ const MyInfoBookmark = ({
           <img
             src={
               isBookmarked
-                ? "./images/isBookmarked.png"
-                : "./images/Bookmark.png"
+                ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isBookmarked.png"
+                : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Bookmark.png"
             }
             alt="Bookmark"
             style={{

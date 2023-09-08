@@ -33,7 +33,7 @@ const MyInfoContentList = () => {
   // const selectedFilter = myinfoData[postsByType[activeTab]];
 
   return (
-    <div className="flex-col bg-white rounded-md w-full shadow-md mb-6 pl-[4%] pt-[2%] md:w-[70%] md:min-h-[800px] md:my-[2%]">
+    <div className="flex-col bg-white rounded-md w-full shadow-md mb-6 pl-[4%] pt-[2%] lg:w-[70%] md:min-h-[800px] md:my-[2%]">
       <ul className="flex md:mb-[2%]">
         <li className={tabStyle(1)} onClick={() => handleTabs(1)}>
           게시글

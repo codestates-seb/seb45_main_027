@@ -21,7 +21,7 @@ const MyInfoLayout = () => {
 
   return (
     <div>
-      <div className="flex flex-col justify-center mb-[10%] mx-4 md:w-[95%] md:flex-row">
+      <div className="flex flex-col justify-center mb-[10%] px-4 w-full md:flex-row">
         {!showAccountSettings && (
           <>
             <UserProfile
@@ -32,7 +32,12 @@ const MyInfoLayout = () => {
           </>
         )}
       </div>
-      {showAccountSettings && <UserAccount toggleAccountSettings={toggleAccountSettings} userDetails={userDetails}/>}
+      {showAccountSettings && (
+        <UserAccount
+          toggleAccountSettings={toggleAccountSettings}
+          userDetails={userDetails}
+        />
+      )}
     </div>
   );
 };

@@ -19,7 +19,9 @@ const MyInfoLike = ({ imgSrc, title, itemId, toggleLike, isLiked }) => {
         >
           <img
             src={
-              isLiked ? "./images/isLiked.png" : "./images/emptyHeart.png"
+              isLiked
+                ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isLiked.png"
+                : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/emptyHeart.png"
             }
             alt="Like"
             style={{
