@@ -20,7 +20,7 @@ const TipsHeader = ({ viewportWidth }) => {
           <h1 className="text-3xl md:text-4xl text-[#F5634A] font-semibold Showcard-Gothic w-max">
             Interior Tips
           </h1>
-          <h2 className="hidden md:block pl-4 text-gray-500 font-medium text-lg">
+          <h2 className="hidden md:block text-gray-500 font-medium text-lg pl-4  w-max">
             당신의 삶을 바꿔드립니다. 지금 바로 태그검색!
           </h2>
         </div>
