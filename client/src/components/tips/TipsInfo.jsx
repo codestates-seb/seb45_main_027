@@ -1,9 +1,12 @@
 import React from "react";
 
-const TipsInfo = () => {
+const TipsInfo = ({ handleTipClick, item }) => {
   return (
     <div className="flex-col pt-2 mb-8">
-      <div className="flex justify-center mb-3">
+      <div
+        className="flex justify-center mb-3 cursor-pointer"
+        onClick={() => handleTipClick(item.tipId)}
+      >
         <span className="text-3xl font-bold">Title.</span>
       </div>
 
@@ -34,6 +37,7 @@ const TipsInfo = () => {
             <span className="pl-1">22</span>
           </div>
         </div>
+        {/* 프로필 이동 로직 구현해야함*** */}
         <span>Username</span>
       </div>
     </div>

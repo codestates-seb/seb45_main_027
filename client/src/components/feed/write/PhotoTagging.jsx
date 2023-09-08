@@ -48,7 +48,6 @@ const PhotoTagging = ({
   const handleCloseInput = () => {
     setInputVisible(false);
   };
-  console.log(inputPosition);
 
   return (
     <div

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 const btn = "rounded-md px-9 py-1 mx-2 shadow ";
 
 const WriteBtn = ({
+  saveToLocalStorage,
   buttonBgColor,
   buttonBorderColor,
   buttonTextColor,
@@ -42,6 +43,7 @@ const WriteBtn = ({
       >
         <button
           className={`${buttonBorderColor} ${buttonTextColor} border bg-white ${btn}`}
+          onClick={saveToLocalStorage}
         >
           임시저장
         </button>

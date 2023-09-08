@@ -59,8 +59,15 @@ const optionsData = [
   },
 ];
 
-const WriteInformation = () => {
+const WriteInformation = ({ selectedValues, setSelectedValues }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleSelectChange = (name, value) => {
+    setSelectedValues((prevSelectedValues) => ({
+      ...prevSelectedValues,
+      [name]: value,
+    }));
+  };
 
   const customStyles = {
     // 드랍다운 스타일
@@ -107,8 +114,13 @@ const WriteInformation = () => {
                   value: option,
                   label: option,
                 }))}
-                placeholder={`선택해주세요`}
+                placeholder={`선택해주세요.`}
                 styles={customStyles}
+                // selectedValues와 연동
+                value={selectedValues[optionGroup.name] || []}
+                onChange={(value) =>
+                  handleSelectChange(optionGroup.name, value)
+                }
               />
             </li>
           ))}
