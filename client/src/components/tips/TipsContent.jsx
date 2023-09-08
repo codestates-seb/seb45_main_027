@@ -59,7 +59,7 @@ const TipsContent = ({ viewportWidth }) => {
             <img
               src={item.url}
               alt="tipsimg"
-              className="aspectRatioImage_1_1 rounded-md"
+              className="aspectRatioImage_1_1 rounded-md cursor-pointer"
               onClick={() => handleTipClick(item.tipId)}
             />
             <p>
@@ -73,9 +73,9 @@ const TipsContent = ({ viewportWidth }) => {
                 className="absolute w-10 h-10 bottom-4 right-4 cursor-pointer"
                 onClick={() => toggleBookmark(idx)}
               />
-            </p>
+              </p>
+            </div>
             <TipsInfo handleTipClick={handleTipClick} item={item} />
-          </div>
         </div>
         ))}
       </div>
