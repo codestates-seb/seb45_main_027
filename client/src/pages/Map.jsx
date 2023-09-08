@@ -21,11 +21,15 @@ const Map = () => {
   return (
     <>
       <Background mainclassName="h-full bg-[#FFFAEE] ">
-        <div className="p-5 flex-col w-full">
+        <div className="flex flex-col w-full md:mt-10 md:mx-8">
           {viewportWidth < 720 ? null : (
-            <h1 className="text-4xl text-[#F5634A] pb-5 font-bold">Map</h1>
+            <h1 className="text-3xl md:text-4xl text-[#F5634A] font-semibold Showcard-Gothic w-max">
+              Map
+            </h1>
           )}
-          <KakaoMap viewportWidth={viewportWidth}></KakaoMap>
+          <div className="py-5">
+            <KakaoMap viewportWidth={viewportWidth}></KakaoMap>
+          </div>
         </div>
       </Background>
       {viewportWidth < 720 && <FooterMobile />}

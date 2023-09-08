@@ -79,7 +79,7 @@ const BestInteriorCarousel = ({ viewportWidth, setViewportWidth }) => {
   ));
 
   return (
-    <div className="py-5 px-3 w-full ">
+    <div className="py-5 px-8 w-full ">
       <Carousel
         showArrows={true}
         centerMode={true}

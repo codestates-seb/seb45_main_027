@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const BestInteriorHeader = () => {
   return (
-    <div className="flex pt-10 justify-between items-center mx-8">
+    <div className="flex mt-10 justify-between items-center mx-8">
       <div className="flex items-baseline">
-        <h1 className="text-4xl text-[#F5634A] font-semibold Showcard-Gothic">
+        <h1 className="text-3xl md:text-4xl text-[#F5634A] font-semibold Showcard-Gothic w-max">
           Best Interior
         </h1>
         <h2 className="pl-4 text-gray-500 font-medium text-lg">
