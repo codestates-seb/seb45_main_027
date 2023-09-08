@@ -8,7 +8,7 @@ const BestInteriorHeader = () => {
         <h1 className="text-3xl md:text-4xl text-[#F5634A] font-semibold Showcard-Gothic w-max">
           Best Interior
         </h1>
-        <h2 className="pl-4 text-gray-500 font-medium text-lg">
+        <h2 className="hidden md:block pl-4 text-gray-500 font-medium text-lg">
           삐삐에서 핫한 Best 10
         </h2>
       </div>
