@@ -42,10 +42,16 @@ public class MailService {
         String code = createCode();
 
         String content = "<h3>회원가입 인증 번호</h3>"
-                +"<p>아래의 인증 번호를 입력해주세요.</p>"
-                + "<div style='border: 1px solid #e1e1e1; padding: 10px; width: 100px; text-align: center;'>"
+                +"<p>안녕하세요</p>"
+                +"<p>BBIBBI에 관심 가져 주셔서 감사합니다.</p>"
+                +"<p>신뢰와 안전을 위해 이메일 인증이 필요합니다.</p>"
+                +"<p>아래 인증 코드를 입력하여 회원가입을 완료해 주세요.</p>"
+                + "<div style='border: 1px solid #e1e1e1; padding: 10px; width: 300px; text-align: center; display:flex;'>"
+                + "<p style='font-weight: 700; padding: 0.25rem;'>인증 코드 : </p>"
                 + code
-                + "</div>";
+                + "</div>"
+                +"<p>인증 코드가 만료되기 전에 입력해 주시기 바랍니다.</p>"
+                +"<p>감사합니다.</p>";
 
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
         if (optionalMember.isPresent()) {
@@ -82,11 +88,17 @@ public class MailService {
         String from = "BBIBBI";
         String passwordCode = generatePassword();
 
-        String content = "<h3>새로운 비밀번호</h3>"
-                +"<p>아래의 새로운 비밀번호를 입력해 로그인해주세요.</p>"
-                + "<div style='border: 1px solid #e1e1e1; padding: 10px; width: 100px; text-align: center;'>"
+        String content = "<h3>임시의 새로운 비밀번호 </h3>"
+                +"<p>안녕하세요</p>"
+                +"<p>BBIBBI를 이용해 주셔서 감사합니다.</p>"
+                +"<p>비밀번호 재설정 요청을 받았기에 안내 메일을 보내 드립니다.</p>"
+                +"<p>아래에 제시된 코드로 로그인 후 비밀번호를 변경해주세요.</p>"
+                + "<div style='border: 1px solid #e1e1e1; padding: 10px; width: 300px; text-align: center; display:flex;'>"
+                + "<p style='font-weight: 700; padding: 0.25rem;'>비밀번호 재설정 코드 : </p>"
                 + passwordCode
-                + "</div>";
+                + "</div>"
+                +"<p>코드가 만료되기 전에 재설정을 완료해 주시기 바랍니다.</p>"
+                +"<p>감사합니다.</p>";
 
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
         if (optionalMember.isPresent()) {
@@ -137,7 +149,7 @@ public class MailService {
     }
 
     private String generatePassword() {
-        int length = 10; // 비밀번호 길이
+        int length = 10; // 비밀번호 길이 6-15자리
         StringBuilder password = new StringBuilder();
 
         try {
