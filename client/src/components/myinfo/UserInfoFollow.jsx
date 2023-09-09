@@ -57,13 +57,13 @@ const UserInfoFollow = () => {
 
   const [followersList, setFollowersList] = useState([
     {
-      id: 1,
+      id: 9,
       username: "User1",
       profileImage: "./images/Yuri.png",
       isFollowing: false,
     },
     {
-      id: 2,
+      id: 10,
       username: "User2",
       profileImage: "./images/Dusan.png",
       isFollowing: true,

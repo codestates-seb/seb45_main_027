@@ -14,12 +14,12 @@ const FormValidation = ({ path }) => {
     return /\s/.test(value);
   };
   
-  const isNameValid = nickname.trim().length >= 3 && !hasSpaces(nickname);
+  const isNameValid = nickname.trim().length >= 3 && nickname.trim().length <= 10 && !hasSpaces(nickname);
   const isEmailValid = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(
     email
   );
   const isPasswordValid = !hasSpaces(password) &&
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&!])[A-Za-z\d@#$%^&!]{8,15}$/g.test(
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&()+|=])[A-Za-z\d~!@#$%^&()+|=]{6,15}$/.test(
       password
     ); 
 
@@ -38,14 +38,14 @@ const FormValidation = ({ path }) => {
 
     if (path === "signup") {
       if (!isNameValid) {
-        setNameError("Nick Name must be at least 3 characters long and cannot contain spaces.");
+        setNameError("닉네임은 3글자 이상 10글자 이하로 입력해주세요. 공백은 사용할 수 없습니다.");
       }
       if (!isEmailValid) {
-        setEmailError("Invalid email address.");
+        setEmailError("유요한 이메일을 입력해주세요.");
       }
       if (!isPasswordValid) {
         setPasswordError(
-          "Password must be 8 to 15 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character and cannot contain spaces."
+          "비밀번호는 6글자 이상 15글자 이하로 입력해주세요. 영문, 숫자, 특수문자가 반드시 포함되어야 하며 공백은 사용할 수 없습니다."
         );
       }
 

@@ -5,7 +5,7 @@ const ResetPassword = () => {
   const handleEmailSubmit = async () => {
     try {
       // 이메일이 존재하는지 확인
-      //await axios.post(`${baseURL}/auth/email/password`, { email });
+      //await axios.post(`${baseURL}/auth/password`, { email });
       alert(`We've sent you a new password to your email address.`)
 
     } catch (error) {

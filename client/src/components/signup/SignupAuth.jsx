@@ -23,7 +23,7 @@ const SignupAuth = () => {
     try {
       // 서버에서 유저 이메일로 인증코드 전송
       // 서버로 이메일과 유저가 입력한 인증코드를 보내줌
-      //await axios.post(`${baseURL}/email/check `, { email, code });
+      //await axios.post(`${baseURL}/auth/email/check `, { email, code });
 
       alert("Succefully Verified.");
       navigate("/login");
