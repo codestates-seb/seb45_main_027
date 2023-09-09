@@ -14,6 +14,7 @@ import com.project.bbibbi.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -24,6 +25,11 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -47,10 +53,12 @@ public class SecurityConfig {
                 .headers().frameOptions().disable()
                 //H2허용 문제로(클릭재킹 막기위해서지만)
                 .and()
-
                 // 세션 사용하지 않으므로 STATELESS로 설정
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
 
+                .cors() // CORS 추가
+                .configurationSource(corsConfigurationSource()) // 앞서 정의한 CorsConfigurationSource 빈을 지정합니다.
                 .and()
 
                 //== URL별 권한 관리 옵션 ==//
@@ -59,7 +67,12 @@ public class SecurityConfig {
                 // 아이콘, css, js 관련
                 // 기본 페이지, css, image, js 하위 폴더에 있는 자료들은 모두 접근 가능, h2-console에 접근 가능
                 .antMatchers("/","/css/**","/images/**","/js/**","/favicon.ico","/h2/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/").permitAll()
                 .antMatchers("/auth/**").permitAll() // 회원가입 접근 가능
+                .antMatchers(HttpMethod.GET, "/members/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/feed/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/tip/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/follow/**").permitAll()
                 .anyRequest().authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
                 .and()
                 //== 소셜 로그인 설정 ==//
@@ -136,5 +149,16 @@ public class SecurityConfig {
         return jwtAuthenticationFilter;
     }
 
-    // 회원가입(닉네임 이메일 비번) 시 로그인, 회원 가입 후 이메일 전송(이메일 치기), 이메일 비번치고 로그인
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("<http://localhost:3000>", "..."));
+        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Authorization-refresh", "Cache-Control", "Content-Type"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Authorization-refresh"));//응답헤더 설정
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 }

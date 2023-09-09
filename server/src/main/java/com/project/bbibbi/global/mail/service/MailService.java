@@ -88,11 +88,11 @@ public class MailService {
         String from = "BBIBBI";
         String passwordCode = generatePassword();
 
-        String content = "<h3>회원가입 인증 번호</h3>"
+        String content = "<h3>임시의 새로운 비밀번호 </h3>"
                 +"<p>안녕하세요</p>"
                 +"<p>BBIBBI를 이용해 주셔서 감사합니다.</p>"
                 +"<p>비밀번호 재설정 요청을 받았기에 안내 메일을 보내 드립니다.</p>"
-                +"<p>아래에 제시된 코드로 비밀번호를 쉽게 재설정할 수 있습니다.</p>"
+                +"<p>아래에 제시된 코드로 로그인 후 비밀번호를 변경해주세요.</p>"
                 + "<div style='border: 1px solid #e1e1e1; padding: 10px; width: 300px; text-align: center; display:flex;'>"
                 + "<p style='font-weight: 700; padding: 0.25rem;'>비밀번호 재설정 코드 : </p>"
                 + passwordCode

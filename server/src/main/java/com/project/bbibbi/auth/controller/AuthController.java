@@ -85,10 +85,6 @@ public class AuthController {
         return null;
 
         //자기 이메일로 보내고 ok, 컨펌 다시 내 아이디창으로 보내야하는데 내 역량에서 가능한가 ?
-
-
-
-
     }
     // 로그인 창에서 이메일 찾기 이메일 닉네임 패스워드
 
@@ -116,7 +112,5 @@ public class AuthController {
 
         return ResponseEntity.noContent().build();
     }
-
-
 }
 
