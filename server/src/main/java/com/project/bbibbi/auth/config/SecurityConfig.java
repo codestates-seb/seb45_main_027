@@ -73,6 +73,21 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET, "/feed/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/tip/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/follow/**").permitAll()
+                // 타 도메인쪽에서 작업을 위해 위의 GET 외에도 PATCH, POST, DELETE도 넣었습니다.
+                // 타 도메인쪽 작업 완료되면 지우도록 알려드리겠습니다.
+                .antMatchers(HttpMethod.POST, "/members/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/feed/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/tip/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/follow/**").permitAll()
+                .antMatchers(HttpMethod.PATCH, "/members/**").permitAll()
+                .antMatchers(HttpMethod.PATCH, "/feed/**").permitAll()
+                .antMatchers(HttpMethod.PATCH, "/tip/**").permitAll()
+                .antMatchers(HttpMethod.PATCH, "/follow/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/members/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/feed/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/tip/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/follow/**").permitAll()
+                // 여기 위까지 타 도메인 임시 작업 허용
                 .anyRequest().authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
                 .and()
                 //== 소셜 로그인 설정 ==//
