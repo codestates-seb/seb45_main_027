@@ -58,7 +58,7 @@ public class SecurityConfig {
                 .and()
 
                 .cors() // CORS 추가
-                .configurationSource(corsConfigurationSource()) // 앞서 정의한 CorsConfigurationSource 빈을 지정합니다.
+                .configurationSource(corsConfigurationSource()) //  CorsConfigurationSource 빈을 지정.
                 .and()
 
                 //== URL별 권한 관리 옵션 ==//

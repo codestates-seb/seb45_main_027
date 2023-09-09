@@ -26,6 +26,9 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) {
         String email = extractUsername(authentication); // 인증 정보에서 Username(email) 추출
+        //CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        // 이런식으로 가져와서 반환할 때 같이 반환해야할듯 ?
+        //Long memberId = userDetails.getMemberId();
         String accessToken = jwtService.createAccessToken(email); // JwtService의 createAccessToken을 사용하여 AccessToken 발급
         String refreshToken = jwtService.createRefreshToken(); // JwtService의 createRefreshToken을 사용하여 RefreshToken 발급
 
@@ -43,6 +46,8 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private String extractUsername(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        //Long memberId = userDetails.getmemberId; 이러면 userDetails를 재정의해주는 클래스 만들어야함
+        //userDetails에 권한이 꼭 들어가야하네.. 이거 커스텀 해야할텐데 어렵다
         return userDetails.getUsername();
     }
 
