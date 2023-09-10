@@ -84,7 +84,7 @@ const Main = () => {
     return () => {
       window.removeEventListener("wheel", onWheel);
     };
-  }, [isScrolling]);
+  }, []);
 
   return (
     <>
