@@ -27,7 +27,7 @@ const FooterMobile = () => {
           {/* 홈 */}
           <Link to="/">
             <li>
-              <img className="w-14" src="/images/삐삐Logo.png" alt="홈" />
+              <img className="w-14" src="/images/Logo.png" alt="홈" />
             </li>
           </Link>
 
@@ -42,7 +42,10 @@ const FooterMobile = () => {
           {/* 유저 (로그인 여부에 따라 경로 달라져야 함) */}
           <Link to="/login">
             <li className={liPoint}>
-              <img src="/images/user.png" alt="유저" />
+              <img
+                src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/user.png"
+                alt="유저"
+              />
               <span className="mt-2">My</span>
             </li>
           </Link>

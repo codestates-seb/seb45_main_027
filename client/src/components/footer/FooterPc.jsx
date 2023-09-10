@@ -17,7 +17,7 @@ const FooterPc = () => {
         <div className="flex flex-col items-center">
           <img
             className="w-12 h-12"
-            src="/images/삐삐Logo.png"
+            src="/images/Logo.png"
             alt="삐삐로고"
           />
           <span className="py-5 text-xl font-semibold text-white">

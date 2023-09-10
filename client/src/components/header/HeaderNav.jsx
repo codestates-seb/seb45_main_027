@@ -10,7 +10,7 @@ export const HeaderNav = () => {
             <li>
               <img
                 className="w-8 h-8 mr-8"
-                src="/images/삐삐Logo.png"
+                src="/images/Logo.png"
                 alt="로고"
               />
             </li>

@@ -16,7 +16,10 @@ const Comment = () => {
 
         {/* 댓글 입력창 */}
         <div className="flex w-full mt-4">
-          <img src="/images/userComment.png" alt="유저사진" />
+          <img
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userComment.png"
+            alt="유저사진"
+          />
           <div className="flex w-full relative">
             <input className="h-full w-full ml-4 border rounded-lg pl-4" />
             <button className=" absolute right-0 top-1/4 pr-4"> 입력 </button>
@@ -27,7 +30,10 @@ const Comment = () => {
           {/* 댓글 작성보기 */}
           <div className="flex flex-col items-start mt-10">
             <div className="flex items-start">
-              <img src="/images/userComment.png" alt="유저사진" />
+              <img
+                src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userComment.png"
+                alt="유저사진"
+              />
 
               <div className="flex flex-col ml-4 w-full">
                 {/* 작성자 */}
@@ -51,7 +57,9 @@ const Comment = () => {
                     <img
                       className="w-6 h-6 mr-1"
                       src={
-                        like ? "/images/heart-on.png" : "/images/heart-off.png"
+                        like
+                          ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/heart-on.png"
+                          : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/heart-off.png"
                       }
                       alt="좋아요"
                     />
@@ -67,7 +75,10 @@ const Comment = () => {
                 {/* 답글 입력창 */}
                 {showReply && (
                   <div className=" flex w-full mt-6">
-                    <img src="/images/userComment.png" alt="유저사진" />
+                    <img
+                      src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userComment.png"
+                      alt="유저사진"
+                    />
                     <div className="flex w-full relative">
                       <input className="h-full w-full ml-4 border rounded-lg pl-4" />
                       <button className=" absolute right-0 top-1/4 pr-4">
@@ -79,7 +90,10 @@ const Comment = () => {
 
                 {/* 답글 작성보기 */}
                 <div className="flex items-start mt-10 bg-[#fceecd] p-8 rounded-lg shadow">
-                  <img src="/images/userComment.png" alt="유저사진" />
+                  <img
+                    src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userComment.png"
+                    alt="유저사진"
+                  />
 
                   <div className="flex flex-col ml-4 w-full">
                     {/* 작성자 */}

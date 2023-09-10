@@ -19,35 +19,61 @@ const ShowroomUserTop = () => {
       </div>
       <div className="flex pt-10 lg:pt-0">
         <div className={div}>
-          <img className={img} src="/images/city.png" alt="주거형태" />
+          <img
+            className={img}
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/images/city.png"
+            alt="주거형태"
+          />
           <span>주거형태</span>
         </div>
         <div className={div}>
-          <img className={img} src="/images/width.png " alt="공간" />
+          <img
+            className={img}
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/images/width.png "
+            alt="공간"
+          />
           <span>공간</span>
         </div>
         <div className={div}>
-          <img className={img} src="/images/door.png" alt="평수" />
+          <img
+            className={img}
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/door.png"
+            alt="평수"
+          />
           <span>평수</span>
         </div>
         <div className={div}>
-          <img className={img} src="/images/house.png " alt="방개수" />
+          <img
+            className={img}
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/house.png "
+            alt="방개수"
+          />
           <span>방개수</span>
         </div>
         <div className={div}>
-          <img className={img} src="/images/local.png" alt="지역" />
+          <img
+            className={img}
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/local.png"
+            alt="지역"
+          />
           <span>지역</span>
         </div>
       </div>
       <button className="h-full p-10" onClick={() => setFollow(!follow)}>
         {follow ? (
           <div className={`bg-gray-100 hover:bg-gray-200 ${button} `}>
-            <img src="/images/check.png" alt="" />
+            <img
+              src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/check.png"
+              alt=""
+            />
             <span className=" text-gray-800 font-semibold pl-1">팔로잉</span>
           </div>
         ) : (
           <div className={`bg-[#00647B] hover:bg-[#3b98ad] ${button} `}>
-            <img src="/images/plus.png" alt="" />
+            <img
+              src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/plus.png"
+              alt=""
+            />
             <span className="text-white font-semibold pl-1">팔로우</span>
           </div>
         )}

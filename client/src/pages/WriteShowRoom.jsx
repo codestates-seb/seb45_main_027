@@ -6,7 +6,7 @@ import WriteGuide from "../components/feed/write/WriteGuide";
 import WriteCoverImg from "../components/feed/write/WriteCoverImg";
 import WriteTitle from "../components/feed/write/WriteTitle";
 import WriteInformation from "../components/feed/write/WriteInformation";
-import WriteFormShowroom from "../components/feed/write/WriteFormShowroom";
+// import WriteFormShowroom from "../components/feed/write/WriteFormShowroom";
 import WriteFormShowroomcopy from "../components/feed/write/WriteFormShowroomcopy";
 import { toast } from "react-hot-toast";
 
@@ -41,7 +41,7 @@ const WriteShowRoom = () => {
         const parsedData = JSON.parse(savedData);
         setCoverImage(parsedData.coverImage);
         setTitle(parsedData.title);
-        setEditorContent(parsedData.editorContent);
+        setEditorContent(parsedData.orContent);
         setSelectedValues(parsedData.selectedValues);
         toast.success("작성중인 글을 불러왔습니다.");
       } else {

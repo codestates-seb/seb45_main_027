@@ -13,7 +13,11 @@ const Sidebar = () => {
         <button className={display} onClick={() => setLike(!like)}>
           <img
             className="m-4"
-            src={like ? "/images/heart-on.png" : "/images/heart-off.png"}
+            src={
+              like
+                ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/heart-on.png"
+                : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/heart-off.png"
+            }
             alt="좋아요"
           />
         </button>
@@ -23,7 +27,9 @@ const Sidebar = () => {
           <img
             className="m-4"
             src={
-              Bookmark ? "/images/bookmark-on.png" : "/images/bookmark-off.png"
+              Bookmark
+                ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark-on.png"
+                : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark-off.png"
             }
             alt="북마크"
           />
@@ -33,14 +39,18 @@ const Sidebar = () => {
         <button className={display}>
           <img
             className="m-5"
-            src="/images/side-speech-bubble.png"
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/side-speech-bubble.png"
             alt="댓글"
           />
         </button>
 
         {/* 공유 */}
         <button className={`${display} pr-2.5`}>
-          <img className="m-4" src="/images/side-share.png" alt="공유" />
+          <img
+            className="m-4"
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/side-share.png"
+            alt="공유"
+          />
         </button>
       </div>
     );

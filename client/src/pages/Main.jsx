@@ -5,7 +5,8 @@ const Main = () => {
   const sections = [
     {
       id: "main0",
-      background: "url('/images/main-bg1.png')",
+      background:
+        "url('https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/main-bg1.png')",
       title: "공간별 인테리어 모아보기",
       subTitle: "Show room",
       intro1: "베스트 10곳을 모아서 볼 수 있는!",
@@ -16,7 +17,8 @@ const Main = () => {
     },
     {
       id: "main1",
-      background: "url('/images/main-bg2.png')",
+      background:
+        "url('https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/main-bg2.png')",
       title: "유용한 꿀팁 모아보기",
       subTitle: "Tips",
       intro1: "살림에 유용한 정보들이 가득합니다.",
@@ -27,7 +29,8 @@ const Main = () => {
     },
     {
       id: "main2",
-      background: "url('/images/main-bg3.png')",
+      background:
+        "url('https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/main-bg3.png')",
       title: "가까운 인테리어 가게 찾기",
       subTitle: "Map",
       intro1: "내 위치를 기반으로 장소를 알려드립니다.",

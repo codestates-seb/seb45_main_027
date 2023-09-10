@@ -11,20 +11,27 @@ const FooterMobileWrite = () => {
         <ul className="flex items-center justify-around w-11/12 text-gray-400 font-medium">
           {/* 좋아요*/}
           <li className={liPoint}>
-            <img src="/images/heart.png" alt="좋아요" />
+            <img
+              src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/heart.png"
+              alt="좋아요"
+            />
             <span className="mt-2">00</span>
           </li>
 
           {/* 북마크 */}
           <li className={liPoint}>
-            <img className="h-12" src="/images/bookmark.png" alt="북마크" />
+            <img
+              className="h-12"
+              src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark.png"
+              alt="북마크"
+            />
             <span className="mt-2">000</span>
           </li>
 
           {/* 홈 */}
           <Link to="/">
             <li>
-              <img className="w-14" src="/images/삐삐Logo.png" alt="홈" />
+              <img className="w-14" src="/images/Logo.png" alt="홈" />
             </li>
           </Link>
 

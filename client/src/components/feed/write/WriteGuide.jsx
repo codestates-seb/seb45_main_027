@@ -8,7 +8,11 @@ const WriteGuide = ({ Title }) => {
       {/* 아코디언 */}
       <div className="flex justify-between w-full items-center">
         <div className="flex items-center py-2">
-          <img className="w-7 h-7 mr-5" src="/images/book.png" alt="" />
+          <img
+            className="w-7 h-7 mr-5"
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/book.png"
+            alt=""
+          />
           <div className="text-2xl font-semibold">
             <span>{Title}</span>
             <span>작성 가이드</span>
@@ -19,7 +23,7 @@ const WriteGuide = ({ Title }) => {
         <button onClick={() => setIsOpen(!isOpen)}>
           <img
             className={`w-7 h-7 ${isOpen ? "transform rotate-180" : ""}`}
-            src="/images/arrow-line.png"
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/arrow-line.png"
             alt=""
           />
         </button>
