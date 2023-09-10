@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
 
@@ -74,11 +75,14 @@ public class JwtService {
     }
 
     // AccessToken + RefreshToken 같이 헤더에 실어 보내기
-    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
-        response.setStatus(HttpServletResponse.SC_OK);
+    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken, Long memberId) throws IOException {
 
+        String forFront = "{member-id} :" + memberId; // 실어서 보내는데 memberId도 같이
+
+        response.setStatus(HttpServletResponse.SC_OK);
         setAccessTokenHeader(response, accessToken);
         setRefreshTokenHeader(response, refreshToken);
+        response.getWriter().write(forFront);
         log.info("Access Token, Refresh Token 헤더 설정 완료");
     }
     //헤더에서 RefreshToken 추출 후 토큰형식으로 BEARER 제거 후 순수 토큰만 가져오기 위해 헤더 갖고온 뒤 "BEARER 삭제 로직("" 로 만들어버림)

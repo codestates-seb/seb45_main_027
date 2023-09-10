@@ -83,12 +83,16 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
      *  reIssueRefreshToken()로 리프레시 토큰 재발급 & DB에 리프레시 토큰 업데이트 메소드 호출
      *  그 후 JwtService.sendAccessTokenAndRefreshToken()으로 응답 헤더에 보내기
      */
-    public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, String refreshToken) {
+    public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, String refreshToken)  {
         memberRepository.findByRefreshToken(refreshToken)
                 .ifPresent(member -> {
                     String reIssuedRefreshToken = reIssueRefreshToken(member);
-                    jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(member.getEmail()),
-                            reIssuedRefreshToken);
+                    try {
+                        jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(member.getEmail()),
+                                reIssuedRefreshToken, member.getMemberId());
+                    } catch (IOException e) {
+                        throw new RuntimeException("입출력 오류입니다", e);
+                    }
                 });
     }
 

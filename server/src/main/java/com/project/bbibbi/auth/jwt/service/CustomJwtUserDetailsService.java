@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CustomJwtUserDetailsService implements UserDetailsService {
@@ -17,16 +19,19 @@ public class CustomJwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("이메일이 없습니다"));
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+        Member findMember = optionalMember.orElseThrow(() -> new UsernameNotFoundException("이메일이 없습니다"));
+        //Member member = memberRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("이메일이 없습니다"));
+        // 멤버낫파운드 익셉션 발생시킬까 ?
 
 //        return User.builder().username(member.getEmail())
 //                .password(member.getPassword())
 //                .build();
 
         return org.springframework.security.core.userdetails.User.builder()
-                .username(member.getEmail())
-                .password(member.getPassword())
-                .roles(member.getRole().name())
+                .username(findMember.getEmail())
+                .password(findMember.getPassword())
+                .roles(findMember.getRole().name())
                 .build();
     }
 }
