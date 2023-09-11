@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null); //유저정보 여기에 담을거임
   const navigate = useNavigate();
 
-  const baseURL = "https://bacd-210-123-100-75.ngrok-free.app";
+  const baseURL = "http://ec2-15-164-234-24.ap-northeast-2.compute.amazonaws.com:8080";
 
   useEffect(() => {
     // 엑세스토큰 체크하고 리프레시토큰 받아오는 부분
@@ -70,7 +70,10 @@ export function AuthProvider({ children }) {
 
   async function login(email, password) {
     try {
-      const response = await axios.post(`${baseURL}/auth/oauth`, { email, password });
+      const response = await axios.post(`${baseURL}/auth/login`, {
+        email,
+        password,
+      });
       setUser(response.data.user); // user로 오는지 member로 오는지 확인 필요함
 
       localStorage.setItem("accessToken", response.data.accessToken);
@@ -86,13 +89,14 @@ export function AuthProvider({ children }) {
 
   async function kakaoLogin(code) {
     try {
-      const response = await axios.get(`${baseURL}/auth/oauth/kakao?code=${code}`);
-
+      const response = await axios.get(
+        `${baseURL}/auth/oauth/kakao?code=${code}`
+      );
 
       //어디서 보낸건지 서버에서 알고 싶다면 이런 방법도 있다
       // const requestData = {
-      //   code, 
-      //   provider: "kakao", 
+      //   code,
+      //   provider: "kakao",
       // };
       // const response = await axios.post(`${baseURL}/auth/oauth`, requestData);
 
@@ -100,35 +104,36 @@ export function AuthProvider({ children }) {
       localStorage.setItem("refreshToken", response.data.refreshToken);
       navigate("/");
     } catch (error) {
-    console.log(code);
+      console.log(code);
 
       throw error;
     }
   }
 
-
   async function naverLogin(code) {
     try {
-      const response = await axios.get(`${baseURL}/auth/oauth/kakao?code=${code}`);
+      const response = await axios.get(
+        `${baseURL}/auth/oauth/kakao?code=${code}`
+      );
 
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
       navigate("/");
     } catch (error) {
-    console.log(code);
+      console.log(code);
 
       throw error;
     }
   }
 
-  async function register(nickname, email, password) {
+  async function register(email, nickname, password) {
     try {
-      await axios.post(`${baseURL}/auth/oauth`, {
-        nickname,
+      await axios.post(`${baseURL}/auth/signup`, {
         email,
+        nickname,
         password,
       });
-      
+
       navigate("/verify");
     } catch (error) {
       console.error("Registration failed:", error);
@@ -137,11 +142,19 @@ export function AuthProvider({ children }) {
     }
   }
 
-  function logout() {
-    delete axios.defaults.headers.common["Authorization"];
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    setUser(null);
+  async function logout() {
+    try {
+      delete axios.defaults.headers.common["Authorization"];
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      setUser(null);
+
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      alert("Logout failed");
+      throw error;
+    }
   }
 
   const value = {

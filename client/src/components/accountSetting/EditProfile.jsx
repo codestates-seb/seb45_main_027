@@ -3,51 +3,50 @@ import axios from "axios";
 
 const EditProfile = ({
   profileData,
+  setProfileData,
+
   buttonStyle,
   fileInputStyle,
   inputStyle,
-  handleProfileChange,
+
   handleProfileUpdate,
 }) => {
-  // let profilePictureSrc;
 
-  // if (
-  //   profileData.profilePicture instanceof File ||
-  //   profileData.profilePicture instanceof Blob
-  // ) {
-  //   profilePictureSrc = URL.createObjectURL(profileData.profilePicture);
-  // } else {
-  //   profilePictureSrc = profileData.profilePicture;
-  // }
-
+  //유저가 사진 업로드시 서버로 보냄
   const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setProfileData({ ...profileData, profilePicture: reader.result });
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+
     try {
-      const formData = new FormData();
-      formData.append("myInfoImage", e.target.files[0]);
+      const myInfoImage = "유저가 업로드한 사진 경로";
 
       const response = await axios.post(
-        "http://백엔드호스트/imageUpload/myInfoImage",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        "baseUrl/imageUpload/myInfoImage",
+        myInfoImage
       );
 
-      // `response.data` will contain the S3 URL of the uploaded image
+      //이미지 업로드 성공시 응답으로 받은 사진 경로 확인
       console.log("Image uploaded:", response.data);
+      // 응답으로 받은 사진을 여기서 저장해서 유저한테 보여줌
+      setProfileData({ ...profileData, profilePicture: response.data });
 
-      // Update profileData with the new image URL
-      handleProfileChange({
-        target: {
-          name: "profilePicture",
-          value: response.data,
-        },
-      });
     } catch (error) {
       console.error("Image upload failed:", error);
     }
+  };
+
+  //닉네임, 바이오 수정시
+  const handleProfileChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData({ ...profileData, [name]: value });
   };
 
   return (

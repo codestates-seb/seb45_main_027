@@ -64,14 +64,14 @@ const UserInfoFollow = () => {
 
   const [followersList, setFollowersList] = useState([
     {
-      id: 1,
+      id: 9,
       username: "User1",
       profileImage:
         "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Yuri.png",
       isFollowing: false,
     },
     {
-      id: 2,
+      id: 10,
       username: "User2",
       profileImage:
         "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Dusan.png",
@@ -121,7 +121,7 @@ const UserInfoFollow = () => {
   };
 
   return (
-    <div className="">
+    <div className="z-50">
       <div className="flex flex-row md:justify-center p-2 mb-6 text-[#525252] font-medium">
         <button
           className={`flex items-center text-base ${
@@ -143,7 +143,7 @@ const UserInfoFollow = () => {
         </button>
       </div>
       <div
-        className="md:mb-10 md:h-[300px] overflow-auto xl:w-[250px]"
+        className="md:mb-10 md:h-[300px] overflow-auto xl:w-[250px] bg-white opacity-[90%]"
         style={{
           scrollbarWidth: "thin",
         }}

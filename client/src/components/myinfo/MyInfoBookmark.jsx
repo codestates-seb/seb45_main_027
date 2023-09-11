@@ -12,7 +12,7 @@ const MyInfoBookmark = ({
   };
 
   return (
-    <div className="m-2 h-full w-[140px] md:w-[150px] xl:w-[170px]">
+    <div className="m-2 h-full w-[140px] md:w-[150px] xl:w-[170px] text-[#57534e]">
       <div className="relative">
         <img
           className="rounded-lg object-cover w-[130px] h-[120px] md:w-[150px] md:h-[135px]  xl:w-[170px] xl:h-[155px]"
@@ -38,7 +38,7 @@ const MyInfoBookmark = ({
         </button>
       </div>
       <div className="flex flex-col items-center md:mb-4">
-        <div className="text-xl font-medium p-2 mx-1 break-all">{title}</div>
+        <div className="text-lg font-semibold p-2 mx-1 break-all">{title}</div>
       </div>
     </div>
   );
