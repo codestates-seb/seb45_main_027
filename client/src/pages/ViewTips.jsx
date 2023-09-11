@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import Background from '../components/common/Background';
 import ViewCoverImg from '../components/feed/view/ViewCoverImg';
 import Sidebar from '../components/feed/view/Sidebar';
 import TipsContents from '../components/feed/view/TipsContents'
 import Edit from '../components/feed/view/Edit';
 import Comment from '../components/feed/view/Comment'
+import useAxios from "../hooks/useAxios";
+import { toast } from "react-hot-toast";
 
 
 const ViewTips = () => {
+  
 
     return (
       <div className=" ">
