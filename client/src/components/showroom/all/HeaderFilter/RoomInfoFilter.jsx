@@ -16,7 +16,7 @@ const roomInfo = [
 
 const RoomInfoFilter = () => {
   return (
-    <div className="absolute grid grid-cols-4 gap-2 z-10 bg-[#FFFAEE] p-2 rounded-md">
+    <div className="absolute grid grid-cols-4 gap-2 z-10 p-2 rounded-md">
       {roomInfo.map((room, index) => (
         <div
           key={index}
