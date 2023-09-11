@@ -2,17 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import useAxios from "../../../hooks/useAxios";
-
+import { useUserContext } from "../../../context/userContext";
 
 const buttonStyle =
   "flex items-center justify-center rounded-lg shadow w-32 h-full";
 
 const TipsUserTop = () => {
-  const [follow, setFollow] = useState(false);
-  const [nickname, setNickname] = useState(null);
-  const [createdDate, setCreatedDate] = useState(null);
+  const { follow, setFollow, nickname, setNickname } = useUserContext();
   const { tipId } = useParams();
-  console.log(nickname);
+  const [createdDate, setCreatedDate] = useState(null);
 
   const configParams = {
     method: "GET",
@@ -45,7 +43,7 @@ const TipsUserTop = () => {
   return (
     <div className="flex justify-between pt-20">
       <div className="flex items-center">
-        <div className="border w-12 h-12 rounded-full bg-red-500 mr-4" ></div>
+        <div className="border w-12 h-12 rounded-full bg-red-500 mr-4"></div>
         <div>
           <div className="text-lg font-semibold">{nickname}</div>
           <div className="text-gray-500">{createdDate}</div>
