@@ -15,6 +15,7 @@ import WriteTips from "./pages/WriteTips";
 import ViewShowRoom from "./pages/ViewShowRoom";
 import ViewTips from "./pages/ViewTips";
 import { AuthProvider } from "./context/AuthContext";
+import { UserProvider } from "./context/userContext";
 import Verify from "./pages/Verify";
 import { Toaster } from "react-hot-toast";
 
@@ -54,6 +55,7 @@ function App() {
 
   return (
     <AuthProvider>
+      <UserProvider>
       <Toaster />
       {isHeader && <HeaderPc />}
       <Routes>
@@ -70,8 +72,8 @@ function App() {
         <Route path={"/tips/write"} element={<WriteTips />} />
         <Route path={"/tips/:tipId/"} element={<ViewTips />} />
       </Routes>
-
-      {isFooter && <HiddenFooter />}
+        {isFooter && <HiddenFooter />}
+      </UserProvider>
     </AuthProvider>
   );
 }
