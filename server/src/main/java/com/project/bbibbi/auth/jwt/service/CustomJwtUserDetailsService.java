@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -28,10 +29,22 @@ public class CustomJwtUserDetailsService implements UserDetailsService {
 //                .password(member.getPassword())
 //                .build();
 
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(findMember.getEmail())
-                .password(findMember.getPassword())
-                .roles(findMember.getRole().name())
-                .build();
+//        return org.springframework.security.core.userdetails.User.builder()
+//                .username(findMember.getEmail())
+//                .password(findMember.getPassword())
+//                .roles(findMember.getRole().name())
+//                .build();
+//        return CustomJwtUserDetails.builder()
+//                .username(findMember.getEmail())
+//                .password(findMember.getPassword())
+//                .roles(findMember.getRole().name())
+//                .build();
+
+        return new CustomJwtUserDetails(
+                findMember.getMemberId(),
+                findMember.getEmail(),
+                findMember.getPassword(),
+                findMember.getRole()
+        );
     }
 }

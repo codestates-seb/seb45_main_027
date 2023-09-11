@@ -77,7 +77,7 @@ public class JwtService {
     // AccessToken + RefreshToken 같이 헤더에 실어 보내기
     public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken, Long memberId) throws IOException {
 
-        String forFront = "{member-id} :" + memberId; // 실어서 보내는데 memberId도 같이
+        String forFront = "{member-id} : " + memberId; // 실어서 보내는데 memberId도 같이
 
         response.setStatus(HttpServletResponse.SC_OK);
         setAccessTokenHeader(response, accessToken);
