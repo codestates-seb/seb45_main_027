@@ -41,46 +41,61 @@ const Main = () => {
     },
   ];
 
-  const [position, setPosition] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false); // 새로운 상태 변수 추가
   const index = useRef(0);
+  let debounceTimeout = null; // 하나는 이벤트가 발생했을 때 다음 이벤트가 발생할 수 있도록 허용하기 전에 일정 시간을 기다리는 것
+  const maxIndex = sections.length;
 
   function onWheel(e) {
-    if (isScrolling) return; // 스크롤 중이면 추가 작동을 방지
-    setIsScrolling(true); // 스크롤 시작
+    e.preventDefault();
 
-    setPosition(window.scrollY);
+    if (isScrolling) return;
 
-    if (e.wheelDeltaY > 0) {
-      if (index.current > 0) {
-        index.current -= 1;
-      }
-    } else {
-      if (index.current < sections.length - 1) {
-        index.current += 1;
-      }
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
     }
 
-    scrollToSection();
+    debounceTimeout = setTimeout(() => {
+      if (e.wheelDeltaY > 0) {
+        if (index.current > 0) {
+          index.current -= 1;
+        }
+      } else {
+        if (index.current < maxIndex) {
+          index.current += 1;
+        }
+      }
 
-    setTimeout(() => {
-      setIsScrolling(false); // 스크롤 작동이 끝난 후 상태를 초기화
-    }, 500); // 스크롤 작동이 끝나기까지의 시간 (밀리초 단위)
+      scrollToSection();
+      setIsScrolling(true);
+
+      setTimeout(() => {
+        setIsScrolling(false);
+      }, 500);
+    }, 200);
   }
 
   function scrollToSection() {
-    setTimeout(() => {
+    if (index.current === maxIndex) {
+      // Scroll to footer
       window.scrollTo({
-        top:
-          document.getElementById(`main${index.current}`).getBoundingClientRect()
-            .top + window.scrollY,
+        top: document.body.scrollHeight,
         behavior: "smooth",
       });
-    },1000);
+    } else {
+      // Scroll to section
+      window.scrollTo({
+        top:
+          document
+            .getElementById(`main${index.current}`)
+            .getBoundingClientRect().top + window.scrollY,
+        behavior: "smooth",
+      });
+    }
   }
 
   useEffect(() => {
-    window.addEventListener("wheel", onWheel);
+    window.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       window.removeEventListener("wheel", onWheel);
     };
