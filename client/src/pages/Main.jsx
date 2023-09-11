@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import MainSection from "../components/main/MainSection";
 
 const Main = () => {
+  //각 섹션의 정보를 담고 있는 객체 배열
   const sections = [
     {
       id: "main0",
@@ -41,11 +42,12 @@ const Main = () => {
     },
   ];
 
-  const [isScrolling, setIsScrolling] = useState(false); // 새로운 상태 변수 추가
-  const index = useRef(0);
-  let debounceTimeout = null; // 하나는 이벤트가 발생했을 때 다음 이벤트가 발생할 수 있도록 허용하기 전에 일정 시간을 기다리는 것
-  const maxIndex = sections.length;
+  const [isScrolling, setIsScrolling] = useState(false); // 현재 스크롤 중인지 여부를 나타내는 상태
+  const index = useRef(0); // 현재 표시되고 있는 섹션의 인덱스를 추적하는 useRef
+  const maxIndex = sections.length; // 푸터까지 스크롤 할 수 있게 하기 위해
+  let debounceTimeout = null; // 스크롤 발생 시 다음 이벤트가 발생할 수 있도록 허용하기 전에, 일정 시간을 기다리는 디바운스를 구현
 
+  //  휠 이벤트가 발생할 때 실행되는 함수
   function onWheel(e) {
     e.preventDefault();
 
@@ -71,10 +73,11 @@ const Main = () => {
 
       setTimeout(() => {
         setIsScrolling(false);
-      }, 500);
-    }, 200);
+      }, 500); // <- setTimeout
+    }, 200); // <- debounceTimeout
   }
 
+  // 지정된 섹션으로 스크롤하는 함수
   function scrollToSection() {
     if (index.current === maxIndex) {
       // Scroll to footer
@@ -94,6 +97,7 @@ const Main = () => {
     }
   }
 
+  // 마운트될 때 wheel 이벤트 리스너를 추가하고, 언마운트될 때는 제거
   useEffect(() => {
     window.addEventListener("wheel", onWheel, { passive: false });
     return () => {
@@ -104,8 +108,8 @@ const Main = () => {
   return (
     <>
       <div className="w-full overscroll-x-none">
-        {sections.map((section, index) => (
-          <MainSection key={index} {...section} />
+        {sections.map((section) => (  // index를 사용했었으나 section에 고유 id가 있어서 변경.
+          <MainSection key={section.id} {...section} />
         ))}
       </div>
     </>
