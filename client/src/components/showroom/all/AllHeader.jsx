@@ -2,7 +2,7 @@ import React from "react";
 import useInput from "../../../hooks/useInput";
 import AllHeaderFilter from "./HeaderFilter/AllHeaderFilter";
 
-const AllHeader = ({ viewportWidth, setViewportWidth }) => {
+const AllHeader = ({ viewportWidth, setViewportWidth, handleFilterClick }) => {
   const [inputValue, handleInputChange, clearInput] = useInput("");
 
   const handleSearch = (e) => {
@@ -19,12 +19,13 @@ const AllHeader = ({ viewportWidth, setViewportWidth }) => {
         <h1 className="text-4xl text-[#F5634A] font-semibold Showcard-Gothic">
           All
         </h1>
-        <AllHeaderFilter />
+        <AllHeaderFilter handleFilterClick={handleFilterClick} />
       </div>
       <div
         className={`relative flex items-center my-5 ${
           isMobileView ? "mx-auto pr-5" : ""
-        }`}>
+        }`}
+      >
         <img
           className="absolute w-6 left-4"
           src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Search_gray.png"

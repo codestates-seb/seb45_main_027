@@ -44,6 +44,7 @@ const AllContent = ({ showroomData }) => {
   const handleFeedClick = (feedId) => {
     navigate(`/showroom/${feedId}`);
   };
+  console.log(showroomData);
 
   return (
     <div className="flex-col mx-4">
@@ -51,11 +52,13 @@ const AllContent = ({ showroomData }) => {
         {showroomData.map((item, idx) => (
           <div
             key={idx}
-            className="flex-col mx-3 mb-3 w-full sm:w-[45%] lg:w-[30%] h-[20%]">
+            className="flex-col mx-3 mb-3 w-full sm:w-[45%] lg:w-[30%] h-[20%]"
+          >
             <div className="relative">
               <img
                 // 이미지 들어오면 수정 **
                 src="./asset/image.png"
+                // src={item.coverPhoto}
                 alt="shroomimg"
                 className="aspectRatioImage_4_3 rounded-md cursor-pointer"
                 onClick={() => handleFeedClick(item.feedId)}
@@ -77,7 +80,8 @@ const AllContent = ({ showroomData }) => {
             <div className="flex-col pt-2 mb-14">
               <div
                 className="flex justify-center my-3 cursor-pointer"
-                onClick={() => handleFeedClick(item.feedId)}>
+                onClick={() => handleFeedClick(item.feedId)}
+              >
                 <span className="text-3xl font-semibold">{item.title}</span>
               </div>
               <div className="flex justify-center items-center mb-3 text-gray-800">
@@ -85,8 +89,9 @@ const AllContent = ({ showroomData }) => {
                   // 멤버 이미지 수정 **
                   src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Wonho.png"
                   alt="프로필사진"
-                  className="w-6 h-6 rounded-full mr-2"></img>
-                <span className="text-xl">user name</span>
+                  className="w-6 h-6 rounded-full mr-2"
+                ></img>
+                <span className="text-xl">{item.nickname}</span>
               </div>
               <div className="flex justify-center text-lg text-gray-500">
                 <div className="mr-10">
