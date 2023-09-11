@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null); //유저정보 여기에 담을거임
   const navigate = useNavigate();
 
-  const baseURL = "http://ec2-15-164-234-24.ap-northeast-2.compute.amazonaws.com:8080";
+  const baseURL = "http://ec2-15-164-226-144.ap-northeast-2.compute.amazonaws.com:8080";
 
   useEffect(() => {
     // 엑세스토큰 체크하고 리프레시토큰 받아오는 부분
@@ -54,12 +54,12 @@ export function AuthProvider({ children }) {
             } catch (refreshError) {
               // 리프레시 토큰 사용 실패했을때
               console.error("Token refresh failed:", refreshError);
-              navigate("/login");
+              //navigate("/login");
             }
           } else {
             // 또 다른 오류들이나 리프레시토큰이 만료됐을때
             console.error("Authentication error:", error);
-            navigate("/login");
+            //navigate("/login");
           }
         }
       }
@@ -75,9 +75,15 @@ export function AuthProvider({ children }) {
         password,
       });
       setUser(response.data.user); // user로 오는지 member로 오는지 확인 필요함
+      console.log(response);
+      console.log(response.headers['authorization']);
+      console.log(response.headers['authorization-refresh']);
 
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
+      //console.log(response.refreahHeader);
+
+
+      localStorage.setItem("accessToken", response.headers['authorization']);
+      localStorage.setItem("refreshToken", response.headers['authorization-refresh']);
       navigate("/");
     } catch (error) {
       //인증완료되지 않은 이메일 처리도 해야됨
