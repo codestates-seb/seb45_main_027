@@ -16,6 +16,11 @@ const EditProfile = ({
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
+    const formData = new FormData();
+    formData.append("myInfoImage", file);
+
+    const baseURL = process.env.REACT_APP_API_URL;
+
 
     reader.onloadend = () => {
       setProfileData({ ...profileData, profilePicture: reader.result });
@@ -26,11 +31,9 @@ const EditProfile = ({
     }
 
     try {
-      const myInfoImage = "유저가 업로드한 사진 경로";
-
       const response = await axios.post(
-        "baseUrl/imageUpload/myInfoImage",
-        myInfoImage
+        `${baseURL}/imageUpload/myInfoImage`,
+        formData
       );
 
       //이미지 업로드 성공시 응답으로 받은 사진 경로 확인
