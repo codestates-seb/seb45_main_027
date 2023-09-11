@@ -75,23 +75,18 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
   };
 
   return (
-    <div className="md:min-h-[300px]">
-      <div className="text-[#F5634A] text-3xl font-bold mb-[2%]">Show Room</div>
-      <div className="flex flex-wrap items-center">
+    <div className="md:min-h-[300px] flex flex-wrap items-center">
         {activeTab === 1 &&
           visiblePosts.map((item) => (
-            <div key={item.id}>
               <MyInfoPost
                 imgSrc={item.imgSrc}
                 title={item.title}
                 itemId={item.id}
                 deletePost={deletePost}
               />
-            </div>
           ))}
         {activeTab === 2 &&
           visibleBookmarks.map((item) => (
-            <div key={item.id}>
               <MyInfoBookmark
                 imgSrc={item.imgSrc}
                 title={item.title}
@@ -99,11 +94,9 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
                 isBookmarked={item.bookmarked}
                 toggleBookmark={toggleBookmark}
               />
-            </div>
           ))}
         {activeTab === 3 &&
           visibleLikes.map((item) => (
-            <div key={item.id}>
               <MyInfoLike
                 imgSrc={item.imgSrc}
                 title={item.title}
@@ -111,9 +104,7 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
                 isLiked={item.like}
                 toggleLike={toggleLike}
               />
-            </div>
           ))}
-      </div>
       {activeTab === 1 && (
         <Pagination
           currentPage={postPage}

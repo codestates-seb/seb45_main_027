@@ -34,7 +34,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
       const response = await axios.patch("/api/profile", profileData);
       console.log(response.data);
       alert("Profile updated!");
-      navigate("/myinfo");
+      navigate("/");
     } catch (error) {
       console.error(error);
       alert("Error updating profile");

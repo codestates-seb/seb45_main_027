@@ -17,7 +17,23 @@ const ChangePassword = ({ inputStyle, buttonStyle }) => {
     setUpdatedPassword({ ...updatedPassword, [name]: value });
   };
 
+  const hasSpaces = (value) => {
+    return /\s/.test(value);
+  };
+  
+  const isPasswordValid = !hasSpaces(updatedPassword.newPassword) &&
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&()+|=])[A-Za-z\d~!@#$%^&()+|=]{6,15}$/.test(
+      updatedPassword.newPassword
+    ); 
+
+
   const handlePasswordUpdate = async () => {
+
+    if (!isPasswordValid) {
+      alert("비밀번호는 6글자 이상 15글자 이하로 입력해주세요. 영문, 숫자, 특수문자가 반드시 포함되어야 하며 공백은 사용할 수 없습니다.");
+      return;
+    }
+
     if (updatedPassword.newPassword !== updatedPassword.confirmPassword) {
       alert("Passwords do not match!");
       return;
