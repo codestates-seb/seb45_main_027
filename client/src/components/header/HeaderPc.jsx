@@ -2,10 +2,11 @@ import React from "react";
 import HeaderNav from "./HeaderNav";
 import HeaderOff from "./HeaderOff";
 import HeaderOn from "./HeaderOn";
-import { useAuth } from "../../context/AuthContext"
+//import { useAuth } from "../../context/AuthContext"
 
 const HeaderPc = () => {
-  const { user } = useAuth();
+  //const { user } = useAuth();
+  const memberId = localStorage.getItem("memberId");
 
   return (
     <div className="hidden md:block fixed w-full z-50">
@@ -18,7 +19,7 @@ const HeaderPc = () => {
 
           {/* 로그인 후 */}
           {/* <HeaderOn /> */}
-          {user ? <HeaderOn /> : <HeaderOff />}
+          {memberId ? <HeaderOn /> : <HeaderOff />}
         </div>
       </div>
     </div>

@@ -9,11 +9,14 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null); //유저정보 여기에 담을거임
+  const [user, setUser] = useState(null); 
   const navigate = useNavigate();
 
-  const baseURL =
-    "http://ec2-13-209-19-41.ap-northeast-2.compute.amazonaws.com:8080";
+  // const baseURL =
+  //   "http://ec2-3-39-231-102.ap-northeast-2.compute.amazonaws.com:8080";
+
+  const baseURL = process.env.REACT_APP_API_URL;
+
 
   // useEffect(() => {
   //   // 엑세스토큰 체크하고 리프레시토큰 받아오는 부분
@@ -95,6 +98,7 @@ export function AuthProvider({ children }) {
         const memberIdValue = match[1];
         console.log(memberIdValue);
         setUser(memberIdValue);
+        localStorage.setItem("memberId", memberIdValue);
       } else {
         console.error("Value not found");
       }
@@ -106,15 +110,16 @@ export function AuthProvider({ children }) {
       );
       navigate("/");
     } catch (error) {
+      //불일치시 401에러
       //인증완료되지 않은 이메일 처리도 해야됨 403주면 인증페이지로 보내기
-      if (error.response.status === 403) {
-        alert("이메일 인증을 완료해주세요.");
-        //navigate("/verify"); ///한준님 완료되면 주석 풀기
-      } else {
+      // if (error.response.status === 403) {
+      //   alert("이메일 인증을 완료해주세요.");
+      //   //navigate("/verify"); 
+      // } else {
         console.error("Login failed:", error);
         alert("Login failed");
         throw error;
-      }
+      //}
     }
   }
 
@@ -165,7 +170,7 @@ export function AuthProvider({ children }) {
         password,
       });
 
-      navigate("/verify");
+      //navigate("/verify");
     } catch (error) {
       console.error("Registration failed:", error);
       alert("Signup failed");
@@ -178,9 +183,10 @@ export function AuthProvider({ children }) {
       delete axios.defaults.headers.common["Authorization"];
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      localStorage.removeItem("memberId");
       setUser(null);
 
-      //navigate("/");
+      navigate("/login");
     } catch (error) {
       console.error("Logout failed:", error);
       alert("Logout failed");
@@ -190,6 +196,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     user,
+    setUser,
     login,
     register,
     logout,

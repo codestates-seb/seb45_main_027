@@ -7,6 +7,9 @@ import DeleteAccount from "./DeleteAccount";
 
 const UserAccount = ({ toggleAccountSettings, userDetails }) => {
   const navigate = useNavigate();
+  const memberId = localStorage.getItem("memberId");
+  const baseURL = process.env.REACT_APP_API_URL;
+
   const [activeTab, setActiveTab] = useState("editProfile");
   const toggleTab = (tabName) => {
     setActiveTab((prevtab) => (prevtab === tabName ? null : tabName));
@@ -15,9 +18,9 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
   //프로필정보 수정을 위한 state
   const [profileData, setProfileData] = useState({
     id: userDetails[0].id,
-    username: userDetails[0].username,
+    nickname: userDetails[0].username,
     profilePicture: userDetails[0].profilePicture || null,
-    bio: userDetails[0].bio || "",
+    myIntro: userDetails[0].bio || "",
   });
 
   //최종으로 수정된 프로필정보를 서버에 보냄
@@ -31,7 +34,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
 
     try {
       // 프로필데이터 보낼때 아이디도 같이 보내도 되는지 묻기, 아님 아이디 빼야됨
-      const response = await axios.patch("/api/profile", profileData);
+      const response = await axios.patch(`${baseURL}/members/${memberId}`, profileData);
       console.log(response.data);
       alert("Profile updated!");
       navigate("/");
