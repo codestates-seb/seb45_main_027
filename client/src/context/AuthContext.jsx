@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   const baseURL =
-    "http://ec2-3-35-209-46.ap-northeast-2.compute.amazonaws.com:8080";
+    "http://ec2-13-209-19-41.ap-northeast-2.compute.amazonaws.com:8080";
 
   // useEffect(() => {
   //   // 엑세스토큰 체크하고 리프레시토큰 받아오는 부분
@@ -77,9 +77,8 @@ export function AuthProvider({ children }) {
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${storedAccessToken}`;
-    } else {//403 리프레시토큰보내기, 액세스1시간 리프레시2주
-      delete axios.defaults.headers.common["Authorization"];
-      navigate("/login");
+    } else {
+      //403 리프레시토큰보내기, 액세스1시간 리프레시2주
     }
   }, [navigate]);
 
@@ -90,20 +89,15 @@ export function AuthProvider({ children }) {
         password,
       });
       console.log(response);
-      console.log(response.headers["authorization"]);
-      console.log(response.headers["authorization-refresh"]);
 
       const match = response.data.match(/{member-id} : (\d+)/);
-
       if (match) {
-        const memberIdValue = match[1]; // Extracted value
-        console.log(memberIdValue); // This will log "34" as a string
+        const memberIdValue = match[1];
+        console.log(memberIdValue);
         setUser(memberIdValue);
       } else {
         console.error("Value not found");
       }
-
-      //console.log(response.refreahHeader);
 
       localStorage.setItem("accessToken", response.headers["authorization"]);
       localStorage.setItem(
@@ -113,9 +107,14 @@ export function AuthProvider({ children }) {
       navigate("/");
     } catch (error) {
       //인증완료되지 않은 이메일 처리도 해야됨 403주면 인증페이지로 보내기
-      console.error("Login failed:", error);
-      alert("Login failed");
-      throw error;
+      if (error.response.status === 403) {
+        alert("이메일 인증을 완료해주세요.");
+        //navigate("/verify"); ///한준님 완료되면 주석 풀기
+      } else {
+        console.error("Login failed:", error);
+        alert("Login failed");
+        throw error;
+      }
     }
   }
 
@@ -181,7 +180,7 @@ export function AuthProvider({ children }) {
       localStorage.removeItem("refreshToken");
       setUser(null);
 
-      navigate("/");
+      //navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
       alert("Logout failed");

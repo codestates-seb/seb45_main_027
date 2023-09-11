@@ -2,8 +2,21 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext"
+
 
 const HeaderOn = () => {
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      console.log('button clicked');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
     return (
       <div className="flex">
         <ul className="flex text-[#F5634A] text-xl font-bold">
@@ -16,8 +29,8 @@ const HeaderOn = () => {
           </Link>
 
           {/* 로그아웃  */}
-          <Link to="/signup">
-            <li className="flex items-center">
+          {/* <Link to="/signup"> */}
+            <li className="flex items-center" onClick={handleLogout}>
               <img
                 className="flex pr-2.5 h-5"
                 src="/images/logout.png"
@@ -25,7 +38,7 @@ const HeaderOn = () => {
               />
               <span className="Showcard-Gothic">Logout</span>
             </li>
-          </Link>
+          {/* </Link> */}
         </ul>
       </div>
     );
