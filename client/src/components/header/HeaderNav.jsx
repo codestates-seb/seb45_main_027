@@ -10,7 +10,7 @@ export const HeaderNav = () => {
             <li>
               <img
                 className="w-8 h-8 mr-8"
-                src="/images/Logo.png"
+                src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/logo.png"
                 alt="로고"
               />
             </li>

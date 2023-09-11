@@ -98,7 +98,8 @@ const KakaoMap = ({ viewportWidth }) => {
     const bounds = new kakao.maps.LatLngBounds();
 
     for (let i = 0; i < data.length; i++) {
-      var imageSrc = "./images/MapMarker.png";
+      var imageSrc =
+        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/MapMarker.png";
       var imageSize = new kakao.maps.Size(40, 40); // 마커이미지의 크기
       var imageOption = { offset: new kakao.maps.Point(20, 35) }; // 마커이미지의 옵션.
       var markerImage = new kakao.maps.MarkerImage(

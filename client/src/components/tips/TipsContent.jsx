@@ -65,8 +65,8 @@ const TipsContent = ({ viewportWidth }) => {
                 <img
                   src={
                     item.isBookmarked
-                      ? "./images/isBookmarked.png"
-                      : "./images/Bookmark.png"
+                      ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isBookmarked.png"
+                      : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark.png"
                   }
                   alt="Bookmark"
                   className="absolute w-10 h-10 bottom-4 right-4 cursor-pointer"

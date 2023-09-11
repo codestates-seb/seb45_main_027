@@ -59,13 +59,12 @@ const BestInteriorCarousel = ({ viewportWidth, showroomData }) => {
       <img src={image.url} alt={image.url} className="rounded-xl " />
       <p
         className="absolute w-12 h-12 bottom-0 right-1"
-        onClick={() => toggleBookmark(idx)}
-      >
+        onClick={() => toggleBookmark(idx)}>
         <img
           src={
             image.isBookmarked
-              ? "./images/isBookmarked.png"
-              : "./images/Bookmark.png"
+              ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isBookmarked.png"
+              : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark.png"
           }
           alt="Bookmark"
           className="absolute bottom-3 right-7 cursor-pointer"

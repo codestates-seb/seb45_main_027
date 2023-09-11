@@ -39,7 +39,7 @@ const TipsHeader = ({ viewportWidth }) => {
       <div className="relative flex items-center justify-end mt-5">
         <img
           className="absolute left-5 w-6"
-          src="./images/Search_gray.png"
+          src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Search_gray.png"
           alt="searchIamge"
         />
         <input
