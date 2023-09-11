@@ -79,6 +79,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.POST, "/feed/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/tip/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/follow/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/imageUpload/**").permitAll()
                 .antMatchers(HttpMethod.PATCH, "/members/**").permitAll()
                 .antMatchers(HttpMethod.PATCH, "/feed/**").permitAll()
                 .antMatchers(HttpMethod.PATCH, "/tip/**").permitAll()
@@ -179,7 +180,8 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:8080",
-                "http://localhost:3000"
+                "http://localhost:3000",
+                "https://bbibbiapp.s3.ap-northeast-2.amazonaws.com"
         ));
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
