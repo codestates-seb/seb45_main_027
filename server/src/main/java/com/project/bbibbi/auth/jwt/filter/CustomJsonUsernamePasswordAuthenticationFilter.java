@@ -63,21 +63,26 @@ public class CustomJsonUsernamePasswordAuthenticationFilter extends AbstractAuth
      * authenticate()의 파라미터로 UsernamePasswordAuthenticationToken 객체를 넣고 인증 처리
      * (여기서 AuthenticationManager 객체는 ProviderManager -> SecurityConfig에서 설정)
      */
-    @Override
+    @Override // 받은걸 역직렬화해서 추출 후 인증을 하고, 그걸  AuthenticationManage 위임하기
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException {
         if(request.getContentType() == null || !request.getContentType().equals(CONTENT_TYPE)  ) {
             throw new AuthenticationServiceException("Authentication Content-Type not supported: " + request.getContentType());
         }
 
         String messageBody = StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
-
+        // HttpServletRequest의 request를 .getInputStream()꺼내서  스트링으로 변환 후 메세지 바디에 저장
         Map<String, String> usernamePasswordMap = objectMapper.readValue(messageBody, Map.class);
+        // objectMapper.readValue(messageBody, Map.class)를 통해
+        // Map.class 클래스의 객체로 역직렬화(Deserialization)합니다.
 
         String email = usernamePasswordMap.get(USERNAME_KEY);
         String password = usernamePasswordMap.get(PASSWORD_KEY);
 
+
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(email, password);//principal 과 credentials 전달
 
+        //  Username과 Password 정보를 포함한 UsernamePasswordAuthenticationToken을 생성합니다.
         return this.getAuthenticationManager().authenticate(authRequest);
+        // UsernamePasswordAuthenticationToken인 authRequest를 AuthenticationManager에게 전달하면서 인증 처리를 위임합니다.
     }
 }
