@@ -17,12 +17,18 @@ const TipsUserTop = () => {
       <button className="" onClick={() => setFollow(!follow)}>
         {follow ? (
           <div className={`bg-white ${button} `}>
-            <img src="/images/check.png" alt="" />
+            <img
+              src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/check.png"
+              alt=""
+            />
             <span className=" text-gray-800 font-semibold pl-1">팔로잉</span>
           </div>
         ) : (
           <div className={`bg-[#00647B] ${button} `}>
-            <img src="/images/plus.png" alt="" />
+            <img
+              src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/plus.png"
+              alt=""
+            />
             <span className="text-white font-semibold pl-1">팔로우</span>
           </div>
         )}

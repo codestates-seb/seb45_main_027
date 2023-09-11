@@ -11,7 +11,7 @@ const HeaderMobile = ({ buttonBgColor }) => {
             {/* 홈 */}
             <Link to="/">
               <li>
-                <img className="w-10" src="/images/삐삐Logo.png" alt="홈" />
+                <img className="w-10" src="/images/Logo.png" alt="홈" />
               </li>
             </Link>
 

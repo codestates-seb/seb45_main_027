@@ -8,43 +8,50 @@ const UserInfoFollow = () => {
     {
       id: 1,
       username: "User1",
-      profileImage: "./images/Hanjun.png",
+      profileImage:
+        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Hanjun.png",
       isFollowing: true,
     },
     {
       id: 2,
       username: "User2",
-      profileImage: "./images/Sunho.png",
+      profileImage:
+        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Sunho.png",
       isFollowing: true,
     },
     {
       id: 3,
       username: "User3",
-      profileImage: "./images/Hanjun.png",
+      profileImage:
+        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Hanjun.png",
       isFollowing: true,
     },
     {
       id: 4,
       username: "User4",
-      profileImage: "./images/Sunho.png",
+      profileImage:
+        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Sunho.png",
       isFollowing: true,
     },
     {
       id: 5,
       username: "User5",
-      profileImage: "./images/Hanjun.png",
+      profileImage:
+        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Hanjun.png",
       isFollowing: true,
     },
     {
       id: 6,
       username: "User6",
-      profileImage: "./images/Sunho.png",
+      profileImage:
+        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Sunho.png",
       isFollowing: true,
     },
     {
       id: 7,
       username: "User7",
-      profileImage: "./images/Hanjun.png",
+      profileImage:
+        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Hanjun.png",
       isFollowing: true,
     },
     {
@@ -59,13 +66,15 @@ const UserInfoFollow = () => {
     {
       id: 1,
       username: "User1",
-      profileImage: "./images/Yuri.png",
+      profileImage:
+        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Yuri.png",
       isFollowing: false,
     },
     {
       id: 2,
       username: "User2",
-      profileImage: "./images/Dusan.png",
+      profileImage:
+        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Dusan.png",
       isFollowing: true,
     },
   ]);

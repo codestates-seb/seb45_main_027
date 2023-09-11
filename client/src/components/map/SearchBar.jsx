@@ -23,8 +23,7 @@ const SearchBar = ({
         viewportWidth < 720
           ? "mb-4"
           : "absolute z-10 top-5 left-1/2 transform -translate-x-1/2"
-      }`}
-    >
+      }`}>
       <div className="flex justify-start bg-white p-2 w-full h-1/8 text-center mr-4 shadow-xl rounded-lg">
         <img
           className="w-[30px] p-[1px]"
@@ -42,11 +41,10 @@ const SearchBar = ({
       </div>
       <button
         className="shadow-xl rounded-lg bg-white w-[50px] p-p-[1px]"
-        onClick={returnToCurrentLocation}
-      >
+        onClick={returnToCurrentLocation}>
         <img
           className="w-full p-2"
-          src="./images/CurrentLocation.png"
+          src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/CurrentLocation.png"
           alt="CurrentLocation"
         />
       </button>

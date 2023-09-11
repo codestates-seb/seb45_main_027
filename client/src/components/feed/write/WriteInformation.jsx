@@ -83,7 +83,11 @@ const WriteInformation = ({ selectedValues, setSelectedValues }) => {
       {/* 아코디언 */}
       <div className="flex justify-between w-full items-center">
         <div className="flex items-center py-2">
-          <img className="w-7 h-7 mr-5" src="/images/Write.png" alt="" />
+          <img
+            className="w-7 h-7 mr-5"
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Write.png"
+            alt=""
+          />
           <div className="text-2xl font-semibold">
             <span>필수정보 입력</span>
           </div>
@@ -93,7 +97,7 @@ const WriteInformation = ({ selectedValues, setSelectedValues }) => {
         <button onClick={() => setIsOpen(!isOpen)}>
           <img
             className={`w-7 h-7 ${isOpen ? "transform rotate-180" : ""}`}
-            src="/images/arrow-line.png"
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/arrow-line.png"
             alt=""
           />
         </button>
@@ -105,8 +109,7 @@ const WriteInformation = ({ selectedValues, setSelectedValues }) => {
           {optionsData.map((optionGroup) => (
             <li
               key={optionGroup.name}
-              className="flex p-3 2xl:w-1/3 xl:w-1/2 sm:w-full w-full"
-            >
+              className="flex p-3 2xl:w-1/3 xl:w-1/2 sm:w-full w-full">
               <span className="pt-5 min-w-[70px]">{optionGroup.label}</span>
               <Select
                 className="py-2 w-[70%] "
