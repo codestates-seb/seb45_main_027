@@ -54,9 +54,9 @@ const FormValidation = ({ path }) => {
       }
 
       // signup logic
-      console.log("Signing up with data:", { nickname, email, password });
+      console.log("Signing up with data:", { email, nickname, password });
       try {
-        await register(email, password);
+        await register(email, nickname, password);
       } catch (error) {
         // 닉네임, 이메일 중복 체크여부 유저한테 알려줘야함 이럴경우 alert창 띄우고 해당 인풋 비우기(context 함수 건드리기)
         console.error('Registration failed:', error);

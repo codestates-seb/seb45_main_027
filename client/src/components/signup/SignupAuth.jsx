@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignupAuth = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
 
+  const baseURL = "http://ec2-15-164-234-24.ap-northeast-2.compute.amazonaws.com:8080";
+
   const handleEmailSubmit = async () => {
     try {
       // 이메일이 존재하는지 확인
-      //await axios.post(`${baseURL}/auth/email`, { email });
+      await axios.post(`${baseURL}/auth/email`, { email });
 
-      //setStep("code");
       alert(`We've sent you a verification code to your email address.`);
     } catch (error) {
       alert("Email does not exist.");
@@ -23,7 +25,7 @@ const SignupAuth = () => {
     try {
       // 서버에서 유저 이메일로 인증코드 전송
       // 서버로 이메일과 유저가 입력한 인증코드를 보내줌
-      //await axios.post(`${baseURL}/auth/email/check `, { email, code });
+      await axios.post(`${baseURL}/auth/email/check `, { email, code });
 
       alert("Succefully Verified.");
       navigate("/login");

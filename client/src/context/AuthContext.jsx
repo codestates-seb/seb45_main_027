@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null); //유저정보 여기에 담을거임
   const navigate = useNavigate();
 
-  const baseURL = "https://beeb-210-123-100-75.ngrok-free.app";
+  const baseURL = "http://ec2-15-164-234-24.ap-northeast-2.compute.amazonaws.com:8080";
 
   useEffect(() => {
     // 엑세스토큰 체크하고 리프레시토큰 받아오는 부분
