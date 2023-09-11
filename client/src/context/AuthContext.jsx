@@ -128,7 +128,7 @@ export function AuthProvider({ children }) {
 
   async function register(email, nickname, password) {
     try {
-      await axios.post(`${baseURL}/members/signup`, {
+      await axios.post(`${baseURL}/auth/signup`, {
         email,
         nickname,
         password,
