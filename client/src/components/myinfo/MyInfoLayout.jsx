@@ -15,7 +15,8 @@ const MyInfoLayout = () => {
       id: 1,
       username: "pepe",
       bio: "DIY 좋아합니다",
-      profilePicture: "./images/Yebin.png",
+      profilePicture:
+        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Yebin.png",
     },
   ];
 

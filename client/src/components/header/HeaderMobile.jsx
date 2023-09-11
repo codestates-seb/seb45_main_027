@@ -11,7 +11,11 @@ const HeaderMobile = ({ buttonBgColor }) => {
             {/* 홈 */}
             <Link to="/">
               <li>
-                <img className="w-10" src="/images/Logo.png" alt="홈" />
+                <img
+                  className="w-10"
+                  src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/logo.png"
+                  alt="홈"
+                />
               </li>
             </Link>
 

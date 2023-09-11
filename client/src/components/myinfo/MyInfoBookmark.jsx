@@ -21,13 +21,12 @@ const MyInfoBookmark = ({
         />
         <button
           onClick={handleToggleBookmark}
-          className="absolute bottom-3 right-3 cursor-pointer"
-        >
+          className="absolute bottom-3 right-3 cursor-pointer">
           <img
             src={
               isBookmarked
                 ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isBookmarked.png"
-                : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Bookmark.png"
+                : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark.png"
             }
             alt="Bookmark"
             style={{

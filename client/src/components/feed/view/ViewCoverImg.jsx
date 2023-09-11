@@ -24,7 +24,10 @@ const ViewCoverImg = () => {
         <img src={coverPhoto} alt="Cover" className={coverImg} />
       ) : (
         <div className={coverImg}>
-          <img src="/images/loading.gif" alt="로딩중" />
+          <img
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/loading.gif"
+            alt="로딩중"
+          />
         </div>
       )}
     </div>

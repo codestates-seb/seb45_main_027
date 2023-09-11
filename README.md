@@ -1,5 +1,5 @@
 <br>
-<center><img width="250px" src="client/public/images/삐삐Logo.png"></center>
+<center><img width="250px" src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/logo.png"></center>
 
 ## 👧 Project. 삐삐 (BIBI .Best interior)
 > ### Main Project.

@@ -57,7 +57,8 @@ const UserInfoFollow = () => {
     {
       id: 8,
       username: "User8",
-      profileImage: "./images/Sunho.png",
+      profileImage:
+        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Sunho.png",
       isFollowing: true,
     },
   ]);

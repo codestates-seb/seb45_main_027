@@ -27,7 +27,7 @@ const SearchBar = ({
       <div className="flex justify-start bg-white p-2 w-full h-1/8 text-center mr-4 shadow-xl rounded-lg">
         <img
           className="w-[30px] p-[1px]"
-          src="./images/Search.png"
+          src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Search.png"
           alt="searchimg"
         />
         <input
