@@ -3,7 +3,7 @@ import RoomInfoFilter from "./RoomInfoFilter";
 import RoomSizeFilter from "./RoomSizeFilter";
 import RoomTypeFilter from "./RoomTypeFilter";
 
-const AllHeaderFilter = () => {
+const AllHeaderFilter = ({ handleFilterClick }) => {
   // const [roomInfoFilter, setRoomInfoFilter] = useState(false);
   // const [roomSizeFilter, setRoomSizeFilter] = useState(false);
   // const [roomTypeFilter, setRoomTypeFilter] = useState(false);
@@ -72,9 +72,15 @@ const AllHeaderFilter = () => {
       </span>
       {activeModal && (
         <div ref={modalRef}>
-          {activeModal === "roomInfoFilter" && <RoomInfoFilter />}
-          {activeModal === "roomSizeFilter" && <RoomSizeFilter />}
-          {activeModal === "roomTypeFilter" && <RoomTypeFilter />}
+          {activeModal === "roomInfoFilter" && (
+            <RoomInfoFilter handleFilterClick={handleFilterClick} />
+          )}
+          {activeModal === "roomSizeFilter" && (
+            <RoomSizeFilter handleFilterClick={handleFilterClick} />
+          )}
+          {activeModal === "roomTypeFilter" && (
+            <RoomTypeFilter handleFilterClick={handleFilterClick} />
+          )}
         </div>
       )}
     </div>

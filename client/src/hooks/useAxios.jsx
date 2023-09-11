@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const useAxios = (configParams) => {
-  // axios.defaults.baseURL = "http://ec2-43-201-113-34.ap-northeast-2.compute.amazonaws.com:8080";
+  // axios.defaults.baseURL = "https://1416-210-123-100-75.ngrok-free.app";
   const [res, setRes] = useState("");
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchDataUsingAxios(configParams);
+    fetchData(configParams);
   }, []);
 
-  const fetchDataUsingAxios = async () => {
+  const fetchData = async () => {
     setLoading(true);
     try {
       const response = await axios.request(configParams);
@@ -23,7 +23,7 @@ const useAxios = (configParams) => {
     }
   };
 
-  return [res, err, loading];
+  return [res, err, loading, fetchData];
 };
 
 export default useAxios;
