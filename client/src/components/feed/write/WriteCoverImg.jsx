@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import axios from "axios";
+import useAxios from "../../../hooks/useAxios";
 
 const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
   const imageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
+    const formData = new FormData();
+    formData.append("coverPhotoImage", file);
 
     reader.onloadend = () => {
       setCoverImage(reader.result);
@@ -12,6 +16,17 @@ const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
     if (file) {
       reader.readAsDataURL(file);
     }
+
+    axios
+      .post(
+        "http://ec2-54-180-26-247.ap-northeast-2.compute.amazonaws.com:8080/imageUpload/coverImage",
+        formData
+      )
+      .then((response) => {
+        console.log(response.data);
+        console.log("S3업로드 성공");
+      })
+      .catch((error) => {});
   };
 
   const handleUpload = () => {

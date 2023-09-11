@@ -1,5 +1,6 @@
 import React from "react";
 
+// 확장성고려해서 개선좀해라 카테고리
 const roomInfo = [
   {
     name: "원룸",

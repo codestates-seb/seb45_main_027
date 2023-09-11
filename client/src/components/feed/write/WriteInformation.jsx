@@ -109,7 +109,8 @@ const WriteInformation = ({ selectedValues, setSelectedValues }) => {
           {optionsData.map((optionGroup) => (
             <li
               key={optionGroup.name}
-              className="flex p-3 2xl:w-1/3 xl:w-1/2 sm:w-full w-full">
+              className="flex p-3 2xl:w-1/3 xl:w-1/2 sm:w-full w-full"
+            >
               <span className="pt-5 min-w-[70px]">{optionGroup.label}</span>
               <Select
                 className="py-2 w-[70%] "
