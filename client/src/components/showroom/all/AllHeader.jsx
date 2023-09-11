@@ -1,5 +1,6 @@
 import React from "react";
 import useInput from "../../../hooks/useInput";
+import AllHeaderFilter from "./HeaderFilter/AllHeaderFilter";
 
 const AllHeader = ({ viewportWidth, setViewportWidth }) => {
   const [inputValue, handleInputChange, clearInput] = useInput("");
@@ -18,15 +19,13 @@ const AllHeader = ({ viewportWidth, setViewportWidth }) => {
         <h1 className="text-4xl text-[#F5634A] font-semibold Showcard-Gothic">
           All
         </h1>
-        <div className="text-xl flex-nowrap pl-4">
-          <span className="pr-3">최신순</span>
-          <span className="pr-3">인기순</span>
-          <span className="pr-3">공간별</span>
-          <span className="pr-3">평수별</span>
-          <span className="pr-3">주거형태별</span>
-        </div>
+        <AllHeaderFilter />
       </div>
-      <div className={`relative flex items-center my-5 ${isMobileView ? "mx-auto pr-5" : ""}`}>
+      <div
+        className={`relative flex items-center my-5 ${
+          isMobileView ? "mx-auto pr-5" : ""
+        }`}
+      >
         <img
           className="absolute w-6 left-4"
           src="./images/Search_gray.png"
