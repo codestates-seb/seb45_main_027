@@ -8,7 +8,9 @@ import { toast } from "react-hot-toast";
 const ShowRoom = () => {
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   const [showroomData, setShowroomData] = useState("");
+  console.log(showroomData);
 
+  console.log(showroomData);
   const configParams = {
     method: "GET",
     url: "/feed/filter/RECENT00",

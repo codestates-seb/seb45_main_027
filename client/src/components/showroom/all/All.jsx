@@ -8,6 +8,7 @@ const All = ({ viewportWidth, setViewportWidth, showroomData }) => {
       <AllHeader
         viewportWidth={viewportWidth}
         setViewportWidth={setViewportWidth}
+        showroomData={showroomData}
       />
       <AllContent
         viewportWidth={viewportWidth}
