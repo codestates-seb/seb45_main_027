@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const liPoint= "flex flex-col items-center w-12"
+const liPoint = "flex flex-col items-center w-12";
 
 const FooterMobile = () => {
   return (
@@ -22,7 +22,10 @@ const FooterMobile = () => {
           {/* 팁 */}
           <Link to="/tips">
             <li className={liPoint}>
-              <img src="/images/Tips.png" alt="팁" />
+              <img
+                src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Tips.png"
+                alt="팁"
+              />
               <span className="mt-2">Tips</span>
             </li>
           </Link>

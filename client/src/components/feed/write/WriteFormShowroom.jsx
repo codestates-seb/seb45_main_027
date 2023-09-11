@@ -161,7 +161,11 @@ const WriteFormShowroom = () => {
       {/* 이미지 입력 버튼 */}
       <div className="mb-2 pb-2 border-b">
         <label htmlFor="imageUpload" className="cursor-pointer">
-          <img className="p-2" src="/images/gallery.png" alt="" />
+          <img
+            className="p-2"
+            src="/images/https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/gallery.png.png"
+            alt=""
+          />
         </label>
         <input
           id="imageUpload"

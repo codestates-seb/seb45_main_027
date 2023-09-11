@@ -41,7 +41,7 @@ const WriteShowRoom = () => {
         const parsedData = JSON.parse(savedData);
         setCoverImage(parsedData.coverImage);
         setTitle(parsedData.title);
-        setEditorContent(parsedData.orContent);
+        setEditorContent(parsedData.editorContent);
         setSelectedValues(parsedData.selectedValues);
         toast.success("작성중인 글을 불러왔습니다.");
       } else {

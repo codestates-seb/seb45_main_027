@@ -9,7 +9,7 @@ const WriteFormShowroomcopy = ({ editorContent, setEditorContent }) => {
   const [tags, setTags] = useState([]); // 이미지 내 tags 들의 집합
   const [currentTag, setCurrentTag] = useState({ x: "0%", y: "0%", text: "" }); // 현재 추가하려는 tag
   // const [editorContent, setEditorContent] = useState(""); // Editor 내용을 관리
-
+  console.log(editorContent);
   useEffect(() => {
     if (editorContent === DEFAULT_EDITOR_TEXT) {
       editorRef.current.innerHTML = editorContent;
@@ -75,7 +75,11 @@ const WriteFormShowroomcopy = ({ editorContent, setEditorContent }) => {
     <>
       <div className="flex border-b-[1px] pb-4">
         <label htmlFor="imageUpload" className="cursor-pointer rounded-md">
-          <img className="p-2" src="/images/gallery.png" alt="gallery" />
+          <img
+            className="p-2"
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/gallery.png"
+            alt="gallery"
+          />
         </label>
         <input
           id="imageUpload"

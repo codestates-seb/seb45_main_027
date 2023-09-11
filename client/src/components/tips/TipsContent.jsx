@@ -29,7 +29,7 @@ const data = [
   { url: "./asset/image4.png", isBookmarked: false, tipId: 24 },
 ];
 
-const TipsContent = ({ viewportWidth }) => {
+const TipsContent = ({ tipData }) => {
   const [image, setImage2] = useState(data); // 이미지데이터를 상태로 저장
 
   // 북마크 상태를 변경시켜주는 함수
@@ -49,17 +49,18 @@ const TipsContent = ({ viewportWidth }) => {
   return (
     <div className="flex-col m-4">
       <div className="flex justify-between flex-wrap">
-        {image.map((item, idx) => (
+        {tipData.map((item, idx) => (
           <div
             key={idx}
             className="flex-col mx-3 mb-3 w-full sm:w-[45%] md:w-[30%] lg:w-[23%] h-[20%]"
           >
             <div className="relative">
               <img
-                src={item.url}
+                // 이미지 주소 바꿔줘야함
+                src="/asset/image.png"
                 alt="tipsimg"
                 className="aspectRatioImage_1_1 rounded-md cursor-pointer"
-                onClick={() => handleTipClick(item.tipId)}
+                onClick={() => handleTipClick(item.feedId)}
               />
               <p>
                 <img
