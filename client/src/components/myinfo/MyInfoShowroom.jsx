@@ -77,8 +77,9 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
   return (
     <div className="md:min-h-[300px] flex flex-wrap items-center">
         {activeTab === 1 &&
-          visiblePosts.map((item) => (
+          visiblePosts.map((item, idx) => (
               <MyInfoPost
+              key={idx}
                 imgSrc={item.imgSrc}
                 title={item.title}
                 itemId={item.id}
@@ -86,8 +87,9 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
               />
           ))}
         {activeTab === 2 &&
-          visibleBookmarks.map((item) => (
+          visibleBookmarks.map((item, idx) => (
               <MyInfoBookmark
+              key={idx}
                 imgSrc={item.imgSrc}
                 title={item.title}
                 itemId={item.id}
@@ -96,8 +98,9 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
               />
           ))}
         {activeTab === 3 &&
-          visibleLikes.map((item) => (
+          visibleLikes.map((item, idx) => (
               <MyInfoLike
+              key={idx}
                 imgSrc={item.imgSrc}
                 title={item.title}
                 itemId={item.id}

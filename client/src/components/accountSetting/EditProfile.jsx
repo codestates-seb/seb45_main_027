@@ -71,14 +71,14 @@ const EditProfile = ({
       />
       <input
         type="text"
-        name="username"
+        name="nickname"
         placeholder="Nickname"
         value={profileData.username}
         onChange={handleProfileChange}
         className={`${inputStyle} mt-10`}
       />
       <textarea
-        name="bio"
+        name="myIntro"
         placeholder="Bio or Description"
         value={profileData.bio}
         onChange={handleProfileChange}

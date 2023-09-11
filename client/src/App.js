@@ -20,7 +20,7 @@ import Verify from "./pages/Verify";
 import { Toaster } from "react-hot-toast";
 
 const headerPaths = [
-  "myinfo",
+  "myinfo/:memberId",
   "showroom",
   "tips",
   "map",
@@ -37,7 +37,7 @@ const footerPaths = [
   "login",
   "signup",
   "verify",
-  "myinfo",
+  "myinfo/:memberId",
   "showroom",
   "tips",
   "showroom/write",
@@ -63,7 +63,7 @@ function App() {
         <Route path={"/login"} element={<Login />} />
         <Route path={"/signup"} element={<Signup />} />
         <Route path={"/verify"} element={<Verify />} />
-        <Route path={"/myinfo"} element={<MyInfo />} />
+        <Route path={"/myinfo/:memberId"} element={<MyInfo />} />
         <Route path={"/showroom"} element={<ShowRoom />} />
         <Route path={"/tips"} element={<Tips />} />
         <Route path={"/map"} element={<Map />} />
