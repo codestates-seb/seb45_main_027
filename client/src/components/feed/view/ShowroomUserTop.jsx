@@ -21,7 +21,7 @@ const ShowroomUserTop = () => {
         <div className={div}>
           <img
             className={img}
-            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/images/city.png"
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/city.png"
             alt="주거형태"
           />
           <span>주거형태</span>
@@ -29,7 +29,7 @@ const ShowroomUserTop = () => {
         <div className={div}>
           <img
             className={img}
-            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/images/width.png "
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/width.png "
             alt="공간"
           />
           <span>공간</span>

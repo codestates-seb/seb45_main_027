@@ -51,8 +51,7 @@ const AllContent = ({ showroomData }) => {
         {showroomData.map((item, idx) => (
           <div
             key={idx}
-            className="flex-col mx-3 mb-3 w-full sm:w-[45%] lg:w-[30%] h-[20%]"
-          >
+            className="flex-col mx-3 mb-3 w-full sm:w-[45%] lg:w-[30%] h-[20%]">
             <div className="relative">
               <img
                 // 이미지 들어오면 수정 **
@@ -66,8 +65,8 @@ const AllContent = ({ showroomData }) => {
                   // isBookmarked 변수명 수정요함 **
                   src={
                     item.isBookmarked
-                      ? "./images/isBookmarked.png"
-                      : "./images/Bookmark.png"
+                      ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isBookmarked.png"
+                      : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark.png"
                   }
                   alt="Bookmark"
                   className="absolute w-10 h-10 bottom-4 right-4 cursor-pointer"
@@ -78,17 +77,15 @@ const AllContent = ({ showroomData }) => {
             <div className="flex-col pt-2 mb-14">
               <div
                 className="flex justify-center my-3 cursor-pointer"
-                onClick={() => handleFeedClick(item.feedId)}
-              >
+                onClick={() => handleFeedClick(item.feedId)}>
                 <span className="text-3xl font-semibold">{item.title}</span>
               </div>
               <div className="flex justify-center items-center mb-3 text-gray-800">
                 <img
                   // 멤버 이미지 수정 **
-                  src="./images/Wonho.png"
+                  src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Wonho.png"
                   alt="프로필사진"
-                  className="w-6 h-6 rounded-full mr-2"
-                ></img>
+                  className="w-6 h-6 rounded-full mr-2"></img>
                 <span className="text-xl">user name</span>
               </div>
               <div className="flex justify-center text-lg text-gray-500">

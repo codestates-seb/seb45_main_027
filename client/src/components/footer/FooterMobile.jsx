@@ -11,7 +11,10 @@ const FooterMobile = () => {
           {/* 쇼룸 */}
           <Link to="/showroom">
             <li className={liPoint}>
-              <img src="/images/Showroom.png" alt="쇼룸" />
+              <img
+                src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Showroom.png"
+                alt="쇼룸"
+              />
               <span className="w-24 text-center mt-2">Show room</span>
             </li>
           </Link>
@@ -27,14 +30,21 @@ const FooterMobile = () => {
           {/* 홈 */}
           <Link to="/">
             <li>
-              <img className="w-14" src="/images/Logo.png" alt="홈" />
+              <img
+                className="w-14"
+                src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/logo.png"
+                alt="홈"
+              />
             </li>
           </Link>
 
           {/* 맵 */}
           <Link to="/map">
             <li className={liPoint}>
-              <img src="/images/map.png" alt="맵" />
+              <img
+                src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/map.png"
+                alt="맵"
+              />
               <span className="mt-2">Map</span>
             </li>
           </Link>

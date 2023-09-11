@@ -24,11 +24,10 @@ const AllHeader = ({ viewportWidth, setViewportWidth }) => {
       <div
         className={`relative flex items-center my-5 ${
           isMobileView ? "mx-auto pr-5" : ""
-        }`}
-      >
+        }`}>
         <img
           className="absolute w-6 left-4"
-          src="./images/Search_gray.png"
+          src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Search_gray.png"
           alt="searchIamge"
         />
         <input

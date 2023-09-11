@@ -10,7 +10,7 @@ const UserProfileDetails = ({ toggleAccountSettings, userDetails }) => {
             src={
               userDetails[0].profilePicture
                 ? userDetails[0].profilePicture
-                : "./images/user.png"
+                : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/user.png"
             }
             alt="profile"
           />
@@ -23,8 +23,7 @@ const UserProfileDetails = ({ toggleAccountSettings, userDetails }) => {
             </div>
             <button
               className="bg-[#00647B] text-white font-semibold hover:bg-[#00647B]/50 rounded-full p-1 md:p-2 text-xs md:text-md"
-              onClick={() => toggleAccountSettings(true)}
-            >
+              onClick={() => toggleAccountSettings(true)}>
               계정설정
             </button>
           </div>

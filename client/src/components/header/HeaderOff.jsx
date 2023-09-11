@@ -10,7 +10,11 @@ const HeaderOff = () => {
         {/* 로그인 */}
         <Link to="/login">
           <li className="flex items-center">
-            <img className="flex pr-2.5 h-5" src="/images/vector.png" alt="" />
+            <img
+              className="flex pr-2.5 h-5"
+              src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/vector.png"
+              alt=""
+            />
             <span className="Showcard-Gothic pr-8">Login</span>
           </li>
         </Link>
