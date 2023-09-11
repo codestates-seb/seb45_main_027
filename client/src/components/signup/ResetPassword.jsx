@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
+  const baseURL = "http://ec2-15-164-234-24.ap-northeast-2.compute.amazonaws.com:8080";
   const handleEmailSubmit = async () => {
     try {
       // 이메일이 존재하는지 확인
-      //await axios.post(`${baseURL}/auth/password`, { email });
+      await axios.post(`${baseURL}/auth/password`, { email });
       alert(`We've sent you a new password to your email address.`)
 
     } catch (error) {
