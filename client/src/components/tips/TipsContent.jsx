@@ -32,7 +32,6 @@ const data = [
 const TipsContent = ({ viewportWidth }) => {
   const [image, setImage2] = useState(data); // 이미지데이터를 상태로 저장
 
-
   // 북마크 상태를 변경시켜주는 함수
   const toggleBookmark = (idx) => {
     const updatedBookmarks = [...image];
@@ -40,9 +39,8 @@ const TipsContent = ({ viewportWidth }) => {
     setImage2(updatedBookmarks);
     console.log(updatedBookmarks);
   };
- 
+
   const navigate = useNavigate();
-  
 
   // 게시글 클릭시 페이지 이동하는 핸들러 함수
   const handleTipClick = (tipId) => {
@@ -54,7 +52,8 @@ const TipsContent = ({ viewportWidth }) => {
         {image.map((item, idx) => (
           <div
             key={idx}
-            className="flex-col mx-3 mb-3 w-full sm:w-[45%] md:w-[30%] lg:w-[23%] h-[20%]">
+            className="flex-col mx-3 mb-3 w-full sm:w-[45%] md:w-[30%] lg:w-[23%] h-[20%]"
+          >
             <div className="relative">
               <img
                 src={item.url}
