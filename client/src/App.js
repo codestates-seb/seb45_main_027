@@ -20,30 +20,22 @@ import Verify from "./pages/Verify";
 import { Toaster } from "react-hot-toast";
 
 const headerPaths = [
-  "myinfo/:memberId",
+  "myinfo",
   "showroom",
   "tips",
   "map",
   "login",
   "signup",
   "verify",
-  "showroom/write",
-  "tips/write",
-  "showroom/:id/view",
-  "tips/:id/view",
   "",
 ];
 const footerPaths = [
   "login",
   "signup",
   "verify",
-  "myinfo/:memberId",
+  "myinfo",
   "showroom",
   "tips",
-  "showroom/write",
-  "tips/write",
-  "showroom/:id/view",
-  "tips/:id/view",
   "",
 ];
 
@@ -56,22 +48,22 @@ function App() {
   return (
     <AuthProvider>
       <UserProvider>
-      <Toaster />
-      {isHeader && <HeaderPc />}
-      <Routes>
-        <Route path={"/"} element={<Main />} />
-        <Route path={"/login"} element={<Login />} />
-        <Route path={"/signup"} element={<Signup />} />
-        <Route path={"/verify"} element={<Verify />} />
-        <Route path={"/myinfo/:memberId"} element={<MyInfo />} />
-        <Route path={"/showroom"} element={<ShowRoom />} />
-        <Route path={"/tips"} element={<Tips />} />
-        <Route path={"/map"} element={<Map />} />
-        <Route path={"/showroom/write"} element={<WriteShowRoom />} />
-        <Route path={"/showroom/:feedId"} element={<ViewShowRoom />} />
-        <Route path={"/tips/write"} element={<WriteTips />} />
-        <Route path={"/tips/:tipId/"} element={<ViewTips />} />
-      </Routes>
+        <Toaster />
+        {isHeader && <HeaderPc />}
+        <Routes>
+          <Route path={"/"} element={<Main />} />
+          <Route path={"/login"} element={<Login />} />
+          <Route path={"/signup"} element={<Signup />} />
+          <Route path={"/verify"} element={<Verify />} />
+          <Route path={"/myinfo/:memberId"} element={<MyInfo />} />
+          <Route path={"/showroom"} element={<ShowRoom />} />
+          <Route path={"/tips"} element={<Tips />} />
+          <Route path={"/map"} element={<Map />} />
+          <Route path={"/showroom/write"} element={<WriteShowRoom />} />
+          <Route path={"/showroom/:feedId"} element={<ViewShowRoom />} />
+          <Route path={"/tips/write"} element={<WriteTips />} />
+          <Route path={"/tips/:tipId/"} element={<ViewTips />} />
+        </Routes>
         {isFooter && <HiddenFooter />}
       </UserProvider>
     </AuthProvider>

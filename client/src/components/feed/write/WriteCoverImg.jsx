@@ -19,12 +19,13 @@ const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
 
     axios
       .post(
-        "http://ec2-54-180-26-247.ap-northeast-2.compute.amazonaws.com:8080/imageUpload/coverImage",
+        "https://1416-210-123-100-75.ngrok-free.app/imageUpload/coverImage",
         formData
       )
       .then((response) => {
         console.log(response.data);
         console.log("S3업로드 성공");
+        setCoverImage(response.data);
       })
       .catch((error) => {});
   };
