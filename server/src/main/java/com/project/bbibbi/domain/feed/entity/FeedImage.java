@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,17 +25,11 @@ public class    FeedImage extends BaseEntity {
     @Lob
     private String image;
 
-    @Column
-    private Double x;
-
-    @Column
-    private Double y;
-
-    @Column(length = 300)
-    private String tag;
-
     @ManyToOne
     @JoinColumn(name = "feed_id")
     private Feed feed;
+
+    @OneToMany(mappedBy = "feedImage", cascade = CascadeType.REMOVE)
+    private List<FeedImageTag> imageTags = new ArrayList<>();
 
 }

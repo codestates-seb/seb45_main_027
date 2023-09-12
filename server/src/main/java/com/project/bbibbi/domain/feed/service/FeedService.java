@@ -2,7 +2,9 @@ package com.project.bbibbi.domain.feed.service;
 
 import com.project.bbibbi.domain.feed.entity.Feed;
 import com.project.bbibbi.domain.feed.entity.FeedImage;
+import com.project.bbibbi.domain.feed.entity.FeedImageTag;
 import com.project.bbibbi.domain.feed.repository.FeedImageRepository;
+import com.project.bbibbi.domain.feed.repository.FeedImageTagRepository;
 import com.project.bbibbi.domain.feed.repository.FeedRepository;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.global.entity.*;
@@ -24,11 +26,16 @@ public class FeedService {
 
     private final FeedRepository feedRepository;
     private final FeedImageRepository feedImageRepository;
+    private final FeedImageTagRepository feedImageTagRepository;
     private final CustomBeanUtils<Feed> beanUtils;
 
-    public FeedService(FeedRepository feedRepository, FeedImageRepository feedImageRepository, CustomBeanUtils<Feed> beanUtils) {
+    public FeedService(FeedRepository feedRepository,
+                       FeedImageRepository feedImageRepository,
+                       FeedImageTagRepository feedImageTagRepository,
+                       CustomBeanUtils<Feed> beanUtils) {
         this.feedRepository = feedRepository;
         this.feedImageRepository = feedImageRepository;
+        this.feedImageTagRepository = feedImageTagRepository;
         this.beanUtils = beanUtils;
     }
 
@@ -45,25 +52,80 @@ public class FeedService {
     public void createFeedImages(List<FeedImage> feedImages){
         for(FeedImage feedImage : feedImages){
             feedImageRepository.save(feedImage);
+
+            createFeedTagImages(feedImage.getImageTags());
+        }
+    }
+
+    public void createFeedTagImages(List<FeedImageTag> feedImageTags){
+        for(FeedImageTag feedImageTag : feedImageTags){
+            feedImageTagRepository.save(feedImageTag);
         }
     }
 
     public Feed updateFeed(Feed feed){
 
-        Feed updatingFeed = feedRepository.save(feed);
+        Feed preFeed = findFeed(feed.getFeedId());
 
-        feedImageRepository.deleteByFeedId(feed.getFeedId());
+        long preFeedId = preFeed.getFeedId();
+        ArrayList<Long> preFeedImgId = new ArrayList<>();
+
+        if(preFeed.getImages() != null) {
+
+            for (FeedImage feedImage : preFeed.getImages()) {
+                preFeedImgId.add(feedImage.getFeedImageId());
+            }
+
+        }
+
+        if(preFeedImgId != null) {
+            for (Long i : preFeedImgId) {
+
+                feedImageTagRepository.deleteByFeedImageId(i);
+            }
+        }
+
+        feedImageRepository.deleteByFeedId(preFeedId);
+
+        Feed updatingFeed = feedRepository.save(feed);
 
         updatingFeedImages(feed.getImages());
 
-        return updatingFeed;
+        return feed;
 
     }
 
     public void updatingFeedImages(List<FeedImage> feedImages){
         for(FeedImage feedImage : feedImages){
 
-            feedImageRepository.save(feedImage);
+            System.out.println("11");
+            System.out.println("feeIg : "+feedImage.getFeedImageId());
+            FeedImage feedImage1 = feedImageRepository.save(feedImage);
+
+            System.out.println("feeIg2 : "+feedImage1.getFeedImageId());
+
+
+            System.out.println("22");
+
+
+            //   feedImageTagRepository.deleteByFeedImageId(feedImage.getFeedImageId());
+
+            System.out.println("33");
+
+
+            updatingFeedImageTags(feedImage.getImageTags());
+        }
+    }
+
+    public void updatingFeedImageTags(List<FeedImageTag> feedImageTags){
+        for(FeedImageTag feedImageTag : feedImageTags){
+
+            System.out.println("111");
+
+            feedImageTagRepository.save(feedImageTag);
+
+            System.out.println("222");
+
         }
     }
 

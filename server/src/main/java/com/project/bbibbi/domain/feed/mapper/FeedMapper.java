@@ -1,13 +1,9 @@
 package com.project.bbibbi.domain.feed.mapper;
 
-import com.project.bbibbi.domain.feed.dto.FeedImageDto;
-import com.project.bbibbi.domain.feed.dto.FeedPatchDto;
-import com.project.bbibbi.domain.feed.dto.FeedPostDto;
-import com.project.bbibbi.domain.feed.dto.FeedResponseDto;
+import com.project.bbibbi.domain.feed.dto.*;
 import com.project.bbibbi.domain.feed.entity.Feed;
 import com.project.bbibbi.domain.feed.entity.FeedImage;
-import com.project.bbibbi.domain.feedComment.dto.FeedCommentDto;
-import com.project.bbibbi.domain.feedComment.entity.FeedComment;
+import com.project.bbibbi.domain.feed.entity.FeedImageTag;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyResponseDto;
 import com.project.bbibbi.domain.feedReply.entity.FeedReply;
 import com.project.bbibbi.domain.member.entity.Member;
@@ -42,24 +38,44 @@ public interface FeedMapper {
         feed.setMember(Member.builder().memberId(1L).nickname("nickname1").build());
 
 
-        List<FeedImage> feedImages = new ArrayList<>();
 
-        for(FeedImageDto feedImageDto : feedPostDto.getFeedImages()){
+        if(feedPostDto.getFeedImages() != null) {
 
-            FeedImage tempFeedImage = new FeedImage();
+            List<FeedImage> feedImages = new ArrayList<>();
 
-            tempFeedImage.setImage(feedImageDto.getImage());
-            tempFeedImage.setX(feedImageDto.getX());
-            tempFeedImage.setY(feedImageDto.getY());
-            tempFeedImage.setTag(feedImageDto.getTag());
-            tempFeedImage.setFeed(feed);
-            tempFeedImage.setCreatedDateTime(LocalDateTime.now());
+            for (FeedImageDto feedImageDto : feedPostDto.getFeedImages()) {
 
-            feedImages.add(tempFeedImage);
+                FeedImage tempFeedImage = new FeedImage();
 
+                tempFeedImage.setImage(feedImageDto.getImage());
+                tempFeedImage.setFeed(feed);
+
+                if(feedImageDto.getFeedImageTags() != null){
+
+                    List<FeedImageTag> feedImageTags = new ArrayList<>();
+
+                    for(FeedImageTagDto feedImageTagDto : feedImageDto.getFeedImageTags()){
+                        FeedImageTag tempFeedImageTag = new FeedImageTag();
+
+                        tempFeedImageTag.setFeedImage(tempFeedImage);
+                        tempFeedImageTag.setX(feedImageTagDto.getX());
+                        tempFeedImageTag.setY(feedImageTagDto.getY());
+                        tempFeedImageTag.setTag(feedImageTagDto.getTag());
+
+                        feedImageTags.add(tempFeedImageTag);
+                    }
+
+                    tempFeedImage.setImageTags(feedImageTags);
+                }
+
+                tempFeedImage.setCreatedDateTime(LocalDateTime.now());
+
+                feedImages.add(tempFeedImage);
+
+            }
+
+            feed.setImages(feedImages);
         }
-
-        feed.setImages(feedImages);
 
         feed.setCreatedDateTime(LocalDateTime.now());
 
@@ -88,26 +104,48 @@ public interface FeedMapper {
         // 이런 멤버값이 들어온다고 가정한다.
         feed.setMember(Member.builder().memberId(1L).nickname("nickname1").build());
 
-        List<FeedImage> feedImages = new ArrayList<>();
+        if(feedPatchDto.getFeedImages() != null) {
+            List<FeedImage> feedImages = new ArrayList<>();
 
-        for(FeedImageDto feedImageDto : feedPatchDto.getFeedImages()){
+            for (FeedImageDto feedImageDto : feedPatchDto.getFeedImages()) {
 
-            FeedImage tempFeedImage = new FeedImage();
+                FeedImage tempFeedImage = new FeedImage();
 
-            tempFeedImage.setFeedImageId(feedImageDto.getFeedImageId());
-            tempFeedImage.setImage(feedImageDto.getImage());
-            tempFeedImage.setX(feedImageDto.getX());
-            tempFeedImage.setY(feedImageDto.getY());
-            tempFeedImage.setTag(feedImageDto.getTag());
-            tempFeedImage.setFeed(feed);
-            tempFeedImage.setCreatedDateTime(LocalDateTime.now());
-            tempFeedImage.setModifiedDateTime(LocalDateTime.now());
+                tempFeedImage.setFeedImageId(feedImageDto.getFeedImageId());
+                tempFeedImage.setImage(feedImageDto.getImage());
+                tempFeedImage.setFeed(feed);
 
-            feedImages.add(tempFeedImage);
+                if(feedImageDto.getFeedImageTags() != null){
+
+                    List<FeedImageTag> feedImageTags = new ArrayList<>();
+
+                    for(FeedImageTagDto feedImageTagDto : feedImageDto.getFeedImageTags()){
+
+                        FeedImageTag tempFeedImageTag = new FeedImageTag();
+
+                        tempFeedImageTag.setFeedImage(tempFeedImage);
+                        tempFeedImageTag.setX(feedImageTagDto.getX());
+                        tempFeedImageTag.setY(feedImageTagDto.getY());
+                        tempFeedImageTag.setTag(feedImageTagDto.getTag());
+
+                        feedImageTags.add(tempFeedImageTag);
+
+                    }
+
+                    tempFeedImage.setImageTags(feedImageTags);
+
+                }
+
+                tempFeedImage.setCreatedDateTime(LocalDateTime.now());
+                tempFeedImage.setModifiedDateTime(LocalDateTime.now());
+
+                feedImages.add(tempFeedImage);
+
+            }
+
+            feed.setImages(feedImages);
 
         }
-
-        feed.setImages(feedImages);
         feed.setModifiedDateTime(LocalDateTime.now());
 
         return feed;
@@ -139,22 +177,37 @@ public interface FeedMapper {
         feedResponseDto.setLocationName(feed.getLocation().getDescription());
         feedResponseDto.setMemberId(feed.getMember().getMemberId());
         feedResponseDto.setNickname(feed.getMember().getNickname());
-        feedResponseDto.setMemberImage(feed.getMember().getProfileImg());
-
-
-        List<FeedImageDto> feedImageDtos = new ArrayList<>();
 
         if(feed.getImages() != null) {
+            List<FeedImageDto> feedImageDtos = new ArrayList<>();
+
             for (FeedImage feedImage : feed.getImages()) {
 
                 FeedImageDto feedImageDto = new FeedImageDto();
 
                 feedImageDto.setFeedImageId(feedImage.getFeedImageId());
                 feedImageDto.setImage(feedImage.getImage());
-                feedImageDto.setX(feedImage.getX());
-                feedImageDto.setY(feedImage.getY());
-                feedImageDto.setTag(feedImage.getTag());
+
                 feedImageDto.setFeedId(feedImage.getFeed().getFeedId());
+
+                if(feedImage.getImageTags() != null){
+                    List<FeedImageTagDto> feedImageTagDtos = new ArrayList<>();
+
+                    for(FeedImageTag feedImageTag : feedImage.getImageTags()){
+
+                        FeedImageTagDto feedImageTagDto = new FeedImageTagDto();
+
+                        feedImageTagDto.setFeedImageTagId(feedImageTag.getFeedImageTagId());
+                        feedImageTagDto.setX(feedImageTag.getX());
+                        feedImageTagDto.setY(feedImageTag.getY());
+                        feedImageTagDto.setTag(feedImageTag.getTag());
+
+                        feedImageTagDtos.add(feedImageTagDto);
+                    }
+
+                    feedImageDto.setFeedImageTags(feedImageTagDtos);
+                }
+
                 feedImageDto.setCreatedDateTime(feedImage.getCreatedDateTime());
                 feedImageDto.setModifiedDateTime(feedImage.getModifiedDateTime());
 
@@ -166,13 +219,10 @@ public interface FeedMapper {
 
         }
 
-
-        List<FeedReplyResponseDto> allReplies = new ArrayList<>();
-        //피드에 댓글정보가 있으니 allReplies에 뿌려준다.
-
-
-
         if(feed.getReplies() != null) {
+
+            List<FeedReplyResponseDto> allReplies = new ArrayList<>();
+            //피드에 댓글정보가 있으니 allReplies에 뿌려준다.
             for (FeedReply feedReply : feed.getReplies()) {
                 FeedReplyResponseDto feedReplyResponseDto = new FeedReplyResponseDto();
                 feedReplyResponseDto.setFeedReplyId(feedReply.getFeedReplyId());
@@ -181,29 +231,6 @@ public interface FeedMapper {
                 feedReplyResponseDto.setNickname(feedReply.getMember().getNickname());
                 feedReplyResponseDto.setMemberId(feedReply.getMember().getMemberId());
                 feedReplyResponseDto.setCreatedDateTime(feedReply.getCreatedDateTime());
-                System.out.println("111");
-
-                if(feedReply.getComments() != null) {
-
-                    List<FeedCommentDto> feedCommentDtos = new ArrayList<>();
-                    for (FeedComment feedComment : feedReply.getComments()) {
-                        FeedCommentDto feedCommentDto = new FeedCommentDto();
-                        feedCommentDto.setFeedCommentId(feedComment.getFeedCommentId());
-                        feedCommentDto.setContent(feedComment.getContent());
-                        feedCommentDto.setMemberId(feedComment.getMember().getMemberId());
-                        feedCommentDto.setFeedReplyId(feedComment.getFeedReply().getFeedReplyId());
-                        feedCommentDto.setParentComment(feedComment.getParentComment());
-                        feedCommentDto.setNickname(feedComment.getMember().getNickname());
-                        feedCommentDto.setFeedId(feedComment.getFeed().getFeedId());
-
-                        feedCommentDtos.add(feedCommentDto);
-                        System.out.println("222");
-
-                    }
-                    feedReplyResponseDto.setComments(feedCommentDtos);
-
-                }
-
                 allReplies.add(feedReplyResponseDto);
             }
             // Replies 안에 allReplies 저장
@@ -239,38 +266,21 @@ public interface FeedMapper {
                                 .locationName(feed.getLocation().getDescription())
                                 .memberId(feed.getMember().getMemberId())
                                 .nickname(feed.getMember().getNickname())
-                                .memberImage(feed.getMember().getProfileImg())
-                                .replies(feed.getReplies().stream().map(feedReply -> FeedReplyResponseDto.builder()
-                                        .feedReplyId(feedReply.getFeedReplyId())
-                                        .content(feedReply.getContent())
-                                        .nickname(feedReply.getMember().getNickname())
-                                        .feedId(feedReply.getFeed().getFeedId())
-                                        .memberId(feedReply.getFeed().getFeedId())
-                                        .createdDateTime(feedReply.getCreatedDateTime())
-                                                .comments(feedReply.getComments().stream().map(feedComment -> FeedCommentDto.builder()
-                                                                .feedCommentId(feedComment.getFeedCommentId())
-                                                                .content(feedComment.getContent())
-                                                                .memberId(feedComment.getMember().getMemberId())
-                                                                .feedReplyId(feedComment.getFeedReply().getFeedReplyId())
-                                                                .parentComment(feedComment.getParentComment())
-                                                                .commentOrder(feedComment.getParentComment())
-                                                                .nickname(feedComment.getMember().getNickname())
-                                                                .feedId(feedComment.getFeed().getFeedId())
-                                                                .build())
-                                                        .collect(Collectors.toList()))
-                                        .build())
-                                        .collect(Collectors.toList())
-                                )
                                 .feedImages(feed.getImages().stream().map(feedImage -> FeedImageDto.builder()
-                                        .feedImageId(feedImage.getFeedImageId())
-                                        .image(feedImage.getImage())
-                                        .x(feedImage.getX())
-                                        .y(feedImage.getY())
-                                        .tag(feedImage.getTag())
-                                        .feedId(feedImage.getFeed().getFeedId())
-                                        .createdDateTime(feedImage.getCreatedDateTime())
-                                        .modifiedDateTime(feedImage.getModifiedDateTime())
-                                        .build())
+                                                .feedImageId(feedImage.getFeedImageId())
+                                                .image(feedImage.getImage())
+                                                .feedId(feedImage.getFeed().getFeedId())
+                                                .feedImageTags(feedImage.getImageTags().stream().map(feedImageTag -> FeedImageTagDto.builder()
+                                                                .feedImageTagId(feedImageTag.getFeedImageTagId())
+                                                                .x(feedImageTag.getX())
+                                                                .y(feedImageTag.getY())
+                                                                .tag(feedImageTag.getTag())
+                                                                .build())
+                                                        .collect(Collectors.toList())
+                                                )
+                                                .createdDateTime(feedImage.getCreatedDateTime())
+                                                .modifiedDateTime(feedImage.getModifiedDateTime())
+                                                .build())
                                         .collect(Collectors.toList()))
                                 .build())
                         .collect(Collectors.toList());
