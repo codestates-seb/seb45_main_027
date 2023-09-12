@@ -7,15 +7,23 @@ import com.project.bbibbi.domain.feed.entity.*;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyResponseDto;
 import com.project.bbibbi.global.response.MultiResponseDto;
 import com.project.bbibbi.global.response.SingleResponseDto;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.awt.print.Pageable;
 import java.net.URI;
 import java.util.List;
 
@@ -97,6 +105,38 @@ public class FeedController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+//
+//    @GetMapping("/paging")
+//    public ResponseEntity<Page<dto>> getFeedList(
+//            @RequestParam(value = "idx", defaultValue = "0") long Idx,
+//            @RequestParam(value = "search", required = false) String search,
+//            @PageableDefault(size = 10, sort = "idx", direction = Sort.Direction.ASC) Pageable pageable) {
+//        return ResponseEntity.ok(pagingService.getList(pageable, searchText));
+//    }
+//    private HttpHeaders getHeaderWithNextPage
+//            (final Page<dto> responses, final HttpServletRequest httpServletRequest) {
+//
+//        HttpHeaders headers = new HttpHeaders();
+//
+//        //마지막 페이지가 아니라면 = 다음페이지가 존재한다면 header 에 Link 삽입
+//        if (!responses.isLast()) {
+//            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+//
+//            params.add(idx", responses.getContent().get(
+//                    responses.getNumberOfElements() - 1).getIdx().toString());
+//            params.add("search", httpServletRequest.getParameter("search"));
+//
+//            String nextPageUri = ServletUriComponentsBuilder.fromRequestUri(httpServletRequest)
+//                    .replaceQueryParams(params)
+//                    .build()
+//                    .encode()
+//                    .toUriString();
+//
+//            headers.add("Next-Page", nextPageUri);
+//        }
+//
+//        return headers;
+//    }
 
 
 

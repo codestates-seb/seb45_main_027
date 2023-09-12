@@ -1,4 +1,4 @@
-package com.project.bbibbi.domain.feedReply.Controller;
+package com.project.bbibbi.domain.feedReply.controller;
 
 
 import com.project.bbibbi.domain.feed.dto.FeedResponseDto;
@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@RequestMapping("/feed/{feed-id}/reply")
+@RequestMapping("/feed/{feed-id}/feedReply")
 @RestController
 public class FeedReplyController {
     private final FeedReplyService feedReplyService;

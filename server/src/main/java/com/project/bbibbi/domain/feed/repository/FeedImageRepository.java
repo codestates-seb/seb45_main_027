@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.feed.repository;
 
+import com.project.bbibbi.domain.feed.entity.Feed;
 import com.project.bbibbi.domain.feed.entity.FeedImage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
