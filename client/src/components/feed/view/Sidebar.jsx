@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-hot-toast";
 
 const display =
   "flex justify-center items-center w-20 h-20 bg-white border rounded-full shadow my-8 ";
@@ -71,7 +70,6 @@ const Sidebar = ({ commentSectionRef }) => {
           alt="공유"
         />
       </button>
-      <ToastContainer />
     </div>
   );
 };
