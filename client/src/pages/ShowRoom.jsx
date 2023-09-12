@@ -5,6 +5,7 @@ import All from "../components/showroom/all/All";
 import useAxios from "../hooks/useAxios";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import api from "../components/common/tokens";
 
 const ShowRoom = () => {
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
@@ -55,7 +56,7 @@ const ShowRoom = () => {
     try {
       const filterToast = toast.loading("필터링중입니다...");
 
-      const res = await axios.get(url, {
+      const res = await api.get(url, {
         headers: {
           "Content-Type": "application/json",
           "ngrok-skip-browser-warning": "69420",

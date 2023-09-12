@@ -4,47 +4,47 @@ import React from "react";
 const roomInfo = [
   {
     name: "원룸",
-    url: "https://1416-210-123-100-75.ngrok-free.app/feed/filter/INFO01",
+    url: "https://928e-210-123-100-75.ngrok-free.app/feed/filter/INFO01",
   },
   {
     name: "거실",
-    url: "https://1416-210-123-100-75.ngrok-free.app/feed/filter/INFO02",
+    url: "https://928e-210-123-100-75.ngrok-free.app/feed/filter/INFO02",
   },
   {
     name: "침실",
-    url: "https://1416-210-123-100-75.ngrok-free.app/feed/filter/INFO03",
+    url: "https://928e-210-123-100-75.ngrok-free.app/feed/filter/INFO03",
   },
   {
     name: "주방",
-    url: "https://1416-210-123-100-75.ngrok-free.app/feed/filter/INFO04",
+    url: "https://928e-210-123-100-75.ngrok-free.app/feed/filter/INFO04",
   },
   {
     name: "욕실",
-    url: "https://1416-210-123-100-75.ngrok-free.app/feed/filter/INFO05",
+    url: "https://928e-210-123-100-75.ngrok-free.app/feed/filter/INFO05",
   },
   {
     name: "아이방",
-    url: "https://1416-210-123-100-75.ngrok-free.app/feed/filter/INFO06",
+    url: "https://928e-210-123-100-75.ngrok-free.app/feed/filter/INFO06",
   },
   {
     name: "드레스룸",
-    url: "https://1416-210-123-100-75.ngrok-free.app/feed/filter/INFO07",
+    url: "https://928e-210-123-100-75.ngrok-free.app/feed/filter/INFO07",
   },
   {
     name: "서재",
-    url: "https://1416-210-123-100-75.ngrok-free.app/feed/filter/INFO08",
+    url: "https://928e-210-123-100-75.ngrok-free.app/feed/filter/INFO08",
   },
   {
     name: "베란다",
-    url: "https://1416-210-123-100-75.ngrok-free.app/feed/filter/INFO09",
+    url: "https://928e-210-123-100-75.ngrok-free.app/feed/filter/INFO09",
   },
   {
     name: "현관",
-    url: "https://1416-210-123-100-75.ngrok-free.app/feed/filter/INFO10",
+    url: "https://928e-210-123-100-75.ngrok-free.app/feed/filter/INFO10",
   },
   {
     name: "기타",
-    url: "https://1416-210-123-100-75.ngrok-free.app/feed/filter/INFO00",
+    url: "https://928e-210-123-100-75.ngrok-free.app/feed/filter/INFO00",
   },
 ];
 
