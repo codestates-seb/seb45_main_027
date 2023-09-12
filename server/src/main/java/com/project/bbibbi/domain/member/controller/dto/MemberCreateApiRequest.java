@@ -14,7 +14,7 @@ public class MemberCreateApiRequest {
     @Email(message = "사용할 수 없는 email의 형식입니다.")
     @NotBlank(message = "email은 공백으로 사용할 수 없습니다.")
     private String email;
-    @Size(min = 3, max = 10, message = "3 ~ 10 글자 내로 입력해주세요.")
+    @Size(min = 3, max = 15, message = "3 ~ 15 글자 내로 입력해주세요.")
     @NotBlank(message = "닉네임은 공백으로 사용할 수 없습니다.")
     private String nickname;
     @NotNull(message = "비밀번호는 공백으로 사용할 수 없습니다.")
