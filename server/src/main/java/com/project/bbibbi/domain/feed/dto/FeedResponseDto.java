@@ -49,6 +49,10 @@ public class FeedResponseDto {
     private String nickname;
     private String memberImage;
 
+    private int likeCount;
+    private Boolean likeYn;
+    private int repliesCount;
+
 
     // feedImage와 합쳐보내
     private List<FeedImageDto> feedImages;

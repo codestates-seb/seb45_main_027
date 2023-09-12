@@ -75,4 +75,10 @@ public class Feed extends BaseEntity{
     @OrderBy("id asc") // OrderBy 어노테이션을 이용하여 간단히 정렬 처리. asc 오름차순 정렬
     private List<FeedReply> replies;
 
+    @Transient
+    private int likeCount;
+
+    @Transient
+    private Boolean likeYn;
+
 }

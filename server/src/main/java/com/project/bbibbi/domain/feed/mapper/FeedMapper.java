@@ -177,6 +177,11 @@ public interface FeedMapper {
         feedResponseDto.setLocationName(feed.getLocation().getDescription());
         feedResponseDto.setMemberId(feed.getMember().getMemberId());
         feedResponseDto.setNickname(feed.getMember().getNickname());
+        feedResponseDto.setMemberImage(feed.getMember().getProfileImg());
+        feedResponseDto.setLikeCount(feed.getLikeCount());
+        feedResponseDto.setLikeYn(feed.getLikeYn());
+        feedResponseDto.setRepliesCount(feed.getReplies().size());
+
 
         if(feed.getImages() != null) {
             List<FeedImageDto> feedImageDtos = new ArrayList<>();
@@ -266,6 +271,10 @@ public interface FeedMapper {
                                 .locationName(feed.getLocation().getDescription())
                                 .memberId(feed.getMember().getMemberId())
                                 .nickname(feed.getMember().getNickname())
+                                .memberImage(feed.getMember().getProfileImg())
+                                .likeCount(feed.getLikeCount())
+                                .likeYn(feed.getLikeYn())
+                                .repliesCount(feed.getReplies().size())
                                 .feedImages(feed.getImages().stream().map(feedImage -> FeedImageDto.builder()
                                                 .feedImageId(feedImage.getFeedImageId())
                                                 .image(feedImage.getImage())

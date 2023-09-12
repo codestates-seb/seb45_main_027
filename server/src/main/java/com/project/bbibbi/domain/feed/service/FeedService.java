@@ -6,6 +6,7 @@ import com.project.bbibbi.domain.feed.entity.FeedImageTag;
 import com.project.bbibbi.domain.feed.repository.FeedImageRepository;
 import com.project.bbibbi.domain.feed.repository.FeedImageTagRepository;
 import com.project.bbibbi.domain.feed.repository.FeedRepository;
+import com.project.bbibbi.domain.feedlike.repository.FeedLikeRepository;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.global.entity.*;
 import com.project.bbibbi.global.utils.CustomBeanUtils;
@@ -27,15 +28,18 @@ public class FeedService {
     private final FeedRepository feedRepository;
     private final FeedImageRepository feedImageRepository;
     private final FeedImageTagRepository feedImageTagRepository;
+    private final FeedLikeRepository feedLikeRepository;
     private final CustomBeanUtils<Feed> beanUtils;
 
     public FeedService(FeedRepository feedRepository,
                        FeedImageRepository feedImageRepository,
                        FeedImageTagRepository feedImageTagRepository,
+                       FeedLikeRepository feedLikeRepository,
                        CustomBeanUtils<Feed> beanUtils) {
         this.feedRepository = feedRepository;
         this.feedImageRepository = feedImageRepository;
         this.feedImageTagRepository = feedImageTagRepository;
+        this.feedLikeRepository = feedLikeRepository;
         this.beanUtils = beanUtils;
     }
 
@@ -98,20 +102,8 @@ public class FeedService {
     public void updatingFeedImages(List<FeedImage> feedImages){
         for(FeedImage feedImage : feedImages){
 
-            System.out.println("11");
-            System.out.println("feeIg : "+feedImage.getFeedImageId());
             FeedImage feedImage1 = feedImageRepository.save(feedImage);
-
-            System.out.println("feeIg2 : "+feedImage1.getFeedImageId());
-
-
-            System.out.println("22");
-
-
             //   feedImageTagRepository.deleteByFeedImageId(feedImage.getFeedImageId());
-
-            System.out.println("33");
-
 
             updatingFeedImageTags(feedImage.getImageTags());
         }
@@ -120,11 +112,7 @@ public class FeedService {
     public void updatingFeedImageTags(List<FeedImageTag> feedImageTags){
         for(FeedImageTag feedImageTag : feedImageTags){
 
-            System.out.println("111");
-
             feedImageTagRepository.save(feedImageTag);
-
-            System.out.println("222");
 
         }
     }
@@ -135,6 +123,25 @@ public class FeedService {
         findFeed.setViews(findFeed.getViews() + 1);
 
         Feed viewUpFeed = feedRepository.save(findFeed);
+
+        // 좋아요 개수
+        Integer feedLikeCount = feedLikeRepository.feedLikeCount(viewUpFeed.getFeedId());
+        viewUpFeed.setLikeCount(feedLikeCount);
+
+        // 로그인한 사람의 좋아요 여부... 로그인한 사람 memberId를 1L 로 가정
+        Member member = Member.builder().memberId(1L).build();
+
+
+        if(member == null){
+            viewUpFeed.setLikeYn(false);
+        }
+        else {
+            int loginUserLikeYn = feedLikeRepository.existCount(viewUpFeed.getFeedId(), member.getMemberId());
+            if(loginUserLikeYn == 0)
+                viewUpFeed.setLikeYn(false);
+            else viewUpFeed.setLikeYn(true);
+        }
+
 
         return viewUpFeed;
     }
@@ -187,7 +194,9 @@ public class FeedService {
         // 좋아요 "LIKE00" -> "LIKE"
         else if(whereCode.equals("LIKE")){
 
-//            selectedFeeds = feedRepository.findByOrderByLike();
+            List<Feed> likeFeed = feedRepository.findByOrderByLike();
+            selectedFeeds = new PageImpl<>(likeFeed);
+
         }
         // 최신순 "RECENT00" -> "RECENT"
         else if(whereCode.equals("RECENT")){
@@ -195,6 +204,11 @@ public class FeedService {
 
             selectedFeeds = feedRepository.findByOrderByCreatedDateTimeDesc(pageRequest);
 
+        }
+        // 조회수순 "VIEW00" -> "VIEW"
+        else if(whereCode.equals("VIEW")){
+
+            selectedFeeds = feedRepository.findByOrderByViewsDesc(pageRequest);
         }
 
         return selectedFeeds;
