@@ -2,17 +2,22 @@ package com.project.bbibbi.auth.jwt.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.bbibbi.domain.member.repository.MemberRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -75,14 +80,23 @@ public class JwtService {
     }
 
     // AccessToken + RefreshToken 같이 헤더에 실어 보내기
-    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken, Long memberId) throws IOException {
+    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken,
+                                          String refreshToken, Long memberId, String profileImg,
+                                          String nickname) throws IOException {
 
-        String forFront = "{member-id} : " + memberId; // 실어서 보내는데 memberId도 같이
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> data = new HashMap<>();
+        data.put("memberId", memberId);
+        data.put("profileImg", profileImg);
+        data.put("nickname", nickname);
 
         response.setStatus(HttpServletResponse.SC_OK);
         setAccessTokenHeader(response, accessToken);
         setRefreshTokenHeader(response, refreshToken);
-        response.getWriter().write(forFront);
+        // JSON 형식의 데이터를 바디에 쓰기
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        PrintWriter writer = response.getWriter();
+        objectMapper.writeValue(writer, data);
         log.info("Access Token, Refresh Token 헤더 설정 완료");
     }
     //헤더에서 RefreshToken 추출 후 토큰형식으로 BEARER 제거 후 순수 토큰만 가져오기 위해 헤더 갖고온 뒤 "BEARER 삭제 로직("" 로 만들어버림)

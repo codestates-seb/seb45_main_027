@@ -46,7 +46,7 @@ public class Member extends BaseEntity {
     private String myIntro;
 
     @Lob
-    private String image;
+    private String profileImg;
 
     private String refreshToken; // 리프레시 토큰
 
@@ -113,13 +113,13 @@ public class Member extends BaseEntity {
 
     @Builder
     private Member(Long memberId, String email, String nickname, String password,
-                   String myIntro, String image, Role role, SocialType socialType, String socialId, boolean checkUser) { // 빌더 패턴 사용
+                   String myIntro, String profileImg, Role role, SocialType socialType, String socialId, boolean checkUser) { // 빌더 패턴 사용
         this.memberId = memberId;
         this.email = email;
         this.nickname = nickname;
         this.password = password;
         this.myIntro = myIntro;
-        this.image = image;
+        this.profileImg = profileImg;
         this.role = role;
         this.socialType = socialType;
         this.socialId = socialId;
@@ -139,14 +139,14 @@ public class Member extends BaseEntity {
                 .role(Role.USER)
                 .checkUser(false)
 //                .myIntro(null)
-//                .image(null) // 나중에 수정 ?
+//                .profileImg(null) // 나중에 수정 ?
                 .build();
     }
 
     public void updateMyInfo(String nickname,String myIntro, String image) {
         this.nickname = nickname == null ? this.nickname : nickname;
         this.myIntro = myIntro == null ? this.myIntro : myIntro;
-        this.image = image == null ? this.image : image;
+        this.profileImg = image == null ? this.profileImg : image;
 
     }
 

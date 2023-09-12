@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginDto {
+public class LoginDto { // 삭제 ㄱㄱ
 
     private String email;
     private String password;

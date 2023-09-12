@@ -44,7 +44,10 @@ public class CustomJwtUserDetailsService implements UserDetailsService {
                 findMember.getMemberId(),
                 findMember.getEmail(),
                 findMember.getPassword(),
-                findMember.getRole()
+                findMember.getRole(),
+                findMember.isCheckUser(),
+                findMember.getProfileImg(),
+                findMember.getNickname()
         );
     }
 }

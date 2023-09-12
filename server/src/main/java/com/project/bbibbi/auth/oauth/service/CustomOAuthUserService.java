@@ -64,7 +64,9 @@ public class CustomOAuthUserService implements OAuth2UserService<OAuth2UserReque
                 extractAttributes.getNameAttributeKey(),
                 createdMember.getEmail(),
                 createdMember.getRole(),
-                createdMember.getMemberId() // 바뀐 부분 멤버 아이디로 이렇게 가져와도 되나 ? 고치자
+                createdMember.getMemberId(), // 바뀐 부분 멤버 아이디로 이렇게 가져와도 되나 ? 고치자
+                createdMember.getProfileImg(),
+                createdMember.getNickname()
         );
     }
 

@@ -12,5 +12,5 @@ public class MemberUpdateServiceRequest {
     private Long memberId;
     private String nickname;
     private String myIntro;
-    private String image;
+    private String profileImg;
 }

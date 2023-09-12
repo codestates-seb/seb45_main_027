@@ -34,12 +34,14 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         CustomJwtUserDetails userDetails = (CustomJwtUserDetails) authentication.getPrincipal();
         String email = userDetails.getUsername();
         Long memberId = userDetails.getMemberId();
+        String profileImg = userDetails.getProfileImg();
+        String nickname = userDetails.getNickname();
 
 
         String accessToken = jwtService.createAccessToken(email); // JwtService의 createAccessToken을 사용하여 AccessToken 발급
         String refreshToken = jwtService.createRefreshToken(); // JwtService의 createRefreshToken을 사용하여 RefreshToken 발급
 
-        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken, memberId); // 응답 헤더에 AccessToken, RefreshToken 실어서 응답
+        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken, memberId, profileImg, nickname); // 응답 헤더에 AccessToken, RefreshToken 실어서 응답
 
         memberRepository.findByEmail(email)
                 .ifPresent(member -> {

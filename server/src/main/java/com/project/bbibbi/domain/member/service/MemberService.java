@@ -1,11 +1,13 @@
 package com.project.bbibbi.domain.member.service;
 
+import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.member.repository.MemberRepository;
 import com.project.bbibbi.domain.member.service.dto.request.MemberCreateServiceRequest;
 import com.project.bbibbi.domain.member.service.dto.request.MemberUpdatePasswordApiServiceRequest;
 import com.project.bbibbi.domain.member.service.dto.request.MemberUpdateServiceRequest;
 import com.project.bbibbi.domain.member.service.dto.response.MemberResponse;
+import com.project.bbibbi.global.exception.businessexception.memberexception.MemberAccessDeniedException;
 import com.project.bbibbi.global.exception.businessexception.memberexception.MemberDuplicateException;
 import com.project.bbibbi.global.exception.businessexception.memberexception.MemberNotFoundException;
 import com.project.bbibbi.global.exception.businessexception.memberexception.MemberPasswordException;
@@ -77,23 +79,41 @@ public class MemberService {
         member.updateMyInfo(
                 request.getNickname(),
                 request.getMyIntro(),
-                request.getImage());
+                request.getProfileImg());
     }
 
     public void updatePassword(MemberUpdatePasswordApiServiceRequest request) {
 
-        //Long loginMemberId = SecurityUtil.getCurrentId();
-        // 로그인한 멤버인지 확인 후 그 멤버 아이디로 밑에 추가해주기
         //checkAccessAuthority(loginMemberId, request.getMemberId());
 
-        //Member member = verifiyMember(loginMemberId);
-        Member member = verifiyMember(request.getMemberId());
 
-        checkPassword(request.getPassword(), member.getPassword());
+        // 이게 진짠데 로그인 시 아이디를 못 가져오고 있다
+        Long MemberId = loginUtils.getLoginId();
 
-        member.updatePassword(
-                passwordEncoder.encode(request.getNewPassword())
-        );
+                Optional<Member> optionalMember = memberRepository.findById(MemberId);
+                Member member = optionalMember.orElseThrow(MemberNotFoundException::new);
+
+
+                if (!MemberId.equals(request.getMemberId())) {
+                    throw new MemberAccessDeniedException();
+                }
+
+
+        //        Member member = verifiyMember(loginMemberId);
+        //        Member member = verifiyMember(request.getMemberId());
+
+                checkPassword(request.getPassword(), member.getPassword());
+
+                member.updatePassword(
+                        passwordEncoder.encode(request.getNewPassword())
+                );
+//        Member member = verifiyMember(request.getMemberId());
+//
+//        checkPassword(request.getPassword(), member.getPassword());
+//
+//        member.updatePassword(
+//                passwordEncoder.encode(request.getNewPassword())
+//        );
     }
 
     public void deleteMember(Long memberId) {
