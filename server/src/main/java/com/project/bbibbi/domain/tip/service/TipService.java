@@ -49,8 +49,13 @@ public class TipService {
     }
 
     public Tip getTipById(Long tipId) {
-        return tipRepository.findById(tipId)
-                .orElseThrow();
+        Tip findTip = tipRepository.findById(tipId).orElseThrow();
+
+        findTip.setViews(findTip.getViews() + 1);
+
+        Tip viewUpTip = tipRepository.save(findTip);
+
+        return viewUpTip;
     }
 
     public Tip createTip(Tip tip) {

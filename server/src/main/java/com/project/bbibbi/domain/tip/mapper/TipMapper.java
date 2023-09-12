@@ -103,6 +103,8 @@ public interface TipMapper {
         tipResponseDto.setViews(tip.getViews());
         tipResponseDto.setMemberId(tip.getMember().getMemberId());
         tipResponseDto.setNickname(tip.getMember().getNickname());
+        tipResponseDto.setMemberImage(tip.getMember().getProfileImg());
+
 
         List<TipImageDto> tipImageDtos = new ArrayList<>();
 

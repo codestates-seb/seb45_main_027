@@ -68,7 +68,13 @@ public class FeedService {
     }
 
     public Feed findFeed(Long feedId){
-        return findVerifiedFeed(feedId);
+        Feed findFeed = findVerifiedFeed(feedId);
+
+        findFeed.setViews(findFeed.getViews() + 1);
+
+        Feed viewUpFeed = feedRepository.save(findFeed);
+
+        return viewUpFeed;
     }
 
 //    public List<Feed> findFeeds(){

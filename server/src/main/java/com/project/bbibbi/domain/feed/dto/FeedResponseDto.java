@@ -47,6 +47,8 @@ public class FeedResponseDto {
 
     private Long memberId;
     private String nickname;
+    private String memberImage;
+
 
     // feedImage와 합쳐보내
     private List<FeedImageDto> feedImages;

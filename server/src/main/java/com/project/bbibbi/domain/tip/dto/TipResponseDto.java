@@ -35,6 +35,7 @@ public class TipResponseDto {
 
     private Long memberId;
     private String nickname;
+    private String memberImage;
 
     private LocalDateTime createdDateTime;
     private LocalDateTime modifiedDateTime;
