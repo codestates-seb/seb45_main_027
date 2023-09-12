@@ -8,7 +8,7 @@ public class MemberlExistEmailException extends MemberException {
     public static final String CODE = "member-409";
 
     public MemberlExistEmailException() {
-        super(CODE, HttpStatus.CONFLICT, MESSAGE);
+        super(CODE, HttpStatus.CONFLICT, MESSAGE); //409
     }
 }
 

@@ -61,14 +61,16 @@ public class MemberService {
     }
 
     public void updateMember(MemberUpdateServiceRequest request) {
-        //Long loginMemberId = SecurityUtil.getCurrentId();
-        // 로그인한 멤버인지 확인 후 그 멤버 아이디로 밑에 추가해주기
+
+        Long loginMemberId = loginUtils.getLoginId();
+
         //checkAccessAuthority(loginMemberId, request.getMemberId());
 
-        //Member member = verifiyMember(loginMemberId);
+
 
         checkDuplicateNickname(request.getNickname());  // 중복 닉네임일 경우 예외처리
-        Member member = verifiyMember(request.getMemberId()); // 이것도 로그인 구현하면 로그인된 아이디를 가져옴 위에꺼가 진실
+        comparisonMembers(loginMemberId, request.getMemberId());
+        Member member = ExistingMember(loginMemberId); // 이것도 로그인 구현하면 로그인된 아이디를 가져옴 위에꺼가 진실
 
         updateMember(member, request);
 
@@ -88,13 +90,13 @@ public class MemberService {
 
 
         // 이게 진짠데 로그인 시 아이디를 못 가져오고 있다
-        Long MemberId = loginUtils.getLoginId();
+        Long LoginMemberId = loginUtils.getLoginId();
 
-                Optional<Member> optionalMember = memberRepository.findById(MemberId);
+                Optional<Member> optionalMember = memberRepository.findById(request.getMemberId());
                 Member member = optionalMember.orElseThrow(MemberNotFoundException::new);
 
 
-                if (!MemberId.equals(request.getMemberId())) {
+                if (!LoginMemberId.equals(request.getMemberId())) {
                     throw new MemberAccessDeniedException();
                 }
 
@@ -117,14 +119,16 @@ public class MemberService {
     }
 
     public void deleteMember(Long memberId) {
-        //Long loginMemberId = SecurityUtil.getCurrentId();
-        // 로그인한 멤버인지 확인 후 그 멤버 아이디로 밑에 추가해주기
-        //checkAccessAuthority(loginMemberId, request.getMemberId());
 
-        Member member = verifiyMember(memberId);
+
+        Long loginMemberId = loginUtils.getLoginId();
+
+        comparisonMembers(loginMemberId, memberId);
+        Member member = ExistingMember(loginMemberId);
+
 
         try {
-            memberRepository.deleteById(memberId);
+            memberRepository.deleteById(member.getMemberId());
         } catch (EmptyResultDataAccessException ex) {
             throw new MemberNotFoundException();
         }
@@ -209,14 +213,16 @@ public class MemberService {
     }
 
 
-    private Member verifiyMember(String email) {
-        return memberRepository.findByEmail(email)
-                .orElseThrow(MemberNotFoundException::new);
-    }
 
-    private Member verifiyMember(Long memberId) {
+    private Member ExistingMember(Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
         return member;
+    }
+
+    private void comparisonMembers(Long loginMemberId, Long memberId) {
+        if (!loginMemberId.equals(memberId)) {
+            throw new MemberAccessDeniedException();
+        }
     }
 
     private boolean checkEmailCode(String email, String code) {
