@@ -1,7 +1,8 @@
 import React from "react";
 import useInput from "../../../hooks/useInput";
+import AllHeaderFilter from "./HeaderFilter/AllHeaderFilter";
 
-const AllHeader = () => {
+const AllHeader = ({ viewportWidth, setViewportWidth, handleFilterClick }) => {
   const [inputValue, handleInputChange, clearInput] = useInput("");
 
   const handleSearch = (e) => {
@@ -10,26 +11,28 @@ const AllHeader = () => {
       clearInput();
     }
   };
+
+  const isMobileView = viewportWidth < 720; // viewportWidth가 720보다 작으면 모바일 화면으로 간주
   return (
-    <div className="flex justify-between">
-      <div className="flex">
-        <h1 className="pt-1 text-5xl text-[#F5634A] font-semibold">all</h1>
-        <div className="pl-4 pt-6 text-xl">
-          <span className="pr-3 text-[16px]">최신순</span>
-          <span className="pr-3 text-[16px]">인기순</span>
-          <span className="pr-3 text-[16px]">공간별</span>
-          <span className="pr-3 text-[16px]">평수별</span>
-          <span className="pr-3 text-[16px]">주거형태별</span>
-        </div>
+    <div className="flex justify-between items-center flex-wrap mx-8">
+      <div className="flex items-baseline">
+        <h1 className="text-4xl text-[#F5634A] font-semibold Showcard-Gothic">
+          All
+        </h1>
+        <AllHeaderFilter handleFilterClick={handleFilterClick} />
       </div>
-      <div className="relative ">
+      <div
+        className={`relative flex items-center my-5 ${
+          isMobileView ? "mx-auto pr-5" : ""
+        }`}
+      >
         <img
-          className="absolute w-[28px] top-[13px] left-4"
-          src="./images/Search_gray.png"
+          className="absolute w-6 left-4"
+          src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Search_gray.png"
           alt="searchIamge"
         />
         <input
-          className="w-[300px] mt-3 py-3 pl-14 pr-4 rounded-3xl border border-[#BBBBBB] "
+          className="w-[330px] py-3 pl-12 pr-4 rounded-md border"
           type="text"
           value={inputValue}
           onChange={handleInputChange}

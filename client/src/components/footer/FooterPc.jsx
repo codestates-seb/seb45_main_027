@@ -17,13 +17,12 @@ const FooterPc = () => {
         <div className="flex flex-col items-center">
           <img
             className="w-12 h-12"
-            src="/images/삐삐Logo.png"
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/logo.png"
             alt="삐삐로고"
           />
           <span className="py-5 text-xl font-semibold text-white">
             © Copyright ⓒ 2023 삐삐
           </span>
-
 
           <ul className="flex text-xl font-semibold text-white">
             {Members.map((member, index) => (
@@ -35,7 +34,6 @@ const FooterPc = () => {
             ))}
           </ul>
         </div>
-
       </div>
     </footer>
   );
