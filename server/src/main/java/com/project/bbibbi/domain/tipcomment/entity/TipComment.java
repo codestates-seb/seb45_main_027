@@ -1,4 +1,4 @@
-package com.project.bbibbi.domain.tipComment.entity;
+package com.project.bbibbi.domain.tipcomment.entity;
 
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tipReply.entity.TipReply;

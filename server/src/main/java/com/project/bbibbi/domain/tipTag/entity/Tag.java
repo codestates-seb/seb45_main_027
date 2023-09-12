@@ -1,17 +1,16 @@
 package com.project.bbibbi.domain.tipTag.entity;
 
-import com.project.bbibbi.domain.tip.entity.Tip;
 import com.project.bbibbi.global.entity.BaseEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Tag extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

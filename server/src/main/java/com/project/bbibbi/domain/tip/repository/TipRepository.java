@@ -28,11 +28,11 @@ public interface TipRepository extends JpaRepository<Tip, Long>, TipRepositoryCu
 
     Page<Tip> findByMember(Member member, Pageable pageable);
 
-//    @Query(value = "select tip.* from (select b.tip_id, row_number() over(order by b.created_date_time desc) as row_num " +
-//            "from (select * from tip where title like %:searchString% or content like %:searchString% ) as b ) as ranked_tip " +
-//            "inner join (select * from tip where title like %:searchString% or content like %:searchString% ) as tip " +
-//            "on ranked_tip.tip_id = tip.tip_id " +
-//            "where ranked_tip.row_num > :page * :size " +
-//            "order by created_date_time desc limit :size ", nativeQuery = true)
-//    List<Tip> findAllSearch (@Param("searchString") String searchString, @Param("page") int page, @Param("size") int size);
+    @Query(value = "select tip.* from (select b.tip_id, row_number() over(order by b.created_date_time desc) as row_num " +
+            "from (select * from tip where title like %:searchString% or content like %:searchString% ) as b ) as ranked_tip " +
+            "inner join (select * from tip where title like %:searchString% or content like %:searchString% ) as tip " +
+            "on ranked_tip.tip_id = tip.tip_id " +
+            "where ranked_tip.row_num > :page * :size " +
+            "order by created_date_time desc limit :size ", nativeQuery = true)
+    List<Tip> findAllSearch (@Param("searchString") String searchString, @Param("page") int page, @Param("size") int size);
 }

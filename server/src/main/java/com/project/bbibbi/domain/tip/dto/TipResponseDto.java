@@ -39,6 +39,7 @@ public class TipResponseDto {
     private LocalDateTime createdDateTime;
     private LocalDateTime modifiedDateTime;
 
+
     private List<TipImageDto> tipImages;
 
     private List<TipTag> tipTags;

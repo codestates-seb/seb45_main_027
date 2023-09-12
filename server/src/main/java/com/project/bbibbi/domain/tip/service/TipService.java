@@ -42,11 +42,11 @@ public class TipService {
         return  pageTips;
     }
 
-//    public List<Tip> getAllSearchTips(String searchString, int page, int size) {
-//
-//
-//        return tipRepository.findAllSearch(searchString,page,size );
-//    }
+    public List<Tip> getAllSearchTips(String searchString, int page, int size) {
+
+
+        return tipRepository.findAllSearch(searchString,page,size );
+    }
 
     public Tip getTipById(Long tipId) {
         return tipRepository.findById(tipId)
