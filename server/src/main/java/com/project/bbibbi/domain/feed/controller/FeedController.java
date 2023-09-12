@@ -109,6 +109,21 @@ public class FeedController {
 
     }
 
+    @GetMapping("/search/{search-string}")
+    public ResponseEntity getSearchFeeds(@PathVariable("search-string") String searchString,
+                                         @RequestParam int page) {
+
+        // 사이즈는 12로 고정
+        int size = 12;
+
+        List<Feed> pageFeeds = feedService.findSearchFeeds(searchString, page - 1, size);
+
+        List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(pageFeeds);
+
+        return new ResponseEntity<>(new MultiResponseDto<>(feedResponseDtos), HttpStatus.OK);
+
+    }
+
     @GetMapping("/myInfoSearch")
     public ResponseEntity getMyInfoFeeds(@RequestParam int page) {
 

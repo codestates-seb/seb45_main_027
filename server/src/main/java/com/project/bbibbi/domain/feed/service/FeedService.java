@@ -133,6 +133,16 @@ public class FeedService {
 
     }
 
+    public List<Feed> findSearchFeeds(String searchString, int page, int size){
+
+        List<Feed> selectedFeeds = feedRepository.findBySearch(searchString, page, size);
+
+
+        return selectedFeeds;
+
+    }
+
+
     public Page<Feed> findMyInfoFeeds(int page, int size, long myInfoMemberId){
 
         PageRequest pageRequest =  PageRequest.of(page, size, Sort.by("createdDateTime").descending());
