@@ -5,8 +5,10 @@ import com.project.bbibbi.domain.feed.entity.FeedImage;
 import com.project.bbibbi.domain.feed.repository.FeedImageRepository;
 import com.project.bbibbi.domain.feed.repository.FeedRepository;
 import com.project.bbibbi.domain.member.entity.Member;
+import com.project.bbibbi.global.entity.*;
 import com.project.bbibbi.global.utils.CustomBeanUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -76,36 +78,43 @@ public class FeedService {
 //    }
 
     // 필터기능 예시
-    public List<Feed> findFeeds(String searchcode){
+    public Page<Feed> findFeeds(String searchcode, int page, int size){
+
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdDateTime").descending());
 
         String whereCode = searchcode.substring(0, searchcode.length() - 2);
 
-        List<Feed> selectedFeeds = new ArrayList<>();
+        Page<Feed> selectedFeeds = new PageImpl<>(new ArrayList<>());
 
         if(whereCode.equals("LOCATION")){
 
 
-            selectedFeeds = feedRepository.findByLocation(searchcode);
+            selectedFeeds = feedRepository.findByLocation(Location.valueOf(searchcode), pageRequest);
+
         }
         else if(whereCode.equals("COUNT")){
 
 
-            selectedFeeds = feedRepository.findByRoomCount(searchcode);
+            selectedFeeds = feedRepository.findByRoomCount(RoomCount.valueOf(searchcode), pageRequest);
+
         }
         else if(whereCode.equals("INFO")){
 
 
-            selectedFeeds = feedRepository.findByRoomInfo(searchcode);
+            selectedFeeds = feedRepository.findByRoomInfo(RoomInfo.valueOf(searchcode), pageRequest);
+
         }
         else if(whereCode.equals("SIZE")){
 
 
-            selectedFeeds = feedRepository.findByRoomSize(searchcode);
+            selectedFeeds = feedRepository.findByRoomSize(RoomSize.valueOf(searchcode), pageRequest);
+
         }
         else if(whereCode.equals("TYPE")){
 
 
-            selectedFeeds = feedRepository.findByRoomType(searchcode);
+            selectedFeeds = feedRepository.findByRoomType(RoomType.valueOf(searchcode), pageRequest);
+
         }
         // 좋아요 "LIKE00" -> "LIKE"
         else if(whereCode.equals("LIKE")){
@@ -116,7 +125,8 @@ public class FeedService {
         else if(whereCode.equals("RECENT")){
 
 
-            selectedFeeds = feedRepository.findByOrderByCreatedDateTimeDesc();
+            selectedFeeds = feedRepository.findByOrderByCreatedDateTimeDesc(pageRequest);
+
         }
 
         return selectedFeeds;

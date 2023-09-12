@@ -91,8 +91,17 @@ public class FeedController {
 //    }
 
     @GetMapping("/filter/{search-code}")
-    public ResponseEntity getFeeds(@PathVariable("search-code") String searchCode) {
-        List<Feed> feeds = feedService.findFeeds(searchCode);
+    public ResponseEntity getFeeds(@PathVariable("search-code") String searchCode,
+                                   @RequestParam int page) {
+
+        // 사이즈는 12로 고정
+        int size = 12;
+
+        Page<Feed> pageFeeds = feedService.findFeeds(searchCode, page - 1, size);
+
+        List<Feed> feeds = pageFeeds.getContent();
+
+//        List<Feed> feeds = feedService.findFeeds(searchCode);
 
         List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(feeds);
 
