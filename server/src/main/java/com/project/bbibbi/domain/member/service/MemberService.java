@@ -39,7 +39,8 @@ public class MemberService {
 
     public Long signup(MemberCreateServiceRequest request) {
 
-        checkDuplicateMember(request.getEmail()); // 중복 이메일 회원일 경우 예외처리
+        checkDuplicateMember(request.getEmail());       // 중복 이메일 회원일 경우 예외처리
+        checkDuplicateNickname(request.getNickname());  // 중복 닉네임일 경우 예외처리
 
         Member member = createMember(request);
 
@@ -68,6 +69,8 @@ public class MemberService {
         //checkAccessAuthority(loginMemberId, request.getMemberId());
 
         //Member member = verifiyMember(loginMemberId);
+
+        checkDuplicateNickname(request.getNickname());  // 중복 닉네임일 경우 예외처리
         Member member = verifiyMember(request.getMemberId()); // 이것도 로그인 구현하면 로그인된 아이디를 가져옴 위에꺼가 진실
 
         updateMember(member, request);
@@ -181,6 +184,15 @@ public class MemberService {
     private void checkDuplicateMember(String email) {
 
         Member member = memberRepository.findByEmail(email).orElse(null);
+
+        if (member != null) {
+            throw new MemberDuplicateException();
+        }
+    }
+
+    private void checkDuplicateNickname(String nickname) {
+
+        Member member = memberRepository.findByNickname(nickname).orElse(null);
 
         if (member != null) {
             throw new MemberDuplicateException();
