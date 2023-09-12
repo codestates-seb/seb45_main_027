@@ -10,16 +10,17 @@ import WriteInformation from "../components/feed/write/WriteInformation";
 import WriteFormShowroomcopy from "../components/feed/write/WriteFormShowroomcopy";
 import { toast } from "react-hot-toast";
 
+//태그 관련정보 수정후 post 요청만 보내면됨  coverImage  title editorContent selectedValues 내용 담아서 *****
 const WriteShowRoom = () => {
   const [coverImage, setCoverImage] = useState(null); // 커버사진 상태
   const [title, setTitle] = useState(""); // title(제목) 상태
   const [editorContent, setEditorContent] = useState(""); // Editor 내용을 관리
   const [selectedValues, setSelectedValues] = useState({
-    house: null,
-    room: null,
-    pyeong: null,
-    number: null,
-    area: null,
+    roomInfo: null,
+    roomSize: null,
+    roomType: null,
+    roomCount: null,
+    location: null,
   }); // 드랍다운 선택 결과를 담은 상태
 
   // 로컬스토리지에 임시저장값이 있으면 해당값 불러오기 위한 useEffect

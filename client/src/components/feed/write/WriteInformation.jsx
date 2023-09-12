@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 
 const optionsData = [
   {
-    name: "house",
+    name: "roomType",
     label: "주거형태",
     options: ["원룸&오피스텔", "아파트", "빌라&타운하우스", "단독주택", "기타"],
+    code: ["TYPE01", "TYPE02", "TYPE03", "TYPE04", "TYPE00"],
   },
   {
-    name: "room",
+    name: "roomInfo",
     label: "공간",
     options: [
       "원룸",
@@ -23,9 +24,22 @@ const optionsData = [
       "현관",
       "기타",
     ],
+    code: [
+      "INFO01",
+      "INFO02",
+      "INFO03",
+      "INFO04",
+      "INFO05",
+      "INFO06",
+      "INFO07",
+      "INFO08",
+      "INFO09",
+      "INFO10",
+      "INFO00",
+    ],
   },
   {
-    name: "pyeong",
+    name: "roomSize",
     label: "평수",
     options: [
       "1~9평",
@@ -37,14 +51,25 @@ const optionsData = [
       "60평",
       "70평 이상",
     ],
+    code: [
+      "SIZE01",
+      "SIZE02",
+      "SIZE03",
+      "SIZE04",
+      "SIZE05",
+      "SIZE06",
+      "SIZE07",
+      "SIZE08",
+    ],
   },
   {
-    name: "number",
+    name: "roomCount",
     label: "방 개수",
     options: ["1", "2", "3", "4", "5개 이상"],
+    code: ["COUNT01", "COUNT02", "COUNT03", "COUNT04", "COUNT05"],
   },
   {
-    name: "area",
+    name: "location",
     label: "지역",
     options: [
       "서울시",
@@ -56,16 +81,45 @@ const optionsData = [
       "제주도",
       "해외",
     ],
+    code: [
+      "LOCATION01",
+      "LOCATION02",
+      "LOCATION03",
+      "LOCATION04",
+      "LOCATION05",
+      "LOCATION06",
+      "LOCATION07",
+      "LOCATION08",
+    ],
   },
 ];
 
 const WriteInformation = ({ selectedValues, setSelectedValues }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSelectChange = (name, value) => {
+  const optionsIndexes = {}; // 인덱스를 저장할 객체
+
+  // optionsData에서 각 옵션 그룹별로 옵션의 인덱스를 optionsIndexes 객체에 저장
+  optionsData.forEach((optionGroup) => {
+    optionGroup.options.forEach((option, index) => {
+      optionsIndexes[option] = index;
+    });
+  });
+
+  const handleSelectChange = (name, selectedOption) => {
+    const { value } = selectedOption;
+
+    // optionsIndexes 객체를 사용하여 선택한 옵션의 인덱스를 찾음
+    const selectedIndex = optionsIndexes[value];
+
+    // optionsData에서 해당 그룹의 코드를 가져옴
+    const code = optionsData.find((group) => group.name === name).code[
+      selectedIndex
+    ];
+
     setSelectedValues((prevSelectedValues) => ({
       ...prevSelectedValues,
-      [name]: value,
+      [name]: { value, label: value, code }, // 선택한 옵션의 code 값을 포함
     }));
   };
 
@@ -122,8 +176,8 @@ const WriteInformation = ({ selectedValues, setSelectedValues }) => {
                 styles={customStyles}
                 // selectedValues와 연동
                 value={selectedValues[optionGroup.name] || []}
-                onChange={(value) =>
-                  handleSelectChange(optionGroup.name, value)
+                onChange={(selectedOption) =>
+                  handleSelectChange(optionGroup.name, selectedOption)
                 }
               />
             </li>
