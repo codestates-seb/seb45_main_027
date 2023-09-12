@@ -97,6 +97,10 @@ export function AuthProvider({ children }) {
 
       //navigate("/verify");
     } catch (error) {
+      //409시 중복닉네임,아이디
+      if(error.response.status === 409){
+        alert("이미 등록된 이메일 또는 닉네임입니다.");
+      };
       console.error("Registration failed:", error);
       alert("Signup failed");
       throw error;
