@@ -27,7 +27,7 @@ public class TipPatchDto {
 
     private Long memberId;
 
-    private List<TipImageDto> tipImages;
+//    private List<TipImageDto> tipImages;
 
     private List<String> tagContents;
 

@@ -70,32 +70,32 @@ public class TipService {
         updatedTip.setCreatedDateTime(tip.getCreatedDateTime());
 
         // 기존 사진
-        List<Long> curImgId = new ArrayList<>();
-        for(TipImage tipImage : tip.getTipImages()){
-            Long add = tipImage.getTipImageId();
-
-            curImgId.add(add);
-        }
+//        List<Long> curImgId = new ArrayList<>();
+//        for(TipImage tipImage : tip.getTipImages()){
+//            Long add = tipImage.getTipImageId();
+//
+//            curImgId.add(add);
+//        }
 
         tip.setTitle(updatedTip.getTitle());
         tip.setCoverPhoto(updatedTip.getCoverPhoto());
         tip.setContent(updatedTip.getContent());
 
         // 새 사진은 insert하고
-        for (TipImage tipImage : updatedTip.getTipImages()) {
-            tipImage.setTip(tip); // TipImage에 Tip 연관성 설정
-            tipImageService.saveTipImage(tipImage);
-        }
+//        for (TipImage tipImage : updatedTip.getTipImages()) {
+//            tipImage.setTip(tip); // TipImage에 Tip 연관성 설정
+//            tipImageService.saveTipImage(tipImage);
+//        }
 
         // 구 사진은 삭제
-        for(Long long1 : curImgId){
-            tipRepository.deleteImageById(long1);
-        }
+//        for(Long long1 : curImgId){
+//            tipRepository.deleteImageById(long1);
+//        }
 
         Tip updatingTip = tipRepository.save(tip);
 
 
-        updatingTip.setTipImages(updatedTip.getTipImages());
+//        updatingTip.setTipImages(updatedTip.getTipImages());
 
         return updatingTip;
     }

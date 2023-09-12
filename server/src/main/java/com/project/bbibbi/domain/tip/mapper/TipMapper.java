@@ -39,19 +39,19 @@ public interface TipMapper {
         tip.setContent(tipPostDto.getContent());
         tip.setMember(Member.builder().memberId(tipPostDto.getMemberId()).build());
 
-        List<TipImage> tipImages = new ArrayList<>();
-
-        for(TipImageDto tipImageDto : tipPostDto.getTipImages()){
-            TipImage tipImage = new TipImage();
-
-            tipImage.setImage(tipImageDto.getImage());
-            tipImage.setTip(tip);
-            tipImage.setCreatedDateTime(LocalDateTime.now());
-
-            tipImages.add(tipImage);
-        }
-
-        tip.setTipImages(tipImages);
+//        List<TipImage> tipImages = new ArrayList<>();
+//
+//        for(TipImageDto tipImageDto : tipPostDto.getTipImages()){
+//            TipImage tipImage = new TipImage();
+//
+//            tipImage.setImage(tipImageDto.getImage());
+//            tipImage.setTip(tip);
+//            tipImage.setCreatedDateTime(LocalDateTime.now());
+//
+//            tipImages.add(tipImage);
+//        }
+//
+//        tip.setTipImages(tipImages);
 
         tip.setCreatedDateTime(LocalDateTime.now());
 
@@ -69,20 +69,20 @@ public interface TipMapper {
         tip.setContent(tipPatchDto.getContent());
         tip.setMember(Member.builder().memberId(tipPatchDto.getMemberId()).build());
 
-        List<TipImage> tipImages = new ArrayList<>();
-
-        for(TipImageDto tipImageDto : tipPatchDto.getTipImages()){
-            TipImage tipImage = new TipImage();
-
-            tipImage.setImage(tipImageDto.getImage());
-            tipImage.setTip(tip);
-            tipImage.setCreatedDateTime(LocalDateTime.now());
-            tipImage.setModifiedDateTime(LocalDateTime.now());
-
-            tipImages.add(tipImage);
-        }
-
-        tip.setTipImages(tipImages);
+//        List<TipImage> tipImages = new ArrayList<>();
+//
+//        for(TipImageDto tipImageDto : tipPatchDto.getTipImages()){
+//            TipImage tipImage = new TipImage();
+//
+//            tipImage.setImage(tipImageDto.getImage());
+//            tipImage.setTip(tip);
+//            tipImage.setCreatedDateTime(LocalDateTime.now());
+//            tipImage.setModifiedDateTime(LocalDateTime.now());
+//
+//            tipImages.add(tipImage);
+//        }
+//
+//        tip.setTipImages(tipImages);
 
         tip.setModifiedDateTime(LocalDateTime.now());
 
@@ -106,19 +106,19 @@ public interface TipMapper {
         tipResponseDto.setMemberImage(tip.getMember().getProfileImg());
 
 
-        List<TipImageDto> tipImageDtos = new ArrayList<>();
-
-        for(TipImage tipImage : tip.getTipImages()){
-            TipImageDto tipImageDto = new TipImageDto(tipImage.getTipImageId()
-                    ,tipImage.getImage()
-                    ,tipImage.getTip().getTipId()
-                    ,tipImage.getCreatedDateTime()
-                    ,tipImage.getModifiedDateTime());
-
-            tipImageDtos.add(tipImageDto);
-        }
-
-        tipResponseDto.setTipImages(tipImageDtos);
+//        List<TipImageDto> tipImageDtos = new ArrayList<>();
+//
+//        for(TipImage tipImage : tip.getTipImages()){
+//            TipImageDto tipImageDto = new TipImageDto(tipImage.getTipImageId()
+//                    ,tipImage.getImage()
+//                    ,tipImage.getTip().getTipId()
+//                    ,tipImage.getCreatedDateTime()
+//                    ,tipImage.getModifiedDateTime());
+//
+//            tipImageDtos.add(tipImageDto);
+//        }
+//
+//        tipResponseDto.setTipImages(tipImageDtos);
 
         tipResponseDto.setCreatedDateTime(tip.getCreatedDateTime());
         tipResponseDto.setModifiedDateTime(tip.getModifiedDateTime());

@@ -67,8 +67,8 @@ public class Feed extends BaseEntity{
 //    @Column
 //    private Long memberId;
 
-    @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
-    private List<FeedImage> images = new ArrayList<>();
+//    @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
+//    private List<FeedImage> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "feed", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     //게시글 UI에서 댓글을 바로 보여주기 위해 FetchType을 EAGER로 설정,펼쳐보기 같은 UI라면 Lazy로 설정

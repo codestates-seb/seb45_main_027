@@ -40,8 +40,8 @@ public class Tip extends BaseEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @OneToMany(mappedBy = "tip", cascade = {CascadeType.ALL})
-    private List<TipImage> tipImages = new ArrayList<>();
+//    @OneToMany(mappedBy = "tip", cascade = {CascadeType.ALL})
+//    private List<TipImage> tipImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "tip", cascade = {CascadeType.ALL})
     private List<TipTag> tipTags = new ArrayList<>();

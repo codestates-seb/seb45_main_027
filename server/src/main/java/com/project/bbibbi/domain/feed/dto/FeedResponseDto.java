@@ -55,7 +55,7 @@ public class FeedResponseDto {
 
 
     // feedImage와 합쳐보내
-    private List<FeedImageDto> feedImages;
+//    private List<FeedImageDto> feedImages;
 
     // reply
     private List<FeedReplyResponseDto> replies;

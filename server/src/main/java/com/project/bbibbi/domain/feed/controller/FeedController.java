@@ -53,7 +53,9 @@ public class FeedController {
 
         URI location = UriComponentsBuilder.newInstance().path(FEED_DEFAULT_URL + "/{feed-id}").buildAndExpand(createdFeed.getFeedId()).toUri();
 
-        return ResponseEntity.created(location).build();
+        FeedResponseDto feedResponseDto = mapper.feedToFeedResponseDto(createdFeed);
+
+        return ResponseEntity.created(location).body(new SingleResponseDto<>(feedResponseDto));
 
     }
 
