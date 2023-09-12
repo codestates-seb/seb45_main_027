@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const display =
   "flex justify-center items-center w-20 h-20 bg-white border rounded-full shadow my-8 ";
@@ -7,6 +9,17 @@ const Sidebar = () => {
     const [like, setLike] = useState(false);
     const [Bookmark, setBookmark] = useState(false);
   
+  const linkShare = () => {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        toast("링크가 복사되었습니다.");
+      })
+      .catch((err) => {
+        toast("링크 복사에 실패했습니다.");
+      });
+  };
+
     return (
       <div className="hidden md:flex flex-col w-max h-0 sticky top-48 float-right mr-20 z-50">
         {/* 좋아요 */}
@@ -45,13 +58,14 @@ const Sidebar = () => {
         </button>
 
         {/* 공유 */}
-        <button className={`${display} pr-2.5`}>
+        <button className={`${display} pr-2.5`} onClick={linkShare}>
           <img
             className="m-4"
             src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/side-share.png"
             alt="공유"
           />
         </button>
+        <ToastContainer/>
       </div>
     );
 };

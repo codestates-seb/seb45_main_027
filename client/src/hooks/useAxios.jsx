@@ -3,7 +3,7 @@ import axios from "axios";
 
 const useAxios = (configParams) => {
   // axios.defaults.baseURL =
-  //   "http://ec2-54-180-26-247.ap-northeast-2.compute.amazonaws.com:8080";
+    "http://ec2-3-35-209-205.ap-northeast-2.compute.amazonaws.com:8080";
 
   const [res, setRes] = useState("");
   const [err, setErr] = useState("");
