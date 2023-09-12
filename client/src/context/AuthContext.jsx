@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-hot-toast";
+
 
 const AuthContext = createContext();
 
@@ -31,6 +33,8 @@ export function AuthProvider({ children }) {
   }, [navigate]);
 
   async function login(email, password) {
+    toast.loading("로딩중...");
+
     try {
       const response = await axios.post(`${baseURL}/auth/login`, {
         email,
@@ -45,6 +49,7 @@ export function AuthProvider({ children }) {
         "refreshToken",
         response.headers["authorization-refresh"]
       );
+      toast.dismiss();
       navigate("/");
     } catch (error) {
       //불일치시 401에러
@@ -52,6 +57,7 @@ export function AuthProvider({ children }) {
         alert("이메일 또는 비밀번호가 일치하지 않습니다.");
       };
       console.error("Login failed:", error);
+      toast.dismiss();
       alert("Login failed");
       throw error;
     }
@@ -79,6 +85,7 @@ export function AuthProvider({ children }) {
 
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
+      alert('로그인이 성공했습니다')
       navigate("/");
     } catch (error) {
       console.log(code);
@@ -88,6 +95,8 @@ export function AuthProvider({ children }) {
   }
 
   async function register(email, nickname, password) {
+    toast.loading("로딩중...");
+
     try {
       await axios.post(`${baseURL}/auth/signup`, {
         email,
@@ -95,13 +104,19 @@ export function AuthProvider({ children }) {
         password,
       });
 
-      //navigate("/verify");
+      toast.dismiss();
+      navigate("/login");
     } catch (error) {
       //409시 중복닉네임,아이디
       if(error.response.status === 409){
-        alert("이미 등록된 이메일 또는 닉네임입니다.");
+        alert("이미 등록된 이메일입니다.");
       };
+      if(error.response.status === 400 && error.response.data.message){
+        alert("이미 등록된 닉네임입니다.");
+      };
+
       console.error("Registration failed:", error);
+      toast.dismiss();
       alert("Signup failed");
       throw error;
     }
