@@ -1,5 +1,6 @@
 package com.project.bbibbi.auth.jwt.filter;
 
+import com.project.bbibbi.auth.jwt.service.CustomJwtUserDetails;
 import com.project.bbibbi.auth.jwt.service.JwtService;
 import com.project.bbibbi.auth.utils.PasswordUtil;
 import com.project.bbibbi.domain.member.entity.Member;
@@ -89,7 +90,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                     String reIssuedRefreshToken = reIssueRefreshToken(member);
                     try {
                         jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(member.getEmail()),
-                                reIssuedRefreshToken, member.getMemberId());
+                                reIssuedRefreshToken, member.getMemberId(),member.getProfileImg(),member.getNickname());
                     } catch (IOException e) {
                         throw new RuntimeException("입출력 오류입니다", e);
                     }
@@ -147,13 +148,24 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         String password = member.getPassword();
         if (password == null) { // 소셜 로그인 유저의 비밀번호 임의로 설정 하여 소셜 로그인 유저도 인증 되도록 설정
             password = PasswordUtil.generateRandomPassword();
+
         }
 
-        UserDetails userDetailsUser = org.springframework.security.core.userdetails.User.builder()
-                .username(member.getEmail())
-                .password(password)
-                .roles(member.getRole().name())
-                .build();
+//        UserDetails userDetailsUser = org.springframework.security.core.userdetails.User.builder()
+//                .username(member.getEmail())
+//                .password(password)
+//                .roles(member.getRole().name())
+//                .build();
+
+        CustomJwtUserDetails userDetailsUser = new CustomJwtUserDetails( //되면 수정
+                member.getMemberId(),
+                member.getEmail(),
+                password, // 비밀번호는 null
+                member.getRole(),
+                true, // checkUser 값은 true
+                member.getProfileImg(),
+                member.getNickname()
+        );
 
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(userDetailsUser, null,

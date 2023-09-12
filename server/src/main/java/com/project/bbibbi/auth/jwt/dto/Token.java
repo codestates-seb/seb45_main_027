@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class Token {
+public class Token { // 삭제 ㄱㄱ
 
     private String accessToken;
     private String refreshToken;

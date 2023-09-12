@@ -17,11 +17,12 @@ import java.io.IOException;
 public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        response.setStatus(HttpServletResponse.SC_OK);//보안을 위해 로그인 오류지만 200 반환, bad_request를 반환해도 될듯 ?
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);//ok말고 401 반환,(보안떄문에 ok 주는 게 좋다고함 )
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/plain;charset=UTF-8");
         response.getWriter().write("로그인이 실패하였습니다. 이메일 혹은 비밀번호를 확인해주세요! ");
         log.info("로그인에 실패했습니다. 메시지 : {}", exception.getMessage());
+
     }
 }
 

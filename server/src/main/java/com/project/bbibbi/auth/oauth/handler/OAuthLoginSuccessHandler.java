@@ -57,13 +57,15 @@ public class OAuthLoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private void loginSuccess(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
         Long memberId = oAuth2User.getMemberId();
+        String profileImg = oAuth2User.getProfileImg();
+        String nickname = oAuth2User.getNickname();
 
         String accessToken = jwtService.createAccessToken(oAuth2User.getEmail());
         String refreshToken = jwtService.createRefreshToken();
         response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
         response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);
 
-        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken, memberId);
+        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken, memberId, nickname, profileImg);
         jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
     }
 }

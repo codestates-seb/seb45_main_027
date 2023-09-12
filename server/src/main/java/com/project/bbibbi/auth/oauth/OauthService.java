@@ -9,7 +9,7 @@ import java.security.Provider;
 
 @Service
 @Transactional(readOnly = true)
-public class OauthService {
+public class OauthService {//삭제 ㄱㄱ
 
     private final MemberRepository memberRepository;
 

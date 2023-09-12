@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.StreamUtils;
@@ -81,8 +82,13 @@ public class CustomJsonUsernamePasswordAuthenticationFilter extends AbstractAuth
 
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(email, password);//principal 과 credentials 전달
 
-        //  Username과 Password 정보를 포함한 UsernamePasswordAuthenticationToken을 생성합니다.
+//          Username과 Password 정보를 포함한 UsernamePasswordAuthenticationToken을 생성합니다.
         return this.getAuthenticationManager().authenticate(authRequest);
-        // UsernamePasswordAuthenticationToken인 authRequest를 AuthenticationManager에게 전달하면서 인증 처리를 위임합니다.
+//         UsernamePasswordAuthenticationToken인 authRequest를 AuthenticationManager에게 전달하면서 인증 처리를 위임합니다.
+
+//        Authentication authentication = this.getAuthenticationManager().authenticate(authRequest);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+//        return authentication;
     }
 }

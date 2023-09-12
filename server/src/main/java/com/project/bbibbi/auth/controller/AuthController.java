@@ -106,7 +106,7 @@ public class AuthController {
     }
 
     @PostMapping("/email/password")
-    public ResponseEntity<Void> sendEmail(@RequestBody @Valid AuthEmailSendPasswordApiRequest request) {
+    public ResponseEntity<Void> sendEmailForPassword(@RequestBody @Valid AuthEmailSendPasswordApiRequest request) {
 
         memberService.sendFindPasswordCodeToEmail(request.getEmail());
 

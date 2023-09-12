@@ -1,6 +1,7 @@
 package com.project.bbibbi.auth.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.bbibbi.auth.jwt.handler.CustomAccessDeniedHandler;
 import com.project.bbibbi.auth.jwt.filter.CustomJsonUsernamePasswordAuthenticationFilter;
 import com.project.bbibbi.auth.jwt.filter.JwtAuthenticationProcessingFilter;
 import com.project.bbibbi.auth.jwt.handler.LoginFailureHandler;
@@ -43,6 +44,7 @@ public class SecurityConfig {
     private final OAuthLoginSuccessHandler oAuthLoginSuccessHandler;
     private final OAuthLoginFailureHandler oAuthLoginFailureHandler;
     private final CustomOAuthUserService customOAuthUserService;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -59,6 +61,9 @@ public class SecurityConfig {
 
                 .cors() // CORS 추가
                 .configurationSource(corsConfigurationSource()) //  CorsConfigurationSource 빈을 지정.
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(customAccessDeniedHandler) // 이 부분 에러날 수도 있음
                 .and()
 
                 //== URL별 권한 관리 옵션 ==//
