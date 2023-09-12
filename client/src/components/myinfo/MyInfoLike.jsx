@@ -32,7 +32,7 @@ const MyInfoLike = ({ imgSrc, title, itemId, toggleLike, isLiked }) => {
         </button>
       </div>
       <div className="flex flex-col items-center md:mb-4">
-        <div className="text-lg font-semibold p-2 mx-1 break-all">{title}</div>
+        <div className="text-lg font-semibold p-2 max-w-[130px] lg:max-w-[150px] truncate overflow-hidden">{title}</div>
       </div>
     </div>
   );
