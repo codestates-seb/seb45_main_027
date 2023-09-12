@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const useAxios = (configParams) => {
-  // axios.defaults.baseURL =
-    "http://ec2-3-35-209-205.ap-northeast-2.compute.amazonaws.com:8080";
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
   const [res, setRes] = useState("");
   const [err, setErr] = useState("");
