@@ -7,10 +7,7 @@ import com.project.bbibbi.domain.member.service.dto.request.MemberCreateServiceR
 import com.project.bbibbi.domain.member.service.dto.request.MemberUpdatePasswordApiServiceRequest;
 import com.project.bbibbi.domain.member.service.dto.request.MemberUpdateServiceRequest;
 import com.project.bbibbi.domain.member.service.dto.response.MemberResponse;
-import com.project.bbibbi.global.exception.businessexception.memberexception.MemberAccessDeniedException;
-import com.project.bbibbi.global.exception.businessexception.memberexception.MemberDuplicateException;
-import com.project.bbibbi.global.exception.businessexception.memberexception.MemberNotFoundException;
-import com.project.bbibbi.global.exception.businessexception.memberexception.MemberPasswordException;
+import com.project.bbibbi.global.exception.businessexception.memberexception.*;
 import com.project.bbibbi.global.mail.service.MailService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -39,7 +36,7 @@ public class MemberService {
 
     public Long signup(MemberCreateServiceRequest request) {
 
-        checkDuplicateMember(request.getEmail());       // 중복 이메일 회원일 경우 예외처리
+        checkDuplicateEmail(request.getEmail());        // 중복 이메일 회원일 경우 예외처리
         checkDuplicateNickname(request.getNickname());  // 중복 닉네임일 경우 예외처리
 
         Member member = createMember(request);
@@ -181,21 +178,24 @@ public class MemberService {
 
 
 
-    private void checkDuplicateMember(String email) {
+    private void checkDuplicateEmail(String email) {
 
         Member member = memberRepository.findByEmail(email).orElse(null);
-
         if (member != null) {
-            throw new MemberDuplicateException();
+            String memberEmail = member.getEmail();
+            if (memberEmail != null && memberEmail.equals(email)) {
+                throw new MemberlExistEmailException();
+            }
         }
     }
 
     private void checkDuplicateNickname(String nickname) {
 
         Member member = memberRepository.findByNickname(nickname).orElse(null);
-
         if (member != null) {
-            throw new MemberDuplicateException();
+            String memberNickname = member.getNickname();
+            if (memberNickname != null && memberNickname.equals(nickname)) {
+                throw new MemberExistNicknameException();}
         }
     }
 

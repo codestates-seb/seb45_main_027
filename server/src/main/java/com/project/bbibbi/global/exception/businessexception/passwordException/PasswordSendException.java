@@ -1,4 +1,4 @@
-package com.project.bbibbi.global.exception.businessexception.emailexception.passwordException;
+package com.project.bbibbi.global.exception.businessexception.passwordException;
 
 import org.springframework.http.HttpStatus;
 
