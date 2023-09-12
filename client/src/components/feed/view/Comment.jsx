@@ -13,8 +13,17 @@ const Comment = forwardRef((props, ref) => { // 사이드바에서 댓글 클릭
   const [comments, setComments] = useState([]);
   const [replies, setReplies] = useState({});
 
+  const getFormattedDate = () => {
+    const date = new Date();
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  };
+
   const handleCommentSubmit = () => {
-    setComments((prevComments) => [...prevComments, commentInput]);
+    const newComment = {
+      text: commentInput,
+      date: getFormattedDate(),
+    };
+    setComments((prevComments) => [...prevComments, newComment]);
     setReplies((prevReplies) => ({ ...prevReplies, [commentInput]: [] }));
     setCommentInput("");
   };
@@ -37,12 +46,19 @@ const Comment = forwardRef((props, ref) => { // 사이드바에서 댓글 클릭
 
   
   const handleReplySubmit = (comment) => {
+    const newReply = {
+      text: replyInput,
+      date: getFormattedDate(),
+    };
     setReplies((prevReplies) => ({
       ...prevReplies,
-      [comment]: [...prevReplies[comment], replyInput],
+      [comment]: [[...prevReplies[comment]], newReply],
     }));
     setReplyInput("");
+    toggleReply(comment);
   };
+
+  
 
   return (
     <div className="mt-10" ref={ref}>
@@ -82,11 +98,11 @@ const Comment = forwardRef((props, ref) => { // 사이드바에서 댓글 클릭
             />
             <div className="flex flex-col ml-4 w-full">
               <span className="text-lg font-semibold">댓글 작성자</span>
-              <span className="my-4 text-base">{comment}</span>
+              <span className="my-4 text-base">{comment.text}</span>
               {/* 작성날짜, 좋아요, 답글 */}
               <div className="flex items-center text-gray-500 font-medium text-base">
                 {/* 작성날짜 */}
-                <span>작성날짜</span>
+                <span>{comment.date}</span>
 
                 {/* 좋아요 */}
                 <button
@@ -109,7 +125,6 @@ const Comment = forwardRef((props, ref) => { // 사이드바에서 댓글 클릭
               </div>
             </div>
           </div>
-
           {/* 답글 입력창 */}
           {showReply[comment] && (
             <div className="flex w-full mt-6 ml-10">
@@ -131,7 +146,6 @@ const Comment = forwardRef((props, ref) => { // 사이드바에서 댓글 클릭
               </div>
             </div>
           )}
-
           {/* 답글 출력창 */}
           {replies[comment] &&
             replies[comment].map((reply, replyIndex) => (
@@ -146,13 +160,15 @@ const Comment = forwardRef((props, ref) => { // 사이드바에서 댓글 클릭
 
                   {/* 댓글 내용 */}
                   <div key={replyIndex} className="my-4 text-base">
-                    {reply}
+                    {reply.text} {/* 답글 내용 출력 부분을 reply.text로 변경 */}
                   </div>
 
                   {/* 작성날짜 */}
                   <div className="flex items-center text-gray-500 font-medium text-base">
                     {/* 작성날짜 */}
-                    <span>작성날짜</span>
+                    <span>
+                      {reply.date}
+                    </span>
                   </div>
                 </div>
               </div>
