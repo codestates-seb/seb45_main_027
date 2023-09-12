@@ -1,13 +1,12 @@
 import axios from "axios";
 const api = axios.create({ baseURL: process.env.REACT_APP_API_URL });
 
-
 // 요청 인터셉터 추가하기
 api.interceptors.request.use(
   function (config) {
     // 요청이 전달되기 전에 작업 수행
-    const refreshToken = JSON.parse(localStorage.getItem("refreshToken"));
-    const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+    const refreshToken = localStorage.getItem("refreshToken");
+    const accessToken = localStorage.getItem("accessToken");
     config.headers["authorization-refresh"] = refreshToken;
     config.headers["authorization"] = accessToken;
     config.withCredentials = true;
