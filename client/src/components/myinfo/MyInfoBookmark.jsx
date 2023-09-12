@@ -37,7 +37,7 @@ const MyInfoBookmark = ({
         </button>
       </div>
       <div className="flex flex-col items-center md:mb-4">
-        <div className="text-lg font-semibold p-2 mx-1 break-all">{title}</div>
+        <div className="text-lg font-semibold p-2 mx-1 ">{title}</div>
       </div>
     </div>
   );

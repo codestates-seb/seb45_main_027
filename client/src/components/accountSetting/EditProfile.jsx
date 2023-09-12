@@ -11,7 +11,6 @@ const EditProfile = ({
 
   handleProfileUpdate,
 }) => {
-
   //유저가 사진 업로드시 서버로 보냄
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -20,7 +19,6 @@ const EditProfile = ({
     formData.append("myInfoImage", file);
 
     const baseURL = process.env.REACT_APP_API_URL;
-
 
     reader.onloadend = () => {
       setProfileData({ ...profileData, profilePicture: reader.result });
@@ -40,17 +38,18 @@ const EditProfile = ({
       console.log("Image uploaded:", response.data);
       // 응답으로 받은 사진을 여기서 저장해서 유저한테 보여줌
       setProfileData({ ...profileData, profilePicture: response.data });
-
     } catch (error) {
       console.error("Image upload failed:", error);
     }
   };
 
-  //닉네임, 바이오 수정시
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
     setProfileData({ ...profileData, [name]: value });
   };
+
+  const handleImageDelete = async () => {};
+
 
   return (
     <div className="flex flex-col justify-center items-center h-[500px]">
@@ -59,12 +58,15 @@ const EditProfile = ({
         alt="Profile"
         className="w-[200px] h-[200px] rounded-full object-cover opacity-100"
       />
-      <label
-        className={`${buttonStyle} cursor-pointer flex justify-center`}
-        htmlFor="profilePictureInput"
-      >
-        Choose Profile Picture
-      </label>
+      <div className='flex flex-row'>
+        <label
+          className={`${buttonStyle} cursor-pointer flex justify-center`}
+          htmlFor="profilePictureInput"
+        >
+          Choose Profile Picture
+        </label>
+        <button className={buttonStyle} onClick={handleImageDelete}>Delete</button>
+      </div>
       <input
         type="file"
         id="profilePictureInput"

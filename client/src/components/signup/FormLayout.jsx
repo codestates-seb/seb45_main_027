@@ -21,7 +21,7 @@ const FormLayout = ({
   const errorMessageStyle = "text-xl text-red-600 mb-8 ml-2";
   return (
     <form
-      className="flex flex-col justify-center items-start text-4xl mx-[10%] px-[10%] lg:px-0 w-[320px]"
+      className="flex flex-col justify-center items-start text-4xl mx-[10%] px-[10%] w-[320px] md:w-[380px]"
       onSubmit={handleSubmit}
       noValidate>
       {path === "signup" && (
