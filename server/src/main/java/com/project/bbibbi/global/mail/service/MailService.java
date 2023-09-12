@@ -2,9 +2,8 @@ package com.project.bbibbi.global.mail.service;
 
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.member.repository.MemberRepository;
-import com.project.bbibbi.domain.member.service.MemberService;
 import com.project.bbibbi.global.exception.businessexception.emailexception.EmailSendException;
-import com.project.bbibbi.global.exception.businessexception.emailexception.passwordException.PasswordSendException;
+import com.project.bbibbi.global.exception.businessexception.passwordException.PasswordSendException;
 import com.project.bbibbi.global.exception.businessexception.memberexception.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
