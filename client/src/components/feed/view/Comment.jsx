@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React, { useState, forwardRef  } from "react";
 
-const Comment = () => {
+//  함수형 컴포넌트는 ref 속성을 가질 수 없지만, forwardRef를 사용하면 이러한 제약을 우회할 수 있다.
+const Comment = forwardRef((props, ref) => {  // 사이드바에서 댓글 클릭시 이동을 위해 받아 옴.
   // 댓글 좋아요
   const [like, setLike] = useState(false);
   // 답글 달기
   const [showReply, setShowReply] = useState(false);
 
     return (
-      <div className="mt-10">
+      <div className="mt-10" ref={ref}>
         {/* 댓글 수 표시 */}
         <div className="flex">
           <span className="text-xl font-semibold">댓글</span>
@@ -119,6 +120,6 @@ const Comment = () => {
         </div>
       </div>
     );
-};
+});
 
 export default Comment;
