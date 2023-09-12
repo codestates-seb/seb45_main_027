@@ -18,10 +18,7 @@ const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
     }
 
     axios
-      .post(
-        "https://1416-210-123-100-75.ngrok-free.app/imageUpload/coverImage",
-        formData
-      )
+      .post(`${process.env.REACT_APP_API_URL}/imageUpload/coverImage`, formData)
       .then((response) => {
         console.log(response.data);
         console.log("S3업로드 성공");
