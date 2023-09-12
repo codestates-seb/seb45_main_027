@@ -1,13 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import useAxios from "../../../hooks/useAxios";
+import { useUserContext } from "../../../context/userContext";
 
-const button = "flex items-center justify-center rounded-lg shadow h-full px-10 py-4";
+const button =
+  "flex items-center justify-center rounded-lg shadow h-full px-10 py-4";
 const div = "flex flex-col items-center px-6";
 const img = "w-10 h-10 mb-2";
 
-
 const ShowroomUserTop = () => {
-  const [follow, setFollow] = useState(false);
+  const { follow, setFollow, nickname, setNickname } = useUserContext();
+  const { tipId } = useParams();
+  const [createdDate, setCreatedDate] = useState(null);
 
+  const configParams = {
+    method: "GET",
+    url: `/feed/${tipId}`,
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+    },
+  };
+
+  const [response, error, loading] = useAxios(configParams);
+
+  useEffect(() => {
+    if (response) {
+      setNickname(response.data.nickname);
+      const dateTime = response.data.createdDateTime.split("T")[0]; // T 뒤에 시간 부분은 받아오지 않기 위해서 추가
+      setCreatedDate(dateTime);
+    } else if (error) {
+      console.error("Error:", error);
+    }
+  }, [response, error]);
+
+  useEffect(() => {
+    if (!nickname && !createdDate && loading) {
+      toast.loading("로딩중...");
+    } else if ((nickname && createdDate) || error) {
+      toast.dismiss();
+    }
+  }, [nickname, createdDate, loading, error]);
+  
   return (
     <div className="flex-col items-center lg:flex-row flex justify-between p-2 lg:p-8 mt-10 pt-10 rounded-lg shadow bg-white">
       <div className="flex items-center px-10">
