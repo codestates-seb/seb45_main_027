@@ -1,6 +1,7 @@
 package com.project.bbibbi.domain.feed.entity;
 
 //import com.project.bbibbi.domain.member.entity.Member;
+import com.project.bbibbi.domain.feedComment.entity.FeedComment;
 import com.project.bbibbi.domain.feedReply.entity.FeedReply;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.global.entity.*;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;

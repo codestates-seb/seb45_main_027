@@ -1,9 +1,11 @@
 package com.project.bbibbi.domain.feedReply.dto;
 
+import com.project.bbibbi.domain.feedComment.dto.FeedCommentDto;
 import com.project.bbibbi.global.entity.BaseEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -20,6 +22,7 @@ public class FeedReplyResponseDto extends BaseEntity {
     private Long feedId;
     private Long memberId;
     private LocalDateTime createdDateTime;
+    private List<FeedCommentDto> comments;
 /* Entity -> Dto*/
 //    public FeedReplyResponseDto(FeedReplyEntity reply) {
 //        this.feedReplyId = reply.getFeedReplyId();

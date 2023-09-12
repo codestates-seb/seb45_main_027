@@ -1,6 +1,7 @@
 package com.project.bbibbi.domain.feedlike.mapper;
 
 import com.project.bbibbi.domain.feed.entity.Feed;
+import com.project.bbibbi.domain.feedlike.entity.FeedLike;
 import com.project.bbibbi.domain.feedlike.dto.FeedLikeRequestDto;
 import com.project.bbibbi.domain.feedlike.dto.FeedLikeResponseDto;
 import com.project.bbibbi.domain.feedlike.entity.FeedLike;

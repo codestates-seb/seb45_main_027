@@ -1,8 +1,9 @@
 package com.project.bbibbi.domain.member.entity;
 
-import com.project.bbibbi.domain.FeedComment.entity.FeedComment;
-import com.project.bbibbi.domain.FeedBookMark.entity.FeedBookMark;
+import com.project.bbibbi.domain.feedComment.entity.FeedComment;
+import com.project.bbibbi.domain.feedBookmark.entity.FeedBookMark;
 import com.project.bbibbi.domain.feed.entity.Feed;
+import com.project.bbibbi.domain.feedComment.entity.FeedComment;
 import com.project.bbibbi.domain.feedReply.entity.FeedReply;
 import com.project.bbibbi.domain.feedReplyLike.entity.FeedReplyLike;
 import com.project.bbibbi.domain.feedlike.entity.FeedLike;

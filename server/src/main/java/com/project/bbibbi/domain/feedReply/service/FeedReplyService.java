@@ -1,6 +1,7 @@
 package com.project.bbibbi.domain.feedReply.service;
 
 import com.project.bbibbi.domain.feed.repository.FeedRepository;
+import com.project.bbibbi.domain.feedComment.dto.FeedCommentDto;
 import com.project.bbibbi.domain.feedReply.FeedReplyNotFoundException.FeedReplyNotFoundException;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyRequestDto;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyResponseDto;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -42,6 +44,18 @@ public class FeedReplyService {
                 .feedId(reply.getFeed().getFeedId())
                 .memberId(reply.getMember().getMemberId())
                 .nickname(reply.getMember().getNickname())
+                .createdDateTime(reply.getCreatedDateTime())
+                .comments(reply.getComments().stream().map(feedComment -> FeedCommentDto.builder()
+                        .feedCommentId(feedComment.getFeedCommentId())
+                        .content(feedComment.getContent())
+                        .memberId(feedComment.getMember().getMemberId())
+                        .feedReplyId(feedComment.getFeedReply().getFeedReplyId())
+                        .parentComment(feedComment.getParentComment())
+                        .commentOrder(feedComment.getParentComment())
+                        .nickname(feedComment.getMember().getNickname())
+                        .feedId(feedComment.getFeed().getFeedId())
+                        .build())
+                        .collect(Collectors.toList()))
                 .build();
     }
     public Optional<FeedReply> findById(Long replyId) {

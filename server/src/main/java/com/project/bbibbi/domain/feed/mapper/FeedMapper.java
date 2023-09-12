@@ -6,6 +6,8 @@ import com.project.bbibbi.domain.feed.dto.FeedPostDto;
 import com.project.bbibbi.domain.feed.dto.FeedResponseDto;
 import com.project.bbibbi.domain.feed.entity.Feed;
 import com.project.bbibbi.domain.feed.entity.FeedImage;
+import com.project.bbibbi.domain.feedComment.dto.FeedCommentDto;
+import com.project.bbibbi.domain.feedComment.entity.FeedComment;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyResponseDto;
 import com.project.bbibbi.domain.feedReply.entity.FeedReply;
 import com.project.bbibbi.domain.member.entity.Member;
@@ -140,38 +142,71 @@ public interface FeedMapper {
 
         List<FeedImageDto> feedImageDtos = new ArrayList<>();
 
-        for(FeedImage feedImage : feed.getImages()){
+        if(feed.getImages() != null) {
+            for (FeedImage feedImage : feed.getImages()) {
 
-            FeedImageDto feedImageDto = new FeedImageDto();
+                FeedImageDto feedImageDto = new FeedImageDto();
 
-            feedImageDto.setFeedImageId(feedImage.getFeedImageId());
-            feedImageDto.setImage(feedImage.getImage());
-            feedImageDto.setX(feedImage.getX());
-            feedImageDto.setY(feedImage.getY());
-            feedImageDto.setTag(feedImage.getTag());
-            feedImageDto.setFeedId(feedImage.getFeed().getFeedId());
-            feedImageDto.setCreatedDateTime(feedImage.getCreatedDateTime());
-            feedImageDto.setModifiedDateTime(feedImage.getModifiedDateTime());
+                feedImageDto.setFeedImageId(feedImage.getFeedImageId());
+                feedImageDto.setImage(feedImage.getImage());
+                feedImageDto.setX(feedImage.getX());
+                feedImageDto.setY(feedImage.getY());
+                feedImageDto.setTag(feedImage.getTag());
+                feedImageDto.setFeedId(feedImage.getFeed().getFeedId());
+                feedImageDto.setCreatedDateTime(feedImage.getCreatedDateTime());
+                feedImageDto.setModifiedDateTime(feedImage.getModifiedDateTime());
 
-            feedImageDtos.add(feedImageDto);
+                feedImageDtos.add(feedImageDto);
+
+            }
+
+            feedResponseDto.setFeedImages(feedImageDtos);
 
         }
 
-        feedResponseDto.setFeedImages(feedImageDtos);
+
         List<FeedReplyResponseDto> allReplies = new ArrayList<>();
         //피드에 댓글정보가 있으니 allReplies에 뿌려준다.
-       for(FeedReply feedReply : feed.getReplies()){
-           FeedReplyResponseDto feedReplyResponseDto = new FeedReplyResponseDto();
-           feedReplyResponseDto.setFeedReplyId(feedReply.getFeedReplyId());
-           feedReplyResponseDto.setFeedId(feedReply.getFeed().getFeedId());
-           feedReplyResponseDto.setContent(feedReply.getContent());
-           feedReplyResponseDto.setNickname(feedReply.getMember().getNickname());
-           feedReplyResponseDto.setMemberId(feedReply.getMember().getMemberId());
-           feedReplyResponseDto.setCreatedDateTime(feedReply.getCreatedDateTime());
-           allReplies.add(feedReplyResponseDto);
-       }
-        // Replies 안에 allReplies 저장
-       feedResponseDto.setReplies(allReplies);
+
+
+
+        if(feed.getReplies() != null) {
+            for (FeedReply feedReply : feed.getReplies()) {
+                FeedReplyResponseDto feedReplyResponseDto = new FeedReplyResponseDto();
+                feedReplyResponseDto.setFeedReplyId(feedReply.getFeedReplyId());
+                feedReplyResponseDto.setFeedId(feedReply.getFeed().getFeedId());
+                feedReplyResponseDto.setContent(feedReply.getContent());
+                feedReplyResponseDto.setNickname(feedReply.getMember().getNickname());
+                feedReplyResponseDto.setMemberId(feedReply.getMember().getMemberId());
+                feedReplyResponseDto.setCreatedDateTime(feedReply.getCreatedDateTime());
+                System.out.println("111");
+
+                if(feedReply.getComments() != null) {
+
+                    List<FeedCommentDto> feedCommentDtos = new ArrayList<>();
+                    for (FeedComment feedComment : feedReply.getComments()) {
+                        FeedCommentDto feedCommentDto = new FeedCommentDto();
+                        feedCommentDto.setFeedCommentId(feedComment.getFeedCommentId());
+                        feedCommentDto.setContent(feedComment.getContent());
+                        feedCommentDto.setMemberId(feedComment.getMember().getMemberId());
+                        feedCommentDto.setFeedReplyId(feedComment.getFeedReply().getFeedReplyId());
+                        feedCommentDto.setParentComment(feedComment.getParentComment());
+                        feedCommentDto.setNickname(feedComment.getMember().getNickname());
+                        feedCommentDto.setFeedId(feedComment.getFeed().getFeedId());
+
+                        feedCommentDtos.add(feedCommentDto);
+                        System.out.println("222");
+
+                    }
+                    feedReplyResponseDto.setComments(feedCommentDtos);
+
+                }
+
+                allReplies.add(feedReplyResponseDto);
+            }
+            // Replies 안에 allReplies 저장
+            feedResponseDto.setReplies(allReplies);
+        }
 
         return feedResponseDto;
 
@@ -202,6 +237,27 @@ public interface FeedMapper {
                                 .locationName(feed.getLocation().getDescription())
                                 .memberId(feed.getMember().getMemberId())
                                 .nickname(feed.getMember().getNickname())
+                                .replies(feed.getReplies().stream().map(feedReply -> FeedReplyResponseDto.builder()
+                                        .feedReplyId(feedReply.getFeedReplyId())
+                                        .content(feedReply.getContent())
+                                        .nickname(feedReply.getMember().getNickname())
+                                        .feedId(feedReply.getFeed().getFeedId())
+                                        .memberId(feedReply.getFeed().getFeedId())
+                                        .createdDateTime(feedReply.getCreatedDateTime())
+                                                .comments(feedReply.getComments().stream().map(feedComment -> FeedCommentDto.builder()
+                                                                .feedCommentId(feedComment.getFeedCommentId())
+                                                                .content(feedComment.getContent())
+                                                                .memberId(feedComment.getMember().getMemberId())
+                                                                .feedReplyId(feedComment.getFeedReply().getFeedReplyId())
+                                                                .parentComment(feedComment.getParentComment())
+                                                                .commentOrder(feedComment.getParentComment())
+                                                                .nickname(feedComment.getMember().getNickname())
+                                                                .feedId(feedComment.getFeed().getFeedId())
+                                                                .build())
+                                                        .collect(Collectors.toList()))
+                                        .build())
+                                        .collect(Collectors.toList())
+                                )
                                 .feedImages(feed.getImages().stream().map(feedImage -> FeedImageDto.builder()
                                         .feedImageId(feedImage.getFeedImageId())
                                         .image(feedImage.getImage())
