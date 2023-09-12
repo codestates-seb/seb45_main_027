@@ -7,6 +7,7 @@ import com.project.bbibbi.domain.feed.entity.*;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyResponseDto;
 import com.project.bbibbi.global.response.MultiResponseDto;
 import com.project.bbibbi.global.response.SingleResponseDto;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
@@ -93,6 +94,25 @@ public class FeedController {
     public ResponseEntity getFeeds(@PathVariable("search-code") String searchCode) {
         List<Feed> feeds = feedService.findFeeds(searchCode);
 
+        List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(feeds);
+
+        return new ResponseEntity<>(new MultiResponseDto<>(feedResponseDtos), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/myInfoSearch")
+    public ResponseEntity getMyInfoFeeds(@RequestParam int page) {
+
+        // myInfo 대상 memberId가 1번이라고 가정한다. 로그인 기능 구현되면 아랫줄 대신 로그인대상을 받는 코드를 쓴다.
+        Long myInfoMemberId = 1L;
+
+        // 사이즈는 4로 고정
+        int size = 4;
+
+        Page<Feed> pageFeeds = feedService.findMyInfoFeeds(page - 1, size, myInfoMemberId);  // 비쿼리일 경우
+        List<Feed> feeds = pageFeeds.getContent();
+
+//        List<Feed> feeds = feedService.findMyInfoFeeds(page - 1, size, myInfoMemberId); 쿼리방법
         List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(feeds);
 
         return new ResponseEntity<>(new MultiResponseDto<>(feedResponseDtos), HttpStatus.OK);

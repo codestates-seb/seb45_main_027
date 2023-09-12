@@ -4,7 +4,11 @@ import com.project.bbibbi.domain.feed.entity.Feed;
 import com.project.bbibbi.domain.feed.entity.FeedImage;
 import com.project.bbibbi.domain.feed.repository.FeedImageRepository;
 import com.project.bbibbi.domain.feed.repository.FeedRepository;
+import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.global.utils.CustomBeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -118,6 +122,18 @@ public class FeedService {
         return selectedFeeds;
 
     }
+
+    public Page<Feed> findMyInfoFeeds(int page, int size, long myInfoMemberId){
+
+        PageRequest pageRequest =  PageRequest.of(page, size, Sort.by("createdDateTime").descending());
+
+        Page<Feed> pageFeeds = feedRepository.findByMember(Member.builder().memberId(myInfoMemberId).build(),pageRequest); // 비쿼리 성공
+
+//       List<Feed> pageFeeds = feedRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
+
+        return  pageFeeds;
+    }
+
 
     public void deleteFeed(Long feedId){
         Feed feed = findVerifiedFeed(feedId);
