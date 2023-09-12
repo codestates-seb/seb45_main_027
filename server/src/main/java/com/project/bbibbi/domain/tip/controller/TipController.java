@@ -7,9 +7,18 @@ import com.project.bbibbi.domain.tip.entity.Tip;
 import com.project.bbibbi.domain.tip.mapper.TipMapper;
 import com.project.bbibbi.domain.tip.service.TipService;
 import com.project.bbibbi.domain.tipImage.service.TipImageService;
+import com.project.bbibbi.domain.tipTag.entity.TipTag;
+import com.project.bbibbi.domain.tipTag.repository.TipTagRepository;
+import com.project.bbibbi.domain.tipTag.service.TagService;
+import com.project.bbibbi.domain.tipTag.service.TipTagService;
+import com.project.bbibbi.global.response.MultiResponseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -23,12 +32,15 @@ public class TipController {
 
     private final TipImageService tipImageService;
 
+    private final TipTagService tipTagService;
+
     private final TipMapper tipMapper;
 
-    public TipController(TipService tipService, TipMapper tipMapper, TipImageService tipImageService) {
+    public TipController(TipService tipService, TipMapper tipMapper, TipImageService tipImageService, TipTagService tipTagService) {
         this.tipService = tipService;
         this.tipMapper = tipMapper;
         this.tipImageService = tipImageService;
+        this.tipTagService = tipTagService;
     }
 
     @PostMapping
@@ -38,6 +50,7 @@ public class TipController {
         tipPostDto.setMemberId(1L);
         Tip tip = tipMapper.tipPostDtoToTip(tipPostDto);
         Tip createdTip = tipService.createTip(tip);
+//        tipTagService.saveTags(createdTip, tipPostDto.tagContents());
         TipResponseDto tipResponseDto = tipMapper.tipToTipResponseDto(createdTip);
         return ResponseEntity.created(URI.create("/tip/" + createdTip.getTipId())).body(tipResponseDto);
     }
@@ -54,6 +67,7 @@ public class TipController {
             System.out.println("null!");
 //            throw new TipNotFoundException();
         }
+//        tipTagService.saveTags(updatedTip, tipPatchDto.tagContents());
         TipResponseDto tipResponseDto = tipMapper.tipToTipResponseDto(updatedTip);
         return ResponseEntity.ok(tipResponseDto);
     }
@@ -65,10 +79,12 @@ public class TipController {
 
 //            throw new TipNotFoundException();
         }
+//        List<TipTag> tipTags = tipTagService.findTagListByTip(
+//                tipService.getTipById(tipId));
         TipResponseDto tipResponseDto = tipMapper.tipToTipResponseDto(tip);
+//        tipResponseDto.setTiptags(tipTags); // tiptags를 TipResponseDto에 설정
         return ResponseEntity.ok(tipResponseDto);
     }
-
 
     @DeleteMapping("/{tipId}")
     public ResponseEntity<Void> deleteTip(@PathVariable Long tipId) {
@@ -76,23 +92,72 @@ public class TipController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
-    public ResponseEntity<List<TipResponseDto>> getAllTips() {
-        List<Tip> tips = tipService.getAllTips();
+    @GetMapping("/myInfoSearch")
+    public ResponseEntity getMyInfoTips(@RequestParam int page) {
+
+        // myInfo 대상 memberId가 1번이라고 가정한다. 로그인 기능 구현되면 아랫줄 대신 로그인대상을 받는 코드를 쓴다.
+        Long myInfoMemberId = 1L;
+
+        // 사이즈는 4로 고정
+        int size = 4;
+
+        Page<Tip> pageTips = tipService.findMyInfoTips(page - 1, size, myInfoMemberId);  // 비쿼리일 경우
+        List<Tip> tips = pageTips.getContent();
+
+//        List<Tip> tips = tipService.findMyInfoTips(page - 1, size, myInfoMemberId); 쿼리방법
         List<TipResponseDto> tipResponseDtos = tips.stream()
                 .map(tipMapper::tipToTipResponseDto)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(tipResponseDtos);
+
+        return new ResponseEntity<>(new MultiResponseDto<>(tipResponseDtos), HttpStatus.OK);
+
     }
 
-//    @PostMapping("/{tipId}/images")
-//    public ResponseEntity<String> addTipImage(@PathVariable Long tipId, @RequestParam("image") MultipartFile imageFile) {
-//        try {
-//            tipService.addImageToTip(tipId, imageFile);
-//            return ResponseEntity.ok("Image added successfully");
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.notFound().build();
-//        }
+//    @GetMapping
+//    public ResponseEntity<List<TipResponseDto>> getAllTips(@RequestParam int page) {
+//
+//        // 사이즈는 12로 고정
+//        int size = 12;
+//
+//        Page<Tip> pageTips = tipService.getAllTips(page - 1, size);
+//
+//        List<Tip> tips = pageTips.getContent();
+//
+//        List<TipResponseDto> tipResponseDtos = tips.stream()
+//                .map(tipMapper::tipToTipResponseDto)
+//                .collect(Collectors.toList());
+//        return ResponseEntity.ok(tipResponseDtos);
 //    }
 
+    @GetMapping
+    public ResponseEntity<Slice<Tip>> getAllTips(
+            @RequestParam(value = "searchString", required = false) String searchString,
+            @PageableDefault(size=12) Pageable pageable) {
+        return new ResponseEntity<>(
+                tipService.findTipAllByCreatedAtDesc(searchString, pageable), HttpStatus.OK);
+    }
+
+//    @GetMapping("/search/{search-string}")
+//    public ResponseEntity<List<TipResponseDto>> getAllSearchTips(@PathVariable("search-string") String searchString,
+//                                                                 @RequestParam int page) {
+//
+//        // 사이즈는 12로 고정
+//        int size = 12;
+//
+//
+//        List<Tip> pageTips = tipService.getAllSearchTips(searchString, page - 1, size);
+//
+//
+//        List<TipResponseDto> tipResponseDtos = pageTips.stream()
+//                .map(tipMapper::tipToTipResponseDto)
+//                .collect(Collectors.toList());
+//        return ResponseEntity.ok(tipResponseDtos);
+//    }
+
+    @GetMapping("/search/{search-string}")
+    public ResponseEntity<Slice<Tip>> searchAllTips(@PathVariable("search-string") String searchString,
+                                                    @RequestParam @PageableDefault(size=12) Pageable pageable) {
+        return new ResponseEntity<>(
+                tipService.findTipAllByCreatedAtDesc(searchString, pageable), HttpStatus.OK);
+    }
 }
