@@ -27,7 +27,7 @@ public class MemberController {
     }
 
     @GetMapping("/{member-id}")
-    public ResponseEntity<ApiSingleResponse<MemberResponse>> getMember(@PathVariable("member_id") @Positive Long memberId) {
+    public ResponseEntity<ApiSingleResponse<MemberResponse>> getMember(@PathVariable("member-id") @Positive Long memberId) {
 
         MemberResponse memberResponse = memberService.getMember(memberId);
         // db memberId 로그인 하면 토큰안에 암호화된 내용이 있으니까

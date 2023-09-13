@@ -69,6 +69,7 @@ public class FeedService {
 
     public Feed updateFeed(Feed feed){
 
+
         Feed preFeed = findFeed(feed.getFeedId());
 
         long preFeedId = preFeed.getFeedId();
