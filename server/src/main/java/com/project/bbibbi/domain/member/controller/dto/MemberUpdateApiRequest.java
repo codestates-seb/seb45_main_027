@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 public class MemberUpdateApiRequest {
 
-    @Size(min = 2, max = 15, message = "2 ~ 20 글자 내로 입력해주세요.")
+    @Size(min = 2, max = 10, message = "2 ~ 10 글자 내로 입력해주세요.")
     private String nickname;
     private String myIntro;
     private String profileImg;

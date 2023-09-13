@@ -47,9 +47,9 @@ public class MemberService {
     public MemberResponse getMember(Long memberId) {
 
         Optional<Member> memberOptional = memberRepository.findById(memberId);
-        Member member = memberOptional.orElseThrow(MemberNotFoundException::new); // if로 null 값 주던지 아니면 다른 인증으로 바꾸자
-        return null;
-//         return MemberResponse.getMemberResponse(member); // 받을 값들 생각해보자.. 너무 많다
+        Member member = memberOptional.orElseThrow(MemberNotFoundException::new);
+
+         return MemberResponse.MemberInfoResponse(member); // 받을 값들 생각해보자.. 너무 많다
     }
 
     private Member createMember(MemberCreateServiceRequest request) {
@@ -64,7 +64,6 @@ public class MemberService {
 
         Long loginMemberId = loginUtils.getLoginId();
 
-        //checkAccessAuthority(loginMemberId, request.getMemberId());
 
 
 
@@ -86,10 +85,7 @@ public class MemberService {
 
     public void updatePassword(MemberUpdatePasswordApiServiceRequest request) {
 
-        //checkAccessAuthority(loginMemberId, request.getMemberId());
 
-
-        // 이게 진짠데 로그인 시 아이디를 못 가져오고 있다
         Long LoginMemberId = loginUtils.getLoginId();
 
                 Optional<Member> optionalMember = memberRepository.findById(request.getMemberId());
@@ -150,17 +146,17 @@ public class MemberService {
             Member member = optionalMember.get();
             String storedCode = member.getCheckCode();
 
-            // 저장된 코드와 들어온 코드를 비교하여 일치하는지 확인
+            // 저장된 코드와 들어온 코드를 비교해보자
             if (storedCode.equals(code)) {
                 member.updateCheckUser(true);
                 System.out.println("true");
                 return true;
             } else {
                 System.out.println("false");
-                return false; // 코드가 일치하지 않는 경우 false 반환
+                return false; // 코드가 일치하지x
             }
         } else {
-            throw new MemberNotFoundException(); // 멤버가 존재하지 않는 경우 예외 던지기
+            throw new MemberNotFoundException();
         }
     }
     public void sendFindPasswordCodeToEmail(String email) {
