@@ -8,7 +8,7 @@ import ShowroomContents from "../components/feed/view/ShowroomContents";
 import Edit from "../components/feed/view/Edit";
 import Comment from "../components/feed/view/Comment";
 
-const ViewShowRoom = () => {
+const ViewShowRoom = ({ data }) => {
   // 사이드바 댓글 이동 버튼
   const commentSectionRef = useRef(null);
   // 커버 이미지
@@ -17,7 +17,7 @@ const ViewShowRoom = () => {
   const [userId, setUserId] = useState(null);
   // 로컬에 저장된 memberID 가져오기
   const memberId = localStorage.getItem("memberId");
-
+  
   const { feedId } = useParams();
 
   const [response, error, loading] = useAxios({
@@ -40,7 +40,11 @@ const ViewShowRoom = () => {
   return (
     <div>
       <ViewCoverImg coverPhoto={coverPhoto} loading={loading} error={error} />
-      <Sidebar commentSectionRef={commentSectionRef} />
+      {/* 선택적 체이닝(Optional Chaining) - response?.data: response가 null이나 undefined일 경우 undefined 리턴 */}
+      <Sidebar
+        data={response?.data?.data}
+        commentSectionRef={commentSectionRef}
+      />
       <Background
         mainclassName="bg-[#FFFAEE] h-full px-14 md:px-56 pb-40"
         divclassName="flex-col my-24 md:my-0">
