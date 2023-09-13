@@ -4,15 +4,15 @@ import { toast } from "react-hot-toast";
 const display =
   "flex justify-center items-center w-20 h-20 bg-white border rounded-full shadow my-8 ";
 
-const Sidebar = ({ commentSectionRef, data }) => {
+const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
   // 좋아요,북마크 서버통신
-  const [like, setLike] = useState(data?.likeYn || false);
-  const [Bookmark, setBookmark] = useState(data?.bookMarkYn || false);
+  const [like, setLike] = useState(feedData.likeYn || false);
+  const [Bookmark, setBookmark] = useState(feedData.bookMarkYn || false);
 
   useEffect(() => {
-    setLike(data?.likeYn || false);
-    setBookmark(data?.bookMarkYn || false);
-  }, [data]);
+    setLike(feedData.likeYn || false);
+    setBookmark(feedData.bookMarkYn || false);
+  }, [feedData.likeYn, feedData.bookMarkYn]);
 
   const scrollToComments = () => {
     if (commentSectionRef.current) {

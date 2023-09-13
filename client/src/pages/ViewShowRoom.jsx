@@ -14,13 +14,8 @@ const ViewShowRoom = () => {
   const [feedData, setFeedData] = useState({});
   // 사이드바 댓글 이동 버튼
   const commentSectionRef = useRef(null);
-  // 멤버아이디 (게시글ID(feedId)와 memberId 일치시에만 On)
-  const [userId, setUserId] = useState(null);
-  // 로컬에 저장된 memberID 가져오기
-  const memberId = localStorage.getItem("memberId");
-  
-  const { feedId } = useParams();
 
+  const { feedId } = useParams();
   const [response, error, loading] = useAxios({
     method: "GET",
     url: `/feed/${feedId}`,
@@ -29,9 +24,13 @@ const ViewShowRoom = () => {
     },
   });
 
+  // 멤버아이디 (게시글ID(feedId)와 memberId 일치시에만 On)
+  const userId = response?.data?.data?.feedId;
+  // 로컬에 저장된 memberID 가져오기
+  const memberId = localStorage.getItem("memberId");
+
   useEffect(() => {
     if (response) {
-      setUserId(response.data.data.feedId);
       setFeedData(response.data.data);
     } else if (error) {
       console.error("Error:", error);
@@ -52,6 +51,7 @@ const ViewShowRoom = () => {
 
       <Sidebar
         setFeedData={setFeedData}
+        feedData={feedData}
         commentSectionRef={commentSectionRef}
       />
       <Background
