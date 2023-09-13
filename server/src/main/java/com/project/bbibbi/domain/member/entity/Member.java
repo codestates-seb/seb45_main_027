@@ -144,11 +144,14 @@ public class Member extends BaseEntity {
                 .build();
     }
 
-    public void updateMyInfo(String nickname,String myIntro, String profileImg) {
-        this.nickname = nickname == null ? this.nickname : nickname;
-        this.myIntro = myIntro == null ? this.myIntro : myIntro;
-        this.profileImg = profileImg == null ? this.profileImg : profileImg;
-
+    public void updateMyInfo(String nickname, String myIntro, String profileImg) {
+        if (nickname != null) {
+            this.nickname = nickname;
+        }
+        if (myIntro != null) {
+            this.myIntro = myIntro;
+        }
+            this.profileImg = profileImg;
     }
 
     public void updatePassword(String newPassword) {
