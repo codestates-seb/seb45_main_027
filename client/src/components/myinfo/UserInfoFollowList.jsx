@@ -1,7 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const UserInfoFollowList = ({ userList, handleFollow, handleUnfollow, activeTab }) => {
-  console.log('userList', userList);
 
   return (
     <div>
@@ -13,10 +13,11 @@ const UserInfoFollowList = ({ userList, handleFollow, handleUnfollow, activeTab 
               src={activeTab === 'following' ? user.memberImage : user.memberImage}
               alt={user.memberNickname}
             />
-            <button className="mx-2.5 font-md truncate overflow-hidden max-w-[85px]">
-              {activeTab === 'following' ? user.memberNickname : user.fromMemberNickname}
-
-            </button>
+            <Link to={`/myinfo/${activeTab === 'following' ? user.memberId : user.fromMemberId}`}>
+              <button className="mx-2.5 font-md truncate overflow-hidden max-w-[85px]">
+                {activeTab === 'following' ? user.memberNickname : user.fromMemberNickname}
+              </button>
+            </Link>
           </div>
           <button
             className="text-xs text-white font-bold"

@@ -1,6 +1,10 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 const MyInfoLike = ({ imgSrc, title, itemId, toggleLike, isLiked }) => {
+ const { id } = useParams();
+  const memberId = localStorage.getItem("memberId");
+
   const handleToggleLike = () => {
     toggleLike(itemId);
   };
@@ -14,7 +18,11 @@ const MyInfoLike = ({ imgSrc, title, itemId, toggleLike, isLiked }) => {
           alt="content"
         />
         <button
-          onClick={handleToggleLike}
+          onClick={() => {
+            if (id === memberId) {
+              handleToggleLike();
+            }
+          }}
           className="absolute bottom-3.5 right-3.5 cursor-pointer"
         >
           <img
@@ -32,7 +40,9 @@ const MyInfoLike = ({ imgSrc, title, itemId, toggleLike, isLiked }) => {
         </button>
       </div>
       <div className="flex flex-col items-center md:mb-4">
-        <div className="text-lg font-semibold p-2 max-w-[130px] lg:max-w-[150px] truncate overflow-hidden">{title}</div>
+        <div className="text-lg font-semibold p-2 max-w-[130px] lg:max-w-[150px] truncate overflow-hidden">
+          {title}
+        </div>
       </div>
     </div>
   );

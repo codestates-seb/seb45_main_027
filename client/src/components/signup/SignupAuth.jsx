@@ -19,7 +19,7 @@ const SignupAuth = () => {
       alert(`We've sent you a verification code to your email address.`);
     } catch (error) {
       alert("Email does not exist.");
-      console.error("Password reset initiation failed:", error);
+      //console.error("Password reset initiation failed:", error);
     }
   };
 
@@ -32,7 +32,7 @@ const SignupAuth = () => {
       alert("Succefully Verified.");
       navigate("/login");
     } catch (error) {
-      console.error("Verification code validation failed:", error);
+      //console.error("Verification code validation failed:", error);
     }
   };
 

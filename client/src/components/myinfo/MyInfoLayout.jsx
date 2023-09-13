@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import MyInfoContentList from "./MyInfoContentList";
 import UserProfile from "./UserProfile";
 import UserAccount from "../accountSetting/UserAccount";
@@ -6,7 +7,9 @@ import axios from "axios";
 
 const MyInfoLayout = () => {
   const baseURL = process.env.REACT_APP_API_URL;
-  const memberId = localStorage.getItem("memberId");
+  //const memberId = localStorage.getItem("memberId");
+  const { id } = useParams();
+
 
   const [showAccountSettings, setShowAccountSettings] = useState(false);
   const [profileData, setProfileData] = useState(null);
@@ -15,23 +18,12 @@ const MyInfoLayout = () => {
     setShowAccountSettings(isOpen);
   };
 
-  // const userDetails = [
-  //   {
-  //     id: 1,
-  //     username: "pepe",
-  //     bio: "DIY 좋아합니다",
-  //     profileImg:
-  //       "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Yebin.png",
-  //   },
-  // ];
-
-
   const accessToken = localStorage.getItem("accessToken");
   useEffect(() => {
     
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get(`${baseURL}/members/${memberId}`, {
+        const response = await axios.get(`${baseURL}/members/${id}`, {
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '', // Include the access token if it exists
           },});
@@ -41,12 +33,12 @@ const MyInfoLayout = () => {
         console.log('profile res',response);
         console.log('profile data.data',response.data.data)
       } catch (err) {
-        console.log("Error: ", err);
+        //console.log("Error: ", err);
       }
     };
 
     fetchProfileData();
-  }, []);
+  }, [id]);
 
   return (
     <div>

@@ -1,6 +1,9 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 const UserProfileDetails = ({ toggleAccountSettings, profileData }) => {
+  const { id } = useParams();
+  const memberId = localStorage.getItem("memberId");
   return (
     <div className="flex flex-row justify-center items-center md:flex-col md:mb-6 ">
       {profileData && (
@@ -21,11 +24,11 @@ const UserProfileDetails = ({ toggleAccountSettings, profileData }) => {
             <div className="text-sm pb-4 md:mx-16 md:my-4 break-all">
               {profileData.myIntro}
             </div>
-            <button
+            {memberId === id && <button
               className="bg-[#00647B] text-white font-semibold hover:bg-[#00647B]/50 rounded-full p-1 md:p-2 text-xs md:text-md"
               onClick={() => toggleAccountSettings(true)}>
               계정설정
-            </button>
+            </button>}
           </div>
         </>
       )}

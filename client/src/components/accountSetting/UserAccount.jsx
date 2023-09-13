@@ -8,6 +8,7 @@ import DeleteAccount from "./DeleteAccount";
 const UserAccount = ({ toggleAccountSettings, userDetails }) => {
   const navigate = useNavigate();
   const memberId = localStorage.getItem("memberId");
+  const accessToken = localStorage.getItem("accessToken");
   const baseURL = process.env.REACT_APP_API_URL;
 
   const [activeTab, setActiveTab] = useState("editProfile");
@@ -17,20 +18,13 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
 
   //프로필정보 수정을 위한 state
   const [profileData, setProfileData] = useState({
-    //id: userDetails.id,
-    nickname: userDetails.username,
+    nickname: userDetails.nickname,
     profileImg: userDetails.profileImg,
-    myIntro: userDetails.bio || "",
+    myIntro: userDetails.myIntro,
   });
 
   //최종으로 수정된 프로필정보를 서버에 보냄
   const handleProfileUpdate = async () => {
-    // const formData = {
-    //   id: profileData.id,
-    //   username: profileData.username,
-    //   profilePicture: profileData.profilePicture,
-    //   bio: profileData.bio,
-    // };
     const hasSpaces = (value) => {
       return /\s/.test(value);
     };
@@ -48,18 +42,24 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
       // 닉네임 2글자 이상으로 유효성 넣기 아니면 안넘어가기
       const response = await axios.patch(
         `${baseURL}/members/${memberId}`,
-        profileData
+        profileData,
+        {
+          headers: {
+            Authorization: accessToken ? `Bearer ${accessToken}` : "", // Include the access token if it exists
+          },
+        }
       );
       localStorage.setItem("nickname", profileData.nickname);
       localStorage.setItem("profileImg", profileData.profileImg);
       console.log(response.data);
+      console.log(profileData.profileImg);
       alert("Profile updated!");
       navigate("/");
     } catch (error) {
       console.error(error);
-      if(error.response.status === 400 && error.response.data.message){
+      if (error.response.status === 400 && error.response.data.message) {
         alert("이미 등록된 닉네임입니다.");
-      };
+      }
       alert("Error updating profile");
     }
     console.log(profileData);
@@ -83,7 +83,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
       </button>
       <div className="flex flex-col container mx-auto p-4 bg-white opacity-[.9] rounded-lg min-w-[350px] md:min-w-[750px] mb-32">
         <div className="flex justify-between">
-          <div className="text-3xl font-bold px-2 py-2">{`Hello, ${userDetails[0].username}`}</div>
+          <div className="text-3xl font-bold px-2 py-2">{`Hello, ${userDetails.nickname}`}</div>
           <DeleteAccount />
         </div>
         <div>

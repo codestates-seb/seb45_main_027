@@ -32,7 +32,7 @@ api.interceptors.response.use(
         response.headers["authorization-refresh"]
       );
     }
-    console.log("interceptor response", response);
+    //console.log("interceptor response", response);
     return response;
   },
   function (error) {
