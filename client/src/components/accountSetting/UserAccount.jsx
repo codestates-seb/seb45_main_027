@@ -19,7 +19,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
   const [profileData, setProfileData] = useState({
     id: userDetails[0].id,
     nickname: userDetails[0].username,
-    profilePicture: userDetails[0].profilePicture || null,
+    profileImg: userDetails[0].profileImg,
     myIntro: userDetails[0].bio || "",
   });
 
@@ -51,7 +51,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
         profileData
       );
       localStorage.setItem("nickname", profileData.nickname);
-      localStorage.setItem("profileImg", profileData.profilePicture);
+      localStorage.setItem("profileImg", profileData.profileImg);
       console.log(response.data);
       alert("Profile updated!");
       navigate("/");

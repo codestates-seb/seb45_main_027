@@ -25,10 +25,15 @@ const HeaderOn = () => {
       <ul className="flex text-[#F5634A] text-xl font-bold">
         {/* 유저정보 */}
         <li className="flex items-center" onClick={handleUserClick}>
-          {profileImg === null ? (
-            <img src={profileImg} alt="profileImg" className='"w-4 h-4 mr-2.5 rounded-full' />
+          {profileImg && profileImg === null ? (
+
+            <div className="w-8 h-8 mr-2.5 bg-yellow-200 rounded-full"></div>
+            // <img src={profileImg} alt="profileImg" className='"w-4 h-4 mr-2.5' /></div>
+
+
           ) : (
-            <div className="w-8 h-8 mr-2.5 bg-yellow-200 rounded-full" />
+            <img src={profileImg} alt="profileImg" className='"w-4 h-4 mr-2.5 rounded-full' />
+
           )}
           <span className="pr-8 text-gray-700">{nickname}</span>
         </li>

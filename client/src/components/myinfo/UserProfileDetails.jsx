@@ -8,8 +8,8 @@ const UserProfileDetails = ({ toggleAccountSettings, userDetails }) => {
           <img
             className="flex items-center rounded-full object-cover w-[75px] h-[75px] m-2.5 md:mt-10 md:mb-6 md:w-[140px] md:h-[140px] xl:w-[160px] xl:h-[160px]"
             src={
-              userDetails[0].profilePicture
-                ? userDetails[0].profilePicture
+              userDetails[0].profileImg
+                ? userDetails[0].profileImg
                 : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/user.png"
             }
             alt="profile"
