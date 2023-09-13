@@ -88,6 +88,8 @@ const UserInfoFollow = () => {
     setActiveTab(tab);
   };
 
+  if(!followingList && !followersList) {return <div>loading...</div>};
+  
   return (
     <div className="z-50">
       <div className="flex flex-row md:justify-center p-2 mb-6 text-[#525252] font-medium">

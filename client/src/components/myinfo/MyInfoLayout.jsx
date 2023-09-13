@@ -15,15 +15,15 @@ const MyInfoLayout = () => {
     setShowAccountSettings(isOpen);
   };
 
-  const userDetails = [
-    {
-      id: 1,
-      username: "pepe",
-      bio: "DIY 좋아합니다",
-      profileImg:
-        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Yebin.png",
-    },
-  ];
+  // const userDetails = [
+  //   {
+  //     id: 1,
+  //     username: "pepe",
+  //     bio: "DIY 좋아합니다",
+  //     profileImg:
+  //       "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Yebin.png",
+  //   },
+  // ];
 
 
   const accessToken = localStorage.getItem("accessToken");
@@ -36,7 +36,7 @@ const MyInfoLayout = () => {
             Authorization: accessToken ? `Bearer ${accessToken}` : '', // Include the access token if it exists
           },});
 
-        setProfileData(response.data);
+        setProfileData(response.data.data);
         //console.log("Data: ", data);
         console.log('profile res',response);
         console.log('profile data.data',response.data.data)
@@ -55,7 +55,8 @@ const MyInfoLayout = () => {
           <>
             <UserProfile
               toggleAccountSettings={toggleAccountSettings}
-              userDetails={userDetails}
+              //userDetails={userDetails}
+              profileData={profileData}
             />
             <MyInfoContentList />
           </>
@@ -64,7 +65,8 @@ const MyInfoLayout = () => {
       {showAccountSettings && (
         <UserAccount
           toggleAccountSettings={toggleAccountSettings}
-          userDetails={userDetails}
+          //userDetails={userDetails}
+          userDetails={profileData}
         />
       )}
     </div>
