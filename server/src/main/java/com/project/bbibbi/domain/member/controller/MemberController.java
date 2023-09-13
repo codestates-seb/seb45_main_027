@@ -70,7 +70,7 @@ public class MemberController {
 
         return ResponseEntity.noContent().build();
     }
-    // 게시글 리스트, 팁 리스트, 좋아요 리스트는 멤버쪽에서 말고 그냥 해달라 요청해라
+
 
     // 비밀번호 찾기, 아이디 찾기, 로그인, 이미지 관련 이미지 업로드 이미지 수정 이미지 삭제
 
