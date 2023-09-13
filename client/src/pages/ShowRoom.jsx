@@ -9,6 +9,7 @@ import useInput from "../hooks/useInput";
 
 const ShowRoom = () => {
   const [inputValue, handleInputChange, clearInput] = useInput(""); // 검색창 인풋값 상태
+  const [searchKeyworld, setSearchKeyworld] = useState(""); // 검색창 인풋값을 상태로
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth); // 반응형 너비 값
   const [showroomData, setShowroomData] = useState([]); // All부분 렌더링하는 쇼룸데이터
   const [feedCode, setFeedCode] = useState("filter"); // feed/ 다음 피드 코드상태 ex) filter, search 2개임
@@ -19,7 +20,7 @@ const ShowRoom = () => {
 
   const configParams = {
     method: "GET",
-    url: `/feed/${feedCode}/${filterCode}?page=${page.current}`,
+    url: `/feed/${feedCode}/${inputValue}${filterCode}?page=${page.current}`,
     headers: {
       "Content-Type": "application/json",
       "ngrok-skip-browser-warning": "69420",
@@ -70,7 +71,7 @@ const ShowRoom = () => {
 
       const updatedConfigParams = {
         ...configParams,
-        url: `/feed/filter/${filterCode}?page=${page.current}`,
+        url: `/feed/${feedCode}/${inputValue}${filterCode}?page=${page.current}`,
       };
 
       const res = await api(updatedConfigParams);
@@ -90,7 +91,7 @@ const ShowRoom = () => {
       ([entry]) => {
         if (entry.isIntersecting && !loading) {
           page.current += 1; // 페이지 번호 증가
-          const updatedUrl = `/feed/filter/${filterCode}?page=${page.current}`;
+          const updatedUrl = `/feed/${feedCode}/${inputValue}${filterCode}?page=${page.current}`;
           loadMoreData(updatedUrl); // 새로운 페이지 데이터를 불러오는 함수 호출
         }
       },
@@ -110,7 +111,7 @@ const ShowRoom = () => {
         newObserver.unobserve(target.current);
       }
     };
-  }, [filterCode, loading]);
+  }, [filterCode, loading, searchKeyworld]);
 
   // 새로운 페이지 데이터를 불러오는 함수
   const loadMoreData = async (url) => {
@@ -130,21 +131,17 @@ const ShowRoom = () => {
   const handleSearch = async (e, inputValue) => {
     // 추후 앤터 누를시 서버와 통신해서 해당 게시물을 보여주는 로직 작성 ****
     page.current = 1;
-    console.log(inputValue);
+    setFeedCode("search");
+    setFilterCode("");
+    setSearchKeyworld(inputValue);
 
     const updatedConfigParams = {
       ...configParams,
-      url: `/feed/${feedCode}/${inputValue}?page=${page.current}`,
+      url: `/feed/${feedCode}/${inputValue}${filterCode}?page=${page.current}`,
     };
 
     if (e.key === "Enter") {
-      // setFeedCode를 먼저 호출하여 feedCode를 업데이트합니다.
-      setFeedCode("search");
-
-      // 이후에 setShowroomData를 호출하여 데이터를 업데이트합니다.
-      setShowroomData([]);
-
-      // API 호출을 기다리기 위해 try-catch 블록 내에서 비동기로 처리합니다.
+      // API 호출을 기다리기 위해 try-catch 블록 내에서 비동기로 처리
       try {
         const res = await api(updatedConfigParams);
         setShowroomData(res.data.data);
