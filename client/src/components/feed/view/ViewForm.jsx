@@ -1,31 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
 import { toast } from "react-hot-toast";
-import useAxios from "../../../hooks/useAxios";
 
-const ViewForm = () => {
-  const { tipId } = useParams();
-  const [content, setContent] = useState(null);
-  console.log(content);
-
-  const configParams = {
-    method: "GET",
-    url: `/tip/${tipId}`,
-    headers: {
-      "ngrok-skip-browser-warning": "69420",
-    },
-  };
-
-  const [response, error, loading] = useAxios(configParams);
-
-  useEffect(() => {
-    if (response) {
-      setContent(response.data.content);
-    } else if (error) {
-      console.error("Error:", error);
-    }
-  }, [response, error]);
-
+const ViewForm = ({ content, loading, error }) => {
+  
   useEffect(() => {
     if (!content && loading) {
       toast.loading("로딩중...");

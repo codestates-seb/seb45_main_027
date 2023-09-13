@@ -3,7 +3,6 @@ import Background from "../components/common/Background";
 import BestInterior from "../components/showroom/bestinterior/BestInterior";
 import All from "../components/showroom/all/All";
 import useAxios from "../hooks/useAxios";
-import axios from "axios";
 import { toast } from "react-hot-toast";
 import api from "../components/common/tokens";
 
@@ -13,7 +12,7 @@ const ShowRoom = () => {
 
   const configParams = {
     method: "GET",
-    url: "/feed/filter/RECENT00",
+    url: "/feed/filter/RECENT00?page=1",
     headers: {
       "Content-Type": "application/json",
       "ngrok-skip-browser-warning": "69420",
