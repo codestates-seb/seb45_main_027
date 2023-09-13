@@ -1,4 +1,4 @@
-import React, { useState, forwardRef  } from "react";
+import React, { useState, forwardRef } from "react";
 
 //  함수형 컴포넌트는 ref 속성을 가질 수 없지만, forwardRef를 사용하면 이러한 제약을 우회할 수 있다.
 const Comment = forwardRef((props, ref) => { // 사이드바에서 댓글 클릭시 이동을 위해 받아 옴.
@@ -20,13 +20,15 @@ const Comment = forwardRef((props, ref) => { // 사이드바에서 댓글 클릭
 
   const handleCommentSubmit = () => {
     const newComment = {
+      id: new Date().getTime().toString(),
       text: commentInput,
       date: getFormattedDate(),
     };
     setComments((prevComments) => [...prevComments, newComment]);
-    setReplies((prevReplies) => ({ ...prevReplies, [commentInput]: [] }));
+    setReplies((prevReplies) => ({ ...prevReplies, [newComment.id]: [] }));
     setCommentInput("");
   };
+
 
   // 좋아요 각 상태관리
   const toggleLike = (comment) => {
@@ -37,26 +39,32 @@ const Comment = forwardRef((props, ref) => { // 사이드바에서 댓글 클릭
   };
 
   // 답글달기 각 상태관리
-  const toggleReply = (comment) => {
+  const toggleReply = (commentId) => {
     setShowReply((prevShowReply) => ({
       ...prevShowReply,
-      [comment]: !prevShowReply[comment],
+      [commentId]: !prevShowReply[commentId],
     }));
   };
-
   
-  const handleReplySubmit = (comment) => {
+  const handleReplySubmit = (commentId) => {
     const newReply = {
-      text: replyInput,
+      text: replyInput[commentId],
       date: getFormattedDate(),
     };
-    setReplies((prevReplies) => ({
-      ...prevReplies,
-      [comment]: [[...prevReplies[comment]], newReply],
-    }));
-    setReplyInput("");
-    toggleReply(comment);
+
+    setReplies((prevReplies) => {
+      const updatedReplies = { ...prevReplies };
+      if (updatedReplies[commentId]) {
+        updatedReplies[commentId] = [...updatedReplies[commentId], newReply];
+      } else {
+        updatedReplies[commentId] = [newReply];
+      }
+      return updatedReplies;
+    });
+
+    setReplyInput((prevReplyInput) => ({ ...prevReplyInput, [commentId]: "" }));
   };
+
 
   
 
@@ -121,12 +129,14 @@ const Comment = forwardRef((props, ref) => { // 사이드바에서 댓글 클릭
                 </button>
 
                 {/* 답글 */}
-                <button onClick={() => toggleReply(comment)}>답글 달기</button>
+                <button onClick={() => toggleReply(comment.id)}>
+                  답글 달기
+                </button>
               </div>
             </div>
           </div>
           {/* 답글 입력창 */}
-          {showReply[comment] && (
+          {showReply[comment.id] && (
             <div className="flex w-full mt-6 ml-10">
               <img
                 src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userComment.png"
@@ -135,20 +145,25 @@ const Comment = forwardRef((props, ref) => { // 사이드바에서 댓글 클릭
               <div className="flex w-full relative">
                 <input
                   className="h-full w-full ml-4 border rounded-lg pl-4"
-                  value={replyInput}
-                  onChange={(e) => setReplyInput(e.target.value)}
+                  value={replyInput[comment.text] || ""}
+                  onChange={(e) =>
+                    setReplyInput({
+                      ...replyInput,
+                      [comment.text]: e.target.value,
+                    })
+                  }
                 />
                 <button
                   className="absolute right-0 top-1/4 pr-4"
-                  onClick={() => handleReplySubmit(comment)}>
+                  onClick={() => handleReplySubmit(comment.id)}>
                   입력
                 </button>
               </div>
             </div>
           )}
           {/* 답글 출력창 */}
-          {replies[comment] &&
-            replies[comment].map((reply, replyIndex) => (
+          {replies[comment.id] &&
+            replies[comment.id].map((reply, replyIndex) => (
               <div className="flex items-start mt-10 ml-10 bg-[#fceecd] p-8 rounded-lg shadow">
                 <img
                   src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userComment.png"
@@ -160,15 +175,13 @@ const Comment = forwardRef((props, ref) => { // 사이드바에서 댓글 클릭
 
                   {/* 댓글 내용 */}
                   <div key={replyIndex} className="my-4 text-base">
-                    {reply.text} {/* 답글 내용 출력 부분을 reply.text로 변경 */}
+                    {reply.text} 
                   </div>
 
                   {/* 작성날짜 */}
                   <div className="flex items-center text-gray-500 font-medium text-base">
                     {/* 작성날짜 */}
-                    <span>
-                      {reply.date}
-                    </span>
+                    <span>{reply.date}</span>
                   </div>
                 </div>
               </div>
