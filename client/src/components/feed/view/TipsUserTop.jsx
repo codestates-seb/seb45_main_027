@@ -1,49 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { toast } from "react-hot-toast";
-import useAxios from "../../../hooks/useAxios";
+import React, { useEffect } from "react";
 import { useUserContext } from "../../../context/userContext";
+import { toast } from "react-hot-toast";
 
 const buttonStyle =
   "flex items-center justify-center rounded-lg shadow w-32 h-full";
 
-const TipsUserTop = () => {
-  const { follow, setFollow, nickname, setNickname } = useUserContext();
-  const { tipId } = useParams();
-  const [createdDate, setCreatedDate] = useState(null);
-
-  const configParams = {
-    method: "GET",
-    url: `/tip/${tipId}`,
-    headers: {
-      "ngrok-skip-browser-warning": "69420",
-    },
-  };
-
-  const [response, error, loading] = useAxios(configParams);
+const TipsUserTop = ({ memberImage, nickname, createdDate }) => {
+  const { follow, setFollow } = useUserContext();
 
   useEffect(() => {
-    if (response) {
-      setNickname(response.data.nickname);
-      const dateTime = response.data.createdDateTime.split("T")[0]; // T 뒤에 시간 부분은 받아오지 않기 위해서 추가
-      setCreatedDate(dateTime);
-    } else if (error) {
-      console.error("Error:", error);
-    }
-  }, [response, error]);
-
-  useEffect(() => {
-    if (!nickname && !createdDate && loading) {
+    if (!nickname && !createdDate) {
       toast.loading("로딩중...");
-    } else if ((nickname && createdDate) || error) {
+    } else if (nickname && createdDate) {
       toast.dismiss();
     }
-  }, [nickname, createdDate, loading, error]);
+  }, [nickname, createdDate]);
 
   return (
     <div className="flex justify-between pt-20">
       <div className="flex items-center">
-        <div className="border w-12 h-12 rounded-full bg-red-500 mr-4"></div>
+        <div className="border w-12 h-12 rounded-full mr-4">
+          <img src={`${memberImage}`} alt="" />
+        </div>
         <div>
           <div className="text-lg font-semibold">{nickname}</div>
           <div className="text-gray-500">{createdDate}</div>

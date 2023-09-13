@@ -57,9 +57,10 @@ const Edit = () => {
       <button className={button}>
         <span className="text-xl">수정하기</span>
       </button>
-      <button className={`${button} ml-4`}>
-        {" "}
-        {/* onClick={handleDeleteClick}*/}
+
+      <button className={`${button} ml-4`}
+        // onClick={handleDeleteClick}
+      >
         <span className="text-xl">삭제하기</span>
       </button>
     </div>
