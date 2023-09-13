@@ -3,16 +3,16 @@ package com.project.bbibbi.domain.member.entity;
 import com.project.bbibbi.domain.feedComment.entity.FeedComment;
 import com.project.bbibbi.domain.feedBookmark.entity.FeedBookMark;
 import com.project.bbibbi.domain.feed.entity.Feed;
-import com.project.bbibbi.domain.feedComment.entity.FeedComment;
 import com.project.bbibbi.domain.feedReply.entity.FeedReply;
 import com.project.bbibbi.domain.feedReplyLike.entity.FeedReplyLike;
 import com.project.bbibbi.domain.feedlike.entity.FeedLike;
 import com.project.bbibbi.domain.follow.entity.Follow;
 import com.project.bbibbi.domain.tip.entity.Tip;
+import com.project.bbibbi.domain.tipBookmark.entity.TipBookmark;
+import com.project.bbibbi.domain.tipComment.entity.TipComment;
 import com.project.bbibbi.domain.tipLike.entity.TipLike;
 import com.project.bbibbi.domain.tipReply.entity.TipReply;
 import com.project.bbibbi.domain.tipReplyLike.entity.TipReplyLike;
-import com.project.bbibbi.domain.tipcomment.entity.TipComment;
 import com.project.bbibbi.global.entity.BaseEntity;
 import com.project.bbibbi.global.entity.Role;
 import com.project.bbibbi.global.entity.SocialType;
@@ -75,9 +75,9 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<TipComment> tipComments = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<tipBookmark> tipBookmarks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<TipBookmark> tipBookmarks = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<TipLike> tipLikes = new ArrayList<>();
