@@ -46,7 +46,7 @@ public class TipCommentController {
         TipComment savedComment = tipCommentService.saveComment(tipComment);
         // 저장된 엔티티를 DTO로 변환하여 응답합니다.
 
-        TipCommentDto responseDto = TipCommentDto.toDto(savedComment);
+        TipCommentDto responseDto = convertToDto(savedComment);
         return ResponseEntity.ok(responseDto);
     }
 
