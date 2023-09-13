@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { toast } from "react-hot-toast";
 
 const coverImg =
-  "flex items-center justify-center aspectRatioImage_16_9 object-cover w-full h-full"; // object-cover, w-full, h-full 추가
+  "flex items-center justify-center aspectRatioImage_16_9 object-cover w-full h-full"; 
 
 const ViewCoverImg = ({ coverPhoto, loading, error }) => {
   useEffect(() => {
@@ -20,6 +20,7 @@ const ViewCoverImg = ({ coverPhoto, loading, error }) => {
       ) : (
         <div className={coverImg}>
           <img
+            className="object-contain h-full"
             src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/loading.gif"
             alt="로딩중"
           />
