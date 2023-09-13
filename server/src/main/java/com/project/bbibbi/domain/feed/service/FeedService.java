@@ -237,15 +237,31 @@ public class FeedService {
     }
 
 
-    public Page<Feed> findMyInfoFeeds(int page, int size, long myInfoMemberId){
+    public List<Feed> findMyInfoFeeds(long myInfoMemberId){
 
-        PageRequest pageRequest =  PageRequest.of(page, size, Sort.by("createdDateTime").descending());
+//        PageRequest pageRequest =  PageRequest.of(page, size, Sort.by("createdDateTime").descending());
 
-        Page<Feed> pageFeeds = feedRepository.findByMember(Member.builder().memberId(myInfoMemberId).build(),pageRequest); // 비쿼리 성공
+//        Page<Feed> pageFeeds = feedRepository.findByMember(Member.builder().memberId(myInfoMemberId).build(),pageRequest); // 비쿼리 성공
 
 //       List<Feed> pageFeeds = feedRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
 
+        List<Feed> pageFeeds = feedRepository.findByMemberOrderByCreatedDateTimeDesc(Member.builder().memberId(myInfoMemberId).build());
+
         return  pageFeeds;
+    }
+
+    public List<Feed> findMyInfoFeedsLike(long myInfoMemberId){
+
+        List<Feed> pageFeeds = feedRepository.findByMemberLike(myInfoMemberId);
+
+        return pageFeeds;
+    }
+
+    public List<Feed> findMyInfoFeedsBookMark(long myInfoMemberId){
+
+        List<Feed> pageFeeds = feedRepository.findByMemberBookMark(myInfoMemberId);
+
+        return pageFeeds;
     }
 
 

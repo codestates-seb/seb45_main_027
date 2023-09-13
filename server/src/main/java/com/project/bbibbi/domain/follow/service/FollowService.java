@@ -56,9 +56,9 @@ public class FollowService {
     public List<Follow> findFromFollow(Long memberId){
         List<Follow> follows = followRepository.findByFromMemberId(memberId);
 
-        // 로그인사용자가 타인을 팔로우 한 것을 TORIGHT로 지정.
+        // 로그인사용자가 타인을 팔로우 한 것을 TRUE 지정.
         for(Follow follow : follows){
-            follow.setFollowGubun("TORIGHT");
+            follow.setFollowYn(true);
         }
 
         return follows;
@@ -85,13 +85,13 @@ public class FollowService {
         // 있으면 구분값을 CROSS로, 없으면 TOLEFT
         for(Follow follow1 : follows){
 
-            follow1.setFollowGubun("TOLEFT");
+            follow1.setFollowYn(false);
 
             for(Long targetMemberId : fromFollowsTargetMemberIds){
 
                 if(targetMemberId == follow1.getFromMember().getMemberId()){
 
-                    follow1.setFollowGubun("CROSS");
+                    follow1.setFollowYn(true);
                     break;
                 }
             }

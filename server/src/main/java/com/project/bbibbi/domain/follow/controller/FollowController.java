@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.follow.controller;
 
+import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.follow.dto.FollowListResponseDto;
 import com.project.bbibbi.domain.follow.dto.FollowResponseDto;
 import com.project.bbibbi.domain.follow.entity.Follow;
@@ -31,9 +32,10 @@ public class FollowController {
 
     // from-member-id는 로그인한 사용자라고 가정, member-id는 팔로우 대상자
     // 로그인 이후에는 from-member-id를 받는게 아니라 username으로부터 받도록 수정필요
-    @PatchMapping("choose/{from-member-id}/{member-id}")
-    public ResponseEntity patchFollow(@PathVariable("from-member-id") Long fromMemberId,
-                                      @PathVariable("member-id") Long memberId){
+    @PatchMapping("choose/{member-id}")
+    public ResponseEntity patchFollow(@PathVariable("member-id") Long memberId){
+
+        Long fromMemberId = loginUtils.getLoginId();
 
         Follow follow = setMember(fromMemberId, memberId);
 
@@ -46,8 +48,10 @@ public class FollowController {
 
     // 로그인한 사용자가 팔로우한 사람들. member-id는 로그인한 사람이라고 가정
     // 로그인 이후에는 member-id를 받는게 아니라 username으로부터 받도록 수정필요
-    @GetMapping("from/{member-id}")
-    public ResponseEntity getFromFollow(@PathVariable("member-id") Long memberId){
+    @GetMapping("from")
+    public ResponseEntity getFromFollow(){
+
+        Long memberId = loginUtils.getLoginId();
 
         List<Follow> follows = followService.findFromFollow(memberId);
 
@@ -58,8 +62,10 @@ public class FollowController {
 
     // 로그인한 사용자를 팔로우한 사람들. member-id는 로그인한 사람이라고 가정
     // 로그인 이후에는 member-id를 받는게 아니라 username으로부터 받도록 수정필요
-    @GetMapping("to/{member-id}")
-    public ResponseEntity getToFollow(@PathVariable("member-id") Long memberId){
+    @GetMapping("to")
+    public ResponseEntity getToFollow(){
+
+        Long memberId = loginUtils.getLoginId();
 
         List<Follow> follows = followService.findToFollow(memberId);
 

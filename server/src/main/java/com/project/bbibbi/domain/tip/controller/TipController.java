@@ -102,11 +102,10 @@ public class TipController {
         // 사이즈는 4로 고정
         int size = 4;
 
-        Page<Tip> pageTips = tipService.findMyInfoTips(page - 1, size, myInfoMemberId);  // 비쿼리일 경우
-        List<Tip> tips = pageTips.getContent();
+        List<Tip> pageTips = tipService.findMyInfoTips(myInfoMemberId);  // 비쿼리일 경우
 
 //        List<Tip> tips = tipService.findMyInfoTips(page - 1, size, myInfoMemberId); 쿼리방법
-        List<TipResponseDto> tipResponseDtos = tips.stream()
+        List<TipResponseDto> tipResponseDtos = pageTips.stream()
                 .map(tipMapper::tipToTipResponseDto)
                 .collect(Collectors.toList());
 

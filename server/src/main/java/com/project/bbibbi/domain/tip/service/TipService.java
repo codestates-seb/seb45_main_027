@@ -51,13 +51,29 @@ public class TipService {
         return tipRepository.findAll(pageRequest);
     }
 
-    public Page<Tip> findMyInfoTips(int page, int size, long myInfoMemberId){
+    public List<Tip> findMyInfoTips(long myInfoMemberId){
 
-        PageRequest pageRequest =  PageRequest.of(page, size, Sort.by("createdDateTime").descending());
+        List<Tip> pageTips = tipRepository.findByMemberOrderByCreatedDateTimeDesc(Member.builder().memberId(myInfoMemberId).build()); // 비쿼리 성공
 
-        Page<Tip> pageTips = tipRepository.findByMember(Member.builder().memberId(myInfoMemberId).build(),pageRequest); // 비쿼리 성공
+//       List<Feed> pageFeeds = feedRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
 
-//       List<Tip> pageTips = tipRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
+        return  pageTips;
+    }
+
+    public List<Tip> findMyInfoTipsLike(long myInfoMemberId){
+
+        List<Tip> pageTips = tipRepository.findByMemberLike(myInfoMemberId); // 비쿼리 성공
+
+//       List<Feed> pageFeeds = feedRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
+
+        return  pageTips;
+    }
+
+    public List<Tip> findMyInfoTipsBookMark(long myInfoMemberId){
+
+        List<Tip> pageTips = tipRepository.findByMemberBookMark(myInfoMemberId); // 비쿼리 성공
+
+//       List<Feed> pageFeeds = feedRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
 
         return  pageTips;
     }
