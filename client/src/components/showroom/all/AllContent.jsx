@@ -44,7 +44,6 @@ const AllContent = ({ showroomData }) => {
   const handleFeedClick = (feedId) => {
     navigate(`/showroom/${feedId}`);
   };
-  console.log(showroomData);
 
   return (
     <div className="flex-col mx-4">

@@ -12,7 +12,7 @@ const Tips = () => {
 
   const configParams = {
     method: "GET",
-    url: "/feed/filter/RECENT00",
+    url: "/feed/filter/RECENT00?page=1",
     headers: {
       "Content-Type": "application/json",
       "ngrok-skip-browser-warning": "69420",
