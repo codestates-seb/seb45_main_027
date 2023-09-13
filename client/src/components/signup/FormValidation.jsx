@@ -14,7 +14,7 @@ const FormValidation = ({ path }) => {
     return /\s/.test(value);
   };
   
-  const isNameValid = nickname.trim().length >= 3 && nickname.trim().length <= 10 && !hasSpaces(nickname);
+  const isNameValid = nickname.trim().length >= 2 && nickname.trim().length <= 10 && !hasSpaces(nickname);
   const isEmailValid = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(
     email
   );
@@ -38,7 +38,7 @@ const FormValidation = ({ path }) => {
 
     if (path === "signup") {
       if (!isNameValid) {
-        setNameError("닉네임은 3글자 이상 10글자 이하로 입력해주세요. 공백은 사용할 수 없습니다.");
+        setNameError("닉네임은 2글자 이상 10글자 이하로 입력해주세요. 공백은 사용할 수 없습니다.");
       }
       if (!isEmailValid) {
         setEmailError("유요한 이메일을 입력해주세요.");

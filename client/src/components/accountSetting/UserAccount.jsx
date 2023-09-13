@@ -19,7 +19,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
   const [profileData, setProfileData] = useState({
     id: userDetails[0].id,
     nickname: userDetails[0].username,
-    profilePicture: userDetails[0].profilePicture || null,
+    profileImg: userDetails[0].profileImg,
     myIntro: userDetails[0].bio || "",
   });
 
@@ -31,17 +31,36 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
     //   profilePicture: profileData.profilePicture,
     //   bio: profileData.bio,
     // };
+    const hasSpaces = (value) => {
+      return /\s/.test(value);
+    };
+    const nicknameValidation =
+      profileData.nickname.trim().length >= 2 &&
+      profileData.nickname.trim().length <= 10 &&
+      !hasSpaces(profileData.nickname);
+
+    if (!nicknameValidation) {
+      alert("닉네임은 2글자에서 10글자 내로 지정 가능합니다");
+      return;
+    }
 
     try {
-      // 프로필데이터 보낼때 아이디도 같이 보내도 되는지 묻기, 아님 아이디 빼야됨
-      const response = await axios.patch(`${baseURL}/members/${memberId}`, profileData);
+      // 닉네임 2글자 이상으로 유효성 넣기 아니면 안넘어가기
+      const response = await axios.patch(
+        `${baseURL}/members/${memberId}`,
+        profileData
+      );
+      localStorage.setItem("nickname", profileData.nickname);
+      localStorage.setItem("profileImg", profileData.profileImg);
       console.log(response.data);
       alert("Profile updated!");
       navigate("/");
     } catch (error) {
       console.error(error);
+      if(error.response.status === 400 && error.response.data.message){
+        alert("이미 등록된 닉네임입니다.");
+      };
       alert("Error updating profile");
-      //중복 닉네임일 경우 요청받을거임
     }
     console.log(profileData);
   };
