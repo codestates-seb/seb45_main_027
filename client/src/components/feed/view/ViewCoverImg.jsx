@@ -1,22 +1,14 @@
-import React, { useEffect } from "react";
-import { toast } from "react-hot-toast";
+import React from "react";
 
 const coverImg =
   "flex items-center justify-center aspectRatioImage_16_9 object-cover w-full h-full"; 
 
-const ViewCoverImg = ({ coverPhoto, loading, error }) => {
-  useEffect(() => {
-    if (!coverPhoto && loading) {
-      toast.loading("로딩중...");
-    } else if (coverPhoto || error) {
-      toast.dismiss();
-    }
-  }, [coverPhoto, loading, error]);
-
+const ViewCoverImg = ({ setFeedData, feedData }) => {
+  console.log(feedData);
   return (
     <div className="relative pt-0 md:pt-24 max-h-[calc(100vh-350px)] aspectRatioImage_16_9 bg-white">
-      {coverPhoto ? (
-        <img src={`${coverPhoto}`} alt="Cover" className={coverImg} />
+      {feedData.coverPhoto ? (
+        <img src={feedData.coverPhoto} alt="Cover" className={coverImg} />
       ) : (
         <div className={coverImg}>
           <img
