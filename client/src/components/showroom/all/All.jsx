@@ -6,7 +6,11 @@ const All = ({
   viewportWidth,
   setViewportWidth,
   showroomData,
+  setShowroomData,
   handleFilterClick,
+  inputValue,
+  handleInputChange,
+  handleSearch,
 }) => {
   return (
     <div className="flex-col mt-20">
@@ -14,7 +18,11 @@ const All = ({
         viewportWidth={viewportWidth}
         setViewportWidth={setViewportWidth}
         showroomData={showroomData}
+        setShowroomData={setShowroomData}
         handleFilterClick={handleFilterClick}
+        inputValue={inputValue}
+        handleInputChange={handleInputChange}
+        handleSearch={handleSearch}
       />
       <AllContent
         viewportWidth={viewportWidth}

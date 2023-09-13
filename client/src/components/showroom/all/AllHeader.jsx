@@ -1,17 +1,16 @@
 import React from "react";
-import useInput from "../../../hooks/useInput";
 import AllHeaderFilter from "./HeaderFilter/AllHeaderFilter";
 
-const AllHeader = ({ viewportWidth, setViewportWidth, handleFilterClick }) => {
-  const [inputValue, handleInputChange, clearInput] = useInput("");
-
-  const handleSearch = (e) => {
-    // 추후 앤터 누를시 서버와 통신해서 해당 게시물을 보여주는 로직 작성 ****
-    if (e.key === "Enter") {
-      clearInput();
-    }
-  };
-
+const AllHeader = ({
+  viewportWidth,
+  setViewportWidth,
+  handleFilterClick,
+  setShowroomData,
+  showroomData,
+  inputValue,
+  handleInputChange,
+  handleSearch,
+}) => {
   const isMobileView = viewportWidth < 720; // viewportWidth가 720보다 작으면 모바일 화면으로 간주
   return (
     <div className="flex justify-between items-center flex-wrap mx-8">
@@ -36,7 +35,7 @@ const AllHeader = ({ viewportWidth, setViewportWidth, handleFilterClick }) => {
           type="text"
           value={inputValue}
           onChange={handleInputChange}
-          onKeyDown={handleSearch}
+          onKeyDown={(e) => handleSearch(e, inputValue)}
         />
       </div>
     </div>
