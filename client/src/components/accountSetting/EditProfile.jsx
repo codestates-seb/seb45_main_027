@@ -21,7 +21,7 @@ const EditProfile = ({
     const baseURL = process.env.REACT_APP_API_URL;
 
     reader.onloadend = () => {
-      setProfileData({ ...profileData, profilePicture: reader.result });
+      setProfileData({ ...profileData, profileImg: reader.result });
     };
 
     if (file) {
@@ -37,7 +37,7 @@ const EditProfile = ({
       //이미지 업로드 성공시 응답으로 받은 사진 경로 확인
       console.log("Image uploaded:", response.data);
       // 응답으로 받은 사진을 여기서 저장해서 유저한테 보여줌
-      setProfileData({ ...profileData, profilePicture: response.data });
+      setProfileData({ ...profileData, profileImg: response.data });
     } catch (error) {
       console.error("Image upload failed:", error);
     }
@@ -48,13 +48,17 @@ const EditProfile = ({
     setProfileData({ ...profileData, [name]: value });
   };
 
-  const handleImageDelete = async () => {};
+  const handleImageDelete = async () => {
+    setProfileData({ ...profileData, profileImg: null });
+    console.log(profileData.profileImg);
+
+  };
 
 
   return (
     <div className="flex flex-col justify-center items-center h-[500px]">
       <img
-        src={profileData.profilePicture}
+        src={profileData.profileImg}
         alt="Profile"
         className="w-[200px] h-[200px] rounded-full object-cover opacity-100"
       />
@@ -78,14 +82,14 @@ const EditProfile = ({
         type="text"
         name="nickname"
         placeholder="Nickname"
-        value={profileData.username}
+        value={profileData.nickname}
         onChange={handleProfileChange}
         className={`${inputStyle} mt-10`}
       />
       <textarea
         name="myIntro"
         placeholder="Bio or Description"
-        value={profileData.bio}
+        value={profileData.myIntro}
         onChange={handleProfileChange}
         className={`${inputStyle} pb-20`}
       />

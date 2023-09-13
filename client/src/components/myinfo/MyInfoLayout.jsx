@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MyInfoContentList from "./MyInfoContentList";
 import UserProfile from "./UserProfile";
 import UserAccount from "../accountSetting/UserAccount";
+import axios from "axios";
 
 const MyInfoLayout = () => {
+  const baseURL = process.env.REACT_APP_API_URL;
+  const memberId = localStorage.getItem("memberId");
+
   const [showAccountSettings, setShowAccountSettings] = useState(false);
+  const [profileData, setProfileData] = useState(null);
 
   const toggleAccountSettings = (isOpen) => {
     setShowAccountSettings(isOpen);
@@ -15,10 +20,33 @@ const MyInfoLayout = () => {
       id: 1,
       username: "pepe",
       bio: "DIY 좋아합니다",
-      profilePicture:
+      profileImg:
         "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Yebin.png",
     },
   ];
+
+
+  const accessToken = localStorage.getItem("accessToken");
+  useEffect(() => {
+    
+    const fetchProfileData = async () => {
+      try {
+        const response = await axios.get(`${baseURL}/members/${memberId}`, {
+          headers: {
+            Authorization: accessToken ? `Bearer ${accessToken}` : '', // Include the access token if it exists
+          },});
+
+        setProfileData(response.data);
+        //console.log("Data: ", data);
+        console.log('profile res',response);
+        console.log('profile data.data',response.data.data)
+      } catch (err) {
+        console.log("Error: ", err);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
 
   return (
     <div>

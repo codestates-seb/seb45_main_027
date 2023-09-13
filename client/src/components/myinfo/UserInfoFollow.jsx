@@ -1,119 +1,86 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserInfoFollowList from "./UserInfoFollowList";
 import { toast } from "react-hot-toast";
-
+import axios from "axios";
 
 const UserInfoFollow = () => {
-  const [followingList, setFollowingList] = useState([
-    {
-      id: 1,
-      username: "User1",
-      profileImage:
-        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Hanjun.png",
-      isFollowing: true,
-    },
-    {
-      id: 2,
-      username: "User2",
-      profileImage:
-        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Sunho.png",
-      isFollowing: true,
-    },
-    {
-      id: 3,
-      username: "User3",
-      profileImage:
-        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Hanjun.png",
-      isFollowing: true,
-    },
-    {
-      id: 4,
-      username: "User4",
-      profileImage:
-        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Sunho.png",
-      isFollowing: true,
-    },
-    {
-      id: 5,
-      username: "User5",
-      profileImage:
-        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Hanjun.png",
-      isFollowing: true,
-    },
-    {
-      id: 6,
-      username: "User6",
-      profileImage:
-        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Sunho.png",
-      isFollowing: true,
-    },
-    {
-      id: 7,
-      username: "User7",
-      profileImage:
-        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Hanjun.png",
-      isFollowing: true,
-    },
-    {
-      id: 8,
-      username: "User8",
-      profileImage:
-        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Sunho.png",
-      isFollowing: true,
-    },
-  ]);
 
-  const [followersList, setFollowersList] = useState([
-    {
-      id: 9,
-      username: "User1",
-      profileImage:
-        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Yuri.png",
-      isFollowing: false,
-    },
-    {
-      id: 10,
-      username: "User2",
-      profileImage:
-        "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Dusan.png",
-      isFollowing: true,
-    },
-  ]);
+  const [followingList, setFollowingList] = useState('');
+  const [followersList, setFollowersList] = useState('');
+  const baseURL = process.env.REACT_APP_API_URL;
+  const memberId = localStorage.getItem("memberId");
 
-  const handleUnfollow = (userId) => {
+  const accessToken = localStorage.getItem("accessToken");
+  useEffect(() => {
+
+    const fetchFollowingData = async () => {
+      try {
+        const response = await axios.get(`${baseURL}/follow/from/${memberId}`, {
+          headers: {
+            Authorization: accessToken ? `Bearer ${accessToken}` : '', // Include the access token if it exists
+          },});
+
+        setFollowingList(response.data.data);
+        console.log('following data.data',response.data.data)
+      } catch (err) {
+        console.log("Error: ", err);
+      }
+    };
+
+
+    fetchFollowingData();
+  }, []);
+
+  useEffect(() => {
+    const fetchFollowersData = async () => {
+      try {
+        const response = await axios.get(`${baseURL}/follow/to/${memberId}`, {
+          headers: {
+            Authorization: accessToken ? `Bearer ${accessToken}` : '', // Include the access token if it exists
+          },});
+
+        setFollowersList(response.data.data);
+        console.log('followers data.data',response.data.data)
+      } catch (err) {
+        console.log("Error: ", err);
+      }
+    };   fetchFollowersData();
+  }, []);
+
+
+  const handleUnfollow = (memberId) => {
     const updatedFollowingList = followingList.filter(
-      (user) => user.id !== userId
+      (user) => user.id !== memberId
     );
     setFollowingList(updatedFollowingList);
 
     const updatedFollowersList = followersList.map((user) => {
-      if (user.id === userId) {
+      if (user.id === memberId) {
         return {
           ...user,
-          isFollowing: false,
+          followYn: false,
         };
       }
       return user;
     });
     setFollowersList(updatedFollowersList);
     toast.success("팔로우가 취소되었습니다!");
-    console.log(`Unfollow user with ID ${userId}`);
-
+    console.log(`Unfollow user with ID ${memberId}`);
   };
 
-  const handleFollow = (userId) => {
+  const handleFollow = (memberId) => {
     const newFollowersList = followersList.map((user) => {
-      if (user.id === userId) {
+      if (user.id === memberId) {
         return {
           ...user,
-          isFollowing: !user.isFollowing,
+          followYn: !user.FollowYn,
         };
       }
       return user;
     });
     setFollowersList(newFollowersList);
     toast.success("팔로우 되었습니다!");
-    console.log(`Follow user with ID ${userId}`);
+    console.log(`Follow user with ID ${memberId}`);
   };
 
   const [activeTab, setActiveTab] = useState("following");
@@ -149,18 +116,20 @@ const UserInfoFollow = () => {
           scrollbarWidth: "thin",
         }}
       >
-        {activeTab === "following" && (
+        {activeTab === "following" && followingList && (
           <UserInfoFollowList
             userList={followingList}
-            handleUnfollow={(userId) => handleUnfollow(userId)}
-            handleFollow={(userId) => handleFollow(userId)}
+            handleUnfollow={(memberId) => handleUnfollow(memberId)}
+            handleFollow={(memberId) => handleFollow(memberId)}
+            activeTab={activeTab}
           />
         )}
-        {activeTab === "followers" && (
+        {activeTab === "followers" && followersList && (
           <UserInfoFollowList
             userList={followersList}
-            handleUnfollow={(userId) => handleUnfollow(userId)}
-            handleFollow={(userId) => handleFollow(userId)}
+            handleUnfollow={(fromMemberId) => handleUnfollow(fromMemberId)}
+            handleFollow={(fromMemberId) => handleFollow(fromMemberId)}
+            activeTab={activeTab}
           />
         )}
       </div>
