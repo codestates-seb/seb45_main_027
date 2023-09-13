@@ -6,6 +6,7 @@ import com.project.bbibbi.domain.tipReply.dto.TipReplyRequestDto;
 import com.project.bbibbi.domain.tipReply.dto.TipReplyResponseDto;
 import com.project.bbibbi.domain.tipReply.entity.TipReply;
 import com.project.bbibbi.domain.tipReply.service.TipReplyService;
+import com.project.bbibbi.global.exception.tipexception.TipReplyNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,16 +49,15 @@ public class TipReplyController {
         return ResponseEntity.ok(tipReplyResponseDto);
     }
 
-    @GetMapping("/{replyId}")
-    public ResponseEntity<TipReplyResponseDto>
-    findReply(@PathVariable("replyId") Long replyId) {
+    @GetMapping("/{reply-id}")
+    public ResponseEntity<TipReplyResponseDto> findReply(
+            @PathVariable("reply-id") Long replyId) {
         TipReplyResponseDto replyResponseDto = tipReplyService.findReply(replyId);
         return ResponseEntity.ok(replyResponseDto);
     }
 
     @PatchMapping("/{reply-id}")
     public ResponseEntity<TipReplyResponseDto> updateTipReply(
-            @PathVariable("tip-id") Long tipId,
             @PathVariable("reply-id") Long replyId,
             @RequestBody TipReplyRequestDto dto) {
         // 댓글을 찾아옵니다.
@@ -80,13 +80,13 @@ public class TipReplyController {
             return ResponseEntity.ok(tipReplyResponseDto);
         } else {
             // 댓글이 존재하지 않는 경우 404 Not Found를 반환합니다.
-            return ResponseEntity.notFound().build();
+//            return ResponseEntity.notFound().build();
+            throw new TipReplyNotFoundException();
         }
     }
-    @DeleteMapping("/{replyId}")
+    @DeleteMapping("/{reply-id}")
     public ResponseEntity<String> deleteTipReply(
-            @PathVariable("tip-id") Long tipId,
-            @PathVariable("replyId") Long replyId) {
+            @PathVariable("reply-id") Long replyId) {
         // 댓글을 삭제합니다.
         tipReplyService.deleteReply(replyId);
 

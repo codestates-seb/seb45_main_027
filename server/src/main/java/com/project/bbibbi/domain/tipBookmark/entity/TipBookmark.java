@@ -3,6 +3,7 @@ package com.project.bbibbi.domain.tipBookmark.entity;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tip.entity.Tip;
 import com.project.bbibbi.global.entity.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class TipBookmark extends BaseEntity {
@@ -31,15 +33,4 @@ public class TipBookmark extends BaseEntity {
 
     @Transient
     private Integer bookmarkCount;
-
-    // Getter/Setter 메서드
-/*
-    public int getBookmarkCount() {
-        return bookmarkCount;
-    }
-
-    public void setBookmarkCount(int bookmarkCount) {
-        this.bookmarkCount = bookmarkCount;
-    }
-*/
 }

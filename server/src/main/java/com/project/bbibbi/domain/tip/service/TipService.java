@@ -1,27 +1,47 @@
 package com.project.bbibbi.domain.tip.service;
 
-import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tip.entity.Tip;
+import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tip.repository.TipRepository;
-import com.project.bbibbi.domain.tipImage.entity.TipImage;
-import com.project.bbibbi.domain.tipImage.service.TipImageService;
+import com.project.bbibbi.domain.tipBookmark.repository.TipBookmarkRepository;
+//import com.project.bbibbi.domain.tipImage.entity.TipImage;
+//import com.project.bbibbi.domain.tipImage.service.TipImageService;
+import com.project.bbibbi.domain.tipLike.repository.TipLikeRepository;
+//import com.project.bbibbi.domain.tipTag.entity.TipTag;
+//import com.project.bbibbi.domain.tipTag.service.TipTagService;
+import com.project.bbibbi.global.exception.tipexception.TipNotFoundException;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class TipService {
     private final TipRepository tipRepository;
 
-    private final TipImageService tipImageService;
+    private final TipLikeRepository tipLikeRepository;
 
-    public TipService(TipRepository tipRepository, TipImageService tipImageService) {
+    private final TipBookmarkRepository tipBookmarkRepository;
+
+//    private final TipMapper tipMapper;
+
+//    private final TipTagService tipTagService;
+
+//    private final TipImageService tipImageService;
+
+    public TipService(TipRepository tipRepository,
+                      TipLikeRepository tipLikeRepository,
+                      TipBookmarkRepository tipBookmarkRepository) {
         this.tipRepository = tipRepository;
-        this.tipImageService = tipImageService;
+        this.tipLikeRepository = tipLikeRepository;
+        this.tipBookmarkRepository = tipBookmarkRepository;
+//        this.tipMapper = tipMapper;
+//        this.tipTagService = tipTagService;
+//        this.tipImageService = tipImageService;
     }
 
     public Page<Tip> getAllTips(int page, int size) {
@@ -37,7 +57,7 @@ public class TipService {
 
         Page<Tip> pageTips = tipRepository.findByMember(Member.builder().memberId(myInfoMemberId).build(),pageRequest); // 비쿼리 성공
 
-//       List<Feed> pageFeeds = feedRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
+//       List<Tip> pageTips = tipRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
 
         return  pageTips;
     }
@@ -48,14 +68,57 @@ public class TipService {
         return tipRepository.findAllSearch(searchString,page,size );
     }
 
-    public Tip getTipById(Long tipId) {
-        Tip findTip = tipRepository.findById(tipId).orElseThrow();
+    public Tip getTip(Long tipId) {
+        Tip findTip = findVerifiedTip(tipId);
 
         findTip.setViews(findTip.getViews() + 1);
 
         Tip viewUpTip = tipRepository.save(findTip);
 
+        // 좋아요 개수
+        Integer tipLikeCount = tipLikeRepository.tipLikeCount(viewUpTip.getTipId());
+        viewUpTip.setLikeCount(tipLikeCount);
+
+        // 북마크 개수
+        Integer bookmarkCount = tipBookmarkRepository.tipBookmarkCount(viewUpTip.getTipId());
+        viewUpTip.setBookmarkCount(bookmarkCount);
+
+        // 로그인한 사람의 좋아요 여부... 로그인한 사람 memberId를 1L 로 가정
+        Member member = Member.builder().memberId(1L).build();
+
+
+        if(member == null){
+            viewUpTip.setLikeYn(false);
+        }
+        else {
+            int loginUserLikeYn = tipLikeRepository.existCount(viewUpTip.getTipId(), member.getMemberId());
+            if(loginUserLikeYn == 0)
+                viewUpTip.setLikeYn(false);
+            else viewUpTip.setLikeYn(true);
+        }
+
+        if(member == null){
+            viewUpTip.setBookmarkYn(false);
+        }
+        else {
+            int loginUserLikeYn = tipBookmarkRepository.existCount(viewUpTip.getTipId(), member.getMemberId());
+            if(loginUserLikeYn == 0) viewUpTip.setBookmarkYn(false);
+            else viewUpTip.setBookmarkYn(true);
+        }
+
+//        List<TipTag> tipTags = tipTagService.findTagListByTip(viewUpTip);
+//        TipResponseDto tipResponseDto = tipMapper.tipToTipResponseDto(viewUpTip);
+//        tipResponseDto.setTiptags(tipTags);
+
         return viewUpTip;
+    }
+
+    public Tip findVerifiedTip(Long tipId){
+        Optional<Tip> optionalTip = tipRepository.findById(tipId);
+
+        Tip findTip = optionalTip.orElseThrow(() -> { throw new TipNotFoundException(); });
+
+        return findTip;
     }
 
     public Tip createTip(Tip tip) {
@@ -101,8 +164,7 @@ public class TipService {
     }
 
     public void deleteTip(Long tipId) {
-        Tip tip = tipRepository.findById(tipId)
-                .orElseThrow();
+        Tip tip = findVerifiedTip(tipId);
 
         tipRepository.delete(tip);
     }

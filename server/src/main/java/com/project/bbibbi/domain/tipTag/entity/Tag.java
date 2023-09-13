@@ -4,6 +4,7 @@ import com.project.bbibbi.global.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,21 +19,13 @@ public class Tag extends BaseEntity {
 
     @Column
     private String tagContent;
-/*
-    public Long getTagId() {
-        return tagId;
-    }
 
-    public void setTagId(Long tagId) {
-        this.tagId = tagId;
-    }
+    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TipTag> tipTags;
 
-    public String getTagContent() {
-        return tagContent;
-    }
-
-    public void setTagContent(String tagContent) {
+    @Builder
+    public Tag(String tagContent) {
         this.tagContent = tagContent;
     }
-*/
+
 }

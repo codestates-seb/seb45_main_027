@@ -29,7 +29,7 @@ public class TipPostDto {
 
 //    private List<TipImageDto> tipImages;
 
-    private List<String> tagContents;
+    public List<String> tagContents;
 
     public List<String> tagContents() {
         return tagContents;

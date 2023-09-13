@@ -22,7 +22,7 @@ public class TipTagService {
     }
 
     public void saveTags(Tip tip, List<String> tagContents) {
-        if (tagContents.isEmpty()) {
+        if (tagContents == null || tagContents.isEmpty()) {
             return;
         }
 
