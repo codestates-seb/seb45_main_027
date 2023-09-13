@@ -28,6 +28,7 @@ const All = ({
         viewportWidth={viewportWidth}
         setViewportWidth={setViewportWidth}
         showroomData={showroomData}
+        setShowroomData={setShowroomData}
       />
     </div>
   );
