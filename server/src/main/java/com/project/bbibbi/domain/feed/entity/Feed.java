@@ -87,5 +87,6 @@ public class Feed extends BaseEntity{
     @Transient
     private Boolean bookMarkYn;
 
-
+    @Transient
+    private Boolean finalPage = false;
 }

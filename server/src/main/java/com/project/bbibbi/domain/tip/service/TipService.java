@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.tip.service;
 
+import com.project.bbibbi.domain.feed.entity.Feed;
 import com.project.bbibbi.domain.tip.entity.Tip;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tip.repository.TipRepository;
@@ -48,7 +49,16 @@ public class TipService {
 
         PageRequest pageRequest =  PageRequest.of(page, size, Sort.by("createdDateTime").descending());
 
-        return tipRepository.findAll(pageRequest);
+        Page<Tip> tipPages = tipRepository.findAll(pageRequest);
+
+        if(tipPages.isLast()){
+            for(Tip tip : tipPages){
+                tip.setFinalPage(true);
+            }
+        }
+
+
+        return tipPages;
     }
 
     public List<Tip> findMyInfoTips(long myInfoMemberId){
@@ -80,8 +90,18 @@ public class TipService {
 
     public List<Tip> getAllSearchTips(String searchString, int page, int size) {
 
+        List<Tip> searchTips = tipRepository.findAllSearch(searchString,page,size );
 
-        return tipRepository.findAllSearch(searchString,page,size );
+        Integer searchTipsCount = tipRepository.findAllSearchCount(searchString);
+
+        if(((page+1)*size) >= searchTipsCount){
+            for(Tip tip : searchTips){
+                tip.setFinalPage(true);
+            }
+
+        }
+
+        return searchTips;
     }
 
     public Tip getTip(Long tipId) {

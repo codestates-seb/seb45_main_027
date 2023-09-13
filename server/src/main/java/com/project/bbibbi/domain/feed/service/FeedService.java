@@ -175,8 +175,13 @@ public class FeedService {
 
         if(whereCode.equals("LOCATION")){
 
-
             selectedFeeds = feedRepository.findByLocation(Location.valueOf(searchcode), pageRequest);
+
+            if(selectedFeeds.isLast()){
+                for(Feed feed : selectedFeeds){
+                    feed.setFinalPage(true);
+                }
+            }
 
         }
         else if(whereCode.equals("COUNT")){
@@ -184,11 +189,23 @@ public class FeedService {
 
             selectedFeeds = feedRepository.findByRoomCount(RoomCount.valueOf(searchcode), pageRequest);
 
+            if(selectedFeeds.isLast()){
+                for(Feed feed : selectedFeeds){
+                    feed.setFinalPage(true);
+                }
+            }
+
         }
         else if(whereCode.equals("INFO")){
 
 
             selectedFeeds = feedRepository.findByRoomInfo(RoomInfo.valueOf(searchcode), pageRequest);
+
+            if(selectedFeeds.isLast()){
+                for(Feed feed : selectedFeeds){
+                    feed.setFinalPage(true);
+                }
+            }
 
         }
         else if(whereCode.equals("SIZE")){
@@ -196,31 +213,45 @@ public class FeedService {
 
             selectedFeeds = feedRepository.findByRoomSize(RoomSize.valueOf(searchcode), pageRequest);
 
+            if(selectedFeeds.isLast()){
+                for(Feed feed : selectedFeeds){
+                    feed.setFinalPage(true);
+                }
+            }
+
         }
         else if(whereCode.equals("TYPE")){
 
 
             selectedFeeds = feedRepository.findByRoomType(RoomType.valueOf(searchcode), pageRequest);
 
-        }
-        // 좋아요 "LIKE00" -> "LIKE"
-        else if(whereCode.equals("LIKE")){
-
-            List<Feed> likeFeed = feedRepository.findByOrderByLike();
-            selectedFeeds = new PageImpl<>(likeFeed);
+            if(selectedFeeds.isLast()){
+                for(Feed feed : selectedFeeds){
+                    feed.setFinalPage(true);
+                }
+            }
 
         }
         // 최신순 "RECENT00" -> "RECENT"
         else if(whereCode.equals("RECENT")){
 
-
             selectedFeeds = feedRepository.findByOrderByCreatedDateTimeDesc(pageRequest);
+            if(selectedFeeds.isLast()){
+                for(Feed feed : selectedFeeds){
+                    feed.setFinalPage(true);
+                }
+            }
 
         }
         // 조회수순 "VIEW00" -> "VIEW"
         else if(whereCode.equals("VIEW")){
 
             selectedFeeds = feedRepository.findByOrderByViewsDesc(pageRequest);
+            if(selectedFeeds.isLast()){
+                for(Feed feed : selectedFeeds){
+                    feed.setFinalPage(true);
+                }
+            }
         }
 
         return selectedFeeds;
@@ -230,6 +261,16 @@ public class FeedService {
     public List<Feed> findSearchFeeds(String searchString, int page, int size){
 
         List<Feed> selectedFeeds = feedRepository.findBySearch(searchString, page, size);
+
+        Integer selectedFeedsCount = feedRepository.findBySearchCount(searchString);
+
+
+        if(((page+1)*size) >= selectedFeedsCount){
+            for(Feed feed : selectedFeeds){
+                feed.setFinalPage(true);
+            }
+
+        }
 
 
         return selectedFeeds;

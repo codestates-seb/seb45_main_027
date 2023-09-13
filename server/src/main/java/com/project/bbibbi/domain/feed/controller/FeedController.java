@@ -6,6 +6,7 @@ import com.project.bbibbi.domain.feed.dto.*;
 import com.project.bbibbi.domain.feed.entity.*;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyResponseDto;
 import com.project.bbibbi.global.response.MultiResponseDto;
+import com.project.bbibbi.global.response.PageAbleResponseDto;
 import com.project.bbibbi.global.response.SingleResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -107,7 +108,17 @@ public class FeedController {
 
         List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(feeds);
 
-        return new ResponseEntity<>(new MultiResponseDto<>(feedResponseDtos), HttpStatus.OK);
+        PageAbleResponseDto pageAbleResponseDto = new PageAbleResponseDto();
+        if(feeds.get(0).getFinalPage()){
+            pageAbleResponseDto.setIsLast(true);
+        }
+        else {
+            pageAbleResponseDto.setIsLast(false);
+        }
+
+        pageAbleResponseDto.setData(feedResponseDtos);
+
+        return new ResponseEntity<>(pageAbleResponseDto, HttpStatus.OK);
 
     }
 
@@ -122,7 +133,18 @@ public class FeedController {
 
         List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(pageFeeds);
 
-        return new ResponseEntity<>(new MultiResponseDto<>(feedResponseDtos), HttpStatus.OK);
+        PageAbleResponseDto pageAbleResponseDto = new PageAbleResponseDto();
+        if(pageFeeds.get(0).getFinalPage()){
+            pageAbleResponseDto.setIsLast(true);
+        }
+        else {
+            pageAbleResponseDto.setIsLast(false);
+        }
+
+        pageAbleResponseDto.setData(feedResponseDtos);
+
+
+        return new ResponseEntity<>(pageAbleResponseDto, HttpStatus.OK);
 
     }
 

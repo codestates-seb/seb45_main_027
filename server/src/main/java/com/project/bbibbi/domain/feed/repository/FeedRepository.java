@@ -86,6 +86,9 @@ public interface FeedRepository extends JpaRepository<Feed, Long> {
             "order by created_date_time desc limit :size ", nativeQuery = true)
     List<Feed> findBySearch(@Param("searchString") String searchString,@Param("page") int page,@Param("size") int size);
 
+    @Query(value = "select count(*) from feed where title like %:searchString% or content like %:searchString%", nativeQuery = true)
+    Integer findBySearchCount(@Param("searchString") String searchString);
+
     @Query(value = "select feed.* from feed " +
             "inner join (select a.feed_id, ( select count(*) from feed_like where feed_id = a.feed_id) as like_count from feed a ) as feed_likecount " +
             "on feed.feed_id = feed_likecount.feed_id " +

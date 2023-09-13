@@ -78,7 +78,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET, "/feed/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/tip/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/follow/**").permitAll()
-                .antMatchers(HttpMethod.GET, "myContent/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/myContent/**").permitAll()
                 // 타 도메인쪽에서 작업을 위해 위의 GET 외에도 PATCH, POST, DELETE도 넣었습니다.
                 // 타 도메인쪽 작업 완료되면 지우도록 알려드리겠습니다.
                 .antMatchers(HttpMethod.POST, "/members/**").permitAll()
