@@ -1,4 +1,4 @@
-//import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const MyInfoBookmark = ({
   itemId,
@@ -7,6 +7,9 @@ const MyInfoBookmark = ({
   isBookmarked,
   toggleBookmark,
 }) => {
+  const { id } = useParams();
+  const memberId = localStorage.getItem("memberId");
+
   const handleToggleBookmark = () => {
     toggleBookmark(itemId);
   };
@@ -20,7 +23,11 @@ const MyInfoBookmark = ({
           alt="content"
         />
         <button
-          onClick={handleToggleBookmark}
+          onClick={() => {
+            if (id === memberId) {
+              handleToggleBookmark();
+            }
+          }}
           className="absolute bottom-3 right-3 cursor-pointer">
           <img
             src={

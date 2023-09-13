@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import UserInfoFollowList from "./UserInfoFollowList";
 import { toast } from "react-hot-toast";
 import axios from "axios";
@@ -8,44 +9,45 @@ const UserInfoFollow = () => {
   const [followingList, setFollowingList] = useState('');
   const [followersList, setFollowersList] = useState('');
   const baseURL = process.env.REACT_APP_API_URL;
-  const memberId = localStorage.getItem("memberId");
+  //const memberId = localStorage.getItem("memberId");
+  const { id } = useParams();
 
   const accessToken = localStorage.getItem("accessToken");
   useEffect(() => {
 
     const fetchFollowingData = async () => {
       try {
-        const response = await axios.get(`${baseURL}/follow/from/${memberId}`, {
+        const response = await axios.get(`${baseURL}/follow/from/${id}`, {
           headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : '', // Include the access token if it exists
+            Authorization: accessToken ? `Bearer ${accessToken}` : '', 
           },});
 
         setFollowingList(response.data.data);
-        console.log('following data.data',response.data.data)
+        // console.log('following data.data',response.data.data)
       } catch (err) {
-        console.log("Error: ", err);
+        // console.log("Error: ", err);
       }
     };
 
 
     fetchFollowingData();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     const fetchFollowersData = async () => {
       try {
-        const response = await axios.get(`${baseURL}/follow/to/${memberId}`, {
+        const response = await axios.get(`${baseURL}/follow/to/${id}`, {
           headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : '', // Include the access token if it exists
+            Authorization: accessToken ? `Bearer ${accessToken}` : '', 
           },});
 
         setFollowersList(response.data.data);
-        console.log('followers data.data',response.data.data)
+        //console.log('followers data.data',response.data.data)
       } catch (err) {
-        console.log("Error: ", err);
+        // console.log("Error: ", err);
       }
     };   fetchFollowersData();
-  }, []);
+  }, [id]);
 
 
   const handleUnfollow = (memberId) => {
@@ -89,7 +91,7 @@ const UserInfoFollow = () => {
   };
 
   if(!followingList && !followersList) {return <div>loading...</div>};
-  
+
   return (
     <div className="z-50">
       <div className="flex flex-row md:justify-center p-2 mb-6 text-[#525252] font-medium">

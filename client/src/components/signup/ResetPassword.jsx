@@ -12,7 +12,6 @@ const ResetPassword = () => {
       alert(`We've sent you a new password to your email address.`);
     } catch (error) {
       alert("Email does not exist.");
-      console.error("Password reset initiation failed:", error);
     }
   };
   return (

@@ -40,7 +40,6 @@ export function AuthProvider({ children }) {
         email,
         password,
       });
-      console.log(response);
       localStorage.setItem("memberId", response.data.memberId);
       localStorage.setItem("nickname", response.data.nickname);
       localStorage.setItem("profileImg", response.data.profileImg);
@@ -56,7 +55,6 @@ export function AuthProvider({ children }) {
       if(error.response.status === 401){
         alert("이메일 또는 비밀번호가 일치하지 않습니다.");
       };
-      console.error("Login failed:", error);
       toast.dismiss();
       alert("Login failed");
       throw error;
@@ -115,7 +113,6 @@ export function AuthProvider({ children }) {
         alert("이미 등록된 닉네임입니다.");
       };
 
-      console.error("Registration failed:", error);
       toast.dismiss();
       alert("Signup failed");
       throw error;
@@ -134,9 +131,7 @@ export function AuthProvider({ children }) {
 
       navigate("/login");
     } catch (error) {
-      console.error("Logout failed:", error);
       alert("Logout failed");
-      throw error;
     }
   }
 

@@ -27,10 +27,9 @@ const HeaderOn = () => {
         <li
           className="flex items-center cursor-pointer"
           onClick={handleUserClick}>
-          {profileImg && profileImg === null ? (
+          {profileImg === 'null'  ? (
             <div className="w-8 h-8 mr-2.5 bg-yellow-200 rounded-full"></div>
           ) : (
-            // <img src={profileImg} alt="profileImg" className='"w-4 h-4 mr-2.5' /></div>
 
             <img
               src={profileImg}
