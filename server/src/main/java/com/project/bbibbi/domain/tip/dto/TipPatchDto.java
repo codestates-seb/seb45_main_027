@@ -1,7 +1,5 @@
 package com.project.bbibbi.domain.tip.dto;
 
-
-import com.project.bbibbi.domain.tipImage.dto.TipImageDto;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -13,9 +11,9 @@ import java.util.List;
 @Data
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class TipPatchDto {
+    private Long tipId;
 
     @NotBlank
     private String title;

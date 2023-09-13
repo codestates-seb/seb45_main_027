@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/tip/{tipId}/tipbookmark")
+@RequestMapping("/tip/{tip-id}/tipbookmark")
 @Validated
 public class TipBookmarkController {
 
@@ -31,7 +31,7 @@ public class TipBookmarkController {
     }
 
     @PatchMapping
-    public ResponseEntity patchTipBookmark(@PathVariable("tipId") Long tipId){
+    public ResponseEntity patchTipBookmark(@PathVariable("tip-id") Long tipId){
 
         // 로그인한 사용자의 member_id가 1L 이라고 가정.
         // 로그인 기능 지원시 아래 코드는 삭제하고 현재 로그인한 사용자를 가져오도록 대체

@@ -1,13 +1,10 @@
 package com.project.bbibbi.domain.tip.entity;
 
 import com.project.bbibbi.domain.member.entity.Member;
-import com.project.bbibbi.domain.tipImage.entity.TipImage;
+import com.project.bbibbi.domain.tipReply.entity.TipReply;
 import com.project.bbibbi.domain.tipTag.entity.TipTag;
 import com.project.bbibbi.global.entity.BaseEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,6 +14,7 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Tip extends BaseEntity {
@@ -34,7 +32,7 @@ public class Tip extends BaseEntity {
     private String content;
 
     @Column
-    private int views;
+    private Integer views = 0;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
@@ -45,6 +43,22 @@ public class Tip extends BaseEntity {
 
     @OneToMany(mappedBy = "tip", cascade = {CascadeType.ALL})
     private List<TipTag> tipTags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "tip", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("id asc")
+    private List<TipReply> replies;
+
+    @Transient
+    private int likeCount;
+
+    @Transient
+    private Boolean likeYn;
+
+    @Transient
+    private int bookmarkCount;
+
+    @Transient
+    private Boolean bookmarkYn;
 
 //    @OneToMany(mappedBy = "tip", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    private List<TipLike> tipLikes = new ArrayList<>();

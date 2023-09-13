@@ -12,7 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/tip/{tip-id2}/tipreply/{reply-id}/tipreplylike")
+@RequestMapping("/tip/{tip-id}/tipreply/{reply-id}/tipreplylike")
 @Validated
 public class TipReplyLikeController {
 
@@ -28,7 +28,8 @@ public class TipReplyLikeController {
     }
 
     @PatchMapping
-    public ResponseEntity patchTipReplyLike(@PathVariable("tip-id2") Long tipId, @PathVariable("reply-id") Long replyId) {
+    public ResponseEntity patchTipReplyLike(
+            @PathVariable("reply-id") Long replyId) {
 
         // 로그인한 사용자의 member_id가 1L 이라고 가정.
         // 로그인 기능 지원시 아래 코드는 삭제하고 현재 로그인한 사용자를 가져오도록 대체

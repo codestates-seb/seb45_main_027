@@ -6,11 +6,20 @@ import com.project.bbibbi.domain.tip.dto.TipResponseDto;
 import com.project.bbibbi.domain.tip.entity.Tip;
 import com.project.bbibbi.domain.tip.mapper.TipMapper;
 import com.project.bbibbi.domain.tip.service.TipService;
-import com.project.bbibbi.domain.tipImage.service.TipImageService;
+//import com.project.bbibbi.domain.tipImage.service.TipImageService;
+//import com.project.bbibbi.domain.tipTag.entity.TipTag;
+//import com.project.bbibbi.domain.tipTag.repository.TipTagRepository;
+//import com.project.bbibbi.domain.tipTag.service.TagService;
+//import com.project.bbibbi.domain.tipTag.service.TipTagService;
+import com.project.bbibbi.global.exception.tipexception.TipNotFoundException;
 import com.project.bbibbi.global.response.MultiResponseDto;
 import org.springframework.data.domain.Page;
+//import org.springframework.data.domain.Pageable;
+//import org.springframework.data.domain.Slice;
+//import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,19 +27,26 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Validated
 @RestController
 @RequestMapping("/tip")
 public class TipController {
+
+    private final static String TIP_DEFAULT_URL = "/tip";
+
     private final TipService tipService;
 
-    private final TipImageService tipImageService;
+//    private final TipImageService tipImageService;
+
+//    private final TipTagService tipTagService;
 
     private final TipMapper tipMapper;
 
-    public TipController(TipService tipService, TipMapper tipMapper, TipImageService tipImageService) {
+    public TipController(TipService tipService, TipMapper tipMapper) {
         this.tipService = tipService;
         this.tipMapper = tipMapper;
-        this.tipImageService = tipImageService;
+//        this.tipTagService = tipTagService;
+//        this.tipImageService = tipImageService;
     }
 
     @PostMapping
@@ -40,12 +56,14 @@ public class TipController {
         tipPostDto.setMemberId(1L);
         Tip tip = tipMapper.tipPostDtoToTip(tipPostDto);
         Tip createdTip = tipService.createTip(tip);
+//        tipTagService.saveTags(createdTip, tipPostDto.tagContents());
         TipResponseDto tipResponseDto = tipMapper.tipToTipResponseDto(createdTip);
         return ResponseEntity.created(URI.create("/tip/" + createdTip.getTipId())).body(tipResponseDto);
     }
 
-    @PatchMapping("/{tipId}")
-    public ResponseEntity<TipResponseDto> updateTip(@PathVariable Long tipId, @RequestBody @Valid TipPatchDto tipPatchDto) {
+    @PatchMapping("/{tip-id}")
+    public ResponseEntity<TipResponseDto> updateTip(
+            @PathVariable("tip-id") Long tipId, @RequestBody @Valid TipPatchDto tipPatchDto) {
 
         // 로그인한 사용자 memberId가 1 이라고 가정
         tipPatchDto.setMemberId(1L);
@@ -53,25 +71,23 @@ public class TipController {
         Tip tip = tipMapper.tipPatchDtoToTip(tipPatchDto);
         Tip updatedTip = tipService.updateTip(tipId, tip);
         if (updatedTip == null) {
-            System.out.println("null!");
-//            throw new TipNotFoundException();
+//            System.out.println("null!");
+            throw new TipNotFoundException();
         }
+//        tipTagService.saveTags(updatedTip, tipPatchDto.tagContents());
         TipResponseDto tipResponseDto = tipMapper.tipToTipResponseDto(updatedTip);
         return ResponseEntity.ok(tipResponseDto);
     }
-    @GetMapping("/{tipId}")
-    public ResponseEntity<TipResponseDto> getTip(@PathVariable Long tipId) {
-        Tip tip = tipService.getTipById(tipId);
-        if (tip == null) {
-            System.out.println("null!");
-
-//            throw new TipNotFoundException();
-        }
+    @GetMapping("/{tip-id}")
+    public ResponseEntity<TipResponseDto> getTip(@PathVariable("tip-id") Long tipId) {
+        Tip tip = tipService.getTip(tipId);
+//        List<TipTag> tipTags = tipTagService.findTagListByTip(tipService.findVerifiedTip(tipId));
         TipResponseDto tipResponseDto = tipMapper.tipToTipResponseDto(tip);
+//        tipResponseDto.setTiptags(tipTags); // tiptags를 TipResponseDto에 설정
         return ResponseEntity.ok(tipResponseDto);
     }
 
-    @DeleteMapping("/{tipId}")
+    @DeleteMapping("/{tip-id}")
     public ResponseEntity<Void> deleteTip(@PathVariable Long tipId) {
         tipService.deleteTip(tipId);
         return ResponseEntity.noContent().build();
@@ -114,7 +130,13 @@ public class TipController {
         return ResponseEntity.ok(tipResponseDtos);
     }
 
-
+//    @GetMapping
+//    public ResponseEntity<Slice<Tip>> getAllTips(
+//            @RequestParam(value = "searchString", required = false) String searchString,
+//            @PageableDefault(size=12) Pageable pageable) {
+//        return new ResponseEntity<>(
+//                tipService.findTipAllByCreatedAtDesc(searchString, pageable), HttpStatus.OK);
+//    }
 
     @GetMapping("/search/{search-string}")
     public ResponseEntity<List<TipResponseDto>> getAllSearchTips(@PathVariable("search-string") String searchString,
@@ -133,5 +155,10 @@ public class TipController {
         return ResponseEntity.ok(tipResponseDtos);
     }
 
-
+//    @GetMapping("/search/{search-string}")
+//    public ResponseEntity<Slice<Tip>> searchAllTips(@PathVariable("search-string") String searchString,
+//                                                    @RequestParam @PageableDefault(size=12) Pageable pageable) {
+//        return new ResponseEntity<>(
+//                tipService.findTipAllByCreatedAtDesc(searchString, pageable), HttpStatus.OK);
+//    }
 }

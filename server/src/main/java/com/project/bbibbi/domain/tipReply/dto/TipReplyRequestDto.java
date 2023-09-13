@@ -1,6 +1,5 @@
 package com.project.bbibbi.domain.tipReply.dto;
 
-import com.project.bbibbi.global.entity.BaseEntity;
 import lombok.*;
 
 /**
@@ -11,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TipReplyRequestDto extends BaseEntity {
+public class TipReplyRequestDto {
     private Long tipReplyId;
     private String content;
     private Long tipId;
