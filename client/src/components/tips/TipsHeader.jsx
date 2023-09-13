@@ -1,17 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useInput from "../../hooks/useInput";
 
-const TipsHeader = ({ viewportWidth }) => {
-  const [inputValue, handleInputChange, clearInput] = useInput("");
-
-  const handleSearch = (e) => {
-    // 추후 앤터 누를시 서버와 통신해서 해당 게시물을 보여주는 로직 작성 ****
-    if (e.key === "Enter") {
-      clearInput();
-    }
-  };
-
+const TipsHeader = ({ inputValue, handleInputChange, handleSearch }) => {
   return (
     <div className="flex flex-col items-start mt-10 mx-8">
       {/* 카테고리 문구 */}
@@ -47,7 +37,7 @@ const TipsHeader = ({ viewportWidth }) => {
           type="text"
           value={inputValue}
           onChange={handleInputChange}
-          onKeyDown={handleSearch}
+          onKeyDown={(e) => handleSearch(e, inputValue)}
           placeholder="#Tag"
         />
       </div>

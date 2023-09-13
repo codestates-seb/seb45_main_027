@@ -57,15 +57,16 @@ const TipsContent = ({ tipData }) => {
             <div className="relative">
               <img
                 // 이미지 주소 바꿔줘야함
-                src="/asset/image.png"
+                // src="/asset/image.png"
+                src={item.coverPhoto}
                 alt="tipsimg"
                 className="aspectRatioImage_1_1 rounded-md cursor-pointer"
-                onClick={() => handleTipClick(item.feedId)}
+                onClick={() => handleTipClick(item.tipId)}
               />
               <p>
                 <img
                   src={
-                    item.isBookmarked
+                    item.bookmarkYn
                       ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isBookmarked.png"
                       : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark.png"
                   }

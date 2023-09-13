@@ -18,7 +18,7 @@ const TipsInfo = ({ handleTipClick, item }) => {
               alt="Tips_like"
               className="w-10 h-10 rounded-full mr-1"
             />
-            <span className="ml-1 font-medium">0</span>
+            <span className="ml-1 font-medium">{item.likeCount}</span>
           </div>
           <div className="flex items-center mr-4">
             <img
