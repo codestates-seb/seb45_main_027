@@ -179,8 +179,11 @@ public interface FeedMapper {
         feedResponseDto.setMemberId(feed.getMember().getMemberId());
         feedResponseDto.setNickname(feed.getMember().getNickname());
         feedResponseDto.setMemberImage(feed.getMember().getProfileImg());
+        feedResponseDto.setMyIntro(feed.getMember().getMyIntro());
         feedResponseDto.setLikeCount(feed.getLikeCount());
         feedResponseDto.setLikeYn(feed.getLikeYn());
+        feedResponseDto.setBookMarkCount(feed.getBookMarkCount());
+        feedResponseDto.setBookMarkYn(feed.getBookMarkYn());
         feedResponseDto.setRepliesCount( (feed.getReplies() == null) ? 0: feed.getReplies().size());
 
         // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.
@@ -273,8 +276,11 @@ public interface FeedMapper {
                                 .memberId(feed.getMember().getMemberId())
                                 .nickname(feed.getMember().getNickname())
                                 .memberImage(feed.getMember().getProfileImg())
+                                .myIntro(feed.getMember().getMyIntro())
                                 .likeCount(feed.getLikeCount())
                                 .likeYn(feed.getLikeYn())
+                                .bookMarkCount(feed.getBookMarkCount())
+                                .bookMarkYn(feed.getLikeYn())
                                 .repliesCount((feed.getReplies() == null) ? 0 : feed.getReplies().size())
                                 // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.
 //                                .feedImages(feed.getImages().stream().map(feedImage -> FeedImageDto.builder()

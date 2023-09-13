@@ -16,6 +16,6 @@ public class FollowListResponseDto {
     private Long memberId;
     private String memberNickname;
     private String memberImage;
-    private Boolean followYn;
+    private String followGubun;
     private LocalDateTime createdDateTime;
 }

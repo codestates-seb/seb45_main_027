@@ -31,4 +31,8 @@ public class Follow extends BaseEntity {
     @Transient
     private Boolean FollowYn;
 
+    @Transient
+    private String FollowGubun;
+
+
 }

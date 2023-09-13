@@ -6,6 +6,7 @@ import com.project.bbibbi.domain.feed.entity.Feed;
 //import com.project.bbibbi.domain.feed.repository.FeedImageRepository;
 //import com.project.bbibbi.domain.feed.repository.FeedImageTagRepository;
 import com.project.bbibbi.domain.feed.repository.FeedRepository;
+import com.project.bbibbi.domain.feedBookmark.repository.FeedBookMarkRepository;
 import com.project.bbibbi.domain.feedlike.repository.FeedLikeRepository;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.global.entity.*;
@@ -29,13 +30,16 @@ public class FeedService {
 //    private final FeedImageRepository feedImageRepository;
 //    private final FeedImageTagRepository feedImageTagRepository;
     private final FeedLikeRepository feedLikeRepository;
+    private final FeedBookMarkRepository feedBookMarkRepository;
     private final CustomBeanUtils<Feed> beanUtils;
 
     public FeedService(FeedRepository feedRepository,
                        FeedLikeRepository feedLikeRepository,
+                       FeedBookMarkRepository feedBookMarkRepository,
                        CustomBeanUtils<Feed> beanUtils) {
         this.feedRepository = feedRepository;
         this.feedLikeRepository = feedLikeRepository;
+        this.feedBookMarkRepository = feedBookMarkRepository;
         this.beanUtils = beanUtils;
     }
 
@@ -123,6 +127,9 @@ public class FeedService {
         // 좋아요 개수
         Integer feedLikeCount = feedLikeRepository.feedLikeCount(viewUpFeed.getFeedId());
         viewUpFeed.setLikeCount(feedLikeCount);
+        // 북마크 개수
+        Integer bookmarkCount = feedBookMarkRepository.feedBookMarkCount(viewUpFeed.getFeedId());
+        viewUpFeed.setBookMarkCount(bookmarkCount);
 
         // 로그인한 사람의 좋아요 여부... 로그인한 사람 memberId를 1L 로 가정
         Member member = Member.builder().memberId(1L).build();
@@ -138,6 +145,14 @@ public class FeedService {
             else viewUpFeed.setLikeYn(true);
         }
 
+        if(member == null){
+            viewUpFeed.setBookMarkYn(false);
+        }
+        else {
+            int loginUserLikeYn = feedBookMarkRepository.existCount(viewUpFeed.getFeedId(), member.getMemberId());
+            if(loginUserLikeYn == 0) viewUpFeed.setBookMarkYn(false);
+            else viewUpFeed.setBookMarkYn(true);
+        }
 
         return viewUpFeed;
     }

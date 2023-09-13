@@ -40,7 +40,7 @@ public interface FollowMapper {
         followListResponseDto.setMemberImage(
                 Member.builder().profileImg(follow.getMember().getProfileImg()).build().getProfileImg());
         followListResponseDto.setCreatedDateTime(follow.getCreatedDateTime());
-        followListResponseDto.setFollowYn(true);
+        followListResponseDto.setFollowGubun(follow.getFollowGubun());
 
         return followListResponseDto;
 
@@ -57,7 +57,7 @@ public interface FollowMapper {
                                 .memberId(follow.getMember().getMemberId())
                                 .memberNickname(follow.getMember().getNickname())
                                 .memberImage(follow.getMember().getProfileImg())
-                                .followYn(true)
+                                .followGubun(follow.getFollowGubun())
                                 .createdDateTime(follow.getCreatedDateTime())
                                 .build())
                         .collect(Collectors.toList());

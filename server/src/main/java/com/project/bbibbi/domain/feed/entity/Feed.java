@@ -81,4 +81,11 @@ public class Feed extends BaseEntity{
     @Transient
     private Boolean likeYn;
 
+    @Transient
+    private int bookMarkCount;
+
+    @Transient
+    private Boolean bookMarkYn;
+
+
 }

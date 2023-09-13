@@ -7,6 +7,7 @@ import com.project.bbibbi.domain.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -55,11 +56,46 @@ public class FollowService {
     public List<Follow> findFromFollow(Long memberId){
         List<Follow> follows = followRepository.findByFromMemberId(memberId);
 
+        // 로그인사용자가 타인을 팔로우 한 것을 TORIGHT로 지정.
+        for(Follow follow : follows){
+            follow.setFollowGubun("TORIGHT");
+        }
+
         return follows;
     }
 
     public List<Follow> findToFollow(Long memberId){
         List<Follow> follows = followRepository.findByMemberId(memberId);
+
+        List<Follow> fromFollows = followRepository.findByFromMemberId(memberId);
+
+        List<Long> fromFollowsTargetMemberIds = new ArrayList<>();
+
+        // 로그인한 사용자가 타인을 팔로우 하지 않았지만 타인이 로그인사용자를 팔로우 했을 경우 TOLEFT
+        // 로그인한 사용자와 타인이 서로 팔로우 했을 경우 CROSS
+
+        // 로그인한 사용자가 팔로우한 사람을 뽑는다.
+        for(Follow follow : fromFollows){
+
+            fromFollowsTargetMemberIds.add(follow.getMember().getMemberId());
+
+        }
+
+        // 로그인한 사용자를 팔로우한 사람중에, 로그인한 사용자가 팔로우한 사람이 있는지 비교한다.
+        // 있으면 구분값을 CROSS로, 없으면 TOLEFT
+        for(Follow follow1 : follows){
+
+            follow1.setFollowGubun("TOLEFT");
+
+            for(Long targetMemberId : fromFollowsTargetMemberIds){
+
+                if(targetMemberId == follow1.getFromMember().getMemberId()){
+
+                    follow1.setFollowGubun("CROSS");
+                    break;
+                }
+            }
+        }
 
         return follows;
     }
