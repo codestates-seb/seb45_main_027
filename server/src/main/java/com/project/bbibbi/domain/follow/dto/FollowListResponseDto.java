@@ -13,9 +13,10 @@ import java.time.LocalDateTime;
 public class FollowListResponseDto {
     private Long fromMemberId;
     private String fromMemberNickname;
+    private String fromMemberImage;
     private Long memberId;
     private String memberNickname;
     private String memberImage;
-    private String followGubun;
+    private Boolean followYn;
     private LocalDateTime createdDateTime;
 }
