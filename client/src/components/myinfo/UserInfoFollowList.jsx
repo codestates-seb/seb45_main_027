@@ -29,8 +29,6 @@ const UserInfoFollowList = ({ userList, handleFollow, handleUnfollow, activeTab 
             }}
           >
             <span className="bg-[#00647B]/80 rounded-full p-1.5">{user.followYn ? "Following" : "Follow"}</span>
-            <span className="bg-[#00647B]/80 rounded-full p-1.5">{user.followGunbun !== 'CROSS' ? "Following" : "Follow"}</span>
-
           </button>
         </div>
       ))}

@@ -17,10 +17,10 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
 
   //프로필정보 수정을 위한 state
   const [profileData, setProfileData] = useState({
-    id: userDetails[0].id,
-    nickname: userDetails[0].username,
-    profileImg: userDetails[0].profileImg,
-    myIntro: userDetails[0].bio || "",
+    //id: userDetails.id,
+    nickname: userDetails.username,
+    profileImg: userDetails.profileImg,
+    myIntro: userDetails.bio || "",
   });
 
   //최종으로 수정된 프로필정보를 서버에 보냄
