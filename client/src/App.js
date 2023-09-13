@@ -49,7 +49,9 @@ function App() {
     <AuthProvider>
       <UserProvider>
         <Toaster />
-        {isHeader && <HeaderPc />}
+        <div className="flex flex-col min-h-screen">
+          {isHeader && <HeaderPc />}
+          <div className="flex-grow">
         <Routes>
           <Route path={"/"} element={<Main />} />
           <Route path={"/login"} element={<Login />} />
@@ -63,8 +65,10 @@ function App() {
           <Route path={"/showroom/:feedId"} element={<ViewShowRoom />} />
           <Route path={"/tips/write"} element={<WriteTips />} />
           <Route path={"/tips/:tipId"} element={<ViewTips />} />
-        </Routes>
+          </Routes>
+        </div>
         {isFooter && <HiddenFooter />}
+      </div>
       </UserProvider>
     </AuthProvider>
   );
