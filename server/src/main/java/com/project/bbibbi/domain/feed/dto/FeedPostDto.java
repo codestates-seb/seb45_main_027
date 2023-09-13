@@ -38,7 +38,7 @@ public class FeedPostDto {
     private Long memberId;
 
     // feed_image 내용
-    private List<FeedImageDto> feedImages;
+//    private List<FeedImageDto> feedImages;
 
 
 }

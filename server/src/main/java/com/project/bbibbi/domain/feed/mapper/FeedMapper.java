@@ -1,11 +1,9 @@
 package com.project.bbibbi.domain.feed.mapper;
 
-import com.project.bbibbi.domain.feed.dto.FeedImageDto;
-import com.project.bbibbi.domain.feed.dto.FeedPatchDto;
-import com.project.bbibbi.domain.feed.dto.FeedPostDto;
-import com.project.bbibbi.domain.feed.dto.FeedResponseDto;
+import com.project.bbibbi.domain.feed.dto.*;
 import com.project.bbibbi.domain.feed.entity.Feed;
-import com.project.bbibbi.domain.feed.entity.FeedImage;
+//import com.project.bbibbi.domain.feed.entity.FeedImage;
+//import com.project.bbibbi.domain.feed.entity.FeedImageTag;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyResponseDto;
 import com.project.bbibbi.domain.feedReply.entity.FeedReply;
 import com.project.bbibbi.domain.member.entity.Member;
@@ -40,24 +38,44 @@ public interface FeedMapper {
         feed.setMember(Member.builder().memberId(1L).nickname("nickname1").build());
 
 
-        List<FeedImage> feedImages = new ArrayList<>();
-
-        for(FeedImageDto feedImageDto : feedPostDto.getFeedImages()){
-
-            FeedImage tempFeedImage = new FeedImage();
-
-            tempFeedImage.setImage(feedImageDto.getImage());
-            tempFeedImage.setX(feedImageDto.getX());
-            tempFeedImage.setY(feedImageDto.getY());
-            tempFeedImage.setTag(feedImageDto.getTag());
-            tempFeedImage.setFeed(feed);
-            tempFeedImage.setCreatedDateTime(LocalDateTime.now());
-
-            feedImages.add(tempFeedImage);
-
-        }
-
-        feed.setImages(feedImages);
+        // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.
+//        if(feedPostDto.getFeedImages() != null) {
+//
+//            List<FeedImage> feedImages = new ArrayList<>();
+//
+//            for (FeedImageDto feedImageDto : feedPostDto.getFeedImages()) {
+//
+//                FeedImage tempFeedImage = new FeedImage();
+//
+//                tempFeedImage.setImage(feedImageDto.getImage());
+//                tempFeedImage.setFeed(feed);
+//
+//                if(feedImageDto.getFeedImageTags() != null){
+//
+//                    List<FeedImageTag> feedImageTags = new ArrayList<>();
+//
+//                    for(FeedImageTagDto feedImageTagDto : feedImageDto.getFeedImageTags()){
+//                        FeedImageTag tempFeedImageTag = new FeedImageTag();
+//
+//                        tempFeedImageTag.setFeedImage(tempFeedImage);
+//                        tempFeedImageTag.setX(feedImageTagDto.getX());
+//                        tempFeedImageTag.setY(feedImageTagDto.getY());
+//                        tempFeedImageTag.setTag(feedImageTagDto.getTag());
+//
+//                        feedImageTags.add(tempFeedImageTag);
+//                    }
+//
+//                    tempFeedImage.setImageTags(feedImageTags);
+//                }
+//
+//                tempFeedImage.setCreatedDateTime(LocalDateTime.now());
+//
+//                feedImages.add(tempFeedImage);
+//
+//            }
+//
+//            feed.setImages(feedImages);
+//        }
 
         feed.setCreatedDateTime(LocalDateTime.now());
 
@@ -86,26 +104,49 @@ public interface FeedMapper {
         // 이런 멤버값이 들어온다고 가정한다.
         feed.setMember(Member.builder().memberId(1L).nickname("nickname1").build());
 
-        List<FeedImage> feedImages = new ArrayList<>();
-
-        for(FeedImageDto feedImageDto : feedPatchDto.getFeedImages()){
-
-            FeedImage tempFeedImage = new FeedImage();
-
-            tempFeedImage.setFeedImageId(feedImageDto.getFeedImageId());
-            tempFeedImage.setImage(feedImageDto.getImage());
-            tempFeedImage.setX(feedImageDto.getX());
-            tempFeedImage.setY(feedImageDto.getY());
-            tempFeedImage.setTag(feedImageDto.getTag());
-            tempFeedImage.setFeed(feed);
-            tempFeedImage.setCreatedDateTime(LocalDateTime.now());
-            tempFeedImage.setModifiedDateTime(LocalDateTime.now());
-
-            feedImages.add(tempFeedImage);
-
-        }
-
-        feed.setImages(feedImages);
+        // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.
+//        if(feedPatchDto.getFeedImages() != null) {
+//            List<FeedImage> feedImages = new ArrayList<>();
+//
+//            for (FeedImageDto feedImageDto : feedPatchDto.getFeedImages()) {
+//
+//                FeedImage tempFeedImage = new FeedImage();
+//
+//                tempFeedImage.setFeedImageId(feedImageDto.getFeedImageId());
+//                tempFeedImage.setImage(feedImageDto.getImage());
+//                tempFeedImage.setFeed(feed);
+//
+//                if(feedImageDto.getFeedImageTags() != null){
+//
+//                    List<FeedImageTag> feedImageTags = new ArrayList<>();
+//
+//                    for(FeedImageTagDto feedImageTagDto : feedImageDto.getFeedImageTags()){
+//
+//                        FeedImageTag tempFeedImageTag = new FeedImageTag();
+//
+//                        tempFeedImageTag.setFeedImage(tempFeedImage);
+//                        tempFeedImageTag.setX(feedImageTagDto.getX());
+//                        tempFeedImageTag.setY(feedImageTagDto.getY());
+//                        tempFeedImageTag.setTag(feedImageTagDto.getTag());
+//
+//                        feedImageTags.add(tempFeedImageTag);
+//
+//                    }
+//
+//                    tempFeedImage.setImageTags(feedImageTags);
+//
+//                }
+//
+//                tempFeedImage.setCreatedDateTime(LocalDateTime.now());
+//                tempFeedImage.setModifiedDateTime(LocalDateTime.now());
+//
+//                feedImages.add(tempFeedImage);
+//
+//            }
+//
+//            feed.setImages(feedImages);
+//
+//        }
         feed.setModifiedDateTime(LocalDateTime.now());
 
         return feed;
@@ -137,41 +178,73 @@ public interface FeedMapper {
         feedResponseDto.setLocationName(feed.getLocation().getDescription());
         feedResponseDto.setMemberId(feed.getMember().getMemberId());
         feedResponseDto.setNickname(feed.getMember().getNickname());
+        feedResponseDto.setMemberImage(feed.getMember().getProfileImg());
+        feedResponseDto.setMyIntro(feed.getMember().getMyIntro());
+        feedResponseDto.setLikeCount(feed.getLikeCount());
+        feedResponseDto.setLikeYn(feed.getLikeYn());
+        feedResponseDto.setBookMarkCount(feed.getBookMarkCount());
+        feedResponseDto.setBookMarkYn(feed.getBookMarkYn());
+        feedResponseDto.setRepliesCount( (feed.getReplies() == null) ? 0: feed.getReplies().size());
 
-        List<FeedImageDto> feedImageDtos = new ArrayList<>();
+        // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.
+//        if(feed.getImages() != null) {
+//            List<FeedImageDto> feedImageDtos = new ArrayList<>();
+//
+//            for (FeedImage feedImage : feed.getImages()) {
+//
+//                FeedImageDto feedImageDto = new FeedImageDto();
+//
+//                feedImageDto.setFeedImageId(feedImage.getFeedImageId());
+//                feedImageDto.setImage(feedImage.getImage());
+//
+//                feedImageDto.setFeedId(feedImage.getFeed().getFeedId());
+//
+//                if(feedImage.getImageTags() != null){
+//                    List<FeedImageTagDto> feedImageTagDtos = new ArrayList<>();
+//
+//                    for(FeedImageTag feedImageTag : feedImage.getImageTags()){
+//
+//                        FeedImageTagDto feedImageTagDto = new FeedImageTagDto();
+//
+//                        feedImageTagDto.setFeedImageTagId(feedImageTag.getFeedImageTagId());
+//                        feedImageTagDto.setX(feedImageTag.getX());
+//                        feedImageTagDto.setY(feedImageTag.getY());
+//                        feedImageTagDto.setTag(feedImageTag.getTag());
+//
+//                        feedImageTagDtos.add(feedImageTagDto);
+//                    }
+//
+//                    feedImageDto.setFeedImageTags(feedImageTagDtos);
+//                }
+//
+//                feedImageDto.setCreatedDateTime(feedImage.getCreatedDateTime());
+//                feedImageDto.setModifiedDateTime(feedImage.getModifiedDateTime());
+//
+//                feedImageDtos.add(feedImageDto);
+//
+//            }
+//
+//            feedResponseDto.setFeedImages(feedImageDtos);
+//
+//        }
 
-        for(FeedImage feedImage : feed.getImages()){
+        if(feed.getReplies() != null) {
 
-            FeedImageDto feedImageDto = new FeedImageDto();
-
-            feedImageDto.setFeedImageId(feedImage.getFeedImageId());
-            feedImageDto.setImage(feedImage.getImage());
-            feedImageDto.setX(feedImage.getX());
-            feedImageDto.setY(feedImage.getY());
-            feedImageDto.setTag(feedImage.getTag());
-            feedImageDto.setFeedId(feedImage.getFeed().getFeedId());
-            feedImageDto.setCreatedDateTime(feedImage.getCreatedDateTime());
-            feedImageDto.setModifiedDateTime(feedImage.getModifiedDateTime());
-
-            feedImageDtos.add(feedImageDto);
-
+            List<FeedReplyResponseDto> allReplies = new ArrayList<>();
+            //피드에 댓글정보가 있으니 allReplies에 뿌려준다.
+            for (FeedReply feedReply : feed.getReplies()) {
+                FeedReplyResponseDto feedReplyResponseDto = new FeedReplyResponseDto();
+                feedReplyResponseDto.setFeedReplyId(feedReply.getFeedReplyId());
+                feedReplyResponseDto.setFeedId(feedReply.getFeed().getFeedId());
+                feedReplyResponseDto.setContent(feedReply.getContent());
+                feedReplyResponseDto.setNickname(feedReply.getMember().getNickname());
+                feedReplyResponseDto.setMemberId(feedReply.getMember().getMemberId());
+                feedReplyResponseDto.setCreatedDateTime(feedReply.getCreatedDateTime());
+                allReplies.add(feedReplyResponseDto);
+            }
+            // Replies 안에 allReplies 저장
+            feedResponseDto.setReplies(allReplies);
         }
-
-        feedResponseDto.setFeedImages(feedImageDtos);
-        List<FeedReplyResponseDto> allReplies = new ArrayList<>();
-        //피드에 댓글정보가 있으니 allReplies에 뿌려준다.
-       for(FeedReply feedReply : feed.getReplies()){
-           FeedReplyResponseDto feedReplyResponseDto = new FeedReplyResponseDto();
-           feedReplyResponseDto.setFeedReplyId(feedReply.getFeedReplyId());
-           feedReplyResponseDto.setFeedId(feedReply.getFeed().getFeedId());
-           feedReplyResponseDto.setContent(feedReply.getContent());
-           feedReplyResponseDto.setNickname(feedReply.getMember().getNickname());
-           feedReplyResponseDto.setMemberId(feedReply.getMember().getMemberId());
-           feedReplyResponseDto.setCreatedDateTime(feedReply.getCreatedDateTime());
-           allReplies.add(feedReplyResponseDto);
-       }
-        // Replies 안에 allReplies 저장
-       feedResponseDto.setReplies(allReplies);
 
         return feedResponseDto;
 
@@ -202,17 +275,30 @@ public interface FeedMapper {
                                 .locationName(feed.getLocation().getDescription())
                                 .memberId(feed.getMember().getMemberId())
                                 .nickname(feed.getMember().getNickname())
-                                .feedImages(feed.getImages().stream().map(feedImage -> FeedImageDto.builder()
-                                        .feedImageId(feedImage.getFeedImageId())
-                                        .image(feedImage.getImage())
-                                        .x(feedImage.getX())
-                                        .y(feedImage.getY())
-                                        .tag(feedImage.getTag())
-                                        .feedId(feedImage.getFeed().getFeedId())
-                                        .createdDateTime(feedImage.getCreatedDateTime())
-                                        .modifiedDateTime(feedImage.getModifiedDateTime())
-                                        .build())
-                                        .collect(Collectors.toList()))
+                                .memberImage(feed.getMember().getProfileImg())
+                                .myIntro(feed.getMember().getMyIntro())
+                                .likeCount(feed.getLikeCount())
+                                .likeYn(feed.getLikeYn())
+                                .bookMarkCount(feed.getBookMarkCount())
+                                .bookMarkYn(feed.getLikeYn())
+                                .repliesCount((feed.getReplies() == null) ? 0 : feed.getReplies().size())
+                                // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.
+//                                .feedImages(feed.getImages().stream().map(feedImage -> FeedImageDto.builder()
+//                                                .feedImageId(feedImage.getFeedImageId())
+//                                                .image(feedImage.getImage())
+//                                                .feedId(feedImage.getFeed().getFeedId())
+//                                                .feedImageTags(feedImage.getImageTags().stream().map(feedImageTag -> FeedImageTagDto.builder()
+//                                                                .feedImageTagId(feedImageTag.getFeedImageTagId())
+//                                                                .x(feedImageTag.getX())
+//                                                                .y(feedImageTag.getY())
+//                                                                .tag(feedImageTag.getTag())
+//                                                                .build())
+//                                                        .collect(Collectors.toList())
+//                                                )
+//                                                .createdDateTime(feedImage.getCreatedDateTime())
+//                                                .modifiedDateTime(feedImage.getModifiedDateTime())
+//                                                .build())
+//                                        .collect(Collectors.toList()))
                                 .build())
                         .collect(Collectors.toList());
 

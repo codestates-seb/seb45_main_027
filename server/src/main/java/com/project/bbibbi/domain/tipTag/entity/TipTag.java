@@ -1,7 +1,6 @@
 package com.project.bbibbi.domain.tipTag.entity;
 
 import com.project.bbibbi.domain.tip.entity.Tip;
-import com.project.bbibbi.domain.tipTag.entity.Tag;
 import com.project.bbibbi.global.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +24,11 @@ public class TipTag extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id", nullable = false)
     private Tag tag;
+
+    public TipTag(Tip tip, Tag tag) {
+        this.tip = tip;
+        this.tag = tag;
+    }
 
     // Getter/Setter 메서드
 /*

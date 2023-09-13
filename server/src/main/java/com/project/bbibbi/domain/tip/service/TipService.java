@@ -1,12 +1,13 @@
 package com.project.bbibbi.domain.tip.service;
 
+import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tip.entity.Tip;
 import com.project.bbibbi.domain.tip.repository.TipRepository;
 import com.project.bbibbi.domain.tipImage.entity.TipImage;
 import com.project.bbibbi.domain.tipImage.service.TipImageService;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +24,38 @@ public class TipService {
         this.tipImageService = tipImageService;
     }
 
-    public List<Tip> getAllTips() {
-        return tipRepository.findAll();
+    public Page<Tip> getAllTips(int page, int size) {
+
+        PageRequest pageRequest =  PageRequest.of(page, size, Sort.by("createdDateTime").descending());
+
+        return tipRepository.findAll(pageRequest);
+    }
+
+    public Page<Tip> findMyInfoTips(int page, int size, long myInfoMemberId){
+
+        PageRequest pageRequest =  PageRequest.of(page, size, Sort.by("createdDateTime").descending());
+
+        Page<Tip> pageTips = tipRepository.findByMember(Member.builder().memberId(myInfoMemberId).build(),pageRequest); // 비쿼리 성공
+
+//       List<Feed> pageFeeds = feedRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
+
+        return  pageTips;
+    }
+
+    public List<Tip> getAllSearchTips(String searchString, int page, int size) {
+
+
+        return tipRepository.findAllSearch(searchString,page,size );
     }
 
     public Tip getTipById(Long tipId) {
-        return tipRepository.findById(tipId)
-                .orElseThrow();
+        Tip findTip = tipRepository.findById(tipId).orElseThrow();
+
+        findTip.setViews(findTip.getViews() + 1);
+
+        Tip viewUpTip = tipRepository.save(findTip);
+
+        return viewUpTip;
     }
 
     public Tip createTip(Tip tip) {
@@ -44,32 +70,32 @@ public class TipService {
         updatedTip.setCreatedDateTime(tip.getCreatedDateTime());
 
         // 기존 사진
-        List<Long> curImgId = new ArrayList<>();
-        for(TipImage tipImage : tip.getTipImages()){
-            Long add = tipImage.getTipImageId();
-
-            curImgId.add(add);
-        }
+//        List<Long> curImgId = new ArrayList<>();
+//        for(TipImage tipImage : tip.getTipImages()){
+//            Long add = tipImage.getTipImageId();
+//
+//            curImgId.add(add);
+//        }
 
         tip.setTitle(updatedTip.getTitle());
         tip.setCoverPhoto(updatedTip.getCoverPhoto());
         tip.setContent(updatedTip.getContent());
 
         // 새 사진은 insert하고
-        for (TipImage tipImage : updatedTip.getTipImages()) {
-            tipImage.setTip(tip); // TipImage에 Tip 연관성 설정
-            tipImageService.saveTipImage(tipImage);
-        }
+//        for (TipImage tipImage : updatedTip.getTipImages()) {
+//            tipImage.setTip(tip); // TipImage에 Tip 연관성 설정
+//            tipImageService.saveTipImage(tipImage);
+//        }
 
         // 구 사진은 삭제
-        for(Long long1 : curImgId){
-            tipRepository.deleteImageById(long1);
-        }
+//        for(Long long1 : curImgId){
+//            tipRepository.deleteImageById(long1);
+//        }
 
         Tip updatingTip = tipRepository.save(tip);
 
 
-        updatingTip.setTipImages(updatedTip.getTipImages());
+//        updatingTip.setTipImages(updatedTip.getTipImages());
 
         return updatingTip;
     }
@@ -81,24 +107,7 @@ public class TipService {
         tipRepository.delete(tip);
     }
 
-//    public void addImageToTip(Long tipId, MultipartFile imageFile) {
-//        Tip tip = tipRepository.findById(tipId).orElse(null);
-//        if (tip == null) {
-//            throw new IllegalArgumentException("Tip not found");
-//        }
-//
-//        String storedFileName = tipImageService.saveImage(imageFile);
-//        String imageUri = tipImageService.getImageUrl(storedFileName);
-//
-//        // TipImage 엔티티를 생성하고 저장합니다
-//        TipImage tipImage = new TipImage();
-//        tipImage.setImage(storedFileName);
-//        tipImage.setTip(tip);
-//        tipImageService.saveTipImage(tipImage);
-//
-//        // 이미지 URI를 게시글에 추가합니다
-//
-//        tipRepository.save(tip);
-//    }
-
+    public Slice<Tip> findTipAllByCreatedAtDesc(String searchString, Pageable pageable) {
+        return tipRepository.findAllTipsPageableOrderByCreatedAtDesc(searchString, pageable);
+    }
 }
