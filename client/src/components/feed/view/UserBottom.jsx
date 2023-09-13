@@ -3,18 +3,18 @@ import { useUserContext } from "../../../context/userContext";
 
 const button = "flex items-center justify-center h-full";
 
-const UserBottom = ({ memberImage,nickname, myIntro }) => {
+const UserBottom = ({ feedData }) => {
   const { follow, setFollow } = useUserContext();
 
   return (
     <div className="flex justify-between py-12 border-b">
       <div className="flex items-center">
         <div className="border w-16 h-16 rounded-full mr-4">
-          <img src={`${memberImage}`} alt="" />
+          <img src={feedData.memberImage} alt="" />
         </div>
         <div>
           <div className="flex items-center">
-            <div className="text-xl font-semibold">{nickname}</div>
+            <div className="text-xl font-semibold">{feedData.nickname}</div>
             <div className="flex items-center pr-2 pl-2.5 text-2xl">·</div>
             <button className="" onClick={() => setFollow(!follow)}>
               {follow ? (
@@ -32,7 +32,7 @@ const UserBottom = ({ memberImage,nickname, myIntro }) => {
               )}
             </button>
           </div>
-          <div className="text-xl text-gray-500">{myIntro}</div>
+          <div className="text-xl text-gray-500">{feedData.myIntro}</div>
         </div>
       </div>
     </div>

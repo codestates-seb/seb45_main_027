@@ -1,20 +1,14 @@
-import React, { useEffect } from "react";
-import { toast } from "react-hot-toast";
+import React from "react";
 
 const TitleText = "flex items-center justify-center text-4xl font-bold";
 
-const ViewTitle = ({ title, loading, error }) => {
-  useEffect(() => {
-    if (!title && loading) {
-      toast.loading("로딩중...");
-    } else if (title || error) {
-      toast.dismiss();
-    }
-  }, [title, loading, error]);
-
+const ViewTitle = ({ feedData }) => {
+  console.log(feedData);
   return (
     <div className="max-h-full">
-      {title ? <span className={TitleText}>{title}</span> : null}
+      {feedData.title ? (
+        <span className={TitleText}>{feedData.title}</span>
+      ) : null}
     </div>
   );
 };
