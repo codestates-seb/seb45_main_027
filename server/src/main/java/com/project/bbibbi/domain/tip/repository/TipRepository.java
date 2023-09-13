@@ -27,7 +27,21 @@ public interface TipRepository extends JpaRepository<Tip, Long>, TipRepositoryCu
 //    void insertImageForce(@Param("createdDateTime") LocalDateTime createdDateTime, @Param("modifiedDateTime") LocalDateTime modifiedDateTime,
 //                          @Param("image") String image, @Param("tipId") Long tipId);
 
-    Page<Tip> findByMember(Member member, Pageable pageable);
+    List<Tip> findByMemberOrderByCreatedDateTimeDesc(Member member);
+
+    @Query(value = "select tip.* from tip " +
+            "inner join (select a.tip_id, ( select count(*) from tip_like where tip_id = a.tip_id) as like_count from tip a ) as tip_likecount " +
+            "on tip.tip_id = tip_likecount.tip_id " +
+            "where tip.member_id = :memberId " +
+            "order by tip_likecount.like_count desc, tip.created_date_time desc ", nativeQuery = true)
+    List<Tip> findByMemberLike(@Param("memberId") long memberId);
+
+    @Query(value = "select tip.* from tip " +
+            "inner join (select a.tip_id, (select count(*) from tip_bookmark where tip_id = a.tip_id) as book_mark_count from tip a ) as tip_bookcount " +
+            "on tip.tip_id = tip_bookcount.tip_id " +
+            "where tip.member_id = :memberId " +
+            "order by tip_bookcount.book_mark_count desc, tip.created_date_time desc ", nativeQuery = true)
+    List<Tip> findByMemberBookMark(@Param("memberId") long memberId);
 
     @Query(value = "select tip.* from (select b.tip_id, row_number() over(order by b.created_date_time desc) as row_num " +
             "from (select * from tip where title like %:searchString% or content like %:searchString% ) as b ) as ranked_tip " +

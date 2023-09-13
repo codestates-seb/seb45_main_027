@@ -39,7 +39,21 @@ public interface FeedRepository extends JpaRepository<Feed, Long> {
     //    @Query(value = "select * from feed where member_id = :myInfoMemberId order by created_date_time desc limit :size", nativeQuery = true)
 //    Page<Feed> findByMemberId(@Param("myInfoMemberId") long myInfoMemberId, @Param("size") int size);
 
-    Page<Feed> findByMember(Member member, Pageable pageable); // 비쿼리방식 일단 성공한 방법
+    List<Feed> findByMemberOrderByCreatedDateTimeDesc(Member member); // 비쿼리방식 일단 성공한 방법
+
+    @Query(value = "select feed.* from feed " +
+            "inner join (select a.feed_id, ( select count(*) from feed_like where feed_id = a.feed_id) as like_count from feed a ) as feed_likecount " +
+            "on feed.feed_id = feed_likecount.feed_id " +
+            "where feed.member_id = :memberId " +
+            "order by feed_likecount.like_count desc, feed.created_date_time desc ", nativeQuery = true)
+    List<Feed> findByMemberLike(@Param("memberId") long memberId);
+
+    @Query(value = "select feed.* from feed " +
+            "inner join (select a.feed_id, (select count(*) from feed_book_mark where feed_id = a.feed_id) as book_mark_count from feed a ) as feed_bookcount " +
+            "on feed.feed_id = feed_bookcount.feed_id " +
+            "where feed.member_id = :memberId " +
+            "order by feed_bookcount.book_mark_count desc, feed.created_date_time desc ", nativeQuery = true)
+    List<Feed> findByMemberBookMark(@Param("memberId") long memberId);
 
     // 쿼리방식 성공.. 이렇게 쓸 경우 Page으로 타입으로 쓸 필요가 없다. 마찬가지로 service의 메서드도 Page로 받을 필요가 없다.
 //    @Query(value = "select feed.* " +

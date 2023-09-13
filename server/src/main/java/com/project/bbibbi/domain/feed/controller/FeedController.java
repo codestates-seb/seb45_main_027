@@ -127,7 +127,7 @@ public class FeedController {
     }
 
     @GetMapping("/myInfoSearch")
-    public ResponseEntity getMyInfoFeeds(@RequestParam int page) {
+    public ResponseEntity getMyInfoFeeds() {
 
         // myInfo 대상 memberId가 1번이라고 가정한다. 로그인 기능 구현되면 아랫줄 대신 로그인대상을 받는 코드를 쓴다.
         Long myInfoMemberId = 1L;
@@ -135,11 +135,10 @@ public class FeedController {
         // 사이즈는 4로 고정
         int size = 4;
 
-        Page<Feed> pageFeeds = feedService.findMyInfoFeeds(page - 1, size, myInfoMemberId);  // 비쿼리일 경우
-        List<Feed> feeds = pageFeeds.getContent();
+        List<Feed> pageFeeds = feedService.findMyInfoFeeds(myInfoMemberId);  // 비쿼리일 경우
 
 //        List<Feed> feeds = feedService.findMyInfoFeeds(page - 1, size, myInfoMemberId); 쿼리방법
-        List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(feeds);
+        List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(pageFeeds);
 
         return new ResponseEntity<>(new MultiResponseDto<>(feedResponseDtos), HttpStatus.OK);
 
