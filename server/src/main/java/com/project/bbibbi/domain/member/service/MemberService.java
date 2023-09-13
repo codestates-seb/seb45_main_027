@@ -63,10 +63,15 @@ public class MemberService {
     public void updateMember(MemberUpdateServiceRequest request) {
 
         Long loginMemberId = loginUtils.getLoginId();
+        if(loginMemberId == null) {
+            throw new MemberNotLoginException();
+        }
 
-        checkDuplicateNickname(request.getNickname());  // 중복 닉네임일 경우 예외처리
         comparisonMembers(loginMemberId, request.getMemberId());
-        Member member = ExistingMember(loginMemberId); // 이것도 로그인 구현하면 로그인된 아이디를 가져옴 위에꺼가 진실
+
+        Member member = ExistingMember(loginMemberId);
+
+        checkDuplicateNickname(request.getNickname(), member.getNickname());  // 중복 닉네임일 경우 예외처리
 
         updateMember(member, request);
 
@@ -83,15 +88,16 @@ public class MemberService {
     public void updatePassword(MemberUpdatePasswordApiServiceRequest request) {
 
 
-        Long LoginMemberId = loginUtils.getLoginId();
+        Long loginMemberId = loginUtils.getLoginId();
+        if(loginMemberId == null) {
+            throw new MemberNotLoginException();
+        }
 
                 Optional<Member> optionalMember = memberRepository.findById(request.getMemberId());
                 Member member = optionalMember.orElseThrow(MemberNotFoundException::new);
 
 
-                if (!LoginMemberId.equals(request.getMemberId())) {
-                    throw new MemberAccessDeniedException();
-                }
+            comparisonMembers(loginMemberId, request.getMemberId());
 
 
         //        Member member = verifiyMember(loginMemberId);
@@ -115,6 +121,9 @@ public class MemberService {
 
 
         Long loginMemberId = loginUtils.getLoginId();
+        if(loginMemberId == null) {
+            throw new MemberNotLoginException();
+        }
 
         comparisonMembers(loginMemberId, memberId);
         Member member = ExistingMember(loginMemberId);
@@ -193,6 +202,15 @@ public class MemberService {
             String memberNickname = member.getNickname();
             if (memberNickname != null && memberNickname.equals(nickname)) {
                 throw new MemberExistNicknameException();}
+        }
+    }
+
+    private void checkDuplicateNickname(String newNickname, String currentNickname) {
+        if (newNickname != null && !newNickname.equals(currentNickname)) {
+            Member member = memberRepository.findByNickname(newNickname).orElse(null);
+            if (member != null) {
+                throw new MemberExistNicknameException();
+            }
         }
     }
 
