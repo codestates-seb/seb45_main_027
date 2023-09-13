@@ -10,9 +10,12 @@
     "pretendard": "^1.3.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
+    "react-select": "^5.7.4",
+    "styled-components": "^6.0.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

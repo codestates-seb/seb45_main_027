@@ -1,30 +1,47 @@
 import React, { useState } from "react";
+import axios from "axios";
+import useAxios from "../../../hooks/useAxios";
 
-const WriteCoverImg = ({ bgColor, btnColor }) => {
-  const [image, setImage] = useState(null);
-
+const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
   const imageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
+    const formData = new FormData();
+    formData.append("coverPhotoImage", file);
 
     reader.onloadend = () => {
-      setImage(reader.result);
+      setCoverImage(reader.result);
     };
 
     if (file) {
       reader.readAsDataURL(file);
     }
+
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/imageUpload/coverImage`, formData)
+      .then((response) => {
+        console.log(response.data);
+        console.log("S3업로드 성공");
+        setCoverImage(response.data);
+      })
+      .catch((error) => {});
+  };
+
+  const handleUpload = () => {
+    document.getElementById("hiddenFileInput").click();
   };
 
   return (
     <div className="w-full h-full flex mt-10">
       <div
-        className={`${bgColor} w-full h-[500px] flex flex-col justify-center items-center text-xl rounded-2xl shadow`}>
-        {image ? (
+        className={`${bgColor} w-full h-[500px] flex flex-col justify-center items-center text-xl rounded-md shadow`}
+      >
+        {coverImage ? (
           <img
-            src={image}
+            src={coverImage}
             alt="CoverImg"
-            className="w-full h-2/3 rounded-2xl object-cover"
+            className="w-full h-[100%] rounded-md object-cover"
+            onClick={handleUpload}
           />
         ) : (
           <span className="font-semibold text-gray-500 mb-10">
@@ -38,11 +55,15 @@ const WriteCoverImg = ({ bgColor, btnColor }) => {
           id="hiddenFileInput"
           onChange={imageUpload}
         />
-        <button
-          className={`${btnColor} text-white px-10 py-2 rounded-3xl shadow mt-10`}
-          onClick={() => document.getElementById("hiddenFileInput").click()}>
-          커버사진 추가하기
-        </button>
+
+        {!coverImage ? (
+          <button
+            className={`${btnColor} text-white px-10 py-2 rounded-md shadow mt-10`}
+            onClick={handleUpload}
+          >
+            커버사진 추가하기
+          </button>
+        ) : null}
       </div>
     </div>
   );

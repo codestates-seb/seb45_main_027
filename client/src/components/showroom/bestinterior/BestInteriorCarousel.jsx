@@ -21,7 +21,7 @@ const data = [
   { url: "./asset/image4.png", isBookmarked: false },
 ];
 
-const BestInteriorCarousel = ({ viewportWidth, setViewportWidth }) => {
+const BestInteriorCarousel = ({ viewportWidth, showroomData }) => {
   const [numVisibleSlides, setNumVisibleSlides] = useState(20); // 캐러셀 사진 크기를 반응형으로 제어하기 위한 상태
   const [image, setImage] = useState(data); // 이미지데이터를 상태로 저장
 
@@ -59,13 +59,12 @@ const BestInteriorCarousel = ({ viewportWidth, setViewportWidth }) => {
       <img src={image.url} alt={image.url} className="rounded-xl " />
       <p
         className="absolute w-12 h-12 bottom-0 right-1"
-        onClick={() => toggleBookmark(idx)}
-      >
+        onClick={() => toggleBookmark(idx)}>
         <img
           src={
             image.isBookmarked
-              ? "./images/isBookmarked.png"
-              : "./images/Bookmark.png"
+              ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isBookmarked.png"
+              : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark.png"
           }
           alt="Bookmark"
           className="absolute bottom-3 right-7 cursor-pointer"
@@ -79,7 +78,7 @@ const BestInteriorCarousel = ({ viewportWidth, setViewportWidth }) => {
   ));
 
   return (
-    <div className="py-5 px-3 w-full ">
+    <div className="py-5 px-8 md:px-3 w-full ">
       <Carousel
         showArrows={true}
         centerMode={true}

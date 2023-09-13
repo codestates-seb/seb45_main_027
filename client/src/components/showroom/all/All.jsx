@@ -1,17 +1,33 @@
 import React from "react";
 import AllHeader from "./AllHeader";
-import Allcontent from "./Allcontent";
+import AllContent from "./AllContent";
 
-const All = ({ viewportWidth, setViewportWidth }) => {
+const All = ({
+  viewportWidth,
+  setViewportWidth,
+  showroomData,
+  setShowroomData,
+  handleFilterClick,
+  inputValue,
+  handleInputChange,
+  handleSearch,
+}) => {
   return (
-    <div className="flex-col mt-10">
+    <div className="flex-col mt-20">
       <AllHeader
         viewportWidth={viewportWidth}
         setViewportWidth={setViewportWidth}
+        showroomData={showroomData}
+        setShowroomData={setShowroomData}
+        handleFilterClick={handleFilterClick}
+        inputValue={inputValue}
+        handleInputChange={handleInputChange}
+        handleSearch={handleSearch}
       />
-      <Allcontent
+      <AllContent
         viewportWidth={viewportWidth}
         setViewportWidth={setViewportWidth}
+        showroomData={showroomData}
       />
     </div>
   );
