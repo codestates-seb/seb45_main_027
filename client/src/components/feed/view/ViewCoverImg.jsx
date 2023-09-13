@@ -1,8 +1,8 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { toast } from "react-hot-toast";
 
 const coverImg =
-  "flex items-center justify-center aspectRatioImage_16_9 md:max-h-[calc(100vh-350px)]";
+  "flex items-center justify-center aspectRatioImage_16_9 object-cover w-full h-full"; // object-cover, w-full, h-full 추가
 
 const ViewCoverImg = ({ coverPhoto, loading, error }) => {
   useEffect(() => {
@@ -14,7 +14,7 @@ const ViewCoverImg = ({ coverPhoto, loading, error }) => {
   }, [coverPhoto, loading, error]);
 
   return (
-    <div className="pt-0 md:pt-24 max-h-[calc(100vh-350px)] aspectRatioImage_16_9 bg-white">
+    <div className="relative pt-0 md:pt-24 max-h-[calc(100vh-350px)] aspectRatioImage_16_9 bg-white">
       {coverPhoto ? (
         <img src={`${coverPhoto}`} alt="Cover" className={coverImg} />
       ) : (
