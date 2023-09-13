@@ -64,9 +64,6 @@ public class MemberService {
 
         Long loginMemberId = loginUtils.getLoginId();
 
-
-
-
         checkDuplicateNickname(request.getNickname());  // 중복 닉네임일 경우 예외처리
         comparisonMembers(loginMemberId, request.getMemberId());
         Member member = ExistingMember(loginMemberId); // 이것도 로그인 구현하면 로그인된 아이디를 가져옴 위에꺼가 진실

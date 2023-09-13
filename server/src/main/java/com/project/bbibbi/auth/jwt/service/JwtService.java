@@ -89,7 +89,7 @@ public class JwtService {
         data.put("memberId", memberId);
         data.put("profileImg", profileImg);
         data.put("nickname", nickname);
-
+        // string nickname =
         response.setStatus(HttpServletResponse.SC_OK);
         setAccessTokenHeader(response, accessToken);
         setRefreshTokenHeader(response, refreshToken);

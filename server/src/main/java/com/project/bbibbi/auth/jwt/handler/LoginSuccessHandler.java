@@ -56,7 +56,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private String extractUsername(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         //Long memberId = userDetails.getmemberId; 이러면 userDetails를 재정의해주는 클래스 만들어야함
-        //userDetails에 권한이 꼭 들어가야하네.. 이거 커스텀 해야할텐데 어렵다
+        //userDetails에 권한이 꼭 들어가야하네.. 이거 커스텀
         return userDetails.getUsername();
     }
 
