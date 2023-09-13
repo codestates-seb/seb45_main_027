@@ -47,9 +47,9 @@ public class MemberService {
     public MemberResponse getMember(Long memberId) {
 
         Optional<Member> memberOptional = memberRepository.findById(memberId);
-        Member member = memberOptional.orElseThrow(MemberNotFoundException::new); // if로 null 값 주던지 아니면 다른 인증으로 바꾸자
-        return null;
-//         return MemberResponse.getMemberResponse(member); // 받을 값들 생각해보자.. 너무 많다
+        Member member = memberOptional.orElseThrow(MemberNotFoundException::new);
+
+         return MemberResponse.MemberInfoResponse(member); // 받을 값들 생각해보자.. 너무 많다
     }
 
     private Member createMember(MemberCreateServiceRequest request) {
@@ -61,14 +61,15 @@ public class MemberService {
     }
 
     public void updateMember(MemberUpdateServiceRequest request) {
-        //Long loginMemberId = SecurityUtil.getCurrentId();
-        // 로그인한 멤버인지 확인 후 그 멤버 아이디로 밑에 추가해주기
-        //checkAccessAuthority(loginMemberId, request.getMemberId());
 
-        //Member member = verifiyMember(loginMemberId);
+        Long loginMemberId = loginUtils.getLoginId();
+
+
+
 
         checkDuplicateNickname(request.getNickname());  // 중복 닉네임일 경우 예외처리
-        Member member = verifiyMember(request.getMemberId()); // 이것도 로그인 구현하면 로그인된 아이디를 가져옴 위에꺼가 진실
+        comparisonMembers(loginMemberId, request.getMemberId());
+        Member member = ExistingMember(loginMemberId); // 이것도 로그인 구현하면 로그인된 아이디를 가져옴 위에꺼가 진실
 
         updateMember(member, request);
 
@@ -84,17 +85,14 @@ public class MemberService {
 
     public void updatePassword(MemberUpdatePasswordApiServiceRequest request) {
 
-        //checkAccessAuthority(loginMemberId, request.getMemberId());
 
+        Long LoginMemberId = loginUtils.getLoginId();
 
-        // 이게 진짠데 로그인 시 아이디를 못 가져오고 있다
-        Long MemberId = loginUtils.getLoginId();
-
-                Optional<Member> optionalMember = memberRepository.findById(MemberId);
+                Optional<Member> optionalMember = memberRepository.findById(request.getMemberId());
                 Member member = optionalMember.orElseThrow(MemberNotFoundException::new);
 
 
-                if (!MemberId.equals(request.getMemberId())) {
+                if (!LoginMemberId.equals(request.getMemberId())) {
                     throw new MemberAccessDeniedException();
                 }
 
@@ -117,14 +115,16 @@ public class MemberService {
     }
 
     public void deleteMember(Long memberId) {
-        //Long loginMemberId = SecurityUtil.getCurrentId();
-        // 로그인한 멤버인지 확인 후 그 멤버 아이디로 밑에 추가해주기
-        //checkAccessAuthority(loginMemberId, request.getMemberId());
 
-        Member member = verifiyMember(memberId);
+
+        Long loginMemberId = loginUtils.getLoginId();
+
+        comparisonMembers(loginMemberId, memberId);
+        Member member = ExistingMember(loginMemberId);
+
 
         try {
-            memberRepository.deleteById(memberId);
+            memberRepository.deleteById(member.getMemberId());
         } catch (EmptyResultDataAccessException ex) {
             throw new MemberNotFoundException();
         }
@@ -146,17 +146,17 @@ public class MemberService {
             Member member = optionalMember.get();
             String storedCode = member.getCheckCode();
 
-            // 저장된 코드와 들어온 코드를 비교하여 일치하는지 확인
+            // 저장된 코드와 들어온 코드를 비교해보자
             if (storedCode.equals(code)) {
                 member.updateCheckUser(true);
                 System.out.println("true");
                 return true;
             } else {
                 System.out.println("false");
-                return false; // 코드가 일치하지 않는 경우 false 반환
+                return false; // 코드가 일치하지x
             }
         } else {
-            throw new MemberNotFoundException(); // 멤버가 존재하지 않는 경우 예외 던지기
+            throw new MemberNotFoundException();
         }
     }
     public void sendFindPasswordCodeToEmail(String email) {
@@ -209,14 +209,16 @@ public class MemberService {
     }
 
 
-    private Member verifiyMember(String email) {
-        return memberRepository.findByEmail(email)
-                .orElseThrow(MemberNotFoundException::new);
-    }
 
-    private Member verifiyMember(Long memberId) {
+    private Member ExistingMember(Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
         return member;
+    }
+
+    private void comparisonMembers(Long loginMemberId, Long memberId) {
+        if (!loginMemberId.equals(memberId)) {
+            throw new MemberAccessDeniedException();
+        }
     }
 
     private boolean checkEmailCode(String email, String code) {

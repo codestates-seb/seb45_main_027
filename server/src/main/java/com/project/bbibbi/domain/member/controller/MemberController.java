@@ -40,7 +40,7 @@ public class MemberController {
                                              @RequestBody @Valid MemberUpdateApiRequest request) {
 
         // 로그인한 유저 인증하는 로직 나중에 추가 ?? 밑에꺼 일단 이거 서비스 단에서 해결해보고 안되면 컨트롤러도 추가
-        //Long memberId = SecurityUtil.getCurrentId();  로그인된 멤버 아이디(
+
 
         memberService.updateMember(request.toUpdateServiceRequest(memberId));
         // 그러면 파라미터 값에 로그인된 멤버 하나 더 추가해주기) 서비스로직도 수정 ㄱㄱ
@@ -55,11 +55,10 @@ public class MemberController {
     public ResponseEntity<Void> updatePassword(@PathVariable("member-id") @Positive Long memberId,
                                                @RequestBody @Valid MemberUpdatePasswordApiRequest request) {
 
-        //Long loginmemberId = SecurityUtil.getCurrentId();  로그인된 멤버 아이디(
-        //  ?? 밑에꺼 일단 이거 서비스 단에서 해결해보고 안되면 컨트롤러도 추가
+
 
         memberService.updatePassword(request.toPasswordServiceRequest(memberId));
-        // 그러면 파라미터 값에 로그인된 멤버 하나 더 추가해주기) 서비스로직도 수정 ㄱㄱ
+
 
         return ResponseEntity.noContent().build();
     }

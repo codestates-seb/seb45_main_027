@@ -94,7 +94,7 @@ public class JwtService {
         setAccessTokenHeader(response, accessToken);
         setRefreshTokenHeader(response, refreshToken);
         // JSON 형식의 데이터를 바디에 쓰기
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8");
         PrintWriter writer = response.getWriter();
         objectMapper.writeValue(writer, data);
         log.info("Access Token, Refresh Token 헤더 설정 완료");
