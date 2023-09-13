@@ -1,6 +1,7 @@
 package com.project.bbibbi.domain.tipReplyLike.entity;
 
 import com.project.bbibbi.domain.member.entity.Member;
+import com.project.bbibbi.domain.tip.entity.Tip;
 import com.project.bbibbi.domain.tipReply.entity.TipReply;
 import com.project.bbibbi.global.entity.BaseEntity;
 import lombok.Getter;
@@ -18,12 +19,12 @@ public class TipReplyLike extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tipReplyLikeId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tip_reply_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "tip_reply_id")
     private TipReply tipReply;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @Transient

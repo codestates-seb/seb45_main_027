@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.tipReply.service;
 
+import com.project.bbibbi.domain.tipComment.dto.TipCommentDto;
 import com.project.bbibbi.domain.tip.repository.TipRepository;
 import com.project.bbibbi.domain.tipReply.dto.TipReplyRequestDto;
 import com.project.bbibbi.domain.tipReply.dto.TipReplyResponseDto;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -37,6 +39,18 @@ public class TipReplyService {
                 .tipId(reply.getTip().getTipId())
                 .memberId(reply.getMember().getMemberId())
                 .nickname(reply.getMember().getNickname())
+                .createdDateTime(reply.getCreatedDateTime())
+                .comments(reply.getComments().stream().map(tipComment -> TipCommentDto.builder()
+                .tipCommentId(tipComment.getTipCommentId())
+                .content(tipComment.getContent())
+                .memberId(tipComment.getMember().getMemberId())
+                .tipReplyId(tipComment.getTipReply().getTipReplyId())
+                .parentComment(tipComment.getParentComment())
+                .commentOrder(tipComment.getParentComment())
+                .nickname(tipComment.getMember().getNickname())
+                .tipId(tipComment.getTip().getTipId())
+                .build())
+                .collect(Collectors.toList()))
                 .build();
     }
 

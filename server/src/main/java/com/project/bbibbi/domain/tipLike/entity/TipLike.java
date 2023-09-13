@@ -20,12 +20,12 @@ public class TipLike extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tipLikeId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tip_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "tip_id")
     private Tip tip;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @Transient
@@ -34,25 +34,4 @@ public class TipLike extends BaseEntity {
     @Transient
     private Integer likeCount;
 
-
-    // Getter/Setter 메서드
-/*
-    // 좋아요 카운트 증가 메서드
-    public void increaseLikeCount() {
-        this.likeCount++;
-    }
-
-    // 좋아요 카운트 감소 메서드
-    public void decreaseLikeCount() {
-        this.likeCount--;
-    }
-
-    public int getLikeCount() {
-        return likeCount;
-    }
-
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
-    }
-    */
 }
