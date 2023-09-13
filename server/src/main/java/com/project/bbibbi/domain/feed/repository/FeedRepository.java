@@ -97,4 +97,10 @@ public interface FeedRepository extends JpaRepository<Feed, Long> {
 
     Page<Feed> findByOrderByViewsDesc(Pageable pageable);
 
+    @Query(value = "select feed.* from feed " +
+            "inner join (select a.feed_id, ( select count(*) from feed_like where feed_id = a.feed_id) as like_count from feed a ) as feed_likecount " +
+            "on feed.feed_id = feed_likecount.feed_id " +
+            "order by feed_likecount.like_count desc, feed.created_date_time desc limit 10", nativeQuery = true)
+    List<Feed> findByLikeTopTen();
+
 }

@@ -148,6 +148,17 @@ public class FeedController {
 
     }
 
+    @GetMapping("/likeTop10")
+    public ResponseEntity getLikeTopTen(){
+
+        List<Feed> pageFeeds = feedService.findLikeTopTen();
+
+        List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(pageFeeds);
+
+        return new ResponseEntity<>(new MultiResponseDto<>(feedResponseDtos), HttpStatus.OK);
+
+    }
+
     @GetMapping("/myInfoSearch")
     public ResponseEntity getMyInfoFeeds() {
 

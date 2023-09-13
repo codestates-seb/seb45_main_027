@@ -277,6 +277,14 @@ public class FeedService {
 
     }
 
+    public List<Feed> findLikeTopTen(){
+
+        List<Feed> selectedTopTenFeeds = feedRepository.findByLikeTopTen();
+
+        return selectedTopTenFeeds;
+
+    }
+
 
     public List<Feed> findMyInfoFeeds(long myInfoMemberId){
 
