@@ -54,7 +54,7 @@ const RoomInfoFilter = ({ handleFilterClick }) => {
       {roomInfo.map((room, index) => (
         <button
           key={index}
-          className="flex justify-center hover:bg-[#00647B] hover:text-white min-w-max px-2.5 py-1 mx-1 rounded-md"
+          className="flex justify-center hover:bg-[#00647bcc] hover:text-white min-w-max px-2.5 py-1 mx-1 rounded-md"
           onClick={() => handleFilterClick(room.filterCode)}>
           {room.name}
         </button>
