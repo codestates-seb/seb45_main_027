@@ -1,0 +1,13 @@
+.slide {
+  min-width: 260px;
+}
+
+.slide > div {
+  min-height: 390px;
+}
+
+.slide > div > img {
+  min-height: 390px;
+  max-height: 390px;
+  object-fit: cover;
+}
