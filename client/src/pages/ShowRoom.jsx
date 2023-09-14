@@ -145,7 +145,6 @@ const ShowRoom = () => {
       try {
         const res = await api(updatedConfigParams);
         setShowroomData(res.data.data);
-        console.log(showroomData);
         clearInput();
         console.log("검색누름");
       } catch (error) {
