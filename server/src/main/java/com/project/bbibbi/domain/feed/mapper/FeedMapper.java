@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.feed.mapper;
 
+import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.feed.dto.*;
 import com.project.bbibbi.domain.feed.entity.Feed;
 //import com.project.bbibbi.domain.feed.entity.FeedImage;
@@ -35,7 +36,8 @@ public interface FeedMapper {
 //        feed.setMemberId(feedPostDto.getMemberId());
 
         // 이런 멤버값이 들어온다고 가정한다.
-        feed.setMember(Member.builder().memberId(1L).nickname("nickname1").build());
+        Long memberId = loginUtils.getLoginId();
+        feed.setMember(Member.builder().memberId(memberId).nickname("").build());
 
 
         // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.

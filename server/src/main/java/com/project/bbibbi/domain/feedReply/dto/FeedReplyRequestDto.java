@@ -3,7 +3,10 @@ package com.project.bbibbi.domain.feedReply.dto;
 
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.global.entity.BaseEntity;
+import io.jsonwebtoken.lang.Assert;
 import lombok.*;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 // Getter, Setter, equals, hashCode, toString 등의 메서드를 자동으로 생성
 @Getter
@@ -16,6 +19,9 @@ public class FeedReplyRequestDto extends BaseEntity {
     private String content;
     private Long memberId;
     private Long feedId;
+
+    }
+
 
     /* Dto -> Entity */
 //public FeedReply toEntity()
@@ -30,5 +36,5 @@ public class FeedReplyRequestDto extends BaseEntity {
 //            .build();
 //
 //    return reply;
-}
+
 

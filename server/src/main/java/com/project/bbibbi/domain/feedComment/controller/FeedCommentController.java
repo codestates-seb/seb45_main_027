@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/feed/{feed-id}/feedReply/{feed-reply-id}/feedComment")
+    @RequestMapping("/feed/{feed-id}/feedReply/{feed-reply-id}/feedComment")
 public class FeedCommentController {
 
     private final FeedCommentService feedCommentService;

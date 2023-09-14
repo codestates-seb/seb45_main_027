@@ -10,6 +10,7 @@ import com.project.bbibbi.domain.feedReply.repository.FeedReplyRepository;
 import com.project.bbibbi.domain.feedReply.service.FeedReplyService;
 import com.project.bbibbi.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -97,9 +98,15 @@ public ResponseEntity feedSave(@PathVariable ("feed-id")Long feedId,
     //게시물에 붙어있는 댓글 전체조회 리스트화해서 보여주기
 
     @GetMapping("/replies")
-    public ResponseEntity<List<FeedReplyResponseDto>> getAllReplyForFeed(@PathVariable("feed-id") Long feedId) {
-        // 특정 게시물에 붙어있는 댓글 목록을 조회합니다.
-        List<FeedReply> replyList = feedReplyService.getAllReplyForFeed(feedId);
+    public ResponseEntity<List<FeedReplyResponseDto>> getAllReplyForFeed(
+            @PathVariable("feed-id") Long feedId,
+            @RequestParam int page) {
+
+        int size = 5;
+        Page<FeedReply> pageFeedReply = feedReplyService.getAllReplyForFeed(feedId, page - 1, size);
+
+        // 페이징된 결과에서 컨텐츠를 가져옵니다.
+        List<FeedReply> replyList = pageFeedReply.getContent();
 
         // 댓글 목록을 Dto로 변환합니다.
         List<FeedReplyResponseDto> replyDtoList = replyList.stream()
@@ -109,6 +116,7 @@ public ResponseEntity feedSave(@PathVariable ("feed-id")Long feedId,
         // 댓글 목록을 응답합니다.
         return ResponseEntity.ok(replyDtoList);
     }
+
     private FeedReplyResponseDto convertToDto(FeedReply reply) {
         return FeedReplyResponseDto.builder()
                 .feedReplyId(reply.getFeedReplyId())
