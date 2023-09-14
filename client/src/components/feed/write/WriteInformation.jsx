@@ -22,7 +22,7 @@ const optionsData = [
       "서재&작업실",
       "베란다",
       "현관",
-      "기타",
+      "기타 ", //options 명이 roomType의 기타와 중복되어 index를 못찾는 오류가 있어 기타 뒤에 스페이스 추가해둠
     ],
     code: [
       "INFO01",

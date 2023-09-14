@@ -3,33 +3,6 @@ import { useNavigate } from "react-router-dom";
 import api from "../../common/tokens";
 import { toast } from "react-hot-toast";
 
-const data = [
-  { url: "./asset/image.png", isBookmarked: true, feedId: 1 },
-  { url: "./asset/image2.png", isBookmarked: false, feedId: 2 },
-  { url: "./asset/image3.png", isBookmarked: false, feedId: 3 },
-  { url: "./asset/image4.png", isBookmarked: false, feedId: 4 },
-  { url: "./asset/image.png", isBookmarked: false, feedId: 5 },
-  { url: "./asset/image2.png", isBookmarked: false, feedId: 6 },
-  { url: "./asset/image3.png", isBookmarked: false, feedId: 7 },
-  { url: "./asset/image4.png", isBookmarked: false, feedId: 8 },
-  { url: "./asset/image.png", isBookmarked: true, feedId: 9 },
-  { url: "./asset/image2.png", isBookmarked: false, feedId: 10 },
-  { url: "./asset/image3.png", isBookmarked: false, feedId: 11 },
-  { url: "./asset/image4.png", isBookmarked: false, feedId: 12 },
-  { url: "./asset/image.png", isBookmarked: false, feedId: 13 },
-  { url: "./asset/image2.png", isBookmarked: false, feedId: 14 },
-  { url: "./asset/image3.png", isBookmarked: false, feedId: 15 },
-  { url: "./asset/image4.png", isBookmarked: false, feedId: 16 },
-  { url: "./asset/image.png", isBookmarked: true, feedId: 17 },
-  { url: "./asset/image2.png", isBookmarked: false, feedId: 18 },
-  { url: "./asset/image3.png", isBookmarked: false, feedId: 19 },
-  { url: "./asset/image4.png", isBookmarked: false, feedId: 20 },
-  { url: "./asset/image.png", isBookmarked: false, feedId: 21 },
-  { url: "./asset/image2.png", isBookmarked: false, feedId: 22 },
-  { url: "./asset/image3.png", isBookmarked: false, feedId: 23 },
-  { url: "./asset/image4.png", isBookmarked: false, feedId: 24 },
-];
-
 const AllContent = ({ showroomData, setShowroomData }) => {
   const navigate = useNavigate();
 
@@ -83,7 +56,6 @@ const AllContent = ({ showroomData, setShowroomData }) => {
     navigate(`/showroom/${feedId}`);
   };
 
-  console.log(showroomData);
   return (
     <div className="flex-col mx-4">
       <div className="flex justify-between flex-wrap">
@@ -92,7 +64,6 @@ const AllContent = ({ showroomData, setShowroomData }) => {
             key={idx}
             className="flex-col mx-3 mb-3 w-full sm:w-[45%] lg:w-[30%] h-[20%]"
           >
-            {console.log(item.bookMarkYn)}
             <div className="relative">
               <img
                 // 이미지 들어오면 수정 **

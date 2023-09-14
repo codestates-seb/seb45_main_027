@@ -18,7 +18,6 @@ const Tips = () => {
   const isFirstPageRendered = useRef(false);
   const target = useRef(null);
 
-  console.log(searchKeyworld);
   const configParams = {
     method: "GET",
     url: `/tip${isSearch}${searchKeyworld}?page=${page.current}`,
@@ -33,7 +32,7 @@ const Tips = () => {
   useEffect(() => {
     if (response) {
       if (isFirstPageRendered.current === false) {
-        setTipData(response.data);
+        setTipData(response.data.data);
         isFirstPageRendered.current = true;
       } else {
         setTipData((prevData) => [...prevData, ...response.data]);
@@ -104,7 +103,7 @@ const Tips = () => {
         return; // 무한 스크롤 중지
       }
       // 기존 데이터와 새로운 데이터를 병합
-      setTipData((prevData) => [...prevData, ...res.data]);
+      setTipData((prevData) => [...prevData, ...res.data.data]);
       toast.dismiss(); // 로딩 메시지 닫기
     } catch (error) {
       console.error("Error loading more data:", error);
@@ -129,7 +128,7 @@ const Tips = () => {
         };
         const res = await api(updatedConfigParams);
         console.log(res);
-        setTipData(res.data);
+        setTipData(res.data.data);
         clearInput();
       } catch (error) {
         console.error("Error sending GET request:", error);
@@ -158,7 +157,7 @@ const Tips = () => {
             handleInputChange={handleInputChange}
             handleSearch={handleSearch}
           />
-          <TipsContent tipData={tipData} />
+          <TipsContent tipData={tipData} setTipData={setTipData} />
         </div>
       </Background>
 

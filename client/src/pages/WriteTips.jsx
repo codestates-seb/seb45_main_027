@@ -8,6 +8,8 @@ import WriteTitle from "../components/feed/write/WriteTitle";
 import WriteFormTips from "../components/feed/write/WriteFormTips";
 import WriteTag from "../components/feed/write/WriteTag";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import api from "../components/common/tokens";
 
 const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요";
 
@@ -16,6 +18,7 @@ const WriteTips = () => {
   const [title, setTitle] = useState(""); // title(제목) 상태
   const [editorContent, setEditorContent] = useState(DEFAULT_EDITOR_TEXT); // Editor 내용을 관리
   const [tags, setTags] = useState([]); // 팁에있는 해시태그 상태!
+  const navigate = useNavigate();
 
   // 로컬스토리지에 임시저장값이 있으면 해당값 불러오기 위한 useEffect
   useEffect(() => {
@@ -71,6 +74,40 @@ const WriteTips = () => {
     }
   };
 
+  // 작성하기 버튼 누를 시 실행되는 핸들러 함수
+  const handlePublish = async () => {
+    // API 호출을 위한 요청 파라미터 설정
+    const configParams = {
+      method: "POST",
+      url: `/tip`,
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "69420",
+      },
+      data: {
+        coverPhoto: coverImage,
+        title: title,
+        content: editorContent,
+        // tipTags: tags, 서버에서 태그작업중
+      },
+    };
+
+    try {
+      // API 호출
+      const response = await api(configParams);
+      // 성공적으로 게시된 경우
+      const tipIdFromResponse = response.data.tipId;
+      toast.success("게시되었습니다.");
+
+      if (tipIdFromResponse) {
+        navigate(`/tips/${tipIdFromResponse}`);
+      }
+    } catch (error) {
+      // 오류 발생 시 오류 메시지를 토스트로 표시
+      toast.error("게시 중 오류가 발생했습니다.");
+    }
+  };
+
   return (
     <>
       <HeaderMobile buttonBgColor="bg-[#00647B]" />
@@ -85,6 +122,7 @@ const WriteTips = () => {
             buttonBorderColor="border-[#00647B]"
             buttonTextColor="text-[#00647B]"
             Title="Tips"
+            handlePublish={handlePublish}
           />
         </div>
         <WriteAccordion Title="Tips " />
