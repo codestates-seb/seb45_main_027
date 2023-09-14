@@ -3,41 +3,27 @@ import RoomInfoFilter from "./RoomInfoFilter";
 import RoomSizeFilter from "./RoomSizeFilter";
 import RoomTypeFilter from "./RoomTypeFilter";
 
-const buttonStyle =
-  "flex justify-center px-2.5 py-1 mx-1 text-gray-700 font-semibold hover:text-white hover:font-bold hover:bg-[#00647bcc] rounded-md focus:border-[#00647B] focus:ring focus:ring-[#00647B] focus:ring-2";
+const filterStyle =
+  "flex justify-center px-2.5 py-2 mx-1 text-gray-700 font-semibold hover:text-white hover:font-bold hover:bg-[#00647bcc] rounded-md";
+
+const filterFocusStyle =
+  "flex justify-center px-2.5 py-1 mx-1 text-gray-700 font-semibold rounded-md border-[3px] border-transparent border-[#00647bcc] transition";
 
 const AllHeaderFilter = ({ handleFilterClick }) => {
-  // const [roomInfoFilter, setRoomInfoFilter] = useState(false);
-  // const [roomSizeFilter, setRoomSizeFilter] = useState(false);
-  // const [roomTypeFilter, setRoomTypeFilter] = useState(false);
-  const [activeModal, setActiveModal] = useState(null); // 상태 하나로 필터 모달 관리
+  const [activeModal, setActiveModal] = useState(null);
+  const [isFocus, setIsFocus] = useState({
+    newest: false,
+    popular: false,
+    roomInfo: false,
+    roomSize: false,
+    roomType: false,
+  });
   const modalRef = useRef(null);
 
-  // // 공간별 필터 클릭
-  // const openRoomInfoFilter = () => {
-  //   setRoomInfoFilter(!roomInfoFilter);
-  //   setRoomSizeFilter(false);
-  //   setRoomTypeFilter(false);
-  // };
-
-  // // 평수별 필터 클릭
-  // const openRoomSizeFilter = () => {
-  //   setRoomSizeFilter(!roomSizeFilter);
-  //   setRoomInfoFilter(false);
-  //   setRoomTypeFilter(false);
-  // };
-
-  // // 주거형태별 필터 클릭
-  // const openRoomTypeFilter = () => {
-  //   setRoomTypeFilter(!roomTypeFilter);
-  //   setRoomInfoFilter(false);
-  //   setRoomSizeFilter(false);
-  // };
-  // 모달 오픈로직
   const openModal = (modalName) => {
     setActiveModal(modalName);
   };
-  // 모달창 닫는 로직
+
   const closeModal = () => {
     setActiveModal(null);
   };
@@ -60,19 +46,44 @@ const AllHeaderFilter = ({ handleFilterClick }) => {
     };
   }, [activeModal]);
 
+  const handleFilterFocus = (filterKey) => {
+    const updatedFocusState = { ...isFocus };
+    Object.keys(updatedFocusState).forEach((key) => {
+      if (key !== filterKey) {
+        updatedFocusState[key] = false;
+      }
+    });
+    return updatedFocusState;
+  };
+
+  const handleFilterClickWithFocus = (filterKey, modalName) => {
+    if (modalName) {
+      openModal(modalName);
+    }
+    setIsFocus((prevState) => ({
+      [filterKey]: !prevState[filterKey],
+    }));
+  };
+
+  const filters = [
+    { key: "newest", label: "최신순", modal: null },
+    { key: "popular", label: "인기순", modal: null },
+    { key: "roomInfo", label: "공간별", modal: "roomInfoFilter" },
+    { key: "roomSize", label: "평수별", modal: "roomSizeFilter" },
+    { key: "roomType", label: "주거형태별", modal: "roomTypeFilter" },
+  ];
+
   return (
     <div className="relative text-xl pl-4 cursor-pointer grid grid-cols-3 gap-1 sm:flex">
-      <span className={buttonStyle}>최신순</span>
-      <span className={buttonStyle}>인기순</span>
-      <span className={buttonStyle} onClick={() => openModal("roomInfoFilter")}>
-        공간별
-      </span>
-      <span className={buttonStyle} onClick={() => openModal("roomSizeFilter")}>
-        평수별
-      </span>
-      <span className={buttonStyle} onClick={() => openModal("roomTypeFilter")}>
-        주거형태별
-      </span>
+      {filters.map((filter) => (
+        <span
+          key={filter.key}
+          className={isFocus[filter.key] ? filterFocusStyle : filterStyle}
+          onClick={() => handleFilterClickWithFocus(filter.key, filter.modal)}
+        >
+          {filter.label}
+        </span>
+      ))}
       {activeModal && (
         <div ref={modalRef}>
           {activeModal === "roomInfoFilter" && (
