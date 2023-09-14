@@ -30,8 +30,8 @@ const MyInfoLayout = () => {
 
         setProfileData(response.data.data);
         //console.log("Data: ", data);
-        console.log('profile res',response);
-        console.log('profile data.data',response.data.data)
+        // console.log('profile res',response);
+        // console.log('profile data.data',response.data.data)
       } catch (err) {
         //console.log("Error: ", err);
       }

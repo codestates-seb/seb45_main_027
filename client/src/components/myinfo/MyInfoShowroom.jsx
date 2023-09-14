@@ -5,7 +5,6 @@ import MyInfoBookmark from "./MyInfoBookmark";
 import MyInfoLike from "./MyInfoLike";
 import { toast } from "react-hot-toast";
 
-
 const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
   // 게시글, 북마크, 삭제 부분
   const [isPostDeleted, setIsPostDeleted] = useState(postData);
@@ -19,7 +18,7 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
     if (confirmDeletion) {
       const updatedPosts = isPostDeleted.filter((item) => item.id !== itemId);
       setIsPostDeleted(updatedPosts);
-    toast.success("게시글이 삭제되었습니다!");
+      toast.success("게시글이 삭제되었습니다!");
 
       console.log(isPostDeleted);
     }
@@ -75,82 +74,86 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
   };
 
   return (
-    <div className="md:min-h-[300px] flex flex-wrap items-center">
+    <>
+      <div className="md:min-h-[210px] md:min-w-[400px] flex flex-row flex-wrap items-start">
         {activeTab === 1 &&
           visiblePosts.map((item, idx) => (
-              <MyInfoPost
+            <MyInfoPost
               key={idx}
-                imgSrc={item.imgSrc}
-                title={item.title}
-                itemId={item.id}
-                deletePost={deletePost}
-              />
+              imgSrc={item.imgSrc}
+              title={item.title}
+              itemId={item.id}
+              deletePost={deletePost}
+            />
           ))}
         {activeTab === 2 &&
           visibleBookmarks.map((item, idx) => (
-              <MyInfoBookmark
+            <MyInfoBookmark
               key={idx}
-                imgSrc={item.imgSrc}
-                title={item.title}
-                itemId={item.id}
-                isBookmarked={item.bookmarked}
-                toggleBookmark={toggleBookmark}
-              />
+              imgSrc={item.imgSrc}
+              title={item.title}
+              itemId={item.id}
+              isBookmarked={item.bookmarked}
+              toggleBookmark={toggleBookmark}
+            />
           ))}
         {activeTab === 3 &&
           visibleLikes.map((item, idx) => (
-              <MyInfoLike
+            <MyInfoLike
               key={idx}
-                imgSrc={item.imgSrc}
-                title={item.title}
-                itemId={item.id}
-                isLiked={item.like}
-                toggleLike={toggleLike}
-              />
+              imgSrc={item.imgSrc}
+              title={item.title}
+              itemId={item.id}
+              isLiked={item.like}
+              toggleLike={toggleLike}
+            />
           ))}
-      {activeTab === 1 && (
-        <Pagination
-          currentPage={postPage}
-          totalPages={Math.ceil(postData.length / itemsPerPage)}
-          onNextPage={() =>
-            handleNextPage(
-              postPage,
-              setPostPage,
-              Math.ceil(postData.length / itemsPerPage)
-            )
-          }
-          onPrevPage={() => handlePrevPage(postPage, setPostPage)}
-        />
-      )}
-      {activeTab === 2 && (
-        <Pagination
-          currentPage={bookmarkPage}
-          totalPages={Math.ceil(bookmarkData.length / itemsPerPage)}
-          onNextPage={() =>
-            handleNextPage(
-              bookmarkPage,
-              setBookmarkPage,
-              Math.ceil(bookmarkData.length / itemsPerPage)
-            )
-          }
-          onPrevPage={() => handlePrevPage(bookmarkPage, setBookmarkPage)}
-        />
-      )}
-      {activeTab === 3 && (
-        <Pagination
-          currentPage={likePage}
-          totalPages={Math.ceil(likeData.length / itemsPerPage)}
-          onNextPage={() =>
-            handleNextPage(
-              likePage,
-              setLikePage,
-              Math.ceil(likeData.length / itemsPerPage)
-            )
-          }
-          onPrevPage={() => handlePrevPage(likePage, setLikePage)}
-        />
-      )}
-    </div>
+      </div>
+      <div>
+        {activeTab === 1 && (
+          <Pagination
+            currentPage={postPage}
+            totalPages={Math.ceil(postData.length / itemsPerPage)}
+            onNextPage={() =>
+              handleNextPage(
+                postPage,
+                setPostPage,
+                Math.ceil(postData.length / itemsPerPage)
+              )
+            }
+            onPrevPage={() => handlePrevPage(postPage, setPostPage)}
+          />
+        )}
+        {activeTab === 2 && (
+          <Pagination
+            currentPage={bookmarkPage}
+            totalPages={Math.ceil(bookmarkData.length / itemsPerPage)}
+            onNextPage={() =>
+              handleNextPage(
+                bookmarkPage,
+                setBookmarkPage,
+                Math.ceil(bookmarkData.length / itemsPerPage)
+              )
+            }
+            onPrevPage={() => handlePrevPage(bookmarkPage, setBookmarkPage)}
+          />
+        )}
+        {activeTab === 3 && (
+          <Pagination
+            currentPage={likePage}
+            totalPages={Math.ceil(likeData.length / itemsPerPage)}
+            onNextPage={() =>
+              handleNextPage(
+                likePage,
+                setLikePage,
+                Math.ceil(likeData.length / itemsPerPage)
+              )
+            }
+            onPrevPage={() => handlePrevPage(likePage, setLikePage)}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

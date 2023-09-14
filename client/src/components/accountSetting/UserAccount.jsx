@@ -4,6 +4,8 @@ import axios from "axios";
 import ChangePassword from "./ChangePassword";
 import EditProfile from "./EditProfile";
 import DeleteAccount from "./DeleteAccount";
+import { toast } from "react-hot-toast";
+
 
 const UserAccount = ({ toggleAccountSettings, userDetails }) => {
   const navigate = useNavigate();
@@ -34,7 +36,8 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
       !hasSpaces(profileData.nickname);
 
     if (!nicknameValidation) {
-      alert("닉네임은 2글자에서 10글자 내로 지정 가능합니다");
+      //alert("닉네임은 2글자에서 10글자 내로 지정 가능합니다");
+      toast.error("닉네임은 2글자에서 10글자 내로 지정 가능합니다");
       return;
     }
 
