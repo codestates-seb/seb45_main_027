@@ -58,7 +58,9 @@ const ShowRoom = () => {
 
   useEffect(() => {
     if (!showroomData.length && loading) {
+      toast.loading("데이터를 불러오는 중입니다...");
     } else if (showroomData.length || error) {
+      toast.dismiss();
     }
   }, [showroomData, loading, error]);
 
