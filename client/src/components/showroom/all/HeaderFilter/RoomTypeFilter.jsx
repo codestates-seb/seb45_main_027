@@ -25,13 +25,12 @@ const RoomTypeFilter = ({ handleFilterClick }) => {
   ];
 
   return (
-    <div className="absolute grid grid-cols-3 gap-x-20 gap-y-2 z-10 p-2 rounded-md ">
+    <div className="absolute top-20 sm:top-10 left-5 grid grid-cols-2 gap-1 z-10 sm:flex min-w-max py-1 text-gray-700 font-semibold bg-[#ffffff7a] rounded-md shadow">
       {roomType.map((room, index) => (
         <div
           key={index}
-          className="bg-[#00647B] text-white text-[14px] py-2 px-2 rounded-md text-center w-[110px]  flex items-center justify-center"
-          onClick={() => handleFilterClick(room.filterCode)}
-        >
+          className="flex justify-center hover:bg-[#00647bcc] hover:text-white min-w-max px-2.5 py-1 mx-1 rounded-md"
+          onClick={() => handleFilterClick(room.filterCode)}>
           {room.name}
         </div>
       ))}

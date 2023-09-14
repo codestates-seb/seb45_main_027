@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import useAxios from "../hooks/useAxios";
 
 const UserContext = createContext();
@@ -16,12 +15,13 @@ export const useUserContext = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
   const [follow, setFollow] = useState("");
-  const { memberId } = useParams();
+  const [memberId, setMemberId] = useState("");
+  const fromMemberId = localStorage.getItem("memberId");
 
   const [res, err, loading, fetchData] = useAxios(
     {
       method: "PATCH",
-      url: `/follow/choose/${memberId}`,
+      url: `/follow/choose/${memberId}/${fromMemberId}`,
       headers: {
         "ngrok-skip-browser-warning": "69420",
       },
@@ -34,12 +34,12 @@ export const UserProvider = ({ children }) => {
     setFollow(!follow);
   };
 
-  // 팔로우 받아온 요청 상태 저장
-  // useEffect(() => {
-  //   if (fetchData) {
-  //     setFollow(fetchData.followYn);
-  //   }
-  // }, [fetchData]);
+ 
+  useEffect(() => {
+    if (res) {
+      setMemberId(res.data.data.memberId);
+    }}, [res]);
+
 
   return (
     <UserContext.Provider value={{ follow, setFollow, toggleFollow }}>

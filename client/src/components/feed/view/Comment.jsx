@@ -132,6 +132,16 @@ const Comment = forwardRef((props, ref) => { // 사이드바에서 댓글 클릭
                 <button onClick={() => toggleReply(comment.id)}>
                   답글 달기
                 </button>
+
+                {/* 수정 */}
+                <button onClick={() => toggleReply(comment.id)}>
+                  수정하기
+                </button>
+                
+                {/* 삭제 */}
+                <button onClick={() => toggleReply(comment.id)}>
+                  삭제하기
+                </button>
               </div>
             </div>
           </div>

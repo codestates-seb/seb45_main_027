@@ -3,6 +3,9 @@ import RoomInfoFilter from "./RoomInfoFilter";
 import RoomSizeFilter from "./RoomSizeFilter";
 import RoomTypeFilter from "./RoomTypeFilter";
 
+const buttonStyle =
+  "flex justify-center px-2.5 py-1 mx-1 text-gray-700 font-semibold hover:text-white hover:font-bold hover:bg-[#00647bcc] rounded-md focus:border-[#00647B] focus:ring focus:ring-[#00647B] focus:ring-2";
+
 const AllHeaderFilter = ({ handleFilterClick }) => {
   // const [roomInfoFilter, setRoomInfoFilter] = useState(false);
   // const [roomSizeFilter, setRoomSizeFilter] = useState(false);
@@ -58,16 +61,16 @@ const AllHeaderFilter = ({ handleFilterClick }) => {
   }, [activeModal]);
 
   return (
-    <div className="relative text-xl flex-nowrap pl-4 cursor-pointer">
-      <span className="pr-3">최신순</span>
-      <span className="pr-3">인기순</span>
-      <span className="pr-3" onClick={() => openModal("roomInfoFilter")}>
+    <div className="relative text-xl pl-4 cursor-pointer grid grid-cols-3 gap-1 sm:flex">
+      <span className={buttonStyle}>최신순</span>
+      <span className={buttonStyle}>인기순</span>
+      <span className={buttonStyle} onClick={() => openModal("roomInfoFilter")}>
         공간별
       </span>
-      <span className="pr-3" onClick={() => openModal("roomSizeFilter")}>
+      <span className={buttonStyle} onClick={() => openModal("roomSizeFilter")}>
         평수별
       </span>
-      <span className="pr-3" onClick={() => openModal("roomTypeFilter")}>
+      <span className={buttonStyle} onClick={() => openModal("roomTypeFilter")}>
         주거형태별
       </span>
       {activeModal && (
