@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../components/common/tokens";
 
-const useAxios = (configParams) => {
+const useAxios = (configParams, autoFetch=true) => {
   axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
   const [res, setRes] = useState("");
@@ -10,7 +10,9 @@ const useAxios = (configParams) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchData(configParams);
+    if (autoFetch) { // 자동 실행 여부를 확인
+      fetchData(configParams);
+    }
   }, []);
 
   const fetchData = async () => {

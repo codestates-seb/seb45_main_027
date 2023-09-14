@@ -7,49 +7,22 @@ const display =
   "flex justify-center items-center w-20 h-20 bg-white border rounded-full shadow my-8 ";
 
 const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
-  const [like, setLike] = useState(feedData.likeYn || false);
-  const [bookmark, setBookmark] = useState(feedData.bookMarkYn || false);
+  const [like, setLike] = useState(feedData.likeYn);
+  const [bookmark, setBookmark] = useState(feedData.bookMarkYn);
   const { feedId } = useParams();
-  // 좋아요 상태에 대한 Axios Hook
-  const [likeResponse, likeError, likeLoading, fetchLikeData] = useAxios({
-    method: "PATCH",
-    url: `/feed/${feedId}/feedLike`,
-    headers: {
-      "ngrok-skip-browser-warning": "69420",
-    },
-  });
 
-  // 북마크 상태에 대한 Axios Hook
-  const [bookmarkResponse, bookmarkError, bookmarkLoading, fetchBookmarkData] = useAxios({
-    method: "PATCH",
-    url: `/feed/${feedId}/feedBookMark`,
-    headers: {
-      "ngrok-skip-browser-warning": "69420",
-    },
-  });
-
-  useEffect(() => {
-    if (likeResponse) {
-      setLike(likeResponse.data.data.likeYn);
-    }
-    if (likeError) {
-      toast("좋아요 업데이트 실패");
-    }
-  }, [likeResponse, likeError]);
-
-  useEffect(() => {
-    if (bookmarkResponse) {
-      setLike(bookmarkResponse.data.data.bookMarkYn);
-    }
-    if (bookmarkError) {
-      toast("북마크 업데이트 실패");
-    }
-  }, [bookmarkResponse, bookmarkError]);
-
-  const toggleLike = () => {
-    fetchLikeData(); 
-    setLike(!like);  
-  };
+  // 북마크 상태
+  const [res, err, loading, fetchBookmarkData] = useAxios(
+    {
+      method: "PATCH",
+      url: `/feed/${feedId}/feedBookMark`,
+      headers: {
+        "ngrok-skip-browser-warning": "69420",
+      },
+    }, false
+  );
+  
+  console.log("fetchBookmarkData:", fetchBookmarkData);
 
   const toggleBookmark = () => {
     fetchBookmarkData(); 
@@ -76,7 +49,7 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
   return (
     <div className="hidden md:flex flex-col w-max h-0 sticky top-48 float-right mr-20 z-50">
       {/* 좋아요 */}
-      <button className={display} onClick={toggleLike}>
+      <button className={display} onClick={() => { setLike(!like) }}>
         <img
           className="m-4"
           src={
