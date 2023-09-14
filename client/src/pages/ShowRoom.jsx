@@ -14,6 +14,7 @@ const ShowRoom = () => {
   const [showroomData, setShowroomData] = useState([]); // All부분 렌더링하는 쇼룸데이터
   const [feedCode, setFeedCode] = useState("filter"); // feed/ 다음 피드 코드상태 ex) filter, search 2개임
   const [filterCode, setFilterCode] = useState("RECENT00"); // filter뒤에 filterCode 상태
+  const [isLastPage, setIsLastPage] = useState(false); // page가 end인지를 저장하는 상태
   const page = useRef(1); // 페이지 ref
   const isFirstPageRendered = useRef(false);
   const target = useRef(null);
@@ -87,38 +88,46 @@ const ShowRoom = () => {
   // IntersectionObserver를 사용하여 스크롤 감지
   useEffect(() => {
     // IntersectionObserver를 생성하고 등록
-    const newObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !loading) {
-          page.current += 1; // 페이지 번호 증가
-          const updatedUrl = `/feed/${feedCode}/${inputValue}${filterCode}?page=${page.current}`;
-          loadMoreData(updatedUrl); // 새로운 페이지 데이터를 불러오는 함수 호출
+    if (!isLastPage) {
+      // isLast가 false일 때만 IntersectionObserver 등록
+      const newObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !loading) {
+            page.current += 1; // 페이지 번호 증가
+            const updatedUrl = `/feed/${feedCode}/${inputValue}${filterCode}?page=${page.current}`;
+            loadMoreData(updatedUrl); // 새로운 페이지 데이터를 불러오는 함수 호출
+          }
+        },
+        {
+          threshold: 0.1, // 스크롤이 약간 발생하면 로딩 시작
         }
-      },
-      {
-        threshold: 0.1, // 스크롤이 약간 발생하면 로딩 시작
-      }
-    );
+      );
 
-    // 현재 컴포넌트의 target 요소를 설정합니다.
-    if (target.current) {
-      newObserver.observe(target.current);
-    }
-
-    // 컴포넌트가 언마운트될 때 Observer를 해제합니다.
-    return () => {
+      // 현재 컴포넌트의 target 요소를 설정합니다.
       if (target.current) {
-        newObserver.unobserve(target.current);
+        newObserver.observe(target.current);
       }
-    };
-  }, [filterCode, loading, searchKeyworld]);
+
+      // 컴포넌트가 언마운트될 때 Observer를 해제합니다.
+      return () => {
+        if (target.current) {
+          newObserver.unobserve(target.current);
+        }
+      };
+    }
+  }, [filterCode, loading, searchKeyworld, isLastPage]);
 
   // 새로운 페이지 데이터를 불러오는 함수
   const loadMoreData = async (url) => {
     try {
       toast.loading("데이터를 불러오는 중입니다..."); // 데이터 로딩 중 토스트 메시지 표시
       const res = await api({ ...configParams, url });
-      setShowroomData((prevData) => [...prevData, ...res.data.data]);
+      if (res.data.isLast === false) {
+        setShowroomData((prevData) => [...prevData, ...res.data.data]);
+      } else {
+        // 마지막 페이지 설정
+        setIsLastPage(res.data.isLast);
+      }
       toast.dismiss(); // 로딩 메시지 닫기
     } catch (error) {
       console.error("Error loading more data:", error);
@@ -157,10 +166,7 @@ const ShowRoom = () => {
   return (
     <Background mainclassName="h-full bg-[#FFFAEE]">
       <div className="flex-col w-full">
-        <BestInterior
-          viewportWidth={viewportWidth}
-          showroomData={showroomData}
-        />
+        <BestInterior viewportWidth={viewportWidth} />
         <All
           viewportWidth={viewportWidth}
           setViewportWidth={setViewportWidth}
