@@ -9,7 +9,7 @@ const UserInfoFollow = () => {
   const [followingList, setFollowingList] = useState('');
   const [followersList, setFollowersList] = useState('');
   const baseURL = process.env.REACT_APP_API_URL;
-  //const loggedinId = localStorage.getItem("memberId");
+  const loggedinId = localStorage.getItem("memberId");
   const { id } = useParams();
 
   const accessToken = localStorage.getItem("accessToken");
@@ -17,7 +17,8 @@ const UserInfoFollow = () => {
 
     const fetchFollowingData = async () => {
       try {
-        const response = await axios.get(`${baseURL}/follow/from`, {
+
+        const response = await axios.get(`${baseURL}/follow/from/${loggedinId}`, {
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '', 
           },});
@@ -28,15 +29,14 @@ const UserInfoFollow = () => {
         // console.log("Error: ", err);
       }
     };
-
-
     fetchFollowingData();
-  }, [id]);
+  }, []);
 
   useEffect(() => {
     const fetchFollowersData = async () => {
       try {
-        const response = await axios.get(`${baseURL}/follow/to`, {
+
+        const response = await axios.get(`${baseURL}/follow/to/${loggedinId}`, {
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '', 
           },});
@@ -47,20 +47,20 @@ const UserInfoFollow = () => {
         // console.log("Error: ", err);
       }
     };   fetchFollowersData();
-  }, [id]);
+  }, []);
 
 
   const handleUnfollow = (memberId, fromMemberId) => {
     const updatedFollowingList = followingList.filter(
-      (user) => user.id !== memberId
+      (user) => user.memberId !== memberId
     );
     setFollowingList(updatedFollowingList);
 
     const updatedFollowersList = followersList.map((user) => {
-      if (user.id === fromMemberId) {
+      if (user.fromMemberId === fromMemberId) {
         return {
           ...user,
-          followYn: false,
+          followYn: !user.followYn,
         };
       }
       return user;
@@ -72,10 +72,10 @@ const UserInfoFollow = () => {
 
   const handleFollow = (fromMemberId) => {
     const newFollowersList = followersList.map((user) => {
-      if (user.id === fromMemberId) {
+      if (user.fromMemberId === fromMemberId) {
         return {
           ...user,
-          followYn: !user.FollowYn,
+          followYn: !user.followYn,
         };
       }
       return user;
