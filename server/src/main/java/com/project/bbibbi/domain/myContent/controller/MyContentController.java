@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,12 +47,10 @@ public class MyContentController {
         this.tipMapper = tipMapper;
     }
 
-    @GetMapping("/search")
-    public ResponseEntity getContents() {
+    @GetMapping("/search/{member-id}")
+    public ResponseEntity getContents(@PathVariable("member-id") long memberId) {
 
         // 일단 받아오자 일반 최신순
-
-        Long memberId = loginUtils.getLoginId();
 
         // 먼저 post 가져옴
         List<Feed> defaultFeed = feedService.findMyInfoFeeds(memberId);
