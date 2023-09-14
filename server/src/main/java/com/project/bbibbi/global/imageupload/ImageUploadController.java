@@ -20,9 +20,18 @@ public class ImageUploadController {
     @Autowired
     private S3Uploader s3Uploader;
 
+    private static final long MAX_FILE_SIZE = 10 * 1024 *1024; // 10MB
+
+
     @PostMapping(value = "/coverImage", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadCoverImage(HttpServletRequest request,
                                                 @RequestParam("coverPhotoImage") MultipartFile coverPhotoImage) throws IOException {
+
+        if (coverPhotoImage.getSize() > MAX_FILE_SIZE) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("10MB 이하 파일을 업로드하세요.");
+        }
 
         String uploadImagePath = s3Uploader.upload(coverPhotoImage,"archive");
 
@@ -38,6 +47,12 @@ public class ImageUploadController {
     public ResponseEntity<String> uploadFeedImage(HttpServletRequest request,
                                                    @RequestParam("feedImage") MultipartFile feedImage) throws IOException {
 
+        if (feedImage.getSize() > MAX_FILE_SIZE) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("10MB 이하 파일을 업로드하세요.");
+        }
+
         String uploadImagePath = s3Uploader.upload(feedImage,"archive");
 
         Gson gson = new Gson();
@@ -52,6 +67,12 @@ public class ImageUploadController {
     public ResponseEntity<String> uploadTipImage(HttpServletRequest request,
                                                   @RequestParam("tipImage") MultipartFile tipImage) throws IOException {
 
+        if (tipImage.getSize() > MAX_FILE_SIZE) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("10MB 이하 파일을 업로드하세요.");
+        }
+
         String uploadImagePath = s3Uploader.upload(tipImage,"archive");
 
         Gson gson = new Gson();
@@ -65,6 +86,12 @@ public class ImageUploadController {
     @PostMapping(value = "/myInfoImage", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadMyInfoImage(HttpServletRequest request,
                                                  @RequestParam("myInfoImage") MultipartFile myInfoImage) throws IOException {
+
+        if (myInfoImage.getSize() > MAX_FILE_SIZE) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("10MB 이하 파일을 업로드하세요.");
+        }
 
         String uploadImagePath = s3Uploader.upload(myInfoImage,"archive");
 
