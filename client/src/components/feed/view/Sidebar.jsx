@@ -9,26 +9,53 @@ const display =
 const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
   const [like, setLike] = useState(feedData.likeYn);
   const [bookmark, setBookmark] = useState(feedData.bookMarkYn);
-  const { feedId } = useParams();
+  const { feedId, tipId } = useParams();
 
+  const someCondition = feedId ? true : false;
   // 북마크 상태
-  const [res, err, loading, fetchBookmarkData] = useAxios(
-    {
-      method: "PATCH",
-      url: `/feed/${feedId}/feedBookMark`,
-      headers: {
-        "ngrok-skip-browser-warning": "69420",
+  const [resBookMark, errBookMark, loadingBookMark, fetchBookmarkData] =
+    useAxios(
+      {
+        method: "PATCH",
+        url: someCondition
+          ? `/feed/${feedId}/feedBookMark`
+          : `/tip/${tipId}/tipbookmark`,
+        headers: {
+          "ngrok-skip-browser-warning": "69420",
+        },
       },
-    }, false
-  );
-  
+      false
+    );
+
   console.log("fetchBookmarkData:", fetchBookmarkData);
 
   const toggleBookmark = () => {
-    fetchBookmarkData(); 
-    setBookmark(!bookmark); 
+    fetchBookmarkData();
+    setBookmark(!bookmark);
   };
 
+  // 좋아요 상태
+  const [resLike, errLike, loadingLike, fetchLikeData] = useAxios(
+    {
+      method: "PATCH",
+      url: someCondition
+        ? `/feed/${feedId}/feedlike`
+        : `/tip/${tipId}/tiplike`,
+      headers: {
+        "ngrok-skip-browser-warning": "69420",
+      },
+    },
+    false
+  );
+
+  console.log("fetchLikeData:", fetchLikeData);
+
+  const toggleLike = () => {
+    fetchLikeData();
+    setLike(!like);
+  };
+
+  // 댓글 스크롤이동
   const scrollToComments = () => {
     if (commentSectionRef.current) {
       commentSectionRef.current.scrollIntoView({ behavior: "smooth" });
@@ -49,7 +76,7 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
   return (
     <div className="hidden md:flex flex-col w-max h-0 sticky top-48 float-right mr-20 z-50">
       {/* 좋아요 */}
-      <button className={display} onClick={() => { setLike(!like) }}>
+      <button className={display} onClick={toggleLike}>
         <img
           className="m-4"
           src={
