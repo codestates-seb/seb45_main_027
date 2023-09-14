@@ -5,7 +5,7 @@ const buttonStyle =
   "flex items-center justify-center rounded-lg shadow w-32 h-full";
   
 const TipsUserTop = ({ feedData }) => {
-  const { follow, setFollow } = useUserContext();
+  const { follow, setFollow, toggleFollow } = useUserContext();
 
   let datePart = "";
   if (feedData && feedData.createdDateTime) {
@@ -23,7 +23,7 @@ const TipsUserTop = ({ feedData }) => {
           <div className="text-gray-500">{datePart}</div>
         </div>
       </div>
-      <button onClick={() => setFollow((prevFollow) => !prevFollow)}>
+      <button onClick={toggleFollow}>
         {follow ? (
           <div className={`bg-white ${buttonStyle} `}>
             <img

@@ -7,8 +7,8 @@ const display =
   "flex justify-center items-center w-20 h-20 bg-white border rounded-full shadow my-8 ";
 
 const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
-  const [like, setLike] = useState(feedData.likeYn);
-  const [bookmark, setBookmark] = useState(feedData.bookMarkYn);
+  const [like, setLike] = useState("");
+  const [bookmark, setBookmark] = useState("");
   const { feedId, tipId } = useParams();
 
   const someCondition = feedId ? true : false;
@@ -26,8 +26,6 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
       },
       false
     );
-
-  console.log("fetchBookmarkData:", fetchBookmarkData);
 
   const toggleBookmark = () => {
     fetchBookmarkData();
@@ -48,12 +46,19 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
     false
   );
 
-  console.log("fetchLikeData:", fetchLikeData);
-
   const toggleLike = () => {
     fetchLikeData();
     setLike(!like);
   };
+
+  // [좋아요/북마크] 받아온 요청 상태 저장
+  useEffect(() => {
+    if (feedData) {
+      setBookmark(feedData.bookMarkYn || feedData.bookmarkYn);
+      setLike(feedData.likeYn);
+    }
+  }, [feedData]);
+
 
   // 댓글 스크롤이동
   const scrollToComments = () => {
@@ -72,7 +77,7 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
         toast("링크 복사에 실패했습니다.");
       });
   };
-
+  
   return (
     <div className="hidden md:flex flex-col w-max h-0 sticky top-48 float-right mr-20 z-50">
       {/* 좋아요 */}

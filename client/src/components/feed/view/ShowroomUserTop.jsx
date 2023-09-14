@@ -7,7 +7,7 @@ const div = "flex flex-col items-center px-6";
 const img = "w-10 h-10 mb-2";
 
 const ShowroomUserTop = ({ feedData }) => {
-  const { follow, setFollow } = useUserContext();
+  const { follow, setFollow, toggleFollow } = useUserContext();
 
   let datePart = "";
   if (feedData && feedData.createdDateTime) {
@@ -67,7 +67,7 @@ const ShowroomUserTop = ({ feedData }) => {
           <span>{feedData.locationName}</span>
         </div>
       </div>
-      <button className="h-full p-10" onClick={() => setFollow(!follow)}>
+      <button className="h-full p-10" onClick={toggleFollow}>
         {follow ? (
           <div className={`bg-gray-200 hover:bg-gray-300 ${button} `}>
             <img
