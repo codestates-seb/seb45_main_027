@@ -4,7 +4,7 @@ import RoomSizeFilter from "./RoomSizeFilter";
 import RoomTypeFilter from "./RoomTypeFilter";
 
 const buttonStyle =
-  "flex justify-center px-2.5 py-1 mx-1 text-gray-700 font-semibold hover:text-white hover:font-bold hover:bg-[#00647B] rounded-md focus:border-[#00647B] focus:ring focus:ring-[#00647B] focus:ring-2";
+  "flex justify-center px-2.5 py-1 mx-1 text-gray-700 font-semibold hover:text-white hover:font-bold hover:bg-[#00647bcc] rounded-md focus:border-[#00647B] focus:ring focus:ring-[#00647B] focus:ring-2";
 
 const AllHeaderFilter = ({ handleFilterClick }) => {
   // const [roomInfoFilter, setRoomInfoFilter] = useState(false);
