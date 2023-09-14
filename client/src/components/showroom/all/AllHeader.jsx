@@ -13,8 +13,8 @@ const AllHeader = ({
 }) => {
   const isMobileView = viewportWidth < 720; // viewportWidth가 720보다 작으면 모바일 화면으로 간주
   return (
-    <div className="flex justify-between items-center flex-wrap mx-8">
-      <div className="flex items-baseline">
+    <div className="flex justify-between items-center flex-wrap mx-8 mb-8">
+      <div className="flex items-center sm:items-end">
         <h1 className="text-4xl text-[#F5634A] font-semibold Showcard-Gothic">
           All
         </h1>
@@ -23,8 +23,7 @@ const AllHeader = ({
       <div
         className={`relative flex items-center my-5 ${
           isMobileView ? "mx-auto pr-5" : ""
-        }`}
-      >
+        }`}>
         <img
           className="absolute w-6 left-4"
           src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Search_gray.png"
