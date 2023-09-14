@@ -10,7 +10,7 @@ const UserInfoFollowList = ({ userList, handleFollow, handleUnfollow, activeTab 
           <div className="flex">
             <img
               className="h-12 w-12 object-cover rounded-full"
-              src={activeTab === 'following' ? user.memberImage : user.memberImage}
+              src={activeTab === 'following' ? user.memberImage : user.fromMemberImage}
               alt={user.memberNickname}
             />
             <Link to={`/myinfo/${activeTab === 'following' ? user.memberId : user.fromMemberId}`}>
@@ -23,9 +23,16 @@ const UserInfoFollowList = ({ userList, handleFollow, handleUnfollow, activeTab 
             className="text-xs text-white font-bold"
             onClick={() => {
               if (!user.followYn) {
-                handleFollow(user.memberId);
+                if(activeTab === 'following') {
+                handleFollow(user.memberId);} else {
+                  handleFollow(user.fromMemberId);
+                }
               } else {
-                handleUnfollow(user.memberId);
+                if(activeTab === 'following') {
+                  handleUnfollow(user.memberId);} else {
+                    handleUnfollow(user.fromMemberId);
+                  }
+               // handleUnfollow(user.memberId);
               }
             }}
           >

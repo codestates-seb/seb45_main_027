@@ -53,7 +53,8 @@ export function AuthProvider({ children }) {
     } catch (error) {
       //불일치시 401에러
       if(error.response.status === 401){
-        alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+        //alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+        toast.error("이메일 또는 비밀번호가 일치하지 않습니다.")
       };
       toast.dismiss();
       alert("Login failed");
@@ -83,7 +84,8 @@ export function AuthProvider({ children }) {
 
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
-      alert('로그인이 성공했습니다')
+      //alert('로그인이 성공했습니다')
+      //toast.success('로그인이 성공했습니다')
       navigate("/");
     } catch (error) {
       console.log(code);
@@ -107,14 +109,18 @@ export function AuthProvider({ children }) {
     } catch (error) {
       //409시 중복닉네임,아이디
       if(error.response.status === 409){
-        alert("이미 등록된 이메일입니다.");
+        //alert("이미 등록된 이메일입니다.");
+        toast.error("이미 등록된 이메일입니다.")
       };
       if(error.response.status === 400 && error.response.data.message){
-        alert("이미 등록된 닉네임입니다.");
+        //alert("이미 등록된 닉네임입니다.");
+        toast.error('이미 등록된 닉네임입니다.')
       };
 
       toast.dismiss();
-      alert("Signup failed");
+      //alert("Signup failed");
+
+      toast.error("회원가입에 실패했습니다.")
       throw error;
     }
   }
@@ -131,7 +137,8 @@ export function AuthProvider({ children }) {
 
       navigate("/login");
     } catch (error) {
-      alert("Logout failed");
+      //alert("Logout failed");
+      toast.error("로그아웃에 실패했습니다.")
     }
   }
 

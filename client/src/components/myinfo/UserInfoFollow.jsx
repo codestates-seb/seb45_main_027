@@ -9,7 +9,7 @@ const UserInfoFollow = () => {
   const [followingList, setFollowingList] = useState('');
   const [followersList, setFollowersList] = useState('');
   const baseURL = process.env.REACT_APP_API_URL;
-  //const memberId = localStorage.getItem("memberId");
+  //const loggedinId = localStorage.getItem("memberId");
   const { id } = useParams();
 
   const accessToken = localStorage.getItem("accessToken");
@@ -17,13 +17,13 @@ const UserInfoFollow = () => {
 
     const fetchFollowingData = async () => {
       try {
-        const response = await axios.get(`${baseURL}/follow/from/${id}`, {
+        const response = await axios.get(`${baseURL}/follow/from`, {
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '', 
           },});
 
         setFollowingList(response.data.data);
-        // console.log('following data.data',response.data.data)
+         console.log('following data.data',response.data.data)
       } catch (err) {
         // console.log("Error: ", err);
       }
@@ -36,13 +36,13 @@ const UserInfoFollow = () => {
   useEffect(() => {
     const fetchFollowersData = async () => {
       try {
-        const response = await axios.get(`${baseURL}/follow/to/${id}`, {
+        const response = await axios.get(`${baseURL}/follow/to`, {
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '', 
           },});
 
         setFollowersList(response.data.data);
-        //console.log('followers data.data',response.data.data)
+        console.log('followers data.data',response.data.data)
       } catch (err) {
         // console.log("Error: ", err);
       }
@@ -50,14 +50,14 @@ const UserInfoFollow = () => {
   }, [id]);
 
 
-  const handleUnfollow = (memberId) => {
+  const handleUnfollow = (memberId, fromMemberId) => {
     const updatedFollowingList = followingList.filter(
       (user) => user.id !== memberId
     );
     setFollowingList(updatedFollowingList);
 
     const updatedFollowersList = followersList.map((user) => {
-      if (user.id === memberId) {
+      if (user.id === fromMemberId) {
         return {
           ...user,
           followYn: false,
@@ -70,9 +70,9 @@ const UserInfoFollow = () => {
     console.log(`Unfollow user with ID ${memberId}`);
   };
 
-  const handleFollow = (memberId) => {
+  const handleFollow = (fromMemberId) => {
     const newFollowersList = followersList.map((user) => {
-      if (user.id === memberId) {
+      if (user.id === fromMemberId) {
         return {
           ...user,
           followYn: !user.FollowYn,
@@ -82,7 +82,7 @@ const UserInfoFollow = () => {
     });
     setFollowersList(newFollowersList);
     toast.success("팔로우 되었습니다!");
-    console.log(`Follow user with ID ${memberId}`);
+    console.log(`Follow user with ID ${fromMemberId}`);
   };
 
   const [activeTab, setActiveTab] = useState("following");
