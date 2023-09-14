@@ -10,7 +10,7 @@ import Edit from "../components/feed/view/Edit";
 import Comment from "../components/feed/view/Comment";
 
 const ViewShowRoom = () => {
-  // GET으로 받아온 API 공유하기 위한 상태
+  // 받아온 API 공유하기 위한 상태
   const [feedData, setFeedData] = useState({});
   // 사이드바 댓글 이동 버튼
   const commentSectionRef = useRef(null);

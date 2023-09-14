@@ -9,6 +9,11 @@ const img = "w-10 h-10 mb-2";
 const ShowroomUserTop = ({ feedData }) => {
   const { follow, setFollow } = useUserContext();
 
+  let datePart = "";
+  if (feedData && feedData.createdDateTime) {
+    datePart = feedData.createdDateTime.split("T")[0];
+  }
+
   return (
     <div className="flex-col items-center lg:flex-row flex justify-between p-2 lg:p-8 mt-10 pt-10 rounded-lg shadow bg-white">
       <div className="flex items-center px-5">
@@ -17,7 +22,7 @@ const ShowroomUserTop = ({ feedData }) => {
         </div>
         <div>
           <div className="text-lg font-semibold">{feedData.nickname}</div>
-          <div className="text-gray-500">{feedData.createdDate}</div>
+          <div className="text-gray-500">{datePart}</div>
         </div>
       </div>
       <div className="flex pt-10 lg:pt-0">

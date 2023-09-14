@@ -1,30 +1,26 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useUserContext } from "../../../context/userContext";
-import { toast } from "react-hot-toast";
 
 const buttonStyle =
   "flex items-center justify-center rounded-lg shadow w-32 h-full";
-
-const TipsUserTop = ({ memberImage, nickname, createdDate }) => {
+  
+const TipsUserTop = ({ feedData }) => {
   const { follow, setFollow } = useUserContext();
 
-  useEffect(() => {
-    if (!nickname && !createdDate) {
-      toast.loading("로딩중...");
-    } else if (nickname && createdDate) {
-      toast.dismiss();
-    }
-  }, [nickname, createdDate]);
+  let datePart = "";
+  if (feedData && feedData.createdDateTime) {
+    datePart = feedData.createdDateTime.split("T")[0];
+  }
 
   return (
     <div className="flex justify-between pt-20">
       <div className="flex items-center">
         <div className="border w-12 h-12 rounded-full mr-4">
-          <img src={`${memberImage}`} alt="" />
+          <img src={`${feedData.memberImage}`} alt="" />
         </div>
         <div>
-          <div className="text-lg font-semibold">{nickname}</div>
-          <div className="text-gray-500">{createdDate}</div>
+          <div className="text-lg font-semibold">{feedData.nickname}</div>
+          <div className="text-gray-500">{datePart}</div>
         </div>
       </div>
       <button onClick={() => setFollow((prevFollow) => !prevFollow)}>

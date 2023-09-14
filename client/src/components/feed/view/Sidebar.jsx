@@ -1,18 +1,60 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import useAxios from "../../../hooks/useAxios";
 
 const display =
   "flex justify-center items-center w-20 h-20 bg-white border rounded-full shadow my-8 ";
 
 const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
-  // 좋아요,북마크 서버통신
   const [like, setLike] = useState(feedData.likeYn || false);
-  const [Bookmark, setBookmark] = useState(feedData.bookMarkYn || false);
+  const [bookmark, setBookmark] = useState(feedData.bookMarkYn || false);
+  const { feedId } = useParams();
+  // 좋아요 상태에 대한 Axios Hook
+  const [likeResponse, likeError, likeLoading, fetchLikeData] = useAxios({
+    method: "PATCH",
+    url: `/feed/${feedId}/feedLike`,
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+    },
+  });
+
+  // 북마크 상태에 대한 Axios Hook
+  const [bookmarkResponse, bookmarkError, bookmarkLoading, fetchBookmarkData] = useAxios({
+    method: "PATCH",
+    url: `/feed/${feedId}/feedBookMark`,
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+    },
+  });
 
   useEffect(() => {
-    setLike(feedData.likeYn || false);
-    setBookmark(feedData.bookMarkYn || false);
-  }, [feedData.likeYn, feedData.bookMarkYn]);
+    if (likeResponse) {
+      setLike(likeResponse.data.data.likeYn);
+    }
+    if (likeError) {
+      toast("좋아요 업데이트 실패");
+    }
+  }, [likeResponse, likeError]);
+
+  useEffect(() => {
+    if (bookmarkResponse) {
+      setLike(bookmarkResponse.data.data.bookMarkYn);
+    }
+    if (bookmarkError) {
+      toast("북마크 업데이트 실패");
+    }
+  }, [bookmarkResponse, bookmarkError]);
+
+  const toggleLike = () => {
+    fetchLikeData(); 
+    setLike(!like);  
+  };
+
+  const toggleBookmark = () => {
+    fetchBookmarkData(); 
+    setBookmark(!bookmark); 
+  };
 
   const scrollToComments = () => {
     if (commentSectionRef.current) {
@@ -34,7 +76,7 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
   return (
     <div className="hidden md:flex flex-col w-max h-0 sticky top-48 float-right mr-20 z-50">
       {/* 좋아요 */}
-      <button className={display} onClick={() => setLike(!like)}>
+      <button className={display} onClick={toggleLike}>
         <img
           className="m-4"
           src={
@@ -47,11 +89,11 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
       </button>
 
       {/* 북마크 */}
-      <button className={display} onClick={() => setBookmark(!Bookmark)}>
+      <button className={display} onClick={toggleBookmark}>
         <img
           className="m-4"
           src={
-            Bookmark
+            bookmark
               ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark-on.png"
               : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark-off.png"
           }
