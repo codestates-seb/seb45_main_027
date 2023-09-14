@@ -9,5 +9,5 @@ import lombok.*;
 @AllArgsConstructor
 public class MyContentResponseDto {
     private ShowRoomDto showRoom;
-//    private TipContentDto tipContent;
+    private TipContentDto tipContent;
 }
