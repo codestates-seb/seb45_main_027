@@ -7,28 +7,60 @@ const display =
   "flex justify-center items-center w-20 h-20 bg-white border rounded-full shadow my-8 ";
 
 const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
-  const [like, setLike] = useState(feedData.likeYn);
-  const [bookmark, setBookmark] = useState(feedData.bookMarkYn);
-  const { feedId } = useParams();
+  const [like, setLike] = useState("");
+  const [bookmark, setBookmark] = useState("");
+  const { feedId, tipId } = useParams();
 
+  const someCondition = feedId ? true : false;
   // 북마크 상태
-  const [res, err, loading, fetchBookmarkData] = useAxios(
+  const [resBookMark, errBookMark, loadingBookMark, fetchBookmarkData] =
+    useAxios(
+      {
+        method: "PATCH",
+        url: someCondition
+          ? `/feed/${feedId}/feedBookMark`
+          : `/tip/${tipId}/tipbookmark`,
+        headers: {
+          "ngrok-skip-browser-warning": "69420",
+        },
+      },
+      false
+    );
+
+  const toggleBookmark = () => {
+    fetchBookmarkData();
+    setBookmark(!bookmark);
+  };
+
+  // 좋아요 상태
+  const [resLike, errLike, loadingLike, fetchLikeData] = useAxios(
     {
       method: "PATCH",
-      url: `/feed/${feedId}/feedBookMark`,
+      url: someCondition
+        ? `/feed/${feedId}/feedlike`
+        : `/tip/${tipId}/tiplike`,
       headers: {
         "ngrok-skip-browser-warning": "69420",
       },
-    }, false
+    },
+    false
   );
-  
-  console.log("fetchBookmarkData:", fetchBookmarkData);
 
-  const toggleBookmark = () => {
-    fetchBookmarkData(); 
-    setBookmark(!bookmark); 
+  const toggleLike = () => {
+    fetchLikeData();
+    setLike(!like);
   };
 
+  // [좋아요/북마크] 받아온 요청 상태 저장
+  useEffect(() => {
+    if (feedData) {
+      setBookmark(feedData.bookMarkYn || feedData.bookmarkYn);
+      setLike(feedData.likeYn);
+    }
+  }, [feedData]);
+
+
+  // 댓글 스크롤이동
   const scrollToComments = () => {
     if (commentSectionRef.current) {
       commentSectionRef.current.scrollIntoView({ behavior: "smooth" });
@@ -45,11 +77,11 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
         toast("링크 복사에 실패했습니다.");
       });
   };
-
+  
   return (
     <div className="hidden md:flex flex-col w-max h-0 sticky top-48 float-right mr-20 z-50">
       {/* 좋아요 */}
-      <button className={display} onClick={() => { setLike(!like) }}>
+      <button className={display} onClick={toggleLike}>
         <img
           className="m-4"
           src={

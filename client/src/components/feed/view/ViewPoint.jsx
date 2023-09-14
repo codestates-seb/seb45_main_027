@@ -11,7 +11,7 @@ const ViewPoint = ({ feedData }) => {
       <div className="flex mr-4 text-lg text-gray-600">
         <span>스크랩</span>
         <span className=" font-semibold ml-1">
-          {feedData.bookMarkCount || "00"}
+          {feedData.bookMarkCount || feedData.bookmarkCount || "00"}
         </span>
       </div>
       <div className="flex mr-4 text-lg text-gray-600">
