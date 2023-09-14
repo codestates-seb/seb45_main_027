@@ -6,7 +6,6 @@ const WriteFormTips = ({
   DEFAULT_EDITOR_TEXT,
 }) => {
   const editorRef = useRef(null);
-  console.log(editorContent);
 
   useEffect(() => {
     if (editorContent === DEFAULT_EDITOR_TEXT) {
@@ -63,7 +62,7 @@ const WriteFormTips = ({
 
       <div
         ref={editorRef}
-        className="w-full h-full min-h-[500px] p-2 border-b"
+        className="w-full h-full min-h-[500px] p-2 border-b text-xl"
         contentEditable={true}
         onFocus={handleFocus}
         onBlur={handleBlur}

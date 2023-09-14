@@ -11,11 +11,25 @@ import { toast } from "react-hot-toast";
 import api from "../components/common/tokens";
 import { useNavigate } from "react-router-dom";
 
-//태그 관련정보 수정후 post 요청만 보내면됨  coverImage  title editorContent selectedValues 내용 담아서 *****
+const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요.";
+
+const toastStyle = {
+  style: {
+    border: "1px solid #b91604",
+    padding: "8px",
+    color: "#b91604",
+    fontSize: "14px",
+  },
+  iconTheme: {
+    primary: "#b91604",
+    secondary: "#FFFAEE",
+  },
+};
+
 const WriteShowRoom = () => {
   const [coverImage, setCoverImage] = useState(null); // 커버사진 상태
-  const [title, setTitle] = useState(""); // title(제목) 상태
-  const [editorContent, setEditorContent] = useState(""); // Editor 내용을 관리
+  const [title, setTitle] = useState(null); // title(제목) 상태
+  const [editorContent, setEditorContent] = useState(DEFAULT_EDITOR_TEXT); // Editor 내용을 관리
   const [selectedValues, setSelectedValues] = useState({
     roomInfo: null,
     roomSize: null,
@@ -89,48 +103,74 @@ const WriteShowRoom = () => {
 
   // 작성하기 버튼 누를 시 실행되는 핸들러 함수
   const handlePublish = async () => {
-    // API 호출을 위한 요청 파라미터 설정
-    const configParams = {
-      method: "POST",
-      url: `/feed`,
-      headers: {
-        "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "69420",
-      },
-      data: {
-        coverPhoto: coverImage,
-        title: title,
-        content: editorContent,
-        roomType: selectedValues.roomType.code,
-        roomSize: selectedValues.roomSize.code,
-        roomInfo: selectedValues.roomInfo.code,
-        roomCount: selectedValues.roomCount.code,
-        location: selectedValues.location.code,
-      },
-    };
+    if (coverImage && title && editorContent && selectedValues) {
+      // 모든 값이 존재할 때만 API 요청
+      // API 호출을 위한 요청 파라미터 설정
+      const configParams = {
+        method: "POST",
+        url: `/feed`,
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        },
+        data: {
+          coverPhoto: coverImage,
+          title: title,
+          content: editorContent,
+          roomType: selectedValues.roomType.code,
+          roomSize: selectedValues.roomSize.code,
+          roomInfo: selectedValues.roomInfo.code,
+          roomCount: selectedValues.roomCount.code,
+          location: selectedValues.location.code,
+        },
+      };
 
-    try {
-      // API 호출
-      const response = await api(configParams);
-      // 성공적으로 게시된 경우
-      const feedIdFromResponse = response.data.data.feedId;
-      toast.success("게시되었습니다.");
+      try {
+        // API 호출
+        const response = await api(configParams);
+        // 성공적으로 게시된 경우
+        const feedIdFromResponse = response.data.data.feedId;
+        toast.success("게시되었습니다.");
 
-      if (feedIdFromResponse) {
-        navigate(`/showroom/${feedIdFromResponse}`);
+        if (feedIdFromResponse) {
+          navigate(`/showroom/${feedIdFromResponse}`);
+        }
+
+        // 게시 후 로컬 스토리지의 임시 데이터 삭제
+        // localStorage.removeItem("tempSaveShowroomData");
+      } catch (error) {
+        // 오류 발생 시 오류 메시지를 토스트로 표시
+        toast.error("게시 중 오류가 발생했습니다.");
       }
-
-      // 게시 후 로컬 스토리지의 임시 데이터 삭제
-      // localStorage.removeItem("tempSaveShowroomData");
-    } catch (error) {
-      // 오류 발생 시 오류 메시지를 토스트로 표시
-      toast.error("게시 중 오류가 발생했습니다.");
+    } else {
+      // 값이 없는 경우 각각의 null 상태에 따라 toast 메시지를 표시
+      if (!coverImage) {
+        toast.error("커버 사진을 선택하세요.", toastStyle);
+      }
+      if (!title) {
+        toast.error("제목을 입력하세요.", toastStyle);
+      }
+      if (editorContent === DEFAULT_EDITOR_TEXT || editorContent === "") {
+        toast.error("내용을 입력하세요.", toastStyle);
+      }
+      if (
+        !selectedValues.roomType ||
+        !selectedValues.roomSize ||
+        !selectedValues.roomSize ||
+        !selectedValues.roomInfo ||
+        !selectedValues.location
+      ) {
+        toast.error("필수정보 값을 모두 선택하세요.", toastStyle);
+      }
     }
   };
 
   return (
     <>
-      <HeaderMobile buttonBgColor="bg-[#F5634A]" />
+      <HeaderMobile
+        buttonBgColor="bg-[#F5634A]"
+        handlePublish={handlePublish}
+      />
       <Background
         mainclassName=" bg-[#FFFAEE] w-full h-full px-14 md:px-56"
         divclassName="flex-col my-24 md:my-0"
@@ -161,6 +201,7 @@ const WriteShowRoom = () => {
           <WriteFormShowroom
             editorContent={editorContent}
             setEditorContent={setEditorContent}
+            DEFAULT_EDITOR_TEXT={DEFAULT_EDITOR_TEXT}
           />
         </div>
       </Background>

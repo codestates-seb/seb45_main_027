@@ -40,7 +40,7 @@ const WriteTag = ({ tags, setTags }) => {
             type="text"
             onKeyDown={handleTagKeyDown}
             placeholder="#태그"
-            className="mt-1 p-1 border rounded-md text-xl"
+            className="mt-1 p-1 border rounded-md text-lg"
           />
         </div>
       </div>
