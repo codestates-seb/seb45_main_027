@@ -9,46 +9,77 @@ const UserInfoFollow = () => {
   const [followingList, setFollowingList] = useState('');
   const [followersList, setFollowersList] = useState('');
   const baseURL = process.env.REACT_APP_API_URL;
-  const loggedinId = localStorage.getItem("memberId");
+  //const loggedinId = localStorage.getItem("memberId");
   const { id } = useParams();
 
   const accessToken = localStorage.getItem("accessToken");
+  // useEffect(() => {
+
+  //   const fetchFollowingData = async () => {
+  //     try {
+
+  //       const response = await axios.get(`${baseURL}/follow/from/${id}`, {
+  //         headers: {
+  //           Authorization: accessToken ? `Bearer ${accessToken}` : '', 
+  //         },});
+
+  //       setFollowingList(response.data.data);
+  //        console.log('following data.data',response.data.data)
+  //     } catch (err) {
+  //       // console.log("Error: ", err);
+  //     }
+  //   };
+  //   fetchFollowingData();
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchFollowersData = async () => {
+  //     try {
+
+  //       const response = await axios.get(`${baseURL}/follow/to/${id}`, {
+  //         headers: {
+  //           Authorization: accessToken ? `Bearer ${accessToken}` : '', 
+  //         },});
+
+  //       setFollowersList(response.data.data);
+  //       console.log('followers data.data',response.data.data)
+  //     } catch (err) {
+  //       // console.log("Error: ", err);
+  //     }
+  //   };   fetchFollowersData();
+  // }, []);
+
+
+
   useEffect(() => {
-
-    const fetchFollowingData = async () => {
+    const fetchData = async () => {
       try {
-
-        const response = await axios.get(`${baseURL}/follow/from/${loggedinId}`, {
-          headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : '', 
-          },});
-
-        setFollowingList(response.data.data);
-         console.log('following data.data',response.data.data)
+        const [followingResponse, followersResponse] = await Promise.all([
+          axios.get(`${baseURL}/follow/from/${id}`, {
+            headers: {
+              Authorization: accessToken ? `Bearer ${accessToken}` : '',
+            },
+          }),
+          axios.get(`${baseURL}/follow/to/${id}`, {
+            headers: {
+              Authorization: accessToken ? `Bearer ${accessToken}` : '',
+            },
+          }),
+        ]);
+  
+        setFollowingList(followingResponse.data.data);
+        setFollowersList(followersResponse.data.data);
+  
+        //console.log('Following data.data', followingResponse.data.data);
+        //console.log('Followers data.data', followersResponse.data.data);
       } catch (err) {
-        // console.log("Error: ", err);
+        console.error("Error: ", err);
       }
     };
-    fetchFollowingData();
-  }, []);
-
-  useEffect(() => {
-    const fetchFollowersData = async () => {
-      try {
-
-        const response = await axios.get(`${baseURL}/follow/to/${loggedinId}`, {
-          headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : '', 
-          },});
-
-        setFollowersList(response.data.data);
-        console.log('followers data.data',response.data.data)
-      } catch (err) {
-        // console.log("Error: ", err);
-      }
-    };   fetchFollowersData();
-  }, []);
-
+  
+    fetchData();
+  }, [accessToken, id]);
+  
 
   const handleUnfollow = (memberId, fromMemberId) => {
     const updatedFollowingList = followingList.filter(
