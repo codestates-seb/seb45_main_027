@@ -24,7 +24,7 @@ const WriteShowRoom = () => {
     location: null,
   }); // 드랍다운 선택 결과를 담은 상태
 
-  // console.log(coverImage);
+  console.log(coverImage);
   // console.log(title);
   // console.log(editorContent);
   // console.log(selectedValues);

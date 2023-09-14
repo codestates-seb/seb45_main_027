@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import api from "../../common/tokens";
 
 const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
+  console.log(coverImage);
   const imageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -22,7 +23,10 @@ const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
         console.log("S3업로드 성공");
         setCoverImage(response.data);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        window.alert("이미지 용량이 초과되었습니다.");
+        setCoverImage(null);
+      });
   };
 
   const handleUpload = () => {
