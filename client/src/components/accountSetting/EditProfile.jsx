@@ -1,4 +1,3 @@
-import React, {useEffect} from "react";
 import axios from "axios";
 
 const EditProfile = ({
@@ -54,9 +53,6 @@ const EditProfile = ({
 
   };
 
-  // useEffect(() => {
-  //   console.log(profileData.profileImg);
-  // }, [profileData.profileImg]);
 
   return (
     <div className="flex flex-col justify-center items-center h-[500px]">

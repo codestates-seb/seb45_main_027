@@ -16,7 +16,7 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
       "Are you sure you want to delete this post? This action cannot be undone."
     );
     if (confirmDeletion) {
-      const updatedPosts = isPostDeleted.filter((item) => item.id !== itemId);
+      const updatedPosts = isPostDeleted.filter((item) => item.feedId !== itemId);
       setIsPostDeleted(updatedPosts);
       toast.success("게시글이 삭제되었습니다!");
 
@@ -25,7 +25,7 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
   };
 
   const toggleBookmark = (itemId) => {
-    const updatedBookmarks = isBookmarked.filter((item) => item.id !== itemId);
+    const updatedBookmarks = isBookmarked.filter((item) => item.feedId !== itemId);
     setIsBookmarked(updatedBookmarks);
     toast.success("북마크가 해제되었습니다!");
 
@@ -33,7 +33,7 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
   };
 
   const toggleLike = (itemId) => {
-    const updatedLikes = isLiked.filter((item) => item.id !== itemId);
+    const updatedLikes = isLiked.filter((item) => item.feedId !== itemId);
     setIsLiked(updatedLikes);
     toast.success("좋아요가 해제되었습니다!");
 
@@ -80,9 +80,9 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
           visiblePosts.map((item, idx) => (
             <MyInfoPost
               key={idx}
-              imgSrc={item.imgSrc}
+              imgSrc={item.coverPhoto}
               title={item.title}
-              itemId={item.id}
+              itemId={item.feedId}
               deletePost={deletePost}
             />
           ))}
@@ -90,10 +90,10 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
           visibleBookmarks.map((item, idx) => (
             <MyInfoBookmark
               key={idx}
-              imgSrc={item.imgSrc}
+              imgSrc={item.coverPhoto}
               title={item.title}
-              itemId={item.id}
-              isBookmarked={item.bookmarked}
+              itemId={item.feedId}
+              isBookmarked={item.bookMarkYn}
               toggleBookmark={toggleBookmark}
             />
           ))}
@@ -101,10 +101,10 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
           visibleLikes.map((item, idx) => (
             <MyInfoLike
               key={idx}
-              imgSrc={item.imgSrc}
+              imgSrc={item.coverPhoto}
               title={item.title}
-              itemId={item.id}
-              isLiked={item.like}
+              itemId={item.feedId}
+              isLiked={item.likeYn}
               toggleLike={toggleLike}
             />
           ))}

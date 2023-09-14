@@ -1,25 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 const UserProfileDetails = ({ toggleAccountSettings, profileData }) => {
   const { id } = useParams();
   const memberId = localStorage.getItem("memberId");
-  const accessToken = localStorage.getItem("accessToken");
-
-  const handleTestFollow = () => {
-    if(id === memberId) return alert("본인은 팔로우할 수 없습니다.");
-    try {
-      const response = axios.patch(
-        `${process.env.REACT_APP_API_URL}/follow/choose/${memberId}/${id}`
-        , {
-          headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : '', 
-          },});
-      console.log(response.data);
-      console.log(memberId, id)
-    } catch {console.log("error")}
-  };
 
   return (
     <div className="flex flex-row justify-center items-center md:flex-col md:mb-6 ">
@@ -49,14 +33,7 @@ const UserProfileDetails = ({ toggleAccountSettings, profileData }) => {
                 계정설정
               </button>
             )}
-            {memberId !== id && (
-              <button
-                className="bg-[#00647B] text-white font-semibold hover:bg-[#00647B]/50 rounded-full p-1 md:p-2 text-xs md:text-md"
-                onClick={handleTestFollow}
-              >
-                Follow
-              </button>
-            )}
+            
           </div>
         </>
       )}

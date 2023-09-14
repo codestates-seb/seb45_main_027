@@ -48,7 +48,9 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
         profileData,
         {
           headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : "", // Include the access token if it exists
+            Authorization: accessToken ? `Bearer ${accessToken}` : "", 
+            "ngrok-skip-browser-warning": "69420",
+
           },
         }
       );

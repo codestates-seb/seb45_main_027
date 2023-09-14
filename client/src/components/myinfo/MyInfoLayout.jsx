@@ -25,7 +25,8 @@ const MyInfoLayout = () => {
       try {
         const response = await axios.get(`${baseURL}/members/${id}`, {
           headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : '', // Include the access token if it exists
+            Authorization: accessToken ? `Bearer ${accessToken}` : '', 
+            "ngrok-skip-browser-warning": "69420",
           },});
 
         setProfileData(response.data.data);
