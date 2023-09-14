@@ -37,7 +37,7 @@ const TipsHeader = ({ inputValue, handleInputChange, handleSearch }) => {
           type="text"
           value={inputValue}
           onChange={handleInputChange}
-          onKeyDown={(e) => handleSearch(e, inputValue)}
+          onKeyUp={(e) => handleSearch(e, inputValue)}
           placeholder="#Tag"
         />
       </div>

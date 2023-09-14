@@ -69,6 +69,7 @@ const AllContent = ({ showroomData, setShowroomData }) => {
           updatedShowroomData[updatedItemIndex].bookMarkYn =
             response.data.data.bookMarkYn;
           setShowroomData(updatedShowroomData); // 업데이트된 배열을 상태로 설정합니다.
+          console.log(showroomData);
         }
       }
     } catch (error) {
@@ -82,6 +83,7 @@ const AllContent = ({ showroomData, setShowroomData }) => {
     navigate(`/showroom/${feedId}`);
   };
 
+  console.log(showroomData);
   return (
     <div className="flex-col mx-4">
       <div className="flex justify-between flex-wrap">
@@ -90,6 +92,7 @@ const AllContent = ({ showroomData, setShowroomData }) => {
             key={idx}
             className="flex-col mx-3 mb-3 w-full sm:w-[45%] lg:w-[30%] h-[20%]"
           >
+            {console.log(item.bookMarkYn)}
             <div className="relative">
               <img
                 // 이미지 들어오면 수정 **

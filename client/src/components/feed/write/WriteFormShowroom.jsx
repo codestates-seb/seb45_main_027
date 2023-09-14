@@ -1,170 +1,84 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import PhotoTagging from "./PhotoTagging";
 
 const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요";
 
-const WriteFormShowroom = () => {
-  const [editor, setEditor] = useState(DEFAULT_EDITOR_TEXT);
+const WriteFormShowroom = ({ editorContent, setEditorContent }) => {
   const editorRef = useRef(null);
-  const [imageData, setImageData] = useState([]); // 이미지 url과 이미지내 tags 정보를 저장하는 상태
+  const [imageSrc, setImageSrc] = useState(null);
+  const [tags, setTags] = useState([]); // 이미지 내 tags 들의 집합
+  const [currentTag, setCurrentTag] = useState({ x: "0%", y: "0%", text: "" }); // 현재 추가하려는 tag
+  // const [editorContent, setEditorContent] = useState(""); // Editor 내용을 관리
 
   useEffect(() => {
-    if (editor === DEFAULT_EDITOR_TEXT) {
-      editorRef.current.innerHTML = editor;
+    if (editorContent === DEFAULT_EDITOR_TEXT) {
+      editorRef.current.innerHTML = editorContent;
     }
-  }, [editor]);
+  }, [editorContent]);
 
   const handleFocus = () => {
-    if (editor === DEFAULT_EDITOR_TEXT) {
-      setEditor("");
+    if (editorContent === DEFAULT_EDITOR_TEXT) {
+      setEditorContent("");
     }
   };
 
   const handleBlur = () => {
     const inputText = editorRef.current.innerHTML.trim();
-    setEditor(inputText || DEFAULT_EDITOR_TEXT);
+    setEditorContent(inputText || DEFAULT_EDITOR_TEXT);
   };
 
-  const ImageUpload = (e) => {
-    const { files } = e.target;
-
-    if (files && files[0]) {
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
       const reader = new FileReader();
-      reader.readAsDataURL(files[0]);
       reader.onloadend = () => {
-        const imageUrl = reader.result;
-        const newEditorContent = editor === DEFAULT_EDITOR_TEXT ? "" : editor;
-        const EditorContent = `${newEditorContent}<div class="imgContainer relative"><img src="${imageUrl}" alt="Uploaded Image"></div><br>`;
-
-        // 이미지와 태그 정보 저장, 에디터 정보 저장
-        setImageData([...imageData, { imageUrl, tags: [] }]);
-        setEditor(EditorContent);
-        e.target.value = null;
+        setImageSrc(reader.result);
       };
+      reader.readAsDataURL(file);
     }
   };
 
-  // 이미지내 태그를 추가하는 함수
-  const addTag = (x, y, imageIndex, e) => {
-    // 이미지, 태그를 둘러싸고 있는 div
-    const parentDiv = e.target.closest(".imgContainer");
-    if (!parentDiv) return; // imgContainer 없으면 바로 return
-
-    // 이미지내 태그를 부모요소 대비 %로 설정하기 위함
-    const containerWidth = parentDiv.offsetWidth;
-    const containerHeight = parentDiv.offsetHeight;
-
-    const xPercentage = (x / containerWidth) * 100;
-    const yPercentage = (y / containerHeight) * 100;
-    const tagText = window.prompt("Enter tag text:", "Tag");
-
-    if (!tagText) return;
-
-    const newTag = {
-      x: xPercentage + "%",
-      y: yPercentage + "%", // %로 바꾸기
-      text: tagText, // 태그 text내용 로직 추가해야함
-    };
-
-    // 현재 클릭한 사진에 tag 추가
-    const updatedImageData = [...imageData];
-    updatedImageData[imageIndex].tags.push(newTag);
-    setImageData(updatedImageData);
-
-    // tag 속성
-    const tagElement = document.createElement("span");
-    tagElement.className = "imagetag";
-    tagElement.style.position = "absolute";
-    tagElement.style.left = newTag.x;
-    tagElement.style.top = newTag.y;
-    tagElement.innerText = newTag.text;
-
-    // tagElement.addEventListener("click", () => {
-    //   alert(`Tag Clicked: ${newTag.text}`);
-    // }); //안됨
-
-    // img컨테이너의 요소로 추가
-    parentDiv.appendChild(tagElement);
+  // 이미지 및 태그 삭제
+  const handleDeleteImageAndTags = () => {
+    // 상위 <div class="relative"> 요소를 삭제합니다.
+    const updatedContent = editorContent.replace(
+      /<div class="relative">[\s\S]*?<\/div>/,
+      ""
+    );
+    setEditorContent(updatedContent);
   };
 
-  // 업로드된 이미지에 온클릭이벤트 핸들러함수 - 클릭한 사진을 index로 판별
-  const handleEditorClick = (e) => {
-    if (e.target.tagName === "IMG") {
-      const imageIndex = imageData.findIndex(
-        (data) => data.imageUrl === e.target.src
-      );
-      if (imageIndex !== -1) {
-        const rect = e.target.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        addTag(x, y, imageIndex, e);
-      }
-    }
+  const handlePost = () => {
+    const tagsData = tags.map((tag) => ({
+      x: tag.x,
+      y: tag.y,
+      text: tag.text,
+    }));
+
+    // post요청시 이미지 태그 생성, 이미지 태그 내 태그 삽입
+    const combinedHTML = `<br/><div class="relative"><img src="${imageSrc}" alt="Uploaded Image" contentEditable="false" />${tagsData
+      .map(
+        (tag) =>
+          `<span class="bg-[#F5634A] p-2 rounded-xl text-white" style="position: absolute; left: ${tag.x}; top: ${tag.y}" contentEditable="false">${tag.text}</span>`
+      )
+      .join("")}</div><br/>`;
+
+    // 에디터 내용에 이미지삽입
+    setEditorContent(editorContent + combinedHTML);
+
+    // 이미지 및 태그정보 초기화
+    setImageSrc(null);
+    setTags([]);
   };
-
-  // const imagetagSelect = document.querySelector(".imagetag");
-  // if (imagetagSelect) {
-  //   imagetagSelect.addEventListener("click", (el) => {
-  //     alert(`Tag Clicked: ${el.text}`);
-  //   });
-  // }
-  // console.log(imagetagSelect);
-
-  useEffect(() => {
-    const imageTagElements = document.querySelectorAll(".imagetag");
-
-    imageTagElements.forEach((element, idx) => {
-      element.addEventListener("click", () => {
-        const editText = window.prompt("Enter tag text:", element.innerText);
-
-        if (editText !== null) {
-          // Find the clicked tag within imageData
-          let clickedImageIndex = -1;
-          let clickedTagIndex = -1;
-
-          for (let i = 0; i < imageData.length; i++) {
-            const image = imageData[i];
-            const tagIndex = image.tags.findIndex(
-              (tag) => tag.text === element.innerText
-            );
-            if (tagIndex !== -1) {
-              clickedImageIndex = i;
-              clickedTagIndex = tagIndex;
-              break; // Exit the loop once we find the tag
-            }
-          }
-
-          if (clickedImageIndex !== -1 && clickedTagIndex !== -1) {
-            // Update the tag's text within imageData
-            const updatedImageData = [...imageData];
-            updatedImageData[clickedImageIndex].tags[clickedTagIndex].text =
-              editText;
-            setImageData(updatedImageData);
-          }
-        }
-      });
-    });
-    console.log(imageData);
-
-    return () => {
-      imageTagElements.forEach((element) => {
-        element.removeEventListener("click", () => {
-          console.log(element.innerHTML);
-        });
-      });
-    };
-  });
-  const a = process.env.REACT_APP_API_KEY;
-  console.log(a);
 
   return (
     <>
-      {/* 이미지 입력 버튼 */}
-      <div className="mb-2 pb-2 border-b">
-        <label htmlFor="imageUpload" className="cursor-pointer">
+      <div className="flex border-b-[1px] pb-4">
+        <label htmlFor="imageUpload" className="cursor-pointer rounded-md">
           <img
             className="p-2"
-            src="/images/https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/gallery.png.png"
-            alt=""
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/gallery.png"
+            alt="gallery"
           />
         </label>
         <input
@@ -172,34 +86,43 @@ const WriteFormShowroom = () => {
           type="file"
           accept="image/*"
           className="hidden"
-          onChange={ImageUpload}
+          onChange={handleImageUpload}
         />
+        <button
+          onClick={handlePost}
+          className="p-2 border-[1px] mx-2 rounded-md"
+        >
+          이미지 등록
+        </button>
+        <button
+          onClick={handleDeleteImageAndTags}
+          className="p-2 border-[1px] mx-2 rounded-md"
+        >
+          이미지 삭제
+        </button>
       </div>
 
-      <div
-        ref={editorRef}
-        className="relative w-full h-full min-h-[500px] p-2 border-b"
-        contentEditable={true}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        dangerouslySetInnerHTML={{ __html: editor }}
-        onClick={handleEditorClick}
-      />
-
-      {imageData.map((image, index) => (
-        <div className="imgContainer relative" key={index}>
-          <img src={image.imageUrl} alt="Uploaded Image" />
-          {image.tags.map((tag, tagIndex) => (
-            <span
-              className="imagetag"
-              key={tagIndex}
-              style={{ position: "absolute", left: tag.x, top: tag.y }}
-            >
-              {tag.text}
-            </span>
-          ))}
-        </div>
-      ))}
+      <div className="flex-col justify-center content-center">
+        {imageSrc ? (
+          <div className="m-5">
+            <PhotoTagging
+              imageSrc={imageSrc}
+              tags={tags}
+              setTags={setTags}
+              currentTag={currentTag}
+              setCurrentTag={setCurrentTag}
+            />
+          </div>
+        ) : null}
+        <div
+          ref={editorRef}
+          contentEditable={true}
+          dangerouslySetInnerHTML={{ __html: editorContent }}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          className="p-2 mt-6 h-full w-full min-h-[600px]"
+        ></div>
+      </div>
     </>
   );
 };

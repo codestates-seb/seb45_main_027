@@ -8,6 +8,7 @@ const WriteBtn = ({
   buttonBorderColor,
   buttonTextColor,
   Title,
+  handlePublish,
 }) => {
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
@@ -47,7 +48,10 @@ const WriteBtn = ({
         >
           임시저장
         </button>
-        <button className={`${buttonBgColor} text-white ${btn}`}>
+        <button
+          className={`${buttonBgColor} text-white ${btn}`}
+          onClick={handlePublish}
+        >
           작성하기
         </button>
       </div>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
-import useAxios from "../../../hooks/useAxios";
+import api from "../../common/tokens";
 
 const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
   const imageUpload = (e) => {
@@ -16,8 +15,7 @@ const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
     if (file) {
       reader.readAsDataURL(file);
     }
-
-    axios
+    api
       .post(`${process.env.REACT_APP_API_URL}/imageUpload/coverImage`, formData)
       .then((response) => {
         console.log(response.data);
