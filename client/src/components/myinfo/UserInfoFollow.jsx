@@ -35,7 +35,9 @@ const UserInfoFollow = () => {
       setFollowingList(followingResponse.data.data);
       setFollowersList(followersResponse.data.data);
 
-      //console.log("Following data.data", followingResponse.data.data);
+      console.log("Following data", followingResponse.data);
+
+      console.log("Following data.data", followingResponse.data.data);
       //console.log("Followers data.data", followersResponse.data.data);
     } catch (err) {
       console.error("Error: ", err);

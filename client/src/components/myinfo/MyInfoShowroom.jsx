@@ -5,7 +5,12 @@ import MyInfoBookmark from "./MyInfoBookmark";
 import MyInfoLike from "./MyInfoLike";
 import { toast } from "react-hot-toast";
 
-const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
+const MyInfoShowroom = ({
+  postData = [],
+  bookmarkData = [],
+  likeData = [],
+  activeTab,
+}) => {
   // 게시글, 북마크, 삭제 부분
   const [isPostDeleted, setIsPostDeleted] = useState(postData);
   const [isBookmarked, setIsBookmarked] = useState(bookmarkData);
@@ -16,7 +21,9 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
       "Are you sure you want to delete this post? This action cannot be undone."
     );
     if (confirmDeletion) {
-      const updatedPosts = isPostDeleted.filter((item) => item.feedId !== itemId);
+      const updatedPosts = isPostDeleted.filter(
+        (item) => item.feedId !== itemId
+      );
       setIsPostDeleted(updatedPosts);
       toast.success("게시글이 삭제되었습니다!");
 
@@ -25,7 +32,9 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
   };
 
   const toggleBookmark = (itemId) => {
-    const updatedBookmarks = isBookmarked.filter((item) => item.feedId !== itemId);
+    const updatedBookmarks = isBookmarked.filter(
+      (item) => item.feedId !== itemId
+    );
     setIsBookmarked(updatedBookmarks);
     toast.success("북마크가 해제되었습니다!");
 
@@ -46,20 +55,23 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
   const [likePage, setLikePage] = useState(1);
   const itemsPerPage = 4;
 
-  const visiblePosts = isPostDeleted.slice(
-    (postPage - 1) * itemsPerPage,
-    postPage * itemsPerPage
-  );
+  const visiblePosts = isPostDeleted
+    ? isPostDeleted.slice(
+        (postPage - 1) * itemsPerPage,
+        postPage * itemsPerPage
+      )
+    : [];
 
-  const visibleBookmarks = isBookmarked.slice(
-    (bookmarkPage - 1) * itemsPerPage,
-    bookmarkPage * itemsPerPage
-  );
+  const visibleBookmarks = isBookmarked
+    ? isBookmarked.slice(
+        (bookmarkPage - 1) * itemsPerPage,
+        bookmarkPage * itemsPerPage
+      )
+    : [];
 
-  const visibleLikes = isLiked.slice(
-    (likePage - 1) * itemsPerPage,
-    likePage * itemsPerPage
-  );
+  const visibleLikes = isLiked
+    ? isLiked.slice((likePage - 1) * itemsPerPage, likePage * itemsPerPage)
+    : [];
 
   const handleNextPage = (pageState, setPageState, totalPages) => {
     if (pageState < totalPages) {
@@ -72,6 +84,10 @@ const MyInfoShowroom = ({ postData, bookmarkData, likeData, activeTab }) => {
       setPageState(pageState - 1);
     }
   };
+
+  console.log("visiblePosts", visiblePosts);
+  console.log(isBookmarked)
+  console.log('postdata', postData)
 
   return (
     <>
