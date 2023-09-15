@@ -18,8 +18,8 @@ const Comment = forwardRef(({ feedData }, ref) => {
   const [comments, setComments] = useState([]);
   const [replies, setReplies] = useState({});
 
-  const [feedReplyId, setFeedReplyId] = useState("") // 댓글 번호
-  const { feedId } = useParams();  // 게시물 번호
+  const [feedReplyId, setFeedReplyId] = useState(""); // 댓글 번호
+  const { feedId } = useParams(); // 게시물 번호
 
   // 좋아요 각 상태관리
   const toggleLike = (comment) => {
@@ -54,10 +54,8 @@ const Comment = forwardRef(({ feedData }, ref) => {
 
     setReplyInput((prevReplyInput) => ({ ...prevReplyInput, [commentId]: "" }));
   };
-      
 
-
-
+  //POST 요청
   const [res, err, loading, fetchData] = useAxios(
     {
       method: "POST",
@@ -84,6 +82,27 @@ const Comment = forwardRef(({ feedData }, ref) => {
       setCommentInput("");
     } catch (error) {
       toast.error("댓글을 추가할 수 없습니다.");
+    }
+  };
+
+  // DELETE 요청
+  const [deleteRes, deleteErr, deleteLoading, fetchDeleteData] = useAxios(
+    {
+      method: "DELETE",
+      url: `/feed/${feedId}/feedReply`,
+      headers: {
+        "ngrok-skip-browser-warning": "69420",
+      },
+    },
+    false
+  );
+
+  const deleteComment = (feedReplyId) => {
+    fetchDeleteData({ url: `/feed/${feedId}/feedReply/${feedReplyId}` });
+    if (deleteRes) {
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.replyId !== feedReplyId)
+      );
     }
   };
 
@@ -174,8 +193,9 @@ const Comment = forwardRef(({ feedData }, ref) => {
                     {/* 삭제 */}
                     <button
                       className="mx-2"
-                      // onClick={deleteComment(replies.feedReplyId)}
-                    >
+                      onClick={() => {
+                        deleteComment(comment.feedReplyId);
+                      }}>
                       삭제하기
                     </button>
                   </div>
