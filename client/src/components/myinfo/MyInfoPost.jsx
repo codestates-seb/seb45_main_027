@@ -1,10 +1,11 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-const MyInfoPost = ({ imgSrc, title, itemId, deletePost }) => {
-  const handleDeletePost = () => {
-    deletePost(itemId);
-  };
+const MyInfoPost = ({ imgSrc, title, itemId, deletePost, label }) => {
+  // const handleDeletePost = () => {
+  //   deletePost(itemId);
+  // };
+  
 
   const { id } = useParams();
   const memberId = localStorage.getItem("memberId");
@@ -29,7 +30,7 @@ const MyInfoPost = ({ imgSrc, title, itemId, deletePost }) => {
             />
             <div>수정</div>
           </button>
-          <button onClick={handleDeletePost} className="flex">
+          <button onClick={()=>deletePost(itemId, label)} className="flex">
             <img
               src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/remove.png"
               alt="remove"

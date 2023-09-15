@@ -5,14 +5,15 @@ const MyInfoBookmark = ({
   imgSrc,
   title,
   isBookmarked,
-  toggleBookmark,
+  deleteBookmark,
+  label,
 }) => {
   const { id } = useParams();
   const memberId = localStorage.getItem("memberId");
 
-  const handleToggleBookmark = () => {
-    toggleBookmark(itemId);
-  };
+  // const handleToggleBookmark = () => {
+  //   toggleBookmark(itemId);
+  // };
 
   return (
     <div className="m-2 h-full w-[140px] md:w-[150px] xl:w-[170px] text-[#57534e]">
@@ -25,7 +26,7 @@ const MyInfoBookmark = ({
         <button
           onClick={() => {
             if (id === memberId) {
-              handleToggleBookmark();
+              deleteBookmark(itemId, label);
             }
           }}
           className="absolute bottom-3 right-3 cursor-pointer">

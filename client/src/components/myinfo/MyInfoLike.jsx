@@ -1,13 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-const MyInfoLike = ({ imgSrc, title, itemId, toggleLike, isLiked }) => {
+const MyInfoLike = ({ imgSrc, title, itemId, deleteLike, isLiked, label }) => {
  const { id } = useParams();
   const memberId = localStorage.getItem("memberId");
-
-  const handleToggleLike = () => {
-    toggleLike(itemId);
-  };
 
   return (
     <div className="m-2 h-full w-[140px] md:w-[150px] xl:w-[170px] text-[#57534e]">
@@ -20,7 +16,7 @@ const MyInfoLike = ({ imgSrc, title, itemId, toggleLike, isLiked }) => {
         <button
           onClick={() => {
             if (id === memberId) {
-              handleToggleLike();
+              deleteLike(itemId, label);
             }
           }}
           className="absolute bottom-3.5 right-3.5 cursor-pointer"

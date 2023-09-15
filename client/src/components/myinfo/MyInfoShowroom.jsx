@@ -4,73 +4,84 @@ import MyInfoPost from "./MyInfoPost";
 import MyInfoBookmark from "./MyInfoBookmark";
 import MyInfoLike from "./MyInfoLike";
 import { toast } from "react-hot-toast";
+import axios from "axios";
 
 const MyInfoShowroom = ({
   postData = [],
   bookmarkData = [],
   likeData = [],
   activeTab,
+  handleFollowAction,
+  label,
 }) => {
-  // 게시글, 북마크, 삭제 부분
-  const [isPostDeleted, setIsPostDeleted] = useState(postData);
-  const [isBookmarked, setIsBookmarked] = useState(bookmarkData);
-  const [isLiked, setIsLiked] = useState(likeData);
+  const baseURL = process.env.REACT_APP_API_URL;
+  const accessToken = localStorage.getItem("accessToken");
 
-  const deletePost = (itemId) => {
+  // 게시글, 북마크, 삭제 부분
+  const deletePost = async (itemId, label) => {
+    let url = '';
+    if(label === "showroom") {url = `${baseURL}/feed/${itemId}`;}
+    if(label === "tips") {url = `${baseURL}/tip/${itemId}`;}
     const confirmDeletion = window.confirm(
-      "Are you sure you want to delete this post? This action cannot be undone."
+      `${itemId} ${label}Are you sure you want to delete this post? This action cannot be undone.`
     );
     if (confirmDeletion) {
-      const updatedPosts = isPostDeleted.filter(
-        (item) => item.feedId !== itemId
-      );
-      setIsPostDeleted(updatedPosts);
-      toast.success("게시글이 삭제되었습니다!");
-
-      console.log(isPostDeleted);
+      try {
+        await axios.delete(url,{
+          headers: {
+            Authorization: accessToken ? `Bearer ${accessToken}` : "", 
+            "ngrok-skip-browser-warning": "69420",
+          },
+        });
+        handleFollowAction();
+        toast.success("게시글이 삭제되었습니다!");
+      } catch {
+        toast.error("게시글 삭제에 실패했습니다.");
+      }
     }
   };
 
-  const toggleBookmark = (itemId) => {
-    const updatedBookmarks = isBookmarked.filter(
-      (item) => item.feedId !== itemId
-    );
-    setIsBookmarked(updatedBookmarks);
-    toast.success("북마크가 해제되었습니다!");
-
-    console.log(isBookmarked);
+  const deleteBookmark = (itemId, label) => {
+    // const updatedBookmarks = isBookmarked.filter(
+    //   (item) => item.feedId !== itemId
+    // );
+    // setIsBookmarked(updatedBookmarks);
+    // toast.success("북마크가 해제되었습니다!");
+    // console.log(isBookmarked);
+    let url = '';
+    if(label === "showroom") {url = `${baseURL}/feed/${itemId}/feedBookMark`;}
+    if(label === "tips") {url = `${baseURL}/tip/${itemId}/tipbookmark`;}
   };
 
-  const toggleLike = (itemId) => {
-    const updatedLikes = isLiked.filter((item) => item.feedId !== itemId);
-    setIsLiked(updatedLikes);
-    toast.success("좋아요가 해제되었습니다!");
-
-    console.log(isLiked);
+  const deleteLike = (itemId, label) => {
+    // const updatedLikes = isLiked.filter((item) => item.feedId !== itemId);
+    // setIsLiked(updatedLikes);
+    // toast.success("좋아요가 해제되었습니다!");
+    // console.log(isLiked);
+    let url = '';
+    if(label === "showroom") {url = `${baseURL}/feed/${itemId}/feedLike`;}
+    if(label === "tips") {url = `${baseURL}/tip/${itemId}/tiplike`;}
   };
 
   // 페이지네이션 부분
   const [postPage, setPostPage] = useState(1);
   const [bookmarkPage, setBookmarkPage] = useState(1);
   const [likePage, setLikePage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 10;
 
-  const visiblePosts = isPostDeleted
-    ? isPostDeleted.slice(
-        (postPage - 1) * itemsPerPage,
-        postPage * itemsPerPage
-      )
+  const visiblePosts = postData
+    ? postData.slice((postPage - 1) * itemsPerPage, postPage * itemsPerPage)
     : [];
 
-  const visibleBookmarks = isBookmarked
-    ? isBookmarked.slice(
+  const visibleBookmarks = bookmarkData
+    ? bookmarkData.slice(
         (bookmarkPage - 1) * itemsPerPage,
         bookmarkPage * itemsPerPage
       )
     : [];
 
-  const visibleLikes = isLiked
-    ? isLiked.slice((likePage - 1) * itemsPerPage, likePage * itemsPerPage)
+  const visibleLikes = likeData
+    ? likeData.slice((likePage - 1) * itemsPerPage, likePage * itemsPerPage)
     : [];
 
   const handleNextPage = (pageState, setPageState, totalPages) => {
@@ -86,8 +97,7 @@ const MyInfoShowroom = ({
   };
 
   console.log("visiblePosts", visiblePosts);
-  console.log(isBookmarked)
-  console.log('postdata', postData)
+  console.log("visibleBookmarks", visibleBookmarks);
 
   return (
     <>
@@ -96,9 +106,10 @@ const MyInfoShowroom = ({
           visiblePosts.map((item, idx) => (
             <MyInfoPost
               key={idx}
+              label={label}
               imgSrc={item.coverPhoto}
               title={item.title}
-              itemId={item.feedId}
+              itemId={item.feedId || item.tipId}
               deletePost={deletePost}
             />
           ))}
@@ -106,22 +117,24 @@ const MyInfoShowroom = ({
           visibleBookmarks.map((item, idx) => (
             <MyInfoBookmark
               key={idx}
+              label={label}
               imgSrc={item.coverPhoto}
               title={item.title}
-              itemId={item.feedId}
+              itemId={item.feedId || item.tipId}
               isBookmarked={item.bookMarkYn}
-              toggleBookmark={toggleBookmark}
+              deleteBookmark={deleteBookmark}
             />
           ))}
         {activeTab === 3 &&
           visibleLikes.map((item, idx) => (
             <MyInfoLike
               key={idx}
+              label={label}
               imgSrc={item.coverPhoto}
               title={item.title}
-              itemId={item.feedId}
+              itemId={item.feedId || item.tipId}
               isLiked={item.likeYn}
-              toggleLike={toggleLike}
+              deleteLike={deleteLike}
             />
           ))}
       </div>
