@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import PhotoTagging from "./PhotoTagging";
 
-const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요";
-
-const WriteFormShowroom = ({ editorContent, setEditorContent }) => {
+const WriteFormShowroom = ({
+  editorContent,
+  setEditorContent,
+  DEFAULT_EDITOR_TEXT,
+}) => {
   const editorRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(null);
   const [tags, setTags] = useState([]); // 이미지 내 tags 들의 집합
@@ -120,7 +122,7 @@ const WriteFormShowroom = ({ editorContent, setEditorContent }) => {
           dangerouslySetInnerHTML={{ __html: editorContent }}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className="p-2 mt-6 h-full w-full min-h-[600px]"
+          className="p-2 mt-6 h-full w-full min-h-[600px] text-xl"
         ></div>
       </div>
     </>

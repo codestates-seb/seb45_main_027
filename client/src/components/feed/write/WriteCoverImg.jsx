@@ -24,8 +24,8 @@ const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
         setCoverImage(response.data);
       })
       .catch((error) => {
-        window.alert("이미지 용량이 초과되었습니다.");
-        setCoverImage(null);
+        window.alert("이미지 업로드에 실패하였습니다.");
+        setCoverImage(null); //coverimage값 초기화
       });
   };
 

@@ -83,7 +83,10 @@ const ShowRoom = () => {
       page.current = 1; // 필터링 시 페이지를 다시 1로 설정
     } catch (error) {
       console.error("Error sending GET request:", error);
-      toast.error("필터링 실패");
+      if (error.request.status === 500) {
+        toast.dismiss();
+        toast.error("필터링 데이터가 없습니다.");
+      }
     }
   };
 

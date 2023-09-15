@@ -62,7 +62,7 @@ const AllContent = ({ showroomData, setShowroomData }) => {
         {showroomData.map((item, idx) => (
           <div
             key={idx}
-            className="flex-col mx-3 mb-3 w-full sm:w-[45%] lg:w-[30%] h-[20%]"
+            className="flex-col mx-3 mt-3 mb-3 w-full sm:w-[45%] lg:w-[30%] h-[20%]"
           >
             <div className="relative">
               <img

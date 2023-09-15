@@ -11,11 +11,24 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import api from "../components/common/tokens";
 
-const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요";
+const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요.";
+
+const toastStyle = {
+  style: {
+    border: "1px solid #033743",
+    padding: "8px",
+    color: "#033743",
+    fontSize: "14px",
+  },
+  iconTheme: {
+    primary: "#033743",
+    secondary: "#FFFAEE",
+  },
+};
 
 const WriteTips = () => {
   const [coverImage, setCoverImage] = useState(null); // 커버사진 상태
-  const [title, setTitle] = useState(""); // title(제목) 상태
+  const [title, setTitle] = useState(null); // title(제목) 상태
   const [editorContent, setEditorContent] = useState(DEFAULT_EDITOR_TEXT); // Editor 내용을 관리
   const [tags, setTags] = useState([]); // 팁에있는 해시태그 상태!
   const navigate = useNavigate();
@@ -69,48 +82,64 @@ const WriteTips = () => {
       toast.success("임시저장이 완료되었습니다!");
     } catch (error) {
       //실패메세지
-      // Display an error toast notification if something went wrong
       toast.error("임시저장에 실패하였습니다.");
     }
   };
 
   // 작성하기 버튼 누를 시 실행되는 핸들러 함수
   const handlePublish = async () => {
-    // API 호출을 위한 요청 파라미터 설정
-    const configParams = {
-      method: "POST",
-      url: `/tip`,
-      headers: {
-        "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "69420",
-      },
-      data: {
-        coverPhoto: coverImage,
-        title: title,
-        content: editorContent,
-        // tipTags: tags, 서버에서 태그작업중
-      },
-    };
+    if (coverImage && title && editorContent) {
+      // 모든 값이 존재할 때만 API 요청
+      // API 호출을 위한 요청 파라미터 설정
+      const configParams = {
+        method: "POST",
+        url: `/tip`,
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        },
+        data: {
+          coverPhoto: coverImage,
+          title: title,
+          content: editorContent,
+          // tipTags: tags, 서버에서 태그작업중 ***
+        },
+      };
 
-    try {
-      // API 호출
-      const response = await api(configParams);
-      // 성공적으로 게시된 경우
-      const tipIdFromResponse = response.data.tipId;
-      toast.success("게시되었습니다.");
+      try {
+        // API 호출
+        const response = await api(configParams);
+        // 성공적으로 게시된 경우
+        const tipIdFromResponse = response.data.tipId;
+        toast.success("게시되었습니다.");
 
-      if (tipIdFromResponse) {
-        navigate(`/tips/${tipIdFromResponse}`);
+        if (tipIdFromResponse) {
+          navigate(`/tips/${tipIdFromResponse}`);
+        }
+      } catch (error) {
+        // 오류 발생 시 오류 메시지를 토스트로 표시
+        toast.error("게시 중 오류가 발생했습니다.");
       }
-    } catch (error) {
-      // 오류 발생 시 오류 메시지를 토스트로 표시
-      toast.error("게시 중 오류가 발생했습니다.");
+    } else {
+      // 값이 없는 경우 각각의 null 상태에 따라 toast 메시지를 표시
+      if (!coverImage) {
+        toast.error("커버 사진을 선택하세요.", toastStyle);
+      }
+      if (!title) {
+        toast.error("제목을 입력하세요.", toastStyle);
+      }
+      if (editorContent === DEFAULT_EDITOR_TEXT || editorContent === "") {
+        toast.error("내용을 입력하세요.", toastStyle);
+      }
     }
   };
 
   return (
     <>
-      <HeaderMobile buttonBgColor="bg-[#00647B]" />
+      <HeaderMobile
+        buttonBgColor="bg-[#00647B]"
+        handlePublish={handlePublish}
+      />
       <Background
         mainclassName="min-h-screen bg-[#FFFAEE] w-full h-full px-14 md:px-56 "
         divclassName="flex-col my-24 md:my-0"
