@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import useAxios from "../hooks/useAxios";
+import { useParams } from "react-router-dom";
 
 const UserContext = createContext();
 
@@ -15,13 +16,12 @@ export const useUserContext = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
   const [follow, setFollow] = useState("");
-  const [memberId, setMemberId] = useState("");
-  const fromMemberId = localStorage.getItem("memberId");
-
+  const { feedId } = useParams();
+  // 팔로우 상태
   const [res, err, loading, fetchData] = useAxios(
     {
       method: "PATCH",
-      url: `/follow/choose/${memberId}/${fromMemberId}`,
+      url: `/feed/${feedId}/feedlike`,
       headers: {
         "ngrok-skip-browser-warning": "69420",
       },
@@ -34,12 +34,11 @@ export const UserProvider = ({ children }) => {
     setFollow(!follow);
   };
 
- 
   useEffect(() => {
     if (res) {
-      setMemberId(res.data.data.memberId);
-    }}, [res]);
-
+      setFollow(res.data.data.followYn);
+    }
+  }, [res]);
 
   return (
     <UserContext.Provider value={{ follow, setFollow, toggleFollow }}>
