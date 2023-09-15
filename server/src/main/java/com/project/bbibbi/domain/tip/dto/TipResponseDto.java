@@ -44,6 +44,7 @@ public class TipResponseDto {
     private int bookmarkCount;
     private Boolean bookmarkYn;
     private int repliesCount;
+    private Boolean followYn;
 
     private List<TipReplyResponseDto> replies;
 

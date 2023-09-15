@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.feed.service;
 
+import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.feed.entity.Feed;
 //import com.project.bbibbi.domain.feed.entity.FeedImage;
 //import com.project.bbibbi.domain.feed.entity.FeedImageTag;
@@ -8,6 +9,7 @@ import com.project.bbibbi.domain.feed.entity.Feed;
 import com.project.bbibbi.domain.feed.repository.FeedRepository;
 import com.project.bbibbi.domain.feedBookmark.repository.FeedBookMarkRepository;
 import com.project.bbibbi.domain.feedlike.repository.FeedLikeRepository;
+import com.project.bbibbi.domain.follow.repository.FollowRepository;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.global.entity.*;
 import com.project.bbibbi.global.utils.CustomBeanUtils;
@@ -31,15 +33,18 @@ public class FeedService {
 //    private final FeedImageTagRepository feedImageTagRepository;
     private final FeedLikeRepository feedLikeRepository;
     private final FeedBookMarkRepository feedBookMarkRepository;
+    private final FollowRepository followRepository;
     private final CustomBeanUtils<Feed> beanUtils;
 
     public FeedService(FeedRepository feedRepository,
                        FeedLikeRepository feedLikeRepository,
                        FeedBookMarkRepository feedBookMarkRepository,
+                       FollowRepository followRepository,
                        CustomBeanUtils<Feed> beanUtils) {
         this.feedRepository = feedRepository;
         this.feedLikeRepository = feedLikeRepository;
         this.feedBookMarkRepository = feedBookMarkRepository;
+        this.followRepository = followRepository;
         this.beanUtils = beanUtils;
     }
 
@@ -133,7 +138,7 @@ public class FeedService {
         viewUpFeed.setBookMarkCount(bookmarkCount);
 
         // 로그인한 사람의 좋아요 여부... 로그인한 사람 memberId를 1L 로 가정
-        Member member = Member.builder().memberId(1L).build();
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
 
 
         if(member == null){
@@ -154,6 +159,16 @@ public class FeedService {
             if(loginUserLikeYn == 0) viewUpFeed.setBookMarkYn(false);
             else viewUpFeed.setBookMarkYn(true);
         }
+
+        Integer existCount = followRepository.existCount(loginUtils.getLoginId(),viewUpFeed.getMember().getMemberId());
+
+        if(existCount == 0){
+            viewUpFeed.setFollowYn(false);
+        }
+        else {
+            viewUpFeed.setFollowYn(true);
+        }
+
 
         return viewUpFeed;
     }

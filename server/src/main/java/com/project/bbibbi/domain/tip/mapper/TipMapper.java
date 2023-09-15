@@ -111,6 +111,7 @@ public interface TipMapper {
         tipResponseDto.setBookmarkCount(tip.getBookmarkCount());
         tipResponseDto.setBookmarkYn(tip.getBookmarkYn());
         tipResponseDto.setRepliesCount( (tip.getReplies() == null) ? 0: tip.getReplies().size());
+        tipResponseDto.setFollowYn(tip.getFollowYn());
 
 
 //        List<TipImageDto> tipImageDtos = new ArrayList<>();

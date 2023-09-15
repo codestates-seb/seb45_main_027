@@ -70,4 +70,7 @@ public class Tip extends BaseEntity {
     @Transient
     private Boolean finalPage = false;
 
+    @Transient
+    private Boolean followYn = false;
+
 }

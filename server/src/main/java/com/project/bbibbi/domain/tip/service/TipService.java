@@ -1,6 +1,8 @@
 package com.project.bbibbi.domain.tip.service;
 
+import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.feed.entity.Feed;
+import com.project.bbibbi.domain.follow.repository.FollowRepository;
 import com.project.bbibbi.domain.tip.entity.Tip;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tip.repository.TipRepository;
@@ -27,6 +29,7 @@ public class TipService {
     private final TipLikeRepository tipLikeRepository;
 
     private final TipBookmarkRepository tipBookmarkRepository;
+    private final FollowRepository followRepository;
 
 //    private final TipMapper tipMapper;
 
@@ -36,9 +39,11 @@ public class TipService {
 
     public TipService(TipRepository tipRepository,
                       TipLikeRepository tipLikeRepository,
+                      FollowRepository followRepository,
                       TipBookmarkRepository tipBookmarkRepository) {
         this.tipRepository = tipRepository;
         this.tipLikeRepository = tipLikeRepository;
+        this.followRepository = followRepository;
         this.tipBookmarkRepository = tipBookmarkRepository;
 //        this.tipMapper = tipMapper;
 //        this.tipTagService = tipTagService;
@@ -121,6 +126,7 @@ public class TipService {
 
         // 로그인한 사람의 좋아요 여부... 로그인한 사람 memberId를 1L 로 가정
         Member member = Member.builder().memberId(1L).build();
+//        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
 
 
         if(member == null){
@@ -145,6 +151,18 @@ public class TipService {
 //        List<TipTag> tipTags = tipTagService.findTagListByTip(viewUpTip);
 //        TipResponseDto tipResponseDto = tipMapper.tipToTipResponseDto(viewUpTip);
 //        tipResponseDto.setTiptags(tipTags);
+
+        // 팔로우 예비
+//        Integer existCount = followRepository.existCount(loginUtils.getLoginId(),viewUpTip.getMember().getMemberId());
+//
+//        if(existCount == 0){
+//            viewUpTip.setFollowYn(false);
+//        }
+//        else {
+//            viewUpTip.setFollowYn(true);
+//        }
+
+
 
         return viewUpTip;
     }

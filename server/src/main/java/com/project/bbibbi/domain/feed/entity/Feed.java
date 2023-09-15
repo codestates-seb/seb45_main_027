@@ -89,4 +89,7 @@ public class Feed extends BaseEntity{
 
     @Transient
     private Boolean finalPage = false;
+
+    @Transient
+    private Boolean followYn = false;
 }

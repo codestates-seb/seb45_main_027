@@ -1,12 +1,13 @@
 spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
   datasource:
-    url: jdbc:mysql://${DB_RDS_URL}:3306/${DB_RDS_DB}
-    username: ${DB_RDS_USER}
-    password: ${DB_RDS_PW}
+    url: jdbc:h2:mem:test
   jpa:
     hibernate:
-    #  dialect: org.hibernate.dialect.MySQL8Dialect
-    #   ddl-auto: create  #  이거 있으면 mysql 해당 스키마에 테이블들 생성된다.
+      ddl-auto: create  # (1) 스키마 자동 생성
     show-sql: true      # (2) SQL 쿼리 출력
     properties:
       hibernate:
@@ -14,7 +15,10 @@ spring:
         highlight_sql: true
         color-codes: true
         use_sql_comments: true
-  #    defer-datasource-initialization: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      data-locations: classpath*:db/h2/data.sql
   mail:
     host: smtp.gmail.com
     port: 587
@@ -41,15 +45,17 @@ logging:
       springframework:
         orm:
           jpa: DEBUG
-      hibernate:
-        type: trace
+server:
+  servlet:
+    encoding:
+      force-response: true
 cloud:
   aws:
     credentials:
-      accessKey: ${AWS_ACCESS_KEY}
-      secretKey: ${AWS_SECRET_KEY}
+      accessKey: 123456
+      secretKey: 123456
     s3:
-      bucket: ${AWS_S3_BUCKET}
+      bucket: 123456
     region:
       static: ap-northeast-2
     stack:

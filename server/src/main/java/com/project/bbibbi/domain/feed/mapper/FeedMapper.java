@@ -187,6 +187,7 @@ public interface FeedMapper {
         feedResponseDto.setBookMarkCount(feed.getBookMarkCount());
         feedResponseDto.setBookMarkYn(feed.getBookMarkYn());
         feedResponseDto.setRepliesCount( (feed.getReplies() == null) ? 0: feed.getReplies().size());
+        feedResponseDto.setFollowYn(feed.getFollowYn());
 
         // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.
 //        if(feed.getImages() != null) {
@@ -284,6 +285,7 @@ public interface FeedMapper {
                                 .bookMarkCount(feed.getBookMarkCount())
                                 .bookMarkYn(feed.getLikeYn())
                                 .repliesCount((feed.getReplies() == null) ? 0 : feed.getReplies().size())
+                                .followYn(feed.getFollowYn())
                                 // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.
 //                                .feedImages(feed.getImages().stream().map(feedImage -> FeedImageDto.builder()
 //                                                .feedImageId(feedImage.getFeedImageId())
