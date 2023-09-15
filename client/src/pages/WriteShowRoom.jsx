@@ -10,6 +10,7 @@ import WriteFormShowroom from "../components/feed/write/WriteFormShowroom";
 import { toast } from "react-hot-toast";
 import api from "../components/common/tokens";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요.";
 
