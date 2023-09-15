@@ -14,6 +14,7 @@ import WriteShowRoom from "./pages/WriteShowRoom";
 import WriteTips from "./pages/WriteTips";
 import ViewShowRoom from "./pages/ViewShowRoom";
 import ViewTips from "./pages/ViewTips";
+import EditShowRoom from "./pages/EditShowRoom";
 import { AuthProvider } from "./context/AuthContext";
 import { UserProvider } from "./context/userContext";
 import Verify from "./pages/Verify";
@@ -27,6 +28,7 @@ const headerPaths = [
   "login",
   "signup",
   "verify",
+  "edit",
   "",
 ];
 const footerPaths = [
@@ -36,6 +38,7 @@ const footerPaths = [
   "myinfo",
   "showroom",
   "tips",
+  "edit",
   "",
 ];
 
@@ -52,23 +55,27 @@ function App() {
         <div className="flex flex-col min-h-screen">
           {isHeader && <HeaderPc />}
           <div className="flex-grow">
-        <Routes>
-          <Route path={"/"} element={<Main />} />
-          <Route path={"/login"} element={<Login />} />
-          <Route path={"/signup"} element={<Signup />} />
-          <Route path={"/verify"} element={<Verify />} />
-          <Route path={"/myinfo/:id"} element={<MyInfo />} />
-          <Route path={"/showroom"} element={<ShowRoom />} />
-          <Route path={"/tips"} element={<Tips />} />
-          <Route path={"/map"} element={<Map />} />
-          <Route path={"/showroom/write"} element={<WriteShowRoom />} />
-          <Route path={"/showroom/:feedId"} element={<ViewShowRoom />} />
-          <Route path={"/tips/write"} element={<WriteTips />} />
-          <Route path={"/tips/:tipId"} element={<ViewTips />} />
-          </Routes>
+            <Routes>
+              <Route path={"/"} element={<Main />} />
+              <Route path={"/login"} element={<Login />} />
+              <Route path={"/signup"} element={<Signup />} />
+              <Route path={"/verify"} element={<Verify />} />
+              <Route path={"/myinfo/:id"} element={<MyInfo />} />
+              <Route path={"/showroom"} element={<ShowRoom />} />
+              <Route path={"/tips"} element={<Tips />} />
+              <Route path={"/map"} element={<Map />} />
+              <Route path={"/showroom/write"} element={<WriteShowRoom />} />
+              <Route path={"/showroom/:feedId"} element={<ViewShowRoom />} />
+              <Route path={"/tips/write"} element={<WriteTips />} />
+              <Route path={"/tips/:tipId"} element={<ViewTips />} />
+              <Route
+                path={"/showroom/edit/:feedId"}
+                element={<EditShowRoom />}
+              />
+            </Routes>
+          </div>
+          {isFooter && <HiddenFooter />}
         </div>
-        {isFooter && <HiddenFooter />}
-      </div>
       </UserProvider>
     </AuthProvider>
   );
