@@ -50,25 +50,29 @@ const EditProfile = ({
   const handleImageDelete = async () => {
     setProfileData({ ...profileData, profileImg: null });
     console.log(profileData.profileImg);
-
   };
-
 
   return (
     <div className="flex flex-col justify-center items-center h-[500px]">
       <img
-        src={profileData.profileImg}
+        src={
+          profileData.profileImg
+            ? profileData.profileImg
+            : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
+        }
         alt="Profile"
         className="w-[200px] h-[200px] rounded-full object-cover opacity-100"
       />
-      <div className='flex flex-row'>
+      <div className="flex flex-row">
         <label
           className={`${buttonStyle} cursor-pointer flex justify-center`}
           htmlFor="profilePictureInput"
         >
           Choose Profile Picture
         </label>
-        <button className={buttonStyle} onClick={handleImageDelete}>Delete</button>
+        <button className={buttonStyle} onClick={handleImageDelete}>
+          Delete
+        </button>
       </div>
       <input
         type="file"

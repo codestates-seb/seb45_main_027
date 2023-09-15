@@ -7,8 +7,6 @@ const SignupAuth = () => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
 
-  //const baseURL = "http://ec2-15-164-234-24.ap-northeast-2.compute.amazonaws.com:8080";
-
   const baseURL = process.env.REACT_APP_API_URL;
 
   const handleEmailSubmit = async () => {

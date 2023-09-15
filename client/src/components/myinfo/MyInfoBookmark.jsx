@@ -11,10 +11,6 @@ const MyInfoBookmark = ({
   const { id } = useParams();
   const memberId = localStorage.getItem("memberId");
 
-  // const handleToggleBookmark = () => {
-  //   toggleBookmark(itemId);
-  // };
-
   return (
     <div className="m-2 h-full w-[140px] md:w-[150px] xl:w-[170px] text-[#57534e]">
       <div className="relative">

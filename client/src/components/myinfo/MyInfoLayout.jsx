@@ -9,7 +9,6 @@ const MyInfoLayout = () => {
   const baseURL = process.env.REACT_APP_API_URL;
   const { id } = useParams();
 
-
   const [showAccountSettings, setShowAccountSettings] = useState(false);
   const [profileData, setProfileData] = useState(null);
 

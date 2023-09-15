@@ -9,7 +9,6 @@ const FormValidation = ({ path }) => {
   const [password, handlePasswordChange, clearInput] = useInput("");
   const { register, login } = useAuth();
 
-
   const hasSpaces = (value) => {
     return /\s/.test(value);
   };
@@ -26,7 +25,6 @@ const FormValidation = ({ path }) => {
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
 
 
   const handleSubmit = async (e) => {
@@ -61,7 +59,6 @@ const FormValidation = ({ path }) => {
       }
     } else {
       // login logic 
-      //console.log("Logging in with data:", { email, password });
       try {
         await login(email, password);
       } catch (error) {
