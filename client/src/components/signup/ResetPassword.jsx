@@ -3,7 +3,6 @@ import axios from "axios";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
-  //const baseURL = "http://ec2-3-39-231-102.ap-northeast-2.compute.amazonaws.com:8080";
   const baseURL = process.env.REACT_APP_API_URL;
   const handleEmailSubmit = async () => {
     try {

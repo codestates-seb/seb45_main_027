@@ -56,6 +56,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
       );
       localStorage.setItem("nickname", profileData.nickname);
       localStorage.setItem("profileImg", profileData.profileImg);
+      
       console.log(response.data);
       console.log(profileData.profileImg);
       alert("Profile updated!");

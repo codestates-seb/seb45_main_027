@@ -2,10 +2,6 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 const MyInfoPost = ({ imgSrc, title, itemId, deletePost, label }) => {
-  // const handleDeletePost = () => {
-  //   deletePost(itemId);
-  // };
-  
 
   const { id } = useParams();
   const memberId = localStorage.getItem("memberId");
