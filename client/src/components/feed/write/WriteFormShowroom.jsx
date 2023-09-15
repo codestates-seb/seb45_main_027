@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import PhotoTagging from "./PhotoTagging";
+import axios from "axios";
 
 const WriteFormShowroom = ({
   editorContent,
@@ -29,14 +30,32 @@ const WriteFormShowroom = ({
     setEditorContent(inputText || DEFAULT_EDITOR_TEXT);
   };
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
+    const reader = new FileReader();
+    const formData = new FormData();
+
+    formData.append("feedImage", file);
+    reader.onloadend = () => {
+      setImageSrc(reader.result);
+    };
+
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImageSrc(reader.result);
-      };
       reader.readAsDataURL(file);
+    }
+    // S3 이미지 업로드 통신 로직은 API(헤더에 토큰정보전달하는 코드) 쓰면 안됨! - 데이터 형식 이슈
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/imageUpload/feedImage`,
+        formData
+      );
+
+      console.log("S3 업로드 성공");
+      setImageSrc(response.data);
+    } catch (error) {
+      console.error("이미지 업로드에 실패하였습니다.", error);
+      window.alert("이미지 업로드에 실패하였습니다.");
+      setImageSrc(null); // coverimage 값 초기화
     }
   };
 

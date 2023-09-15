@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../../common/tokens";
+import axios from "axios";
 
 const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
   console.log(coverImage);
@@ -16,7 +16,9 @@ const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
     if (file) {
       reader.readAsDataURL(file);
     }
-    api
+
+    // S3 이미지 업로드 통신 로직은 API(헤더에 토큰정보전달하는 코드) 쓰면 안됨!
+    axios
       .post(`${process.env.REACT_APP_API_URL}/imageUpload/coverImage`, formData)
       .then((response) => {
         console.log(response.data);

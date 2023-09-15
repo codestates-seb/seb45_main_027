@@ -1,10 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const WriteFormTips = ({
   editorContent,
   setEditorContent,
   DEFAULT_EDITOR_TEXT,
 }) => {
+  const [imageSrc, setImageSrc] = useState(null); // 에디터내 이미지 주소의 상태(s3)
   const editorRef = useRef(null);
 
   useEffect(() => {
@@ -24,19 +27,41 @@ const WriteFormTips = ({
     setEditorContent(inputText || DEFAULT_EDITOR_TEXT);
   };
 
-  const ImageUpload = (e) => {
-    const { files } = e.target;
+  const ImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    const formData = new FormData();
 
-    if (files && files[0]) {
-      const reader = new FileReader();
-      reader.readAsDataURL(files[0]);
-      reader.onloadend = () => {
-        const imageUrl = reader.result;
-        const currentEditorContent = editorRef.current.innerHTML;
-        const newEditorContent = `${currentEditorContent}<img src="${imageUrl}" alt="Uploaded Image"><br>`;
-        setEditorContent(newEditorContent);
-        e.target.value = null;
-      };
+    formData.append("tipImage", file);
+    reader.onloadend = () => {
+      setImageSrc(reader.result);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+    // S3 이미지 업로드 통신 로직은 API(헤더에 토큰정보전달하는 코드) 쓰면 안됨! - 데이터 형식 이슈
+    try {
+      toast.success("이미지업로드 중입니다.");
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/imageUpload/tipImage`,
+        formData
+      );
+      console.log(response.data);
+      console.log("S3 업로드 성공");
+      setImageSrc(response.data);
+      // 에디터에 이미지 추가
+      const currentEditorContent = editorRef.current.innerHTML;
+      const newEditorContent =
+        currentEditorContent +
+        `<img src="${response.data}" alt="Uploaded Image" />`;
+      setEditorContent(newEditorContent);
+      e.target.value = null;
+      toast.dismiss();
+    } catch (error) {
+      console.error("이미지 업로드에 실패하였습니다.", error);
+      window.alert("이미지 업로드에 실패하였습니다.");
+      setImageSrc(null); // coverimage 값 초기화
     }
   };
 
