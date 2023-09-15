@@ -1,6 +1,7 @@
 package com.project.bbibbi.domain.feedBookmark.controller;
 
 
+import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.feedBookmark.dto.FeedBookMarkRequestDto;
 import com.project.bbibbi.domain.feedBookmark.dto.FeedBookMarkResponseDto;
 import com.project.bbibbi.domain.feedBookmark.entity.FeedBookMark;
@@ -36,13 +37,12 @@ public class FeedBookMarkController {
     @PatchMapping
     public ResponseEntity patchFeedBookMark(@PathVariable("feed-id") Long feedId){
 
-        // 로그인한 사용자의 member_id가 1L 이라고 가정.
-        // 로그인 기능 지원시 아래 코드는 삭제하고 현재 로그인한 사용자를 가져오도록 대체
+        Long memberId = loginUtils.getLoginId();
 
         FeedBookMarkRequestDto requestBody
                 = new FeedBookMarkRequestDto();
 
-        requestBody.setMemberId(1L);
+        requestBody.setMemberId(memberId);
         requestBody.setFeedId(feedId);
 
         FeedBookMark feedBookMark = mapper.feedBookMarkRequestDtoToFeedBookMark(requestBody);
