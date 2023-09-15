@@ -5,6 +5,8 @@ import com.project.bbibbi.domain.feed.dto.*;
 import com.project.bbibbi.domain.feed.entity.Feed;
 //import com.project.bbibbi.domain.feed.entity.FeedImage;
 //import com.project.bbibbi.domain.feed.entity.FeedImageTag;
+import com.project.bbibbi.domain.feedComment.dto.FeedCommentDto;
+import com.project.bbibbi.domain.feedComment.entity.FeedComment;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyResponseDto;
 import com.project.bbibbi.domain.feedReply.entity.FeedReply;
 import com.project.bbibbi.domain.member.entity.Member;
@@ -243,14 +245,25 @@ public interface FeedMapper {
                 feedReplyResponseDto.setNickname(feedReply.getMember().getNickname());
                 feedReplyResponseDto.setMemberId(feedReply.getMember().getMemberId());
                 feedReplyResponseDto.setCreatedDateTime(feedReply.getCreatedDateTime());
+                if (feedReply.getComments() != null) {
+                    List<FeedCommentDto> allComments = new ArrayList<>(); // FeedCommentDto 타입으로 리스트 생성
+                    for (FeedComment feedComment : feedReply.getComments()) {
+                        FeedCommentDto commentDto = new FeedCommentDto(); // FeedCommentDto 객체 생성
+                        commentDto.setFeedReplyId(feedComment.getFeedCommentId());
+                        commentDto.setContent(feedComment.getContent());
+                        commentDto.setNickname(feedComment.getMember().getNickname());
+                        commentDto.setMemberId(feedComment.getMember().getMemberId());
+                        commentDto.setCreatedDateTime(feedComment.getCreatedDateTime());
+                        allComments.add(commentDto);
+                    }
+                    feedReplyResponseDto.setComments(allComments); // FeedReplyResponseDto에 FeedCommentDto 리스트 설정
+                }
                 allReplies.add(feedReplyResponseDto);
             }
             // Replies 안에 allReplies 저장
             feedResponseDto.setReplies(allReplies);
         }
-
         return feedResponseDto;
-
     }
 
     default List<FeedResponseDto> feedsToFeedResponseDtos(List<Feed> feeds){

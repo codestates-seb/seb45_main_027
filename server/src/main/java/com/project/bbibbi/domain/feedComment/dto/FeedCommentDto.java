@@ -3,6 +3,8 @@ package com.project.bbibbi.domain.feedComment.dto;
 import com.project.bbibbi.domain.feedComment.entity.FeedComment;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -18,6 +20,7 @@ public class FeedCommentDto {
     private Long commentOrder;
     private String nickname;
     private Long feedId;
+    private LocalDateTime createdDateTime;
 
     public static FeedCommentDto toDto(FeedComment feedComment) {
         return FeedCommentDto.builder()
