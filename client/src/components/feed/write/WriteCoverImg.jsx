@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
-  console.log(coverImage);
   const imageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();

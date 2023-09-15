@@ -10,6 +10,7 @@ import WriteFormShowroom from "../components/feed/write/WriteFormShowroom";
 import { toast } from "react-hot-toast";
 import api from "../components/common/tokens";
 import { useNavigate } from "react-router-dom";
+import useAxios from "../hooks/useAxios";
 
 const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요.";
 
@@ -26,7 +27,8 @@ const toastStyle = {
   },
 };
 
-const WriteShowRoom = () => {
+const EditShowRoom = () => {
+  const [editData, setEditDate] = useState("");
   const [coverImage, setCoverImage] = useState(null); // 커버사진 상태
   const [title, setTitle] = useState(null); // title(제목) 상태
   const [editorContent, setEditorContent] = useState(DEFAULT_EDITOR_TEXT); // Editor 내용을 관리
@@ -38,11 +40,24 @@ const WriteShowRoom = () => {
     location: null,
   }); // 드랍다운 선택 결과를 담은 상태
 
-  // console.log(coverImage);
-  // console.log(title);
-  // console.log(editorContent);
-  // console.log(selectedValues);
-  // console.log(selectedValues);
+  const configParams = {
+    method: "GET",
+    url: `/feed/197`,
+    headers: {
+      "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": "69420",
+    },
+  };
+
+  const [response, error, loading] = useAxios(configParams);
+
+  useEffect(() => {
+    if (response) {
+      setEditDate(response.data.data);
+    } else if (error) {
+      console.error("Error:", error);
+    }
+  }, [response, error, editData]);
 
   const navigate = useNavigate();
 
@@ -209,4 +224,4 @@ const WriteShowRoom = () => {
   );
 };
 
-export default WriteShowRoom;
+export default EditShowRoom;

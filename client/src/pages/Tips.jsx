@@ -42,6 +42,8 @@ const Tips = () => {
     }
   }, [response, error, page]);
 
+  console.log(tipData);
+
   useEffect(() => {
     // 반응형 조건부렌더링
     const handleResize = () => {
