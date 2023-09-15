@@ -59,7 +59,7 @@ const ViewShowRoom = () => {
         divclassName="flex-col my-24 md:my-0">
         <ShowroomContents setFeedData={setFeedData} feedData={feedData} />
         {memberId === userId && <Edit />}
-        <Comment ref={commentSectionRef} />
+        <Comment feedData={feedData}  ref={commentSectionRef} />
       </Background>
     </div>
   );

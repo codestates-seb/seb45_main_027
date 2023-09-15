@@ -77,6 +77,8 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
         toast("링크 복사에 실패했습니다.");
       });
   };
+
+  
   
   return (
     <div className="hidden md:flex flex-col w-max h-0 sticky top-48 float-right mr-20 z-50">
