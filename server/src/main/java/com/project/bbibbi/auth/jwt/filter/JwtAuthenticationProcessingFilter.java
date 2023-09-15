@@ -160,7 +160,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         CustomJwtUserDetails userDetailsUser = new CustomJwtUserDetails( //되면 수정
                 member.getMemberId(),
                 member.getEmail(),
-                password, // 비밀번호는 null
+                member.getPassword(), // 비밀번호는 null
                 member.getRole(),
                 true, // checkUser 값은 true
                 member.getProfileImg(),
