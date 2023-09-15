@@ -21,16 +21,20 @@ public class FeedLikeService {
 
     public FeedLike settingFeedLike (FeedLike feedLike) {
 
-        Integer existCount = feedLikeRepository.existCount(feedLike.getFeed().getFeedId(), feedLike.getMember().getMemberId());
+        Integer existCount =
+                feedLikeRepository.existCount(feedLike.getFeed().getFeedId(), feedLike.getMember().getMemberId());
 
         if(existCount == 0){
             feedLikeRepository.save(feedLike);
         }
         else {
-            feedLikeRepository.deleteByFeedIdAndMemberId(feedLike.getFeed().getFeedId(), feedLike.getMember().getMemberId());
+            feedLikeRepository.deleteByFeedIdAndMemberId
+                    (feedLike.getFeed().getFeedId(), feedLike.getMember().getMemberId());
         }
 
-        Integer updatedLikeCount = feedLikeRepository.existCount(feedLike.getFeed().getFeedId(), feedLike.getMember().getMemberId());
+        Integer updatedLikeCount
+                = feedLikeRepository.existCount
+                (feedLike.getFeed().getFeedId(), feedLike.getMember().getMemberId());
 
 
         FeedLike updatedFeedLike = new FeedLike();

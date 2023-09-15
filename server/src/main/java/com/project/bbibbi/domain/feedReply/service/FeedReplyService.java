@@ -49,6 +49,8 @@ public class FeedReplyService {
                 .memberId(reply.getMember().getMemberId())
                 .nickname(reply.getMember().getNickname())
                 .createdDateTime(reply.getCreatedDateTime())
+//                .replyLikeYn(reply.get)
+//                .profileImg(reply.getMember().getProfileImg())
                 .comments(reply.getComments().stream().map(feedComment -> FeedCommentDto.builder()
                         .feedCommentId(feedComment.getFeedCommentId())
                         .content(feedComment.getContent())

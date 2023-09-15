@@ -19,7 +19,7 @@ public class FeedReplyRequestDto extends BaseEntity {
     private String content;
     private Long memberId;
     private Long feedId;
-
+    private String profileImg;
     }
 
 
