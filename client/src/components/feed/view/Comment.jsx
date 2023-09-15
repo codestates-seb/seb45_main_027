@@ -11,6 +11,8 @@ const Comment = forwardRef(({ feedData }, ref) => {
   const [like, setLike] = useState("");
   // 답글 달기
   const [showReply, setShowReply] = useState({});
+  // 댓글 수정 상태 저장
+  const [editComent, setEditComent] = useState({});
   // 댓글/답글 입력값을 저장할 State
   const [commentInput, setCommentInput] = useState("");
   const [replyInput, setReplyInput] = useState("");
@@ -18,7 +20,6 @@ const Comment = forwardRef(({ feedData }, ref) => {
   const [comments, setComments] = useState([]);
   const [replies, setReplies] = useState({});
 
-  const [feedReplyId, setFeedReplyId] = useState(""); // 댓글 번호
   const { feedId } = useParams(); // 게시물 번호
 
   // 좋아요 각 상태관리
@@ -82,6 +83,45 @@ const Comment = forwardRef(({ feedData }, ref) => {
       setCommentInput("");
     } catch (error) {
       toast.error("댓글을 추가할 수 없습니다.");
+    }
+  };
+
+  //PATCH 요청
+  const [patchRes, patchErr, patchLoading, fetchPatchData] = useAxios(
+    {
+      method: "PATCH",
+      url: `/feed/${feedId}/feedReply`,
+      headers: {
+        "ngrok-skip-browser-warning": "69420",
+      },
+    },
+    false
+  );
+
+  const patchComment = async (feedReplyId, newContent) => {
+    try {
+      const response = await fetchPatchData({
+        url: `/feed/${feedId}/feedReply/${feedReplyId}`,
+        data: {
+          text: newContent,
+        },
+      });
+
+      if (response && response.status === 200) {
+        setComments((prevComments) =>
+          prevComments.map((comment) => {
+            if (comment.feedReplyId === feedReplyId) {
+              return { ...comment, content: newContent };
+            }
+            return comment;
+          })
+        );
+        setEditComent({}); 
+      } else {
+        
+      }
+    } catch (error) {
+      
     }
   };
 
@@ -157,7 +197,23 @@ const Comment = forwardRef(({ feedData }, ref) => {
                   <span className="text-lg font-semibold">
                     {comment.nickname}
                   </span>
-                  <span className="my-4 text-base">{comment.content}</span>
+                  <span className="my-4 text-base">
+                    {editComent[comment.feedReplyId] ? (
+                      <input
+                        type="text"
+                        value={newContent}
+                        onChange={(e) => setNewContent(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            patchComment(feedReplyId, newContent);
+                          }
+                        }}
+                      />
+                    ) : (
+                      comment.content
+                    )}
+                  </span>
                   {/* 작성날짜, 좋아요, 답글 */}
                   <div className="flex items-center text-gray-500 font-medium text-base">
                     {/* 작성날짜 */}
@@ -186,8 +242,11 @@ const Comment = forwardRef(({ feedData }, ref) => {
                     {/* 수정 */}
                     <button
                       className="mx-2"
-                      // onClick={() => toggleReply(comments.id)}
-                    >
+                      onClick={() => {
+                        setEditComent({
+                          [comment.feedReplyId]: true,
+                        });
+                      }}>
                       수정하기
                     </button>
                     {/* 삭제 */}
