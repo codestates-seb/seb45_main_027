@@ -6,7 +6,7 @@ import axios from "axios";
 const MyInfoContentList = () => {
   const { id } = useParams();
 
-  const [myinfoData, setMyinfoData] = useState([]);
+  const [myinfoData, setMyinfoData] = useState("");
 
   const accessToken = localStorage.getItem("accessToken");
   const baseURL = process.env.REACT_APP_API_URL;
@@ -22,7 +22,7 @@ const MyInfoContentList = () => {
         });
 
         setMyinfoData(response.data.data);
-        //console.log('myposts data.data',response.data.data)
+        //console.log('myinfoData',response.data.data)
       } catch (err) {
         console.log("Error: ", err);
       }
@@ -30,8 +30,10 @@ const MyInfoContentList = () => {
     fetchMyinfoData();
   }, []);
   //console.log('myinfoData', myinfoData)
+  console.log("myinfoData", myinfoData);
   console.log("myinfoData.showRoom", myinfoData.showRoom);
   console.log("myinfoData.tipContent", myinfoData.tipContent);
+  //console.log("myinfoData.showRoom.post", myinfoData.showRoom.post);
 
   const [activeTab, setActiveTab] = useState(1);
 
@@ -66,43 +68,31 @@ const MyInfoContentList = () => {
         </li>
       </ul>
       <div className="flex flex-col flex-wrap ">
-        {Array.isArray(myinfoData.showRoom) &&
-        myinfoData.showRoom.length > 0 ? (
-          myinfoData.showRoom.map((item, idx) => (
-            <div
-              key={idx}
-              className="text-[#F5634A] text-3xl font-bold mb-[2%]"
-            >
-              Show room
-              <MyInfoShowroom
-                postData={item.post}
-                bookmarkData={item.bookmark}
-                likeData={item.like}
-                activeTab={activeTab}
-              />
+        {myinfoData && myinfoData.showRoom && (
+          <>
+            <div className="text-[#F5634A] text-3xl font-bold mb-[2%]">
+              Showroom
             </div>
-          ))
-        ) : (
-          <div>No show room data available</div>
+            <MyInfoShowroom
+              postData={myinfoData.showRoom.post}
+              bookmarkData={myinfoData.showRoom.bookMark}
+              likeData={myinfoData.showRoom.like}
+              activeTab={activeTab}
+            />
+          </>
         )}
-        {Array.isArray(myinfoData.tipContent) &&
-        myinfoData.tipContent.length > 0 ? (
-          myinfoData.tipContent.map((item, idx) => (
-            <div
-              key={idx}
-              className="text-[#F5634A] text-3xl font-bold mb-[2%]"
-            >
-              Tips
-              <MyInfoShowroom
-                postData={item.post}
-                bookmarkData={item.bookmark}
-                likeData={item.like}
-                activeTab={activeTab}
-              />
+        {myinfoData && myinfoData.tipContent && (
+          <>
+            <div className="text-[#F5634A] text-3xl font-bold mb-[2%]">
+              Showroom
             </div>
-          ))
-        ) : (
-          <div>No tip content available</div>
+            <MyInfoShowroom
+              postData={myinfoData.tipContent.post}
+              bookmarkData={myinfoData.tipContent.bookMark}
+              likeData={myinfoData.tipContent.like}
+              activeTab={activeTab}
+            />
+          </>
         )}
       </div>
     </div>
