@@ -35,51 +35,14 @@ const UserInfoFollow = () => {
       setFollowingList(followingResponse.data.data);
       setFollowersList(followersResponse.data.data);
 
-      console.log("Following data", followingResponse.data);
-
-      console.log("Following data.data", followingResponse.data.data);
-      //console.log("Followers data.data", followersResponse.data.data);
+      // console.log("Following data", followingResponse.data);
+      // console.log("Following data.data", followingResponse.data.data);
     } catch (err) {
       console.error("Error: ", err);
     }
   };
 
   const handleFollowAction = () => { fetchData();};
-
-  // const handleUnfollow = (memberId, fromMemberId) => {
-  //   const updatedFollowingList = followingList.filter(
-  //     (user) => user.memberId !== memberId
-  //   );
-  //   setFollowingList(updatedFollowingList);
-
-  //   const updatedFollowersList = followersList.map((user) => {
-  //     if (user.fromMemberId === fromMemberId) {
-  //       return {
-  //         ...user,
-  //         followYn: !user.followYn,
-  //       };
-  //     }
-  //     return user;
-  //   });
-  //   setFollowersList(updatedFollowersList);
-  //   toast.success("팔로우가 취소되었습니다!");
-  //   console.log(`Unfollow user with ID ${memberId}`);
-  // };
-
-  // const handleFollow = (fromMemberId) => {
-  //   const newFollowersList = followersList.map((user) => {
-  //     if (user.fromMemberId === fromMemberId) {
-  //       return {
-  //         ...user,
-  //         followYn: !user.followYn,
-  //       };
-  //     }
-  //     return user;
-  //   });
-  //   setFollowersList(newFollowersList);
-  //   toast.success("팔로우 되었습니다!");
-  //   console.log(`Follow user with ID ${fromMemberId}`);
-  // };
 
   const [activeTab, setActiveTab] = useState("following");
   const handleTabChange = (tab) => {

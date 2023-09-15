@@ -7,7 +7,6 @@ import axios from "axios";
 
 const MyInfoLayout = () => {
   const baseURL = process.env.REACT_APP_API_URL;
-  //const memberId = localStorage.getItem("memberId");
   const { id } = useParams();
 
 
@@ -19,27 +18,25 @@ const MyInfoLayout = () => {
   };
 
   const accessToken = localStorage.getItem("accessToken");
+
+  const fetchProfileData = async () => {
+    try {
+      const response = await axios.get(`${baseURL}/members/${id}`, {
+        headers: {
+          Authorization: accessToken ? `Bearer ${accessToken}` : '', 
+          "ngrok-skip-browser-warning": "69420",
+        },});
+
+      setProfileData(response.data.data);
+    } catch (err) {
+      console.log("Error: ", err);
+    }
+  };
+
   useEffect(() => {
-    
-    const fetchProfileData = async () => {
-      try {
-        const response = await axios.get(`${baseURL}/members/${id}`, {
-          headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : '', 
-            "ngrok-skip-browser-warning": "69420",
-          },});
-
-        setProfileData(response.data.data);
-        //console.log("Data: ", data);
-        //console.log('profile res',response);
-        // console.log('profile data.data',response.data.data)
-      } catch (err) {
-        console.log("Error: ", err);
-      }
-    };
-
     fetchProfileData();
   }, [id]);
+
 
   return (
     <div>
@@ -48,7 +45,6 @@ const MyInfoLayout = () => {
           <>
             <UserProfile
               toggleAccountSettings={toggleAccountSettings}
-              //userDetails={userDetails}
               profileData={profileData}
             />
             <MyInfoContentList />
@@ -58,7 +54,6 @@ const MyInfoLayout = () => {
       {showAccountSettings && (
         <UserAccount
           toggleAccountSettings={toggleAccountSettings}
-          //userDetails={userDetails}
           userDetails={profileData}
         />
       )}

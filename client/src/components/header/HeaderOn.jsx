@@ -34,7 +34,7 @@ const HeaderOn = () => {
             <img
               src={profileImg}
               alt="profileImg"
-              className='"w-4 h-4 mr-2.5 rounded-full'
+              className='w-8 h-8 mr-2.5 rounded-full object-cover'
             />
           )}
           <span className="pr-8 text-gray-700">{nickname}</span>

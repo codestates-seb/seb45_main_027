@@ -5,43 +5,42 @@ import axios from "axios";
 
 const MyInfoContentList = () => {
   const { id } = useParams();
-
-  const [myinfoData, setMyinfoData] = useState("");
-
   const accessToken = localStorage.getItem("accessToken");
   const baseURL = process.env.REACT_APP_API_URL;
+  const [myinfoData, setMyinfoData] = useState("");
 
-  useEffect(() => {
-    const fetchMyinfoData = async () => {
-      try {
-        const response = await axios.get(`${baseURL}/myContent/search/${id}`, {
-          headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : "",
-            "ngrok-skip-browser-warning": "69420",
-          },
-        });
 
-        setMyinfoData(response.data.data);
-        //console.log('myinfoData',response.data.data)
-      } catch (err) {
-        console.log("Error: ", err);
-      }
-    };
-    fetchMyinfoData();
-  }, []);
-  //console.log('myinfoData', myinfoData)
-  console.log("myinfoData", myinfoData);
-  console.log("myinfoData.showRoom", myinfoData.showRoom);
-  console.log("myinfoData.tipContent", myinfoData.tipContent);
-  //console.log("myinfoData.showRoom.post", myinfoData.showRoom.post);
+  const fetchMyinfoData = async () => {
+    try {
+      const response = await axios.get(`${baseURL}/myContent/search/${id}`, {
+        headers: {
+          Authorization: accessToken ? `Bearer ${accessToken}` : "",
+          "ngrok-skip-browser-warning": "69420",
+        },
+      });
+
+      setMyinfoData(response.data.data);
+    } catch (err) {
+      console.log("Error: ", err);
+    }
+  };
+  // console.log("myinfoData.showRoom", myinfoData.showRoom);
+  // console.log("myinfoData.tipContent", myinfoData.tipContent);
 
   const [activeTab, setActiveTab] = useState(1);
 
-  useEffect(() => {}, [activeTab]);
+  //useEffect(() => {}, [activeTab]);
 
   const handleTabs = (tabIdx) => {
     setActiveTab(tabIdx);
   };
+
+  useEffect(() => {
+    fetchMyinfoData();
+  }, []);
+
+  const handleFollowAction = () => { fetchMyinfoData();};
+
 
   const tabStyle = (tabIndex) =>
     `${
@@ -74,23 +73,27 @@ const MyInfoContentList = () => {
               Showroom
             </div>
             <MyInfoShowroom
+              label={'showroom'}
               postData={myinfoData.showRoom.post}
               bookmarkData={myinfoData.showRoom.bookMark}
               likeData={myinfoData.showRoom.like}
               activeTab={activeTab}
+              handleFollowAction={handleFollowAction}
             />
           </>
         )}
         {myinfoData && myinfoData.tipContent && (
           <>
             <div className="text-[#F5634A] text-3xl font-bold mb-[2%]">
-              Showroom
+              Tips
             </div>
             <MyInfoShowroom
+              label={'tips'}
               postData={myinfoData.tipContent.post}
               bookmarkData={myinfoData.tipContent.bookMark}
               likeData={myinfoData.tipContent.like}
               activeTab={activeTab}
+              handleFollowAction={handleFollowAction}
             />
           </>
         )}
