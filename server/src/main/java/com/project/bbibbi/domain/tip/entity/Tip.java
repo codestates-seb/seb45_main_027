@@ -66,4 +66,11 @@ public class Tip extends BaseEntity {
 //    private List<TipReply> tipReplies = new ArrayList<>();
 //    @OneToMany(mappedBy = "tip", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    private List<TipBookmark> tipBookmarks = new ArrayList<>();
+
+    @Transient
+    private Boolean finalPage = false;
+
+    @Transient
+    private Boolean followYn = false;
+
 }

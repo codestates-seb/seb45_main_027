@@ -1,11 +1,13 @@
 package com.project.bbibbi.domain.feed.controller;
 
+import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.feed.mapper.FeedMapper;
 import com.project.bbibbi.domain.feed.service.FeedService;
 import com.project.bbibbi.domain.feed.dto.*;
 import com.project.bbibbi.domain.feed.entity.*;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyResponseDto;
 import com.project.bbibbi.global.response.MultiResponseDto;
+import com.project.bbibbi.global.response.PageAbleResponseDto;
 import com.project.bbibbi.global.response.SingleResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -13,6 +15,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -49,9 +53,11 @@ public class FeedController {
 
         Feed feed = mapper.feedPostDtoToFeed(requestBody);
 
+
         Feed createdFeed = feedService.createFeed(feed);
 
-        URI location = UriComponentsBuilder.newInstance().path(FEED_DEFAULT_URL + "/{feed-id}").buildAndExpand(createdFeed.getFeedId()).toUri();
+        URI location = UriComponentsBuilder.newInstance().path(
+                FEED_DEFAULT_URL + "/{feed-id}").buildAndExpand(createdFeed.getFeedId()).toUri();
 
         FeedResponseDto feedResponseDto = mapper.feedToFeedResponseDto(createdFeed);
 
@@ -107,7 +113,17 @@ public class FeedController {
 
         List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(feeds);
 
-        return new ResponseEntity<>(new MultiResponseDto<>(feedResponseDtos), HttpStatus.OK);
+        PageAbleResponseDto pageAbleResponseDto = new PageAbleResponseDto();
+        if(feeds.get(0).getFinalPage()){
+            pageAbleResponseDto.setIsLast(true);
+        }
+        else {
+            pageAbleResponseDto.setIsLast(false);
+        }
+
+        pageAbleResponseDto.setData(feedResponseDtos);
+
+        return new ResponseEntity<>(pageAbleResponseDto, HttpStatus.OK);
 
     }
 
@@ -119,6 +135,28 @@ public class FeedController {
         int size = 12;
 
         List<Feed> pageFeeds = feedService.findSearchFeeds(searchString, page - 1, size);
+
+        List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(pageFeeds);
+
+        PageAbleResponseDto pageAbleResponseDto = new PageAbleResponseDto();
+        if(pageFeeds.get(0).getFinalPage()){
+            pageAbleResponseDto.setIsLast(true);
+        }
+        else {
+            pageAbleResponseDto.setIsLast(false);
+        }
+
+        pageAbleResponseDto.setData(feedResponseDtos);
+
+
+        return new ResponseEntity<>(pageAbleResponseDto, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/likeTop10")
+    public ResponseEntity getLikeTopTen(){
+
+        List<Feed> pageFeeds = feedService.findLikeTopTen();
 
         List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(pageFeeds);
 

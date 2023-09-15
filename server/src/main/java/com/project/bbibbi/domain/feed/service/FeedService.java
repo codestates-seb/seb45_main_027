@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.feed.service;
 
+import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.feed.entity.Feed;
 //import com.project.bbibbi.domain.feed.entity.FeedImage;
 //import com.project.bbibbi.domain.feed.entity.FeedImageTag;
@@ -8,6 +9,7 @@ import com.project.bbibbi.domain.feed.entity.Feed;
 import com.project.bbibbi.domain.feed.repository.FeedRepository;
 import com.project.bbibbi.domain.feedBookmark.repository.FeedBookMarkRepository;
 import com.project.bbibbi.domain.feedlike.repository.FeedLikeRepository;
+import com.project.bbibbi.domain.follow.repository.FollowRepository;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.global.entity.*;
 import com.project.bbibbi.global.utils.CustomBeanUtils;
@@ -31,15 +33,18 @@ public class FeedService {
 //    private final FeedImageTagRepository feedImageTagRepository;
     private final FeedLikeRepository feedLikeRepository;
     private final FeedBookMarkRepository feedBookMarkRepository;
+    private final FollowRepository followRepository;
     private final CustomBeanUtils<Feed> beanUtils;
 
     public FeedService(FeedRepository feedRepository,
                        FeedLikeRepository feedLikeRepository,
                        FeedBookMarkRepository feedBookMarkRepository,
+                       FollowRepository followRepository,
                        CustomBeanUtils<Feed> beanUtils) {
         this.feedRepository = feedRepository;
         this.feedLikeRepository = feedLikeRepository;
         this.feedBookMarkRepository = feedBookMarkRepository;
+        this.followRepository = followRepository;
         this.beanUtils = beanUtils;
     }
 
@@ -133,7 +138,7 @@ public class FeedService {
         viewUpFeed.setBookMarkCount(bookmarkCount);
 
         // 로그인한 사람의 좋아요 여부... 로그인한 사람 memberId를 1L 로 가정
-        Member member = Member.builder().memberId(1L).build();
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
 
 
         if(member == null){
@@ -155,6 +160,16 @@ public class FeedService {
             else viewUpFeed.setBookMarkYn(true);
         }
 
+        Integer existCount = followRepository.existCount(loginUtils.getLoginId(),viewUpFeed.getMember().getMemberId());
+
+        if(existCount == 0){
+            viewUpFeed.setFollowYn(false);
+        }
+        else {
+            viewUpFeed.setFollowYn(true);
+        }
+
+
         return viewUpFeed;
     }
 
@@ -175,8 +190,13 @@ public class FeedService {
 
         if(whereCode.equals("LOCATION")){
 
-
             selectedFeeds = feedRepository.findByLocation(Location.valueOf(searchcode), pageRequest);
+
+            if(selectedFeeds.isLast()){
+                for(Feed feed : selectedFeeds){
+                    feed.setFinalPage(true);
+                }
+            }
 
         }
         else if(whereCode.equals("COUNT")){
@@ -184,11 +204,23 @@ public class FeedService {
 
             selectedFeeds = feedRepository.findByRoomCount(RoomCount.valueOf(searchcode), pageRequest);
 
+            if(selectedFeeds.isLast()){
+                for(Feed feed : selectedFeeds){
+                    feed.setFinalPage(true);
+                }
+            }
+
         }
         else if(whereCode.equals("INFO")){
 
 
             selectedFeeds = feedRepository.findByRoomInfo(RoomInfo.valueOf(searchcode), pageRequest);
+
+            if(selectedFeeds.isLast()){
+                for(Feed feed : selectedFeeds){
+                    feed.setFinalPage(true);
+                }
+            }
 
         }
         else if(whereCode.equals("SIZE")){
@@ -196,31 +228,45 @@ public class FeedService {
 
             selectedFeeds = feedRepository.findByRoomSize(RoomSize.valueOf(searchcode), pageRequest);
 
+            if(selectedFeeds.isLast()){
+                for(Feed feed : selectedFeeds){
+                    feed.setFinalPage(true);
+                }
+            }
+
         }
         else if(whereCode.equals("TYPE")){
 
 
             selectedFeeds = feedRepository.findByRoomType(RoomType.valueOf(searchcode), pageRequest);
 
-        }
-        // 좋아요 "LIKE00" -> "LIKE"
-        else if(whereCode.equals("LIKE")){
-
-            List<Feed> likeFeed = feedRepository.findByOrderByLike();
-            selectedFeeds = new PageImpl<>(likeFeed);
+            if(selectedFeeds.isLast()){
+                for(Feed feed : selectedFeeds){
+                    feed.setFinalPage(true);
+                }
+            }
 
         }
         // 최신순 "RECENT00" -> "RECENT"
         else if(whereCode.equals("RECENT")){
 
-
             selectedFeeds = feedRepository.findByOrderByCreatedDateTimeDesc(pageRequest);
+            if(selectedFeeds.isLast()){
+                for(Feed feed : selectedFeeds){
+                    feed.setFinalPage(true);
+                }
+            }
 
         }
         // 조회수순 "VIEW00" -> "VIEW"
         else if(whereCode.equals("VIEW")){
 
             selectedFeeds = feedRepository.findByOrderByViewsDesc(pageRequest);
+            if(selectedFeeds.isLast()){
+                for(Feed feed : selectedFeeds){
+                    feed.setFinalPage(true);
+                }
+            }
         }
 
         return selectedFeeds;
@@ -231,8 +277,26 @@ public class FeedService {
 
         List<Feed> selectedFeeds = feedRepository.findBySearch(searchString, page, size);
 
+        Integer selectedFeedsCount = feedRepository.findBySearchCount(searchString);
+
+
+        if(((page+1)*size) >= selectedFeedsCount){
+            for(Feed feed : selectedFeeds){
+                feed.setFinalPage(true);
+            }
+
+        }
+
 
         return selectedFeeds;
+
+    }
+
+    public List<Feed> findLikeTopTen(){
+
+        List<Feed> selectedTopTenFeeds = feedRepository.findByLikeTopTen();
+
+        return selectedTopTenFeeds;
 
     }
 

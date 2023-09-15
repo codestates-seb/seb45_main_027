@@ -3,6 +3,7 @@ package com.project.bbibbi.domain.feedReply.dto;
 import com.project.bbibbi.domain.feedComment.dto.FeedCommentDto;
 import com.project.bbibbi.global.entity.BaseEntity;
 import lombok.*;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,12 +24,4 @@ public class FeedReplyResponseDto extends BaseEntity {
     private Long memberId;
     private LocalDateTime createdDateTime;
     private List<FeedCommentDto> comments;
-/* Entity -> Dto*/
-//    public FeedReplyResponseDto(FeedReplyEntity reply) {
-//        this.feedReplyId = reply.getFeedReplyId();
-//        this.content = reply.getContent();
-//        this.nickname = reply.getMember().getNickname();
-//        this.feedId = reply.getFeed().getFeedId();
-//}
-
 }

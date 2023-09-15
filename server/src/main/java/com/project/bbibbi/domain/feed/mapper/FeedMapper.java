@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.feed.mapper;
 
+import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.feed.dto.*;
 import com.project.bbibbi.domain.feed.entity.Feed;
 //import com.project.bbibbi.domain.feed.entity.FeedImage;
@@ -35,7 +36,8 @@ public interface FeedMapper {
 //        feed.setMemberId(feedPostDto.getMemberId());
 
         // 이런 멤버값이 들어온다고 가정한다.
-        feed.setMember(Member.builder().memberId(1L).nickname("nickname1").build());
+        Long memberId = loginUtils.getLoginId();
+        feed.setMember(Member.builder().memberId(memberId).nickname("").build());
 
 
         // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.
@@ -185,6 +187,7 @@ public interface FeedMapper {
         feedResponseDto.setBookMarkCount(feed.getBookMarkCount());
         feedResponseDto.setBookMarkYn(feed.getBookMarkYn());
         feedResponseDto.setRepliesCount( (feed.getReplies() == null) ? 0: feed.getReplies().size());
+        feedResponseDto.setFollowYn(feed.getFollowYn());
 
         // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.
 //        if(feed.getImages() != null) {
@@ -282,6 +285,7 @@ public interface FeedMapper {
                                 .bookMarkCount(feed.getBookMarkCount())
                                 .bookMarkYn(feed.getLikeYn())
                                 .repliesCount((feed.getReplies() == null) ? 0 : feed.getReplies().size())
+                                .followYn(feed.getFollowYn())
                                 // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.
 //                                .feedImages(feed.getImages().stream().map(feedImage -> FeedImageDto.builder()
 //                                                .feedImageId(feedImage.getFeedImageId())

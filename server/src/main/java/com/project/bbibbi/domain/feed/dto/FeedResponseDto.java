@@ -55,6 +55,7 @@ public class FeedResponseDto {
     private int repliesCount;
     private int bookMarkCount;
     private Boolean bookMarkYn;
+    private Boolean followYn;
 
 
 

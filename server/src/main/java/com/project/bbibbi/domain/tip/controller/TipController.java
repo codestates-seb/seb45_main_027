@@ -13,6 +13,7 @@ import com.project.bbibbi.domain.tip.service.TipService;
 //import com.project.bbibbi.domain.tipTag.service.TipTagService;
 import com.project.bbibbi.global.exception.tipexception.TipNotFoundException;
 import com.project.bbibbi.global.response.MultiResponseDto;
+import com.project.bbibbi.global.response.PageAbleResponseDto;
 import org.springframework.data.domain.Page;
 //import org.springframework.data.domain.Pageable;
 //import org.springframework.data.domain.Slice;
@@ -114,7 +115,7 @@ public class TipController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TipResponseDto>> getAllTips(@RequestParam int page) {
+    public ResponseEntity getAllTips(@RequestParam int page) {
 
         // 사이즈는 12로 고정
         int size = 12;
@@ -126,7 +127,19 @@ public class TipController {
         List<TipResponseDto> tipResponseDtos = tips.stream()
                 .map(tipMapper::tipToTipResponseDto)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(tipResponseDtos);
+
+        PageAbleResponseDto pageAbleResponseDto = new PageAbleResponseDto<>();
+
+        if(tips.get(0).getFinalPage()){
+            pageAbleResponseDto.setIsLast(true);
+        }
+        else {
+            pageAbleResponseDto.setIsLast(false);
+        }
+
+        pageAbleResponseDto.setData(tipResponseDtos);
+
+        return ResponseEntity.ok(pageAbleResponseDto);
     }
 
 //    @GetMapping
@@ -138,7 +151,7 @@ public class TipController {
 //    }
 
     @GetMapping("/search/{search-string}")
-    public ResponseEntity<List<TipResponseDto>> getAllSearchTips(@PathVariable("search-string") String searchString,
+    public ResponseEntity getAllSearchTips(@PathVariable("search-string") String searchString,
                                                                  @RequestParam int page) {
 
         // 사이즈는 12로 고정
@@ -151,7 +164,20 @@ public class TipController {
         List<TipResponseDto> tipResponseDtos = pageTips.stream()
                 .map(tipMapper::tipToTipResponseDto)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(tipResponseDtos);
+
+        PageAbleResponseDto pageAbleResponseDto = new PageAbleResponseDto<>();
+
+        if(pageTips.get(0).getFinalPage()){
+            pageAbleResponseDto.setIsLast(true);
+        }
+        else {
+            pageAbleResponseDto.setIsLast(false);
+        }
+
+        pageAbleResponseDto.setData(tipResponseDtos);
+
+
+        return ResponseEntity.ok(pageAbleResponseDto);
     }
 
 //    @GetMapping("/search/{search-string}")
