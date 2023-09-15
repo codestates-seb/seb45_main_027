@@ -72,7 +72,6 @@ const AllHeaderFilter = ({ handleFilterClick, handleFilterClick2 }) => {
     { key: "roomSize", label: "평수별", modal: "roomSizeFilter" },
     { key: "roomType", label: "주거형태별", modal: "roomTypeFilter" },
   ];
-  console.log(isFocus);
 
   return (
     <div className="relative text-xl pl-4 cursor-pointer grid grid-cols-3 gap-1 sm:flex">

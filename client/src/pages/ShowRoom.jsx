@@ -181,7 +181,7 @@ const ShowRoom = () => {
     };
 
     if (e.key === "Enter") {
-      // API 호출을 기다리기 위해 try-catch 블록 내에서 비동기로 처리
+      // API 호출을 기다리기 위해 try-catch 블록 내에서 비동기로 처리.
       try {
         const res = await api(updatedConfigParams);
         setShowroomData(res.data.data);
