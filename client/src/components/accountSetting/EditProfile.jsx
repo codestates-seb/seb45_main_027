@@ -12,6 +12,8 @@ const EditProfile = ({
 }) => {
   //유저가 사진 업로드시 서버로 보냄
   const handleImageUpload = async (e) => {
+    const nullProfileImg = localStorage.getItem("profileImg");
+
     const file = e.target.files[0];
     const reader = new FileReader();
     const formData = new FormData();
@@ -48,7 +50,14 @@ const EditProfile = ({
   };
 
   const handleImageDelete = async () => {
-    setProfileData({ ...profileData, profileImg: null });
+    // const profileImg = localStorage.getItem("profileImg");
+    // localStorage.setItem(
+    //   "profileImg",
+    //   "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
+    // );
+    setProfileData({ ...profileData, profileImg: "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png" });
+    handleProfileUpdate();
+
     console.log(profileData.profileImg);
   };
 

@@ -50,31 +50,25 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : "", 
             "ngrok-skip-browser-warning": "69420",
+
           },
         }
       );
       localStorage.setItem("nickname", profileData.nickname);
-      if (response.data.profileImg === null) {
-        localStorage.setItem(
-          "profileImg",
-          "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
-        );
-      } else {
-        localStorage.setItem("profileImg", response.data.profileImg);
-        
-      }
-      // console.log(response.data);
-      // console.log(profileData.profileImg);
+      localStorage.setItem("profileImg", profileData.profileImg);
+      
+      console.log(response.data);
+      console.log(profileData.profileImg);
       alert("Profile updated!");
       navigate("/");
     } catch (error) {
-      //console.error(error);
+      console.error(error);
       if (error.response.status === 400 && error.response.data.message) {
         alert("이미 등록된 닉네임입니다.");
       }
       alert("Error updating profile");
     }
-    //console.log(profileData);
+    console.log(profileData);
   };
 
   const inputStyle =

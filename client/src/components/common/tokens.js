@@ -1,7 +1,7 @@
 import axios from "axios";
 const api = axios.create({ baseURL: process.env.REACT_APP_API_URL });
 
-// 토큰 정보를 헤더에 추가하는 함수
+// 토큰 정보를 헤더에 추가하는 함수...
 const addTokenToHeaders = (config) => {
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = localStorage.getItem("accessToken");
