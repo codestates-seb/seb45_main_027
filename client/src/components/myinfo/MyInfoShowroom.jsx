@@ -41,26 +41,42 @@ const MyInfoShowroom = ({
     }
   };
 
-  const deleteBookmark = (itemId, label) => {
-    // const updatedBookmarks = isBookmarked.filter(
-    //   (item) => item.feedId !== itemId
-    // );
-    // setIsBookmarked(updatedBookmarks);
-    // toast.success("북마크가 해제되었습니다!");
-    // console.log(isBookmarked);
+  const deleteBookmark = async(itemId, label) => {
     let url = '';
     if(label === "showroom") {url = `${baseURL}/feed/${itemId}/feedBookMark`;}
     if(label === "tips") {url = `${baseURL}/tip/${itemId}/tipbookmark`;}
+
+    try {
+      await axios.patch(url,{
+        headers: {
+          Authorization: accessToken ? `Bearer ${accessToken}` : "", 
+          "ngrok-skip-browser-warning": "69420",
+        },
+      });
+      handleFollowAction();
+      toast.success("북마크가 삭제되었습니다!");
+    } catch {
+      toast.error("북마크 삭제에 실패했습니다.");
+    }
   };
 
-  const deleteLike = (itemId, label) => {
-    // const updatedLikes = isLiked.filter((item) => item.feedId !== itemId);
-    // setIsLiked(updatedLikes);
-    // toast.success("좋아요가 해제되었습니다!");
-    // console.log(isLiked);
+  const deleteLike = async(itemId, label) => {
     let url = '';
     if(label === "showroom") {url = `${baseURL}/feed/${itemId}/feedLike`;}
     if(label === "tips") {url = `${baseURL}/tip/${itemId}/tiplike`;}
+
+    try {
+      await axios.patch(url,{
+        headers: {
+          Authorization: accessToken ? `Bearer ${accessToken}` : "", 
+          "ngrok-skip-browser-warning": "69420",
+        },
+      });
+      handleFollowAction();
+      toast.success("좋아요가 해제되었습니다!");
+    } catch {
+      toast.error("좋아요 취소에 실패했습니다.");
+    }
   };
 
   // 페이지네이션 부분
@@ -98,6 +114,8 @@ const MyInfoShowroom = ({
 
   console.log("visiblePosts", visiblePosts);
   console.log("visibleBookmarks", visibleBookmarks);
+  console.log("visibleLikes", visibleLikes);
+
 
   return (
     <>
