@@ -64,8 +64,34 @@ const ShowRoom = () => {
     }
   }, [showroomData, loading, error]);
 
-  // 필터링 로직 구현 함수
+  // 필터링 로직 구현 함수1 (공간별, 평수별, 주거 형태별)
   const handleFilterClick = async (filterCode) => {
+    try {
+      const filterToast = toast.loading("필터링중입니다...");
+      setFeedCode("filter");
+      setFilterCode(filterCode);
+      page.current = 1;
+
+      const updatedConfigParams = {
+        ...configParams,
+        url: `/feed/${feedCode}/${inputValue}${filterCode}?page=${page.current}`,
+      };
+
+      const res = await api(updatedConfigParams);
+      toast.dismiss(filterToast); // 필터링 중 토스트 메시지 닫기
+      setShowroomData(res.data.data);
+      page.current = 1; // 필터링 시 페이지를 다시 1로 설정
+    } catch (error) {
+      console.error("Error sending GET request:", error);
+      if (error.request.status === 500) {
+        toast.dismiss();
+        toast.error("필터링 데이터가 없습니다.");
+      }
+    }
+  };
+
+  // 필터링 필터링 로직 구현 함수2(최신순(default), 인기순)
+  const handleFilterClick2 = async (filterCode) => {
     try {
       const filterToast = toast.loading("필터링중입니다...");
       setFeedCode("filter");
@@ -178,6 +204,7 @@ const ShowRoom = () => {
           showroomData={showroomData}
           setShowroomData={setShowroomData}
           handleFilterClick={handleFilterClick}
+          handleFilterClick2={handleFilterClick2}
           inputValue={inputValue}
           handleInputChange={handleInputChange}
           handleSearch={handleSearch}

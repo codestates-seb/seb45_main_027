@@ -5,6 +5,7 @@ const AllHeader = ({
   viewportWidth,
   setViewportWidth,
   handleFilterClick,
+  handleFilterClick2,
   setShowroomData,
   showroomData,
   inputValue,
@@ -18,12 +19,16 @@ const AllHeader = ({
         <h1 className="text-4xl text-[#F5634A] font-semibold Showcard-Gothic">
           All
         </h1>
-        <AllHeaderFilter handleFilterClick={handleFilterClick} />
+        <AllHeaderFilter
+          handleFilterClick={handleFilterClick}
+          handleFilterClick2={handleFilterClick2}
+        />
       </div>
       <div
         className={`relative flex items-center my-5 ${
           isMobileView ? "mx-auto pr-5" : ""
-        }`}>
+        }`}
+      >
         <img
           className="absolute w-6 left-4"
           src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Search_gray.png"

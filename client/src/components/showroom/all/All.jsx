@@ -8,6 +8,7 @@ const All = ({
   showroomData,
   setShowroomData,
   handleFilterClick,
+  handleFilterClick2,
   inputValue,
   handleInputChange,
   handleSearch,
@@ -20,6 +21,7 @@ const All = ({
         showroomData={showroomData}
         setShowroomData={setShowroomData}
         handleFilterClick={handleFilterClick}
+        handleFilterClick2={handleFilterClick2}
         inputValue={inputValue}
         handleInputChange={handleInputChange}
         handleSearch={handleSearch}
