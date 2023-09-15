@@ -22,8 +22,8 @@ public enum Provider implements BaseEnum {
     });
 
 
-private final String registrationId;
-private final Function<Map<String, Object>, MemberProfile> of;
+    private final String registrationId;
+    private final Function<Map<String, Object>, MemberProfile> of;
 
     Provider(String registrationId, Function<Map<String, Object>, MemberProfile> of) {
         this.registrationId = registrationId;

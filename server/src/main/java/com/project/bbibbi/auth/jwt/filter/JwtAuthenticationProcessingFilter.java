@@ -2,6 +2,8 @@ package com.project.bbibbi.auth.jwt.filter;
 
 import com.project.bbibbi.auth.jwt.service.CustomJwtUserDetails;
 import com.project.bbibbi.auth.jwt.service.JwtService;
+import com.project.bbibbi.auth.oauth.oauthUserInfo.CustomOAuth2User;
+import com.project.bbibbi.auth.oauth.oauthUserInfo.OAuth2UserInfo;
 import com.project.bbibbi.auth.utils.PasswordUtil;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.member.repository.MemberRepository;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +23,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 
 /**
  * Jwt 인증 필터
@@ -39,6 +43,7 @@ import java.io.IOException;
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     private static final String NO_CHECK_URL = "auth/login"; // "/login"으로 들어오는 요청은 Filter 작동 X
+    // 임시로 바꿔놓기
 
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
@@ -160,7 +165,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         CustomJwtUserDetails userDetailsUser = new CustomJwtUserDetails( //되면 수정
                 member.getMemberId(),
                 member.getEmail(),
-                password, // 비밀번호는 null
+                member.getPassword(),
                 member.getRole(),
                 true, // checkUser 값은 true
                 member.getProfileImg(),
@@ -173,4 +178,32 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
+
+//    public void saveAuthenticationForOauth(Member member) {
+//        String password = member.getPassword();
+//        if (password == null) { // 소셜 로그인 유저는 비밀번호 임의로 설정 하여 소셜 로그인 유저도 인증 되도록 설정
+//            password = PasswordUtil.generateRandomPassword();
+//
+//        }
+//
+//
+//        CustomOAuth2User OAuth2userDetailsUser = new  CustomOAuth2User( //되면 수정
+//                authorities,
+//                attributes,
+//                nameAttributeKey,
+//                member.getEmail(),
+//                member.getRole(),
+//                member.getMemberId(),
+//                member.getProfileImg(),
+//                member.getNickname()
+//        );
+//
+//
+//
+//        Authentication authentication =
+//                new UsernamePasswordAuthenticationToken(OAuth2userDetailsUser, null,
+//                        authoritiesMapper.mapAuthorities(OAuth2userDetailsUser.getAuthorities()));
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//    }
 }

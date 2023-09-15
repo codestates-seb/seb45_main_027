@@ -3,6 +3,8 @@ package com.project.bbibbi.auth.oauth.dto;
 import com.project.bbibbi.auth.oauth.oauthUserInfo.KakaoOAuth2UserInfo;
 import com.project.bbibbi.auth.oauth.oauthUserInfo.NaverOAuth2UserInfo;
 import com.project.bbibbi.auth.oauth.oauthUserInfo.OAuth2UserInfo;
+import com.project.bbibbi.auth.utils.NicknameUtil;
+import com.project.bbibbi.auth.utils.PasswordUtil;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.global.entity.Role;
 import com.project.bbibbi.global.entity.SocialType;
@@ -71,9 +73,11 @@ public class OAuthAttributes {
                 .socialType(socialType)
                 .socialId(oauth2UserInfo.getId())
                 .email(UUID.randomUUID() + "@socialUser.com")
-                .nickname(oauth2UserInfo.getNickname())
+//                .nickname(oauth2UserInfo.getNickname())
+                .nickname(NicknameUtil.generateRandomNickname())
                 .profileImg(oauth2UserInfo.getImageUrl())
                 .role(Role.GUEST)
+                .password(PasswordUtil.generateRandomPassword())
                 .checkUser(true)
                 .build();
     }

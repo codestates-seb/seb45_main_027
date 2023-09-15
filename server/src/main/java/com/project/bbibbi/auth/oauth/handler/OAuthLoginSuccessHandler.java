@@ -35,8 +35,10 @@ public class OAuthLoginSuccessHandler implements AuthenticationSuccessHandler {
 //                String accessToken = jwtService.createAccessToken(oAuth2User.getEmail());
 //                response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
 //                response.sendRedirect("/"); // 성공 시 메인페이지로 어째뜬 리다이렉트(필요없음 사실)
-//                //
-//                jwtService.sendAccessAndRefreshToken(response, accessToken, null, memberId);
+//                Long memberId = oAuth2User.getMemberId();
+//                String profileImg = oAuth2User.getProfileImg();
+//                String nickname = oAuth2User.getNickname();
+//                jwtService.sendAccessAndRefreshToken(response, accessToken,null, memberId, nickname, profileImg);
 //
 //
 //            } else {

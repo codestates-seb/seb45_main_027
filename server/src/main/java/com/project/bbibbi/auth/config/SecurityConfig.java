@@ -72,34 +72,36 @@ public class SecurityConfig {
                 // 아이콘, css, js 관련
                 // 기본 페이지, css, image, js 하위 폴더에 있는 자료들은 모두 접근 가능, h2-console에 접근 가능
                 .antMatchers("/","/css/**","/images/**","/js/**","/favicon.ico","/h2/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/").permitAll()
-                .antMatchers("/auth/**").permitAll() // 회원가입 접근 가능
-                .antMatchers(HttpMethod.GET, "/members/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/feed/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/tip/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/follow/**").permitAll()
-                .antMatchers(HttpMethod.GET, "myContent/**").permitAll()
-                // 타 도메인쪽에서 작업을 위해 위의 GET 외에도 PATCH, POST, DELETE도 넣었습니다.
-                // 타 도메인쪽 작업 완료되면 지우도록 알려드리겠습니다.
-                .antMatchers(HttpMethod.POST, "/members/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/feed/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/tip/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/follow/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/imageUpload/**").permitAll()
-                .antMatchers(HttpMethod.PATCH, "/members/**").permitAll()
-                .antMatchers(HttpMethod.PATCH, "/feed/**").permitAll()
-                .antMatchers(HttpMethod.PATCH, "/tip/**").permitAll()
-                .antMatchers(HttpMethod.PATCH, "/follow/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/members/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/feed/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/tip/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/follow/**").permitAll()
+//                .antMatchers("/sign-up").permitAll() // 회원가입 접근 가능 //임시용 // 지우지 마세요~
+//                .antMatchers(HttpMethod.GET, "/").permitAll()
+//                .antMatchers("/auth/**").permitAll() // 회원가입 접근 가능
+//                .antMatchers(HttpMethod.GET, "/members/**").permitAll()
+//                .antMatchers(HttpMethod.GET, "/feed/**").permitAll()
+//                .antMatchers(HttpMethod.GET, "/tip/**").permitAll()
+//                .antMatchers(HttpMethod.GET, "/follow/**").permitAll()
+//                .antMatchers(HttpMethod.GET, "myContent/**").permitAll()
+//                // 타 도메인쪽에서 작업을 위해 위의 GET 외에도 PATCH, POST, DELETE도 넣었습니다.
+//                // 타 도메인쪽 작업 완료되면 지우도록 알려드리겠습니다.
+//                .antMatchers(HttpMethod.POST, "/members/**").permitAll()
+//                .antMatchers(HttpMethod.POST, "/feed/**").permitAll()
+//                .antMatchers(HttpMethod.POST, "/tip/**").permitAll()
+//                .antMatchers(HttpMethod.POST, "/follow/**").permitAll()
+//                .antMatchers(HttpMethod.POST, "/imageUpload/**").permitAll()
+//                .antMatchers(HttpMethod.PATCH, "/members/**").permitAll()
+//                .antMatchers(HttpMethod.PATCH, "/feed/**").permitAll()
+//                .antMatchers(HttpMethod.PATCH, "/tip/**").permitAll()
+//                .antMatchers(HttpMethod.PATCH, "/follow/**").permitAll()
+//                .antMatchers(HttpMethod.DELETE, "/members/**").permitAll()
+//                .antMatchers(HttpMethod.DELETE, "/feed/**").permitAll()
+//                .antMatchers(HttpMethod.DELETE, "/tip/**").permitAll()
+//                .antMatchers(HttpMethod.DELETE, "/follow/**").permitAll()
                 // 여기 위까지 타 도메인 임시 작업 허용
                 .anyRequest().authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
                 .and()
                 //== 소셜 로그인 설정 ==//
                 .oauth2Login()
                 .successHandler(oAuthLoginSuccessHandler) // 동의하고 계속하기를 눌렀을 때 Handler 설정
+                //.defaultSuccessUrl("/auth/jwt-test")
                 .failureHandler(oAuthLoginFailureHandler) // 소셜 로그인 실패 시 핸들러 설정
                 .userInfoEndpoint().userService(customOAuthUserService); // customUserService 설정
         // 내가 원래있는 USERSERVICE가 아니라 내가 커스텀한 걸로 설정함
