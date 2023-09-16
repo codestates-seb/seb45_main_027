@@ -22,6 +22,7 @@ import { UserProvider } from "./context/userContext";
 import Verify from "./pages/Verify";
 import { Toaster } from "react-hot-toast";
 import scrollToTop from "./components/common/scrollToTop";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const headerPaths = [
   "myinfo",
@@ -65,20 +66,54 @@ function App() {
               <Route path={"/"} element={<Main />} />
               <Route path={"/login"} element={<Login />} />
               <Route path={"/signup"} element={<Signup />} />
-              <Route path={"/verify"} element={<Verify />} />
+              <Route
+                path={"/verify"}
+                element={
+                  <ProtectedRoute>
+                    <Verify />
+                  </ProtectedRoute>
+                }
+              />
               <Route path={"/myinfo/:id"} element={<MyInfo />} />
               <Route path={"/showroom"} element={<ShowRoom />} />
               <Route path={"/tips"} element={<Tips />} />
               <Route path={"/map"} element={<Map />} />
-              <Route path={"/showroom/write"} element={<WriteShowRoom />} />
+              <Route
+                path={"/showroom/write"}
+                element={
+                  <ProtectedRoute>
+                    <WriteShowRoom />
+                  </ProtectedRoute>
+                }
+              />
               <Route path={"/showroom/:feedId"} element={<ViewShowRoom />} />
-              <Route path={"/tips/write"} element={<WriteTips />} />
+              <Route
+                path={"/tips/write"}
+                element={
+                  <ProtectedRoute>
+                    <WriteTips />
+                  </ProtectedRoute>
+                }
+              />
               <Route path={"/tips/:tipId"} element={<ViewTips />} />
+
               <Route
                 path={"/showroom/:feedId/edit"}
-                element={<EditShowRoom />}
+                element={
+                  <ProtectedRoute>
+                    <EditShowRoom />
+                  </ProtectedRoute>
+                }
               />
-              <Route path={"/tips/:tipId/edit"} element={<EditTips />} />
+
+              <Route
+                path={"/tips/:tipId/edit"}
+                element={
+                  <ProtectedRoute>
+                    <EditTips />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </div>
           {isFooter && <HiddenFooter />}
