@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import CommentDelete from "./CommentDelete";
 import CommentPatch from "./CommentPatch";
 import CommentLike from "./CommentLike";
+import ReplyWrap from "./ReplyWrap";
 
 const CommentOutput = ({ feedData, setFeedData }) => {
   const profileImg = localStorage.getItem("profileImg");
@@ -10,8 +11,10 @@ const CommentOutput = ({ feedData, setFeedData }) => {
   const [replies, setReplies] = useState("");
     
   // 댓글 수정 상태
-  const [editComent, setEditComent] = useState({});
+    const [editComent, setEditComent] = useState({});
     
+    // 답글창
+    const [showReplyBox, setShowReplyBox] = useState({});
 
 
   // 전체데이터에서 댓글 접근
@@ -20,13 +23,20 @@ const CommentOutput = ({ feedData, setFeedData }) => {
       setReplies(feedData.replies);
     } 
   }, [feedData]);
+   
+    console.log(replies);
+
+    useEffect(() => {
+      console.log(showReplyBox);
+    }, [showReplyBox]);
+
     
   return (
     <div>
       {/* 댓글 출력창 */}
       {replies &&
-        replies.map((comment, index) => (
-          <div key={comment.id} className="flex flex-col mt-10">
+              replies.map((comment, index) => (
+          <div key={comment.feedReplyId} className="flex flex-col mt-10">
             <div className="bg-[#fceecd75] p-8 rounded-lg shadow">
               <div className="flex items-start">
                 <img
@@ -54,11 +64,20 @@ const CommentOutput = ({ feedData, setFeedData }) => {
                       {comment.createdDateTime.split("T")[0]}
                     </span>
                     {/* 좋아요 */}
-                    <CommentLike
-                      comment={comment}
-                    />
+                    <CommentLike comment={comment} />
                     {/* 답글 */}
-                    <button className="mx-2">답글 달기</button>
+                    <div key={comment.feedReplyId} className="flex flex-col">
+                      <button
+                        className="mx-2"
+                        onClick={() =>
+                          setShowReplyBox((prev) => ({
+                            ...prev,
+                            [comment.feedReplyId]: !prev[comment.feedReplyId],
+                          }))
+                        }>
+                        답글 달기
+                      </button>
+                    </div>
                     {/* 수정 */}
                     <button
                       className="mx-2"
@@ -79,6 +98,13 @@ const CommentOutput = ({ feedData, setFeedData }) => {
                       setFeedData={setFeedData}
                     />
                   </div>
+                  {showReplyBox[comment.feedReplyId] && (
+                    <ReplyWrap
+                      commentId={comment.feedReplyId}
+                      feedData={feedData}
+                      setFeedData={setFeedData}
+                    />
+                  )}
                 </div>
               </div>
             </div>
