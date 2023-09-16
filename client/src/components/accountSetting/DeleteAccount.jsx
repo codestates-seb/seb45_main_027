@@ -19,7 +19,13 @@ const DeleteAccount = () => {
 
     if (confirmDeletion) {
       try {
-        await axios.delete(`${baseURL}/members/${memberId}`);
+        await axios.delete(`${baseURL}/members/${memberId}`,{
+          headers: {
+            //Authorization: accessToken ? `Bearer ${accessToken}` : "", 
+            "ngrok-skip-browser-warning": "69420",
+
+          },
+        });
         delete axios.defaults.headers.common["Authorization"];
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");

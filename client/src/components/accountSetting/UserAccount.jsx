@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import axios from "axios";
+//import axios from "axios";
+import api from "../common/tokens";
 import ChangePassword from "./ChangePassword";
 import EditProfile from "./EditProfile";
 import DeleteAccount from "./DeleteAccount";
@@ -44,7 +45,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
 
     try {
       // 닉네임 2글자 이상으로 유효성 넣기 아니면 안넘어가기
-      const response = await axios.patch(
+      const response = await api.patch(
         `${baseURL}/members/${memberId}`,
         profileData,
         {

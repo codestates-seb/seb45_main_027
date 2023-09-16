@@ -1,9 +1,10 @@
-import axios from "axios";
+//import axios from "axios";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+import api from "../common/tokens";
 
 const UserInfoFollowList = ({ userList, onFollowAction, activeTab }) => {
-  const accessToken = localStorage.getItem("accessToken");
+  //const accessToken = localStorage.getItem("accessToken");
   const loggedinId = localStorage.getItem("memberId");
   const { id } = useParams();
 
@@ -24,9 +25,9 @@ const UserInfoFollowList = ({ userList, onFollowAction, activeTab }) => {
     }
 
     try {
-      await axios.patch(url, {
+      await api.patch(url, {
         headers: {
-          Authorization: accessToken ? `Bearer ${accessToken}` : "",
+          //Authorization: accessToken ? `Bearer ${accessToken}` : "",
           "ngrok-skip-browser-warning": "69420",
         },
       });
@@ -49,9 +50,12 @@ const UserInfoFollowList = ({ userList, onFollowAction, activeTab }) => {
               className="h-12 w-12 object-cover rounded-full"
               src={
                 activeTab === "following"
-                  ? user.memberImage
-                  : user.fromMemberImage
+                  ? user.memberImage || "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
+                  : user.fromMemberImage || "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
               }
+              // profileData.profileImg
+              //   ? profileData.profileImg
+              //   : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
               alt={user.memberNickname}
             />
             <Link

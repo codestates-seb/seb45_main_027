@@ -50,6 +50,12 @@ const ChangePassword = ({ inputStyle, buttonStyle }) => {
      await axios.patch(`${baseUrl}/members/${memberId}/password`, {
         password: updatedPassword.currentPassword,
         newPassword: updatedPassword.newPassword,
+        //이거 괜찮나?
+        headers: {
+          //Authorization: accessToken ? `Bearer ${accessToken}` : "", 
+          "ngrok-skip-browser-warning": "69420",
+
+        },
       });
       console.log(updatedPassword.newPassword);
       alert("Password updated!");
