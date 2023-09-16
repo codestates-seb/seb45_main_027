@@ -62,7 +62,7 @@ const ViewShowRoom = () => {
         <ShowroomContents setFeedData={setFeedData} feedData={feedData} />
 
         {memberId == userId && <Edit feedData={feedData} />}
-        <Comment feedData={feedData} ref={commentSectionRef} />
+        <CommentWrap feedData={feedData} ref={commentSectionRef} />
 
       </Background>
     </div>
