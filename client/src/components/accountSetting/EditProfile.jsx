@@ -55,8 +55,8 @@ const EditProfile = ({
     //   "profileImg",
     //   "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
     // );
-    setProfileData({ ...profileData, profileImg: "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png" });
-    handleProfileUpdate();
+    setProfileData({ ...profileData, profileImg: null });
+    //handleProfileUpdate();
 
     console.log(profileData.profileImg);
   };

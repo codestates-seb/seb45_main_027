@@ -27,10 +27,14 @@ const MyInfoLayout = () => {
         },});
 
       setProfileData(response.data.data);
+      console.log('profileData: ', profileData)
     } catch (err) {
       console.log("Error: ", err);
     }
   };
+
+  console.log('profileData2: ', profileData)
+
 
   useEffect(() => {
     fetchProfileData();

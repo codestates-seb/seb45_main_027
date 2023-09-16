@@ -18,6 +18,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
     setActiveTab((prevtab) => (prevtab === tabName ? null : tabName));
   };
 
+
   //프로필정보 수정을 위한 state
   const [profileData, setProfileData] = useState({
     nickname: userDetails.nickname,
@@ -55,7 +56,15 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
         }
       );
       localStorage.setItem("nickname", profileData.nickname);
-      localStorage.setItem("profileImg", profileData.profileImg);
+     // localStorage.setItem("profileImg", profileData.profileImg);
+      if (profileData.profileImg === null) {
+        localStorage.setItem(
+          "profileImg",
+          "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
+        );
+      } else {
+        localStorage.setItem("profileImg", profileData.profileImg);
+      }
       
       console.log(response.data);
       console.log(profileData.profileImg);
