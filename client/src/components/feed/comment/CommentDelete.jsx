@@ -33,7 +33,6 @@ const CommentDelete = ({ comment, replies, setReplies }) => {
     }
   };
 
-  console.log(comment);
   return (
     <div>
         <button
