@@ -30,7 +30,7 @@ public class FeedLike extends BaseEntity {
     private Member member;
 
     @Transient
-    private Boolean LikeYn;
+    private Boolean likeYn;
 
     @Transient
     private Integer LikeCount;

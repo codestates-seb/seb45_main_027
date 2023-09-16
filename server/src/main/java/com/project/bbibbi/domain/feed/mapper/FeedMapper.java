@@ -245,6 +245,8 @@ public interface FeedMapper {
                 feedReplyResponseDto.setNickname(feedReply.getMember().getNickname());
                 feedReplyResponseDto.setMemberId(feedReply.getMember().getMemberId());
                 feedReplyResponseDto.setCreatedDateTime(feedReply.getCreatedDateTime());
+                feedReplyResponseDto.setMemberImage(feedReply.getMember().getProfileImg());
+                feedReplyResponseDto.setReplyLikeYn(feedReply.getReplyLikeYn());
                 if (feedReply.getComments() != null) {
                     List<FeedCommentDto> allComments = new ArrayList<>(); // FeedCommentDto 타입으로 리스트 생성
                     for (FeedComment feedComment : feedReply.getComments()) {
@@ -263,7 +265,7 @@ public interface FeedMapper {
             // Replies 안에 allReplies 저장
             feedResponseDto.setReplies(allReplies);
         }
-        return feedResponseDto;
+            return feedResponseDto;
     }
 
     default List<FeedResponseDto> feedsToFeedResponseDtos(List<Feed> feeds){

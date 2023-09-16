@@ -50,5 +50,8 @@ public class FeedReply extends BaseEntity {
     protected void onUpdate() {
         modifiedDateTime = LocalDateTime.now();
     }
+
+    @Transient
+    private Boolean replyLikeYn = false;
 }
 
