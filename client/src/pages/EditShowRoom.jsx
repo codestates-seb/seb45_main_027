@@ -9,7 +9,7 @@ import WriteInformation from "../components/feed/write/WriteInformation";
 import WriteFormShowroom from "../components/feed/write/WriteFormShowroom";
 import { toast } from "react-hot-toast";
 import api from "../components/common/tokens";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxios from "../hooks/useAxios";
 
 const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요.";
@@ -28,21 +28,18 @@ const toastStyle = {
 };
 
 const EditShowRoom = () => {
-  const [editData, setEditDate] = useState("");
-  const [coverImage, setCoverImage] = useState(null); // 커버사진 상태
-  const [title, setTitle] = useState(null); // title(제목) 상태
-  const [editorContent, setEditorContent] = useState(DEFAULT_EDITOR_TEXT); // Editor 내용을 관리
-  const [selectedValues, setSelectedValues] = useState({
-    roomInfo: null,
-    roomSize: null,
-    roomType: null,
-    roomCount: null,
-    location: null,
-  }); // 드랍다운 선택 결과를 담은 상태
+  const { feedId } = useParams();
+  const navigate = useNavigate();
+  const [editData, setEditData] = useState("");
+  const [coverImage, setCoverImage] = useState(""); // 커버사진 상태
+  const [title, setTitle] = useState(""); // title(제목) 상태
+  const [editorContent, setEditorContent] = useState(""); // Editor 내용을 관리
+  const [selectedValues, setSelectedValues] = useState({}); // 드랍다운 선택 결과를 담은 상태
+  const [isEditPage, setIsEditPage] = useState(false); // edit page여부를 확인하는 상태
 
   const configParams = {
     method: "GET",
-    url: `/feed/197`,
+    url: `/feed/${feedId}`,
     headers: {
       "Content-Type": "application/json",
       "ngrok-skip-browser-warning": "69420",
@@ -51,19 +48,51 @@ const EditShowRoom = () => {
 
   const [response, error, loading] = useAxios(configParams);
 
+  // 초기 렌더링시 해당 수정글의 정보를 렌더링
   useEffect(() => {
     if (response) {
-      setEditDate(response.data.data);
+      setEditData(response.data.data);
+      if (editData) {
+        setIsEditPage(true);
+        setCoverImage(editData.coverPhoto);
+        setTitle(editData.title);
+        setEditorContent(editData.content);
+        setSelectedValues({
+          roomInfo: {
+            name: editData.roomInfoName,
+            code: editData.roomInfo,
+            label: editData.roomInfoName,
+          },
+          roomSize: {
+            name: editData.roomSizeName,
+            code: editData.roomSize,
+            label: editData.roomSizeName,
+          },
+          roomType: {
+            name: editData.roomTypeName,
+            code: editData.roomType,
+            label: editData.roomTypeName,
+          },
+          roomCount: {
+            name: editData.roomCountName,
+            code: editData.roomCount,
+            label: editData.roomCountName,
+          },
+          location: {
+            name: editData.locationName,
+            code: editData.location,
+            label: editData.locationName,
+          },
+        });
+      }
     } else if (error) {
       console.error("Error:", error);
     }
   }, [response, error, editData]);
 
-  const navigate = useNavigate();
-
   // 로컬스토리지에 임시저장값이 있으면 해당값 불러오기 위한 useEffect
   useEffect(() => {
-    const savedData = localStorage.getItem("tempSaveShowroomData");
+    const savedData = localStorage.getItem("tempSaveShowroomDataEdit");
 
     if (savedData) {
       const tempSaveData = JSON.parse(savedData);
@@ -85,7 +114,7 @@ const EditShowRoom = () => {
         toast.success("작성중인 글을 불러왔습니다.");
       } else {
         // 취소시 삭제
-        localStorage.removeItem("tempSaveShowroomData");
+        localStorage.removeItem("tempSaveShowroomDataEdit");
         toast.error("작성중인 글을 삭제하였습니다.");
       }
     }
@@ -103,7 +132,7 @@ const EditShowRoom = () => {
       };
 
       localStorage.setItem(
-        "tempSaveShowroomData",
+        "tempSaveShowroomDataEdit",
         JSON.stringify(tempSaveData)
       );
 
@@ -122,8 +151,8 @@ const EditShowRoom = () => {
       // 모든 값이 존재할 때만 API 요청
       // API 호출을 위한 요청 파라미터 설정
       const configParams = {
-        method: "POST",
-        url: `/feed`,
+        method: "PATCH",
+        url: `/feed/${feedId}`,
         headers: {
           "Content-Type": "application/json",
           "ngrok-skip-browser-warning": "69420",
@@ -145,7 +174,7 @@ const EditShowRoom = () => {
         const response = await api(configParams);
         // 성공적으로 게시된 경우
         const feedIdFromResponse = response.data.data.feedId;
-        toast.success("게시되었습니다.");
+        toast.success("수정되었습니다.");
 
         if (feedIdFromResponse) {
           navigate(`/showroom/${feedIdFromResponse}`);
@@ -182,44 +211,51 @@ const EditShowRoom = () => {
 
   return (
     <>
-      <HeaderMobile
-        buttonBgColor="bg-[#F5634A]"
-        handlePublish={handlePublish}
-      />
-      <Background
-        mainclassName=" bg-[#FFFAEE] w-full h-full px-14 md:px-56"
-        divclassName="flex-col my-24 md:my-0"
-      >
-        <div className="hidden md:block">
-          <WriteBtn
-            saveToLocalStorage={saveToLocalStorage}
+      {editData ? (
+        <>
+          <HeaderMobile
             buttonBgColor="bg-[#F5634A]"
-            buttonBorderColor="border-[#F5634A]"
-            buttonTextColor="text-[#F5634A]"
-            Title="Show room"
             handlePublish={handlePublish}
           />
-        </div>
-        <WriteGuide Title="Show room" />
-        <WriteInformation
-          selectedValues={selectedValues}
-          setSelectedValues={setSelectedValues}
-        />
-        <WriteCoverImg
-          coverImage={coverImage}
-          setCoverImage={setCoverImage}
-          bgColor="bg-[#f5644a16]"
-          btnColor="bg-[#F5634A]"
-        />
-        <div className="mt-10 mb-20 p-4 bg-white w-full h-full rounded-md">
-          <WriteTitle title={title} setTitle={setTitle} />
-          <WriteFormShowroom
-            editorContent={editorContent}
-            setEditorContent={setEditorContent}
-            DEFAULT_EDITOR_TEXT={DEFAULT_EDITOR_TEXT}
-          />
-        </div>
-      </Background>
+          <Background
+            mainclassName=" bg-[#FFFAEE] w-full h-full px-14 md:px-56"
+            divclassName="flex-col my-24 md:my-0"
+          >
+            <div className="hidden md:block">
+              <WriteBtn
+                saveToLocalStorage={saveToLocalStorage}
+                buttonBgColor="bg-[#F5634A]"
+                buttonBorderColor="border-[#F5634A]"
+                buttonTextColor="text-[#F5634A]"
+                Title="Show room"
+                handlePublish={handlePublish}
+                isEditPage={isEditPage}
+              />
+            </div>
+            <WriteGuide Title="Show room" />
+            <WriteInformation
+              selectedValues={selectedValues}
+              setSelectedValues={setSelectedValues}
+            />
+            <WriteCoverImg
+              coverImage={coverImage}
+              setCoverImage={setCoverImage}
+              bgColor="bg-[#f5644a16]"
+              btnColor="bg-[#F5634A]"
+            />
+            <div className="mt-10 mb-20 p-4 bg-white w-full h-full rounded-md">
+              <WriteTitle title={title} setTitle={setTitle} />
+              <WriteFormShowroom
+                editorContent={editorContent}
+                setEditorContent={setEditorContent}
+                DEFAULT_EDITOR_TEXT={DEFAULT_EDITOR_TEXT}
+              />
+            </div>
+          </Background>
+        </>
+      ) : (
+        <div>loading</div>
+      )}
     </>
   );
 };

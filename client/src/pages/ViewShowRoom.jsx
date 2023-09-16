@@ -24,8 +24,9 @@ const ViewShowRoom = () => {
     },
   });
 
-  // 멤버아이디 (게시글ID(feedId)와 memberId 일치시에만 On)
-  const userId = response?.data?.data?.feedId;
+  // 작정자 멤버아이디 (게시글ID(feedId)와 memberId 일치시에만 On)
+  const userId = response?.data?.data?.memberId;
+
   // 로컬에 저장된 memberID 가져오기
   const memberId = localStorage.getItem("memberId");
 
@@ -56,10 +57,13 @@ const ViewShowRoom = () => {
       />
       <Background
         mainclassName="bg-[#FFFAEE] h-full px-14 md:px-56 pb-40"
-        divclassName="flex-col my-24 md:my-0">
+        divclassName="flex-col my-24 md:my-0"
+      >
         <ShowroomContents setFeedData={setFeedData} feedData={feedData} />
-        {memberId === userId && <Edit />}
-        <CommentWrap feedData={feedData} ref={commentSectionRef} />
+
+        {memberId == userId && <Edit feedData={feedData} />}
+        <Comment feedData={feedData} ref={commentSectionRef} />
+
       </Background>
     </div>
   );

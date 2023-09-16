@@ -8,8 +8,9 @@ import WriteTitle from "../components/feed/write/WriteTitle";
 import WriteFormTips from "../components/feed/write/WriteFormTips";
 import WriteTag from "../components/feed/write/WriteTag";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../components/common/tokens";
+import useAxios from "../hooks/useAxios";
 
 const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요.";
 
@@ -26,16 +27,46 @@ const toastStyle = {
   },
 };
 
-const WriteTips = () => {
+const EditTips = () => {
+  const { tipId } = useParams();
+  const [editData, setEditData] = useState();
   const [coverImage, setCoverImage] = useState(null); // 커버사진 상태
   const [title, setTitle] = useState(null); // title(제목) 상태
-  const [editorContent, setEditorContent] = useState(DEFAULT_EDITOR_TEXT); // Editor 내용을 관리
+  const [editorContent, setEditorContent] = useState(""); // Editor 내용을 관리
   const [tags, setTags] = useState([]); // 팁에있는 해시태그 상태!
+  const [isEditPage, setIsEditPage] = useState(false); // edit page여부를 확인하는 상태
   const navigate = useNavigate();
+
+  const configParams = {
+    method: "GET",
+    url: `/tip/${tipId}`,
+    headers: {
+      "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": "69420",
+    },
+  };
+  console.log(editData);
+
+  const [response, error, loading] = useAxios(configParams);
+  // 초기 렌더링시 해당 수정글의 정보를 렌더링
+  useEffect(() => {
+    if (response) {
+      setEditData(response.data);
+      if (editData) {
+        setIsEditPage(true);
+        setCoverImage(editData.coverPhoto);
+        setTitle(editData.title);
+        setEditorContent(editData.content);
+        // 태그정보 업데이트 되면 추가 ***
+      }
+    } else if (error) {
+      console.error("Error:", error);
+    }
+  }, [response, error, editData]);
 
   // 로컬스토리지에 임시저장값이 있으면 해당값 불러오기 위한 useEffect
   useEffect(() => {
-    const savedData = localStorage.getItem("tempSaveTipData");
+    const savedData = localStorage.getItem("tempSaveTipDataEdit");
 
     if (savedData) {
       const tempSaveData = JSON.parse(savedData);
@@ -56,11 +87,10 @@ const WriteTips = () => {
         setCoverImage(parsedData.coverImage);
         setTitle(parsedData.title);
         setEditorContent(parsedData.editorContent);
-        setTags(parsedData.tags);
         toast.success("작성중인 글을 불러왔습니다.");
       } else {
         // 취소시 삭제
-        localStorage.removeItem("tempSaveTipData");
+        localStorage.removeItem("tempSaveTipDataEdit");
         toast.error("작성중인 글을 삭제하였습니다.");
       }
     }
@@ -77,7 +107,7 @@ const WriteTips = () => {
         createdAt: new Date(), // 현재시간까지 저장
       };
 
-      localStorage.setItem("tempSaveTipData", JSON.stringify(tempSaveData));
+      localStorage.setItem("tempSaveTipDataEdit", JSON.stringify(tempSaveData));
 
       // 성공메세지
       toast.success("임시저장이 완료되었습니다!");
@@ -93,8 +123,8 @@ const WriteTips = () => {
       // 모든 값이 존재할 때만 API 요청
       // API 호출을 위한 요청 파라미터 설정
       const configParams = {
-        method: "POST",
-        url: `/tip`,
+        method: "PATCH",
+        url: `/tip/${tipId}`,
         headers: {
           "Content-Type": "application/json",
           "ngrok-skip-browser-warning": "69420",
@@ -103,7 +133,7 @@ const WriteTips = () => {
           coverPhoto: coverImage,
           title: title,
           content: editorContent,
-          tagContents: tags,
+          // tipTags: tags, 서버에서 태그작업중 ***
         },
       };
 
@@ -112,7 +142,7 @@ const WriteTips = () => {
         const response = await api(configParams);
         // 성공적으로 게시된 경우
         const tipIdFromResponse = response.data.tipId;
-        toast.success("게시되었습니다.");
+        toast.success("수정되었습니다.");
 
         if (tipIdFromResponse) {
           navigate(`/tips/${tipIdFromResponse}`);
@@ -132,11 +162,9 @@ const WriteTips = () => {
       if (editorContent === DEFAULT_EDITOR_TEXT || editorContent === "") {
         toast.error("내용을 입력하세요.", toastStyle);
       }
-      if (tags.length === 0) {
-        toast.error("태그를 삽입해주세요.", toastStyle);
-      }
     }
   };
+
   return (
     <>
       <HeaderMobile
@@ -155,6 +183,7 @@ const WriteTips = () => {
             buttonTextColor="text-[#00647B]"
             Title="Tips"
             handlePublish={handlePublish}
+            isEditPage={isEditPage}
           />
         </div>
         <WriteAccordion Title="Tips " />
@@ -178,4 +207,4 @@ const WriteTips = () => {
   );
 };
 
-export default WriteTips;
+export default EditTips;
