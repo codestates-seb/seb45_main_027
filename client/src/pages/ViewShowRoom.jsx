@@ -7,7 +7,7 @@ import ViewCoverImg from "../components/feed/view/ViewCoverImg";
 import Sidebar from "../components/feed/view/Sidebar";
 import ShowroomContents from "../components/feed/view/ShowroomContents";
 import Edit from "../components/feed/view/Edit";
-import Comment from "../components/feed/view/Comment";
+import CommentWrap from "../components/feed/comment/CommentWrap";
 
 const ViewShowRoom = () => {
   // 받아온 API 공유하기 위한 상태
@@ -59,7 +59,7 @@ const ViewShowRoom = () => {
         divclassName="flex-col my-24 md:my-0">
         <ShowroomContents setFeedData={setFeedData} feedData={feedData} />
         {memberId === userId && <Edit />}
-        <Comment feedData={feedData}  ref={commentSectionRef} />
+        <CommentWrap feedData={feedData} ref={commentSectionRef} />
       </Background>
     </div>
   );
