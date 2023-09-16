@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import PhotoTagging from "./PhotoTagging";
+import ImageEditGuide from "./ImageEditGuide";
 import axios from "axios";
 
 const WriteFormShowroom = ({
@@ -11,7 +12,6 @@ const WriteFormShowroom = ({
   const [imageSrc, setImageSrc] = useState(null);
   const [tags, setTags] = useState([]); // 이미지 내 tags 들의 집합
   const [currentTag, setCurrentTag] = useState({ x: "0%", y: "0%", text: "" }); // 현재 추가하려는 tag
-  // const [editorContent, setEditorContent] = useState(""); // Editor 내용을 관리
 
   useEffect(() => {
     if (editorContent === DEFAULT_EDITOR_TEXT) {
@@ -61,9 +61,9 @@ const WriteFormShowroom = ({
 
   // 이미지 및 태그 삭제
   const handleDeleteImageAndTags = () => {
-    // 상위 <div class="relative"> 요소를 삭제합니다.
+    // 상위 <div id="contentImage"> 요소를 삭제
     const updatedContent = editorContent.replace(
-      /<div class="relative">[\s\S]*?<\/div>/,
+      /<br\/><div id="contentImage" class="relative mx-5"[\s\S]*?<\/div><br\/>/,
       ""
     );
     setEditorContent(updatedContent);
@@ -77,10 +77,10 @@ const WriteFormShowroom = ({
     }));
 
     // post요청시 이미지 태그 생성, 이미지 태그 내 태그 삽입
-    const combinedHTML = `<br/><div class="relative"><img src="${imageSrc}" alt="Uploaded Image" contentEditable="false" />${tagsData
+    const combinedHTML = `<br/><div id="contentImage" class="relative mx-5" style="display: inline-block; justify-content: center; align-items: center; position: relative; text-align: center;"><img src="${imageSrc}" class="" alt="Uploaded Image" contentEditable="false" />${tagsData
       .map(
         (tag) =>
-          `<span class="bg-[#F5634A] p-2 rounded-xl text-white" style="position: absolute; left: ${tag.x}; top: ${tag.y}" contentEditable="false">${tag.text}</span>`
+          `<span class="bg-[#F5634A] p-2 rounded-xl text-white text-base" style="position: absolute; left: ${tag.x}; top: ${tag.y}; transform: translate(-50%, -50%);" contentEditable="false">${tag.text}</span>`
       )
       .join("")}</div><br/>`;
 
@@ -125,7 +125,8 @@ const WriteFormShowroom = ({
 
       <div className="flex-col justify-center content-center">
         {imageSrc ? (
-          <div className="m-5">
+          <div className="m-5 p-3 flex flex-col border-[3px] rounded-md">
+            <ImageEditGuide />
             <PhotoTagging
               imageSrc={imageSrc}
               tags={tags}
@@ -141,7 +142,7 @@ const WriteFormShowroom = ({
           dangerouslySetInnerHTML={{ __html: editorContent }}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className="p-2 mt-6 h-full w-full min-h-[600px] text-xl"
+          className="p-2 mt-6 h-full  min-h-[600px] text-xl"
         ></div>
       </div>
     </>
