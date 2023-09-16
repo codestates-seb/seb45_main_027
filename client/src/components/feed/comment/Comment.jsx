@@ -2,6 +2,7 @@ import React, { useState, forwardRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import useAxios from "../../../hooks/useAxios";
+import api from "../../common/tokens";
 
 //  함수형 컴포넌트는 ref 속성을 가질 수 없지만, forwardRef를 사용하면 이러한 제약을 우회할 수 있다.
 const Comment = forwardRef(({ feedData }, ref) => {
