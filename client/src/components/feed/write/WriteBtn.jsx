@@ -9,6 +9,7 @@ const WriteBtn = ({
   buttonTextColor,
   Title,
   handlePublish,
+  isEditPage,
 }) => {
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
@@ -52,7 +53,7 @@ const WriteBtn = ({
           className={`${buttonBgColor} text-white ${btn}`}
           onClick={handlePublish}
         >
-          작성하기
+          {isEditPage ? "수정하기" : "작성하기"}
         </button>
       </div>
     </div>

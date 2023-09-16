@@ -15,6 +15,7 @@ import WriteTips from "./pages/WriteTips";
 import ViewShowRoom from "./pages/ViewShowRoom";
 import ViewTips from "./pages/ViewTips";
 import EditShowRoom from "./pages/EditShowRoom";
+import EditTips from "./pages/EditTips";
 import { AuthProvider } from "./context/AuthContext";
 import { UserProvider } from "./context/userContext";
 import Verify from "./pages/Verify";
@@ -69,9 +70,10 @@ function App() {
               <Route path={"/tips/write"} element={<WriteTips />} />
               <Route path={"/tips/:tipId"} element={<ViewTips />} />
               <Route
-                path={"/showroom/edit/:feedId"}
+                path={"/showroom/:feedId/edit"}
                 element={<EditShowRoom />}
               />
+              <Route path={"/tips/:tipId/edit"} element={<EditTips />} />
             </Routes>
           </div>
           {isFooter && <HiddenFooter />}
