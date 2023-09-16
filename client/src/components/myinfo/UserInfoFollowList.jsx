@@ -1,10 +1,8 @@
-//import axios from "axios";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../common/tokens";
 
 const UserInfoFollowList = ({ userList, onFollowAction, activeTab }) => {
-  //const accessToken = localStorage.getItem("accessToken");
   const loggedinId = localStorage.getItem("memberId");
   const { id } = useParams();
 
@@ -12,15 +10,15 @@ const UserInfoFollowList = ({ userList, onFollowAction, activeTab }) => {
     let url = "";
     if (id === loggedinId) {
       if (activeTab === "following") {
-        url = `${process.env.REACT_APP_API_URL}/follow/choose/${fromMemberId}/${memberId}`; //내계정 팔로잉리스트에서
+        url = `/follow/choose/${fromMemberId}/${memberId}`; //내계정 팔로잉리스트에서
       } else {
-        url = `${process.env.REACT_APP_API_URL}/follow/choose/${memberId}/${fromMemberId}`; //내계정 팔로워리스트에서
+        url = `/follow/choose/${memberId}/${fromMemberId}`; //내계정 팔로워리스트에서
       }
     } else {
       if (activeTab === "following") {
-        url = `${process.env.REACT_APP_API_URL}/follow/choose/${loggedinId}/${memberId}`; //다른계정 팔로잉리스트에서
+        url = `/follow/choose/${loggedinId}/${memberId}`; //다른계정 팔로잉리스트에서
       } else {
-        url = `${process.env.REACT_APP_API_URL}/follow/choose/${loggedinId}/${fromMemberId}`; //다른계정 팔로워리스트에서
+        url = `/follow/choose/${loggedinId}/${fromMemberId}`; //다른계정 팔로워리스트에서
       }
     }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import api from "../common/tokens";
 //import { useAuth } from "../../context/AuthContext";
 
 const DeleteAccount = () => {
@@ -9,7 +10,7 @@ const DeleteAccount = () => {
   const memberId = localStorage.getItem("memberId");
   
 
-  const baseURL = process.env.REACT_APP_API_URL;
+ // const baseURL = process.env.REACT_APP_API_URL;
   
 
   const handleAccountDeletion = async () => {
@@ -19,11 +20,10 @@ const DeleteAccount = () => {
 
     if (confirmDeletion) {
       try {
-        await axios.delete(`${baseURL}/members/${memberId}`,{
+        await api.delete(`/members/${memberId}`,{
           headers: {
             //Authorization: accessToken ? `Bearer ${accessToken}` : "", 
             "ngrok-skip-browser-warning": "69420",
-
           },
         });
         delete axios.defaults.headers.common["Authorization"];
