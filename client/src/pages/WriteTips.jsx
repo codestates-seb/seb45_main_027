@@ -56,6 +56,7 @@ const WriteTips = () => {
         setCoverImage(parsedData.coverImage);
         setTitle(parsedData.title);
         setEditorContent(parsedData.editorContent);
+        setTags(parsedData.tags);
         toast.success("작성중인 글을 불러왔습니다.");
       } else {
         // 취소시 삭제
@@ -102,7 +103,7 @@ const WriteTips = () => {
           coverPhoto: coverImage,
           title: title,
           content: editorContent,
-          // tipTags: tags, 서버에서 태그작업중 ***
+          tagContents: tags,
         },
       };
 
@@ -131,9 +132,11 @@ const WriteTips = () => {
       if (editorContent === DEFAULT_EDITOR_TEXT || editorContent === "") {
         toast.error("내용을 입력하세요.", toastStyle);
       }
+      if (tags.length === 0) {
+        toast.error("태그를 삽입해주세요.", toastStyle);
+      }
     }
   };
-
   return (
     <>
       <HeaderMobile
