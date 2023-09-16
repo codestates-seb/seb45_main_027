@@ -28,20 +28,26 @@ api.interceptors.response.use(
     return response;
   },
   async function (error) {
-    console.log(error);
     // 엑세스 토큰 만료시 ERR_NETWORK 에러가 뜨는거같음
     if (error.response && error.response.status === 403) {
       const refreshToken = localStorage.getItem("refreshToken");
-
       if (refreshToken) {
         try {
           // 엔드포인트를 동적으로 설정할 수 있도록, api를 사용하는 곳에서 엔드포인트를 전달받음
+          const data = JSON.parse(error.config.data);
+          const method = error.config.method; // 현재요청의 메서드 추출
           const endpoint = error.config.url; // 현재 요청의 엔드포인트 추출
-
           // 현재 요청한 곳으로 리프레시 토큰을 실어서 서버로 전송
-          const response = await api.post(endpoint, {
-            refreshToken,
-          });
+          const configParams = {
+            method: method,
+            url: `${process.env.REACT_APP_API_URL}${endpoint}`,
+            headers: {
+              "Authorization-refresh": refreshToken,
+            },
+            data: data,
+          };
+
+          const response = await axios(configParams);
           console.log(response);
 
           // 유효한 리프레시 토큰일 경우 서버로부터 헤더를 통해 데이터를 전달받음
@@ -57,7 +63,7 @@ api.interceptors.response.use(
         } catch (err) {
           // 엑세스 토큰 재발급에 실패한 경우 로그아웃 또는 다른 처리 수행
           window.dispatchEvent(new Event("logoutEvent"));
-          console.log("엑세스토큰 재발급 실패");
+          console.log(err);
         }
       } else {
         // 리프레시 토큰이 없는 경우 로그아웃 또는 다른 처리 수행
