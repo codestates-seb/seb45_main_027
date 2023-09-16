@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 
 const AllContent = ({ showroomData, setShowroomData }) => {
   const navigate = useNavigate();
+  const defalutImage = localStorage.getItem("profileImg");
 
   // 북마크 상태를 변경시켜주는 함수
   const toggleBookmark = async (feedId) => {
@@ -98,11 +99,13 @@ const AllContent = ({ showroomData, setShowroomData }) => {
                 <img
                   // 멤버 이미지 수정 **
                   // src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Wonho.png"
-                  src={item.memberImage}
+                  src={
+                    item.memberImage == null ? defalutImage : item.memberImage
+                  }
                   alt="프로필사진"
                   className="w-6 h-6 rounded-full mr-2"
                 ></img>
-                <span className="text-xl">{item.nickname}</span>
+                <span className="text-xl">{item.nickname} </span>
               </div>
               <div className="flex justify-center text-lg text-gray-500">
                 <div className="mr-10">
