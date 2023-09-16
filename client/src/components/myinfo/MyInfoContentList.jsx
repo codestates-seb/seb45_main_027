@@ -1,44 +1,14 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 import MyInfoShowroom from "./MyInfoShowroom";
-//import axios from "axios";
-import api from "../common/tokens";
 
 const MyInfoContentList = ({myinfoData, fetchMyinfoData}) => {
-  //const { id } = useParams();
-  //const accessToken = localStorage.getItem("accessToken");
-  //const baseURL = process.env.REACT_APP_API_URL;
- // const [myinfoData, setMyinfoData] = useState("");
-
-
-  // const fetchMyinfoData = async () => {
-  //   try {
-  //     const response = await api.get(`${baseURL}/myContent/search/${id}`, {
-  //       headers: {
-  //         //Authorization: accessToken ? `Bearer ${accessToken}` : "",
-  //         "ngrok-skip-browser-warning": "69420",
-  //       },
-  //     });
-
-  //     setMyinfoData(response.data.data);
-  //   } catch (err) {
-  //     console.log("Error: ", err);
-  //   }
-  // };
-  // console.log("myinfoData.showRoom", myinfoData.showRoom);
-  // console.log("myinfoData.tipContent", myinfoData.tipContent);
-
+  
   const [activeTab, setActiveTab] = useState(1);
 
-  //useEffect(() => {}, [activeTab]);
 
   const handleTabs = (tabIdx) => {
     setActiveTab(tabIdx);
   };
-
-  // useEffect(() => {
-  //   fetchMyinfoData();
-  // }, []);
 
   const handleFollowAction = () => { fetchMyinfoData();};
 

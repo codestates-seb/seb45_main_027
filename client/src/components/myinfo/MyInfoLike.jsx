@@ -1,8 +1,16 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-const MyInfoLike = ({ imgSrc, title, itemId, deleteLike, isLiked, label }) => {
- const { id } = useParams();
+const MyInfoLike = ({
+  imgSrc,
+  title,
+  itemId,
+  deleteLike,
+  isLiked,
+  label,
+  postNavigate,
+}) => {
+  const { id } = useParams();
   const memberId = localStorage.getItem("memberId");
 
   return (
@@ -12,6 +20,7 @@ const MyInfoLike = ({ imgSrc, title, itemId, deleteLike, isLiked, label }) => {
           className="rounded-lg object-cover w-[130px] h-[120px] md:w-[150px] md:h-[135px]  xl:w-[170px] xl:h-[155px]"
           src={imgSrc}
           alt="content"
+          onClick={() => postNavigate(itemId, label)}
         />
         <button
           onClick={() => {
@@ -22,11 +31,12 @@ const MyInfoLike = ({ imgSrc, title, itemId, deleteLike, isLiked, label }) => {
           className="absolute bottom-3.5 right-3.5 cursor-pointer"
         >
           <img
-            src={
-              isLiked
-                ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isLiked.png"
-                : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/emptyHeart.png"
-            }
+            // src={
+            //   isLiked
+            //     ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isLiked.png"
+            //     : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/emptyHeart.png"
+            // }
+            src={"https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isLiked.png"}
             alt="Like"
             style={{
               width: "100%",
@@ -36,7 +46,10 @@ const MyInfoLike = ({ imgSrc, title, itemId, deleteLike, isLiked, label }) => {
         </button>
       </div>
       <div className="flex flex-col items-center md:mb-4">
-        <div className="text-lg font-semibold p-2 max-w-[130px] lg:max-w-[150px] truncate overflow-hidden">
+        <div
+          className="text-lg font-semibold p-2 max-w-[130px] lg:max-w-[150px] truncate overflow-hidden"
+          onClick={() => postNavigate(itemId, label)}
+        >
           {title}
         </div>
       </div>

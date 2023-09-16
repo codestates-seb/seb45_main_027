@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "../components/common/tokens";
 import { toast } from "react-hot-toast";
 
 const AuthContext = createContext();
@@ -12,26 +13,13 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  const baseURL = process.env.REACT_APP_API_URL;
-
-  // useEffect(() => {
-  //   const storedAccessToken = localStorage.getItem("accessToken");
-  //   const storedRefreshToken = localStorage.getItem("refreshToken");
-
-  //   if (storedAccessToken && storedRefreshToken) {
-  //     axios.defaults.headers.common[
-  //       "Authorization"
-  //     ] = `Bearer ${storedAccessToken}`;
-  //   } else {
-  //     //403 리프레시토큰보내기, 액세스1시간 리프레시2주
-  //   }
-  // }, [navigate]);
+  //const baseURL = process.env.REACT_APP_API_URL;
 
   async function login(email, password) {
     toast.loading("로딩중...");
 
     try {
-      const response = await axios.post(`${baseURL}/auth/login`, {
+      const response = await api.post(`/auth/login`, {
         email,
         password,
       });
@@ -67,8 +55,8 @@ export function AuthProvider({ children }) {
 
   async function kakaoLogin(code) {
     try {
-      const response = await axios.get(
-        `${baseURL}/auth/oauth/kakao?code=${code}`
+      const response = await api.get(
+        `/auth/oauth/kakao?code=${code}`
       );
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
@@ -81,8 +69,8 @@ export function AuthProvider({ children }) {
 
   async function naverLogin(code) {
     try {
-      const response = await axios.get(
-        `${baseURL}/auth/oauth/kakao?code=${code}`
+      const response = await api.get(
+        `/auth/oauth/kakao?code=${code}`
       );
 
       localStorage.setItem("accessToken", response.data.accessToken);
@@ -99,7 +87,7 @@ export function AuthProvider({ children }) {
     toast.loading("로딩중...");
 
     try {
-      await axios.post(`${baseURL}/auth/signup`, {
+      await api.post(`/auth/signup`, {
         email,
         nickname,
         password,

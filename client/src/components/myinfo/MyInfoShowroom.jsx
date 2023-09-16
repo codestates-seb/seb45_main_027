@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
 import MyInfoPost from "./MyInfoPost";
 import MyInfoBookmark from "./MyInfoBookmark";
@@ -15,17 +16,18 @@ const MyInfoShowroom = ({
   handleFollowAction,
   label,
 }) => {
-  const baseURL = process.env.REACT_APP_API_URL;
- // const accessToken = localStorage.getItem("accessToken");
+  //const baseURL = process.env.REACT_APP_API_URL;
+  const navigate = useNavigate();
+  // const accessToken = localStorage.getItem("accessToken");
 
   // 게시글, 북마크, 삭제 부분
   const deletePost = async (itemId, label) => {
     let url = "";
     if (label === "showroom") {
-      url = `${baseURL}/feed/${itemId}`;
+      url = `/feed/${itemId}`;
     }
     if (label === "tips") {
-      url = `${baseURL}/tip/${itemId}`;
+      url = `/tip/${itemId}`;
     }
     const confirmDeletion = window.confirm(
       `${itemId} ${label}Are you sure you want to delete this post? This action cannot be undone.`
@@ -34,7 +36,6 @@ const MyInfoShowroom = ({
       try {
         await api.delete(url, {
           headers: {
-            //Authorization: accessToken ? `Bearer ${accessToken}` : "",
             "ngrok-skip-browser-warning": "69420",
           },
         });
@@ -49,14 +50,18 @@ const MyInfoShowroom = ({
   const deleteBookmark = async (itemId, label) => {
     let url = "";
     if (label === "showroom") {
-      url = `${baseURL}/feed/${itemId}/feedBookMark`;
+      url = `/feed/${itemId}/feedBookMark`;
     }
     if (label === "tips") {
-      url = `${baseURL}/tip/${itemId}/tipbookmark`;
+      url = `/tip/${itemId}/tipbookmark`;
     }
 
     try {
-      await api.patch(url);
+      await api.patch(url, {
+        headers: {
+          "ngrok-skip-browser-warning": "69420",
+        },
+      });
       handleFollowAction();
       toast.success("북마크가 삭제되었습니다!");
     } catch {
@@ -67,19 +72,27 @@ const MyInfoShowroom = ({
   const deleteLike = async (itemId, label) => {
     let url = "";
     if (label === "showroom") {
-      url = `${baseURL}/feed/${itemId}/feedLike`;
+      url = `/feed/${itemId}/feedlike`;
     }
     if (label === "tips") {
-      url = `${baseURL}/tip/${itemId}/tiplike`;
+      url = `/tip/${itemId}/tiplike`;
     }
 
     try {
-      await api.patch(url);
+      await api.patch(url, {
+        headers: {
+          "ngrok-skip-browser-warning": "69420",
+        },
+      });
       handleFollowAction();
       toast.success("좋아요가 해제되었습니다!");
     } catch {
       toast.error("좋아요 취소에 실패했습니다.");
     }
+  };
+
+  const postNavigate = (itemId, label) => {
+    navigate(`/${label}/${itemId}`);
   };
 
   // 페이지네이션 부분
@@ -131,6 +144,7 @@ const MyInfoShowroom = ({
               title={item.title}
               itemId={item.feedId || item.tipId}
               deletePost={deletePost}
+              postNavigate={postNavigate}
             />
           ))}
         {activeTab === 2 &&
@@ -143,6 +157,7 @@ const MyInfoShowroom = ({
               itemId={item.feedId || item.tipId}
               isBookmarked={item.bookMarkYn}
               deleteBookmark={deleteBookmark}
+              postNavigate={postNavigate}
             />
           ))}
         {activeTab === 3 &&
@@ -155,6 +170,7 @@ const MyInfoShowroom = ({
               itemId={item.feedId || item.tipId}
               isLiked={item.likeYn}
               deleteLike={deleteLike}
+              postNavigate={postNavigate}
             />
           ))}
       </div>

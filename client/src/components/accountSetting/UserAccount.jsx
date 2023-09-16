@@ -11,8 +11,8 @@ import { toast } from "react-hot-toast";
 const UserAccount = ({ toggleAccountSettings, userDetails }) => {
   const navigate = useNavigate();
   const memberId = localStorage.getItem("memberId");
-  const accessToken = localStorage.getItem("accessToken");
-  const baseURL = process.env.REACT_APP_API_URL;
+  // const accessToken = localStorage.getItem("accessToken");
+  // const baseURL = process.env.REACT_APP_API_URL;
 
   const [activeTab, setActiveTab] = useState("editProfile");
   const toggleTab = (tabName) => {
@@ -38,21 +38,19 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
       !hasSpaces(profileData.nickname);
 
     if (!nicknameValidation) {
-      //alert("닉네임은 2글자에서 10글자 내로 지정 가능합니다");
       toast.error("닉네임은 2글자에서 10글자 내로 지정 가능합니다");
       return;
     }
 
     try {
       // 닉네임 2글자 이상으로 유효성 넣기 아니면 안넘어가기
-      const response = await api.patch(
-        `${baseURL}/members/${memberId}`,
+      await api.patch(
+        `/members/${memberId}`,
         profileData,
         {
           headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : "", 
+            //Authorization: accessToken ? `Bearer ${accessToken}` : "", 
             "ngrok-skip-browser-warning": "69420",
-
           },
         }
       );
@@ -67,16 +65,18 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
         localStorage.setItem("profileImg", profileData.profileImg);
       }
       
-      console.log(response.data);
-      console.log(profileData.profileImg);
+      // console.log(response.data);
+      // console.log(profileData.profileImg);
       alert("Profile updated!");
       navigate("/");
     } catch (error) {
       console.error(error);
-      if (error.response.status === 400 && error.response.data.message) {
-        alert("이미 등록된 닉네임입니다.");
-      }
-      alert("Error updating profile");
+      // if (error.response.status === 400 && error.response.data.message) {
+      //   alert("이미 등록된 닉네임입니다.");
+      // }
+      toast.error('프로필 업데이트에 실패했습니다')
+      navigate("/");
+      //alert("Error updating profile");
     }
     console.log(profileData);
   };

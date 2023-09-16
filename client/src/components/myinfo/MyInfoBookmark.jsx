@@ -7,6 +7,7 @@ const MyInfoBookmark = ({
   isBookmarked,
   deleteBookmark,
   label,
+  postNavigate,
 }) => {
   const { id } = useParams();
   const memberId = localStorage.getItem("memberId");
@@ -18,6 +19,7 @@ const MyInfoBookmark = ({
           className="rounded-lg object-cover w-[130px] h-[120px] md:w-[150px] md:h-[135px]  xl:w-[170px] xl:h-[155px]"
           src={imgSrc}
           alt="content"
+          onClick={() => postNavigate(itemId, label)}
         />
         <button
           onClick={() => {
@@ -25,13 +27,18 @@ const MyInfoBookmark = ({
               deleteBookmark(itemId, label);
             }
           }}
-          className="absolute bottom-3 right-3 cursor-pointer">
+          className="absolute bottom-3 right-3 cursor-pointer"
+        >
           <img
+            // src={
+            //   isBookmarked
+            //     ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isBookmarked.png"
+            //     : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark.png"
+            // }
             src={
-              isBookmarked
-                ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isBookmarked.png"
-                : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark.png"
+              "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isBookmarked.png"
             }
+            className='w-4 h-4'
             alt="Bookmark"
             style={{
               width: "100%",
@@ -41,7 +48,12 @@ const MyInfoBookmark = ({
         </button>
       </div>
       <div className="flex flex-col items-center md:mb-4">
-        <div className="text-lg font-semibold p-2 max-w-[130px] lg:max-w-[150px] truncate overflow-hidden">{title}</div>
+        <div
+          className="text-lg font-semibold p-2 max-w-[130px] lg:max-w-[150px] truncate overflow-hidden"
+          onClick={() => postNavigate(itemId, label)}
+        >
+          {title}
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-//import axios from "axios";
+// import axios from "axios";
 import api from "../common/tokens";
 
 const EditProfile = ({
@@ -13,14 +13,14 @@ const EditProfile = ({
 }) => {
   //유저가 사진 업로드시 서버로 보냄
   const handleImageUpload = async (e) => {
-    //const nullProfileImg = localStorage.getItem("profileImg");
 
     const file = e.target.files[0];
     const reader = new FileReader();
     const formData = new FormData();
     formData.append("myInfoImage", file);
 
-    const baseURL = process.env.REACT_APP_API_URL;
+    // const baseURL = process.env.REACT_APP_API_URL;
+    // const accessToken = localStorage.getItem("accessToken");
 
     reader.onloadend = () => {
       setProfileData({ ...profileData, profileImg: reader.result });
@@ -32,7 +32,7 @@ const EditProfile = ({
 
     try {
       const response = await api.post(
-        `${baseURL}/imageUpload/myInfoImage`,
+        `/imageUpload/myInfoImage`,
         formData, 
         {
           headers: {
@@ -57,15 +57,7 @@ const EditProfile = ({
   };
 
   const handleImageDelete = async () => {
-    // const profileImg = localStorage.getItem("profileImg");
-    // localStorage.setItem(
-    //   "profileImg",
-    //   "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
-    // );
     setProfileData({ ...profileData, profileImg: null });
-    //handleProfileUpdate();
-
-    console.log(profileData.profileImg);
   };
 
   return (
