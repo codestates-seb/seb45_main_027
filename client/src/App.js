@@ -1,4 +1,5 @@
 import "./index.css";
+import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import HeaderPc from "./components/header/HeaderPc";
 // import HeaderMobile from "./components/header/HeaderMobile";
@@ -20,6 +21,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { UserProvider } from "./context/userContext";
 import Verify from "./pages/Verify";
 import { Toaster } from "react-hot-toast";
+import scrollToTop from "./components/common/scrollToTop";
 
 const headerPaths = [
   "myinfo",
@@ -48,6 +50,9 @@ function App() {
   const path = location.pathname.split("/")[1];
   const isHeader = headerPaths.includes(path);
   const isFooter = footerPaths.includes(path);
+  // 페이지 이동시 스크롤 최상단으로 올리는 로직
+  const toTopPath = useLocation().pathname;
+  useEffect(scrollToTop, [toTopPath]);
 
   return (
     <AuthProvider>
