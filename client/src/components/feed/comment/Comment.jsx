@@ -32,41 +32,6 @@ const Comment = forwardRef(({ feedData }, ref) => {
   };
 
   
-
-  //POST 요청
-  const [res, err, loading, fetchData] = useAxios(
-    {
-      method: "POST",
-      url: `/feed/${feedId}/feedReply`,
-      headers: {
-        "ngrok-skip-browser-warning": "69420",
-      },
-    },
-    false
-  );
-
-  const postComment = async () => {
-  try {
-    const response = await fetchData({
-      data: {
-        text: commentInput,
-      },
-    });
-
-    if (response.status === 200) { // 상태 코드 확인
-      const newComment = response.data;
-      setComments((prevComments) => [...prevComments, newComment]);
-      
-      setCommentInput("");
-    } else {
-      console.error("Received unexpected status code:", response.status, response.data);
-      toast.error("댓글을 추가할 수 없습니다.");
-    }
-  } catch (error) {
-    console.error("Error comment:", error);  // 에러 로깅
-    toast.error("댓글을 추가할 수 없습니다.");
-  }
-};
   //PATCH 요청
   const [patchRes, patchErr, patchLoading, fetchPatchData] = useAxios(
     {

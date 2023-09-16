@@ -8,7 +8,8 @@ const CommentWrap = forwardRef(({ feedData, setFeedData }, ref) => {
       {/* ref는 사이드바 댓글 스크롤때문에 존재 */}
       <CommentInput feedData={feedData} setFeedData={setFeedData} />
       {/* 댓글 입력창 */}
-      <CommentOutput feedData={feedData} /> {/* 댓글 출력창 */}
+      <CommentOutput feedData={feedData} setFeedData={setFeedData} />{" "}
+      {/* 댓글 출력창 */}
     </div>
   );
 });
