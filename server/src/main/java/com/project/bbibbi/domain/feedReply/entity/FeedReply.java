@@ -51,7 +51,7 @@ public class FeedReply extends BaseEntity {
         modifiedDateTime = LocalDateTime.now();
     }
 
-    @Column(name = "reply_like_yn")
-    private Boolean replyLikeYn;
+    @Transient
+    private Boolean replyLikeYn = false;
 }
 
