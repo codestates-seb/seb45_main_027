@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { toast } from "react-hot-toast";
-import api from "../../common/tokens";
 import CommentDelete from "./CommentDelete";
+import CommentPatch from "./CommentPatch";
 
-const CommentOutput = ({ feedData }) => {
-    const profileImg = localStorage.getItem("profileImg");
-    // 댓글 좋아요
-    const [like, setLike] = useState("");
-    // feedData 안에 댓글 접근
+const CommentOutput = ({ feedData, setFeedData }) => {
+  const profileImg = localStorage.getItem("profileImg");
+  // 댓글 좋아요
+  const [like, setLike] = useState("");
+  // feedData 안에 댓글 접근
     const [replies, setReplies] = useState("");
     
-    useEffect(() => {
-        if (feedData) {
-            setReplies(feedData.replies);
-        }
-    }, [feedData]);
+    // 댓글 수정 상태
+    const [editComent, setEditComent] = useState({});
     
+
+  useEffect(() => {
+    if (feedData) {
+      setReplies(feedData.replies);
+    }
+  }, [feedData]);
+    
+    
+console.log(replies);
   return (
     <div>
       {/* 댓글 출력창 */}
@@ -34,7 +38,18 @@ const CommentOutput = ({ feedData }) => {
                   <span className="text-lg font-semibold">
                     {comment.nickname}
                   </span>
-                  <span className="my-4 text-base">{comment.content}</span>
+
+                  {/* 수정하기 */}
+                  <CommentPatch
+                    editComent={editComent}
+                    setEditComent={setEditComent}
+                    comment={comment}
+                    replies={replies}
+                    setReplies={setReplies}
+                    feedData={feedData}
+                    setFeedData={setFeedData}
+                  />
+                
                   {/* 작성날짜, 좋아요, 답글 */}
                   <div className="flex items-center text-gray-500 font-medium text-base">
                     {/* 작성날짜 */}
@@ -61,8 +76,12 @@ const CommentOutput = ({ feedData }) => {
                     {/* 수정 */}
                     <button
                       className="mx-2"
-                      // onClick={}
-                    >
+                      onClick={() => {
+                        setEditComent({
+                          ...editComent,
+                          [comment.feedReplyId]: true,
+                        });
+                      }}>
                       수정하기
                     </button>
                     {/* 삭제 */}
@@ -70,6 +89,8 @@ const CommentOutput = ({ feedData }) => {
                       comment={comment}
                       replies={replies}
                       setReplies={setReplies}
+                      feedData={feedData}
+                      setFeedData={setFeedData}
                     />
                   </div>
                 </div>

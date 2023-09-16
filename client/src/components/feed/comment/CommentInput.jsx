@@ -41,7 +41,6 @@ const CommentInput = ({ feedData, setFeedData }) => {
         console.log(res.data);
 
         setInputComment("");
-        // window.location.reload();
       } else {
         console.error("status code:", res?.status, res?.data);
         toast.error("댓글을 추가할 수 없습니다.");
