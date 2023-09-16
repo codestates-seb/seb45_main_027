@@ -59,16 +59,18 @@ a {
 }
 * {
   box-sizing: border-box;
-  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-family: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 .Showcard-Gothic {
-  font-family:"Showcard Gothic";
+  font-family: "Showcard Gothic";
 }
-
 
 /* 메인 설명 에니메이션 효과 */
 @keyframes slideOut {
-	0% {
+  0% {
     transform: translateY(-30px);
     opacity: 0;
   }
@@ -92,12 +94,11 @@ a {
 
 .animate-slideOut {
   animation: slideOut 5s ease;
-  animation-iteration-count:infinite;
+  animation-iteration-count: infinite;
 }
 
 /* 메인 슬로건 에니메이션 효과 */
 @keyframes slogan {
-	
   100% {
     transform: translateX(-2126px);
     opacity: 1;
@@ -106,23 +107,31 @@ a {
 
 .animate-slogan {
   animation: slogan 30s linear;
-  animation-iteration-count:infinite;
+  animation-iteration-count: infinite;
 }
 
 /* 커버사진 16/9 비율 */
 .aspectRatioImage_16_9 {
   aspect-ratio: 16 / 9;
-  width: 100%; 
+  width: 100%;
 }
 
 /* 커버사진 4/3 비율 */
 .aspectRatioImage_4_3 {
   aspect-ratio: 4 / 3;
-  width: 100%; 
+  width: 100%;
 }
 
 /* 커버사진 4/3 비율 */
 .aspectRatioImage_1_1 {
   aspect-ratio: 1 / 1;
-  width: 100%; 
+  width: 100%;
+}
+
+#contentImage span {
+  visibility: hidden;
+}
+
+#contentImage:hover span {
+  visibility: visible;
 }
