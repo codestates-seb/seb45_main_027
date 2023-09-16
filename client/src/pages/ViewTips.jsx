@@ -7,7 +7,7 @@ import ViewCoverImg from "../components/feed/view/ViewCoverImg";
 import Sidebar from "../components/feed/view/Sidebar";
 import TipsContents from "../components/feed/view/TipsContents";
 import Edit from "../components/feed/view/Edit";
-// import Comment from "../components/feed/view/Comment";
+// import Comment from "../components/feed/comment/Comment";
 
 const ViewTips = () => {
   // 받아온 API 공유하기 위한 상태

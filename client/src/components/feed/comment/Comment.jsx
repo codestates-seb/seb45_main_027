@@ -2,7 +2,6 @@ import React, { useState, forwardRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import useAxios from "../../../hooks/useAxios";
-import api from "../../common/tokens";
 
 //  함수형 컴포넌트는 ref 속성을 가질 수 없지만, forwardRef를 사용하면 이러한 제약을 우회할 수 있다.
 const Comment = forwardRef(({ feedData }, ref) => {
@@ -31,31 +30,7 @@ const Comment = forwardRef(({ feedData }, ref) => {
     }));
   };
 
-  // 답글달기 각 상태관리
-  const toggleReply = (commentId) => {
-    setShowReply((prevShowReply) => ({
-      ...prevShowReply,
-      [commentId]: !prevShowReply[commentId],
-    }));
-  };
-
-  const handleReplySubmit = (commentId) => {
-    const newReply = {
-      text: replyInput[commentId],
-    };
-
-    setReplies((prevReplies) => {
-      const updatedReplies = { ...prevReplies };
-      if (updatedReplies[commentId]) {
-        updatedReplies[commentId] = [...updatedReplies[commentId], newReply];
-      } else {
-        updatedReplies[commentId] = [newReply];
-      }
-      return updatedReplies;
-    });
-
-    setReplyInput((prevReplyInput) => ({ ...prevReplyInput, [commentId]: "" }));
-  };
+  
 
   //POST 요청
   const [res, err, loading, fetchData] = useAxios(
@@ -70,23 +45,27 @@ const Comment = forwardRef(({ feedData }, ref) => {
   );
 
   const postComment = async () => {
-    try {
-      const response = await fetchData({
-        data: {
-          text: commentInput,
-        },
-      });
+  try {
+    const response = await fetchData({
+      data: {
+        text: commentInput,
+      },
+    });
+
+    if (response.status === 200) { // 상태 코드 확인
       const newComment = response.data;
-      // 댓글
       setComments((prevComments) => [...prevComments, newComment]);
-      // 답글
-      setReplies((prevReplies) => ({ ...prevReplies, [newComment.id]: [] }));
+      
       setCommentInput("");
-    } catch (error) {
+    } else {
+      console.error("Received unexpected status code:", response.status, response.data);
       toast.error("댓글을 추가할 수 없습니다.");
     }
-  };
-
+  } catch (error) {
+    console.error("Error comment:", error);  // 에러 로깅
+    toast.error("댓글을 추가할 수 없습니다.");
+  }
+};
   //PATCH 요청
   const [patchRes, patchErr, patchLoading, fetchPatchData] = useAxios(
     {
@@ -179,7 +158,7 @@ const Comment = forwardRef(({ feedData }, ref) => {
           />
           <button
             className="absolute right-0 top-1/4 pr-4"
-            onClick={() => handleReplySubmit(comments.id)}>
+            onClick={() => postComment(comments.id)}>
             입력
           </button>
         </div>
@@ -237,7 +216,7 @@ const Comment = forwardRef(({ feedData }, ref) => {
                     {/* 답글 */}
                     <button
                       className="mx-2"
-                      onClick={() => toggleReply(comment.id)}>
+                      >
                       답글 달기
                     </button>
                     {/* 수정 */}
@@ -261,58 +240,7 @@ const Comment = forwardRef(({ feedData }, ref) => {
                   </div>
                 </div>
               </div>
-              {/* 답글 입력창 */}
-              {showReply[comment.id] && (
-                <div className="flex w-full mt-6 pl-10">
-                  <img
-                    src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userComment.png"
-                    alt="유저사진"
-                  />
-                  <div className="flex w-full relative">
-                    <input
-                      className="h-full w-full ml-4 border rounded-lg pl-4"
-                      value={replyInput[comment.id] || ""}
-                      onChange={(e) =>
-                        setReplyInput({
-                          ...replyInput,
-                          [comment.id]: e.target.value,
-                        })
-                      }
-                    />
-                    <button
-                      className="absolute right-0 top-1/4 pr-4"
-                      onClick={() => handleReplySubmit(comment.id)}>
-                      입력
-                    </button>
-                  </div>
-                </div>
-              )}
             </div>
-            {/* 답글 출력창 */}
-            {replies[comments.id] &&
-              replies[comments.id].map((reply, replyIndex) => (
-                <div className="flex items-start mt-10 ml-10 bg-[#fceecd75] p-8 rounded-lg shadow">
-                  <img
-                    src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userComment.png"
-                    alt="유저사진"
-                  />
-                  <div className="flex flex-col ml-4 w-full">
-                    {/* 답변 작성자 */}
-                    <span className="text-lg font-semibold">답변 작성자</span>
-
-                    {/* 댓글 내용 */}
-                    <div key={replyIndex} className="my-4 text-base">
-                      {reply.text}
-                    </div>
-
-                    {/* 작성날짜 */}
-                    <div className="flex items-center text-gray-500 font-medium text-base">
-                      {/* 작성날짜 */}
-                      <span>{reply.date}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
           </div>
         ))}
     </div>
