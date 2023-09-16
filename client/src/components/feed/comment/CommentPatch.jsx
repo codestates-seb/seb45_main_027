@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import api from "../../common/tokens";
 
-const CommentPatch = ({ comment, replies, setReplies,feedData, setFeedData, editComent, setEditComent }) => {
+const CommentPatch = ({ comment, setReplies,editComent, setEditComent }) => {
   const { feedId } = useParams(); // 게시물 번호
   const [newContent, setNewContent] = useState("");
 

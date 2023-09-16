@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from "react";
 import CommentDelete from "./CommentDelete";
 import CommentPatch from "./CommentPatch";
+import CommentLike from "./CommentLike";
 
 const CommentOutput = ({ feedData, setFeedData }) => {
   const profileImg = localStorage.getItem("profileImg");
-  // 댓글 좋아요
-  const [like, setLike] = useState("");
+  
   // feedData 안에 댓글 접근
-    const [replies, setReplies] = useState("");
+  const [replies, setReplies] = useState("");
     
-    // 댓글 수정 상태
-    const [editComent, setEditComent] = useState({});
+  // 댓글 수정 상태
+  const [editComent, setEditComent] = useState({});
     
 
+
+  // 전체데이터에서 댓글 접근
   useEffect(() => {
     if (feedData) {
       setReplies(feedData.replies);
-    }
+    } 
   }, [feedData]);
     
-    
-console.log(replies);
   return (
     <div>
       {/* 댓글 출력창 */}
@@ -44,12 +44,9 @@ console.log(replies);
                     editComent={editComent}
                     setEditComent={setEditComent}
                     comment={comment}
-                    replies={replies}
                     setReplies={setReplies}
-                    feedData={feedData}
-                    setFeedData={setFeedData}
                   />
-                
+
                   {/* 작성날짜, 좋아요, 답글 */}
                   <div className="flex items-center text-gray-500 font-medium text-base">
                     {/* 작성날짜 */}
@@ -57,20 +54,9 @@ console.log(replies);
                       {comment.createdDateTime.split("T")[0]}
                     </span>
                     {/* 좋아요 */}
-                    <button
-                      className="flex items-center"
-                      onClick={() => setLike(!like)}>
-                      <img
-                        className="w-6 h-6 mr-1"
-                        src={
-                          like
-                            ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/heart-on.png"
-                            : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/heart-off.png"
-                        }
-                        alt="좋아요"
-                      />
-                      <span className="mr-1">좋아요</span>
-                    </button>
+                    <CommentLike
+                      comment={comment}
+                    />
                     {/* 답글 */}
                     <button className="mx-2">답글 달기</button>
                     {/* 수정 */}
