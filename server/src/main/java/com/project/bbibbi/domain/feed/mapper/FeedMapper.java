@@ -245,6 +245,7 @@ public interface FeedMapper {
                 feedReplyResponseDto.setNickname(feedReply.getMember().getNickname());
                 feedReplyResponseDto.setMemberId(feedReply.getMember().getMemberId());
                 feedReplyResponseDto.setCreatedDateTime(feedReply.getCreatedDateTime());
+                feedReplyResponseDto.setReplyLikeYn(feedReply.getReplyLikeYn());
                 if (feedReply.getComments() != null) {
                     List<FeedCommentDto> allComments = new ArrayList<>(); // FeedCommentDto 타입으로 리스트 생성
                     for (FeedComment feedComment : feedReply.getComments()) {

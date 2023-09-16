@@ -29,6 +29,7 @@ public class FeedReplyLike extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Transient
     private Boolean replyLikeYn;
 
     @Transient

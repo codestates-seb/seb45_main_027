@@ -11,11 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -42,6 +40,7 @@ public class FeedReplyService {
 
         FeedReply reply = feedReplyRepository.findById(replyId)
                 .orElseThrow(() -> new FeedReplyNotFoundException("댓글이 존재하지 않습니다."));
+
         return FeedReplyResponseDto.builder()
                 .feedReplyId(reply.getFeedReplyId())
                 .content(reply.getContent())
@@ -49,8 +48,8 @@ public class FeedReplyService {
                 .memberId(reply.getMember().getMemberId())
                 .nickname(reply.getMember().getNickname())
                 .createdDateTime(reply.getCreatedDateTime())
-//                .replyLikeYn(reply.get)
-//                .profileImg(reply.getMember().getProfileImg())
+                .memberImage(reply.getMember().getProfileImg())
+                .replyLikeYn(reply.getReplyLikeYn())
                 .comments(reply.getComments().stream().map(feedComment -> FeedCommentDto.builder()
                         .feedCommentId(feedComment.getFeedCommentId())
                         .content(feedComment.getContent())
@@ -83,6 +82,9 @@ public class FeedReplyService {
 
             // 새로운 내용으로 댓글을 수정합니다.
             feedReply.setContent(dto.getContent());
+            // replyLikeYn 값을 업데이트합니다.
+            feedReply.setReplyLikeYn(dto.getReplyLikeYn());
+
             // 수정된 댓글을 저장합니다.
             FeedReply updatedReply = feedReplyRepository.save(feedReply);
             return updatedReply;

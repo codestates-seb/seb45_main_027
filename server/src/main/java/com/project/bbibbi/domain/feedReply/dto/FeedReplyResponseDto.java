@@ -26,6 +26,6 @@ public class FeedReplyResponseDto extends BaseEntity {
     private Long memberId;
     private LocalDateTime createdDateTime;
     private List<FeedCommentDto> comments;
-    private Member profileImg;
+    private String memberImage;
     private Boolean replyLikeYn;
 }

@@ -20,6 +20,7 @@ public class FeedReplyRequestDto extends BaseEntity {
     private Long memberId;
     private Long feedId;
     private String profileImg;
+    private Boolean replyLikeYn; // replyLikeYn 필드 추가
     }
 
 
