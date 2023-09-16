@@ -1,4 +1,5 @@
-import axios from "axios";
+//import axios from "axios";
+import api from "../common/tokens";
 
 const EditProfile = ({
   profileData,
@@ -12,7 +13,7 @@ const EditProfile = ({
 }) => {
   //유저가 사진 업로드시 서버로 보냄
   const handleImageUpload = async (e) => {
-    const nullProfileImg = localStorage.getItem("profileImg");
+    //const nullProfileImg = localStorage.getItem("profileImg");
 
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -30,9 +31,15 @@ const EditProfile = ({
     }
 
     try {
-      const response = await axios.post(
+      const response = await api.post(
         `${baseURL}/imageUpload/myInfoImage`,
-        formData
+        formData, 
+        {
+          headers: {
+            //Authorization: accessToken ? `Bearer ${accessToken}` : "",
+            "ngrok-skip-browser-warning": "69420",
+          },
+        }
       );
 
       //이미지 업로드 성공시 응답으로 받은 사진 경로 확인

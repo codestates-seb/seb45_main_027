@@ -15,7 +15,7 @@ const UserProfileDetails = ({ toggleAccountSettings, profileData }) => {
               profileData.profileImg
                 ? profileData.profileImg
                 : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
-            }//이거 서버로 기본 이미지 보낼지, 클라이언트 내부에서 처리할지 얘기해봐야됨
+            }
             alt="profile"
           />
           <div className="flex flex-col justify-center items-start md:items-center">

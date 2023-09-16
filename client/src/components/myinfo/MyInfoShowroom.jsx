@@ -4,7 +4,8 @@ import MyInfoPost from "./MyInfoPost";
 import MyInfoBookmark from "./MyInfoBookmark";
 import MyInfoLike from "./MyInfoLike";
 import { toast } from "react-hot-toast";
-import axios from "axios";
+//import axios from "axios";
+import api from "../common/tokens";
 
 const MyInfoShowroom = ({
   postData = [],
@@ -15,21 +16,25 @@ const MyInfoShowroom = ({
   label,
 }) => {
   const baseURL = process.env.REACT_APP_API_URL;
-  const accessToken = localStorage.getItem("accessToken");
+ // const accessToken = localStorage.getItem("accessToken");
 
   // 게시글, 북마크, 삭제 부분
   const deletePost = async (itemId, label) => {
-    let url = '';
-    if(label === "showroom") {url = `${baseURL}/feed/${itemId}`;}
-    if(label === "tips") {url = `${baseURL}/tip/${itemId}`;}
+    let url = "";
+    if (label === "showroom") {
+      url = `${baseURL}/feed/${itemId}`;
+    }
+    if (label === "tips") {
+      url = `${baseURL}/tip/${itemId}`;
+    }
     const confirmDeletion = window.confirm(
       `${itemId} ${label}Are you sure you want to delete this post? This action cannot be undone.`
     );
     if (confirmDeletion) {
       try {
-        await axios.delete(url,{
+        await api.delete(url, {
           headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : "", 
+            //Authorization: accessToken ? `Bearer ${accessToken}` : "",
             "ngrok-skip-browser-warning": "69420",
           },
         });
@@ -41,18 +46,17 @@ const MyInfoShowroom = ({
     }
   };
 
-  const deleteBookmark = async(itemId, label) => {
-    let url = '';
-    if(label === "showroom") {url = `${baseURL}/feed/${itemId}/feedBookMark`;}
-    if(label === "tips") {url = `${baseURL}/tip/${itemId}/tipbookmark`;}
+  const deleteBookmark = async (itemId, label) => {
+    let url = "";
+    if (label === "showroom") {
+      url = `${baseURL}/feed/${itemId}/feedBookMark`;
+    }
+    if (label === "tips") {
+      url = `${baseURL}/tip/${itemId}/tipbookmark`;
+    }
 
     try {
-      await axios.patch(url,{
-        headers: {
-          Authorization: accessToken ? `Bearer ${accessToken}` : "", 
-          "ngrok-skip-browser-warning": "69420",
-        },
-      });
+      await api.patch(url);
       handleFollowAction();
       toast.success("북마크가 삭제되었습니다!");
     } catch {
@@ -60,18 +64,17 @@ const MyInfoShowroom = ({
     }
   };
 
-  const deleteLike = async(itemId, label) => {
-    let url = '';
-    if(label === "showroom") {url = `${baseURL}/feed/${itemId}/feedLike`;}
-    if(label === "tips") {url = `${baseURL}/tip/${itemId}/tiplike`;}
+  const deleteLike = async (itemId, label) => {
+    let url = "";
+    if (label === "showroom") {
+      url = `${baseURL}/feed/${itemId}/feedLike`;
+    }
+    if (label === "tips") {
+      url = `${baseURL}/tip/${itemId}/tiplike`;
+    }
 
     try {
-      await axios.patch(url,{
-        headers: {
-          Authorization: accessToken ? `Bearer ${accessToken}` : "", 
-          "ngrok-skip-browser-warning": "69420",
-        },
-      });
+      await api.patch(url);
       handleFollowAction();
       toast.success("좋아요가 해제되었습니다!");
     } catch {
@@ -115,7 +118,6 @@ const MyInfoShowroom = ({
   console.log("visiblePosts", visiblePosts);
   console.log("visibleBookmarks", visibleBookmarks);
   console.log("visibleLikes", visibleLikes);
-
 
   return (
     <>

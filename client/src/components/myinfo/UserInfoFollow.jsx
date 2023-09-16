@@ -1,48 +1,43 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import UserInfoFollowList from "./UserInfoFollowList";
 import { toast } from "react-hot-toast";
-import axios from "axios";
+//import axios from "axios";
+//import api from "../common/tokens";
 
-const UserInfoFollow = () => {
-  const [followingList, setFollowingList] = useState("");
-  const [followersList, setFollowersList] = useState("");
-  const baseURL = process.env.REACT_APP_API_URL;
-  const { id } = useParams();
-  const accessToken = localStorage.getItem("accessToken");
+const UserInfoFollow = ({followingList, followersList, fetchFollowData}) => {
+//   const [followingList, setFollowingList] = useState("");
+//   const [followersList, setFollowersList] = useState("");
+//   const baseURL = process.env.REACT_APP_API_URL;
+//   const { id } = useParams();
+//  // const accessToken = localStorage.getItem("accessToken");
   
 
-  useEffect(() => { fetchData(); }, [id]);
+//   useEffect(() => { fetchFollowData(); }, [id]);
 
-  const fetchData = async () => {
-    try {
-      const [followingResponse, followersResponse] = await Promise.all([
-        axios.get(`${baseURL}/follow/from/${id}`, {
-          headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : "",
-            "ngrok-skip-browser-warning": "69420",
+//   const fetchFollowData = async () => {
+//     try {
+//       const [followingResponse, followersResponse] = await Promise.all([
+//         api.get(`${baseURL}/follow/from/${id}`),
+//         api.get(`${baseURL}/follow/to/${id}`, {
+//           headers: {
+//             //Authorization: accessToken ? `Bearer ${accessToken}` : "",
+//             "ngrok-skip-browser-warning": "69420",
+//           },
+//         }),
+//       ]);
 
-          },
-        }),
-        axios.get(`${baseURL}/follow/to/${id}`, {
-          headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : "",
-            "ngrok-skip-browser-warning": "69420",
-          },
-        }),
-      ]);
+//       setFollowingList(followingResponse.data.data);
+//       setFollowersList(followersResponse.data.data);
 
-      setFollowingList(followingResponse.data.data);
-      setFollowersList(followersResponse.data.data);
+//       // console.log("Following data", followingResponse.data);
+//       // console.log("Following data.data", followingResponse.data.data);
+//     } catch (err) {
+//       console.error("Error: ", err);
+//     }
+//   };
 
-      // console.log("Following data", followingResponse.data);
-      // console.log("Following data.data", followingResponse.data.data);
-    } catch (err) {
-      console.error("Error: ", err);
-    }
-  };
-
-  const handleFollowAction = () => { fetchData();};
+  const handleFollowAction = () => { fetchFollowData();};
 
   const [activeTab, setActiveTab] = useState("following");
   const handleTabChange = (tab) => {
