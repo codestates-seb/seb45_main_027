@@ -57,13 +57,15 @@ const ViewShowRoom = () => {
       />
       <Background
         mainclassName="bg-[#FFFAEE] h-full px-14 md:px-56 pb-40"
-        divclassName="flex-col my-24 md:my-0"
-      >
+        divclassName="flex-col my-24 md:my-0">
         <ShowroomContents setFeedData={setFeedData} feedData={feedData} />
 
         {memberId == userId && <Edit feedData={feedData} />}
-        <CommentWrap feedData={feedData} ref={commentSectionRef} />
-
+        <CommentWrap
+          feedData={feedData}
+          setFeedData={setFeedData}
+          ref={commentSectionRef}
+        />
       </Background>
     </div>
   );

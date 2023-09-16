@@ -9,10 +9,10 @@ const ShowroomContents = ({ feedData, setFeedData }) => {
 
   return (
     <div>
-      <ViewTitle feedData={feedData}/>
-      <ShowroomUserTop feedData={feedData}/>
-      <ViewForm feedData={feedData} />
-      <ViewPoint feedData={feedData}/>
+      <ViewTitle feedData={feedData} />
+      <ShowroomUserTop feedData={feedData} />
+      <ViewForm feedData={feedData}/>
+      <ViewPoint feedData={feedData} />
       <UserBottom feedData={feedData} />
     </div>
   );
