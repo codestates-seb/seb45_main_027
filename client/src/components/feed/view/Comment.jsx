@@ -13,6 +13,7 @@ const Comment = forwardRef(({ feedData }, ref) => {
   const [showReply, setShowReply] = useState({});
   // 댓글 수정 상태 저장
   const [editComent, setEditComent] = useState({});
+  const [newContent, setNewContent] = useState({});
   // 댓글/답글 입력값을 저장할 State
   const [commentInput, setCommentInput] = useState("");
   const [replyInput, setReplyInput] = useState("");
@@ -116,12 +117,12 @@ const Comment = forwardRef(({ feedData }, ref) => {
             return comment;
           })
         );
-        setEditComent({}); 
+        setEditComent({ [feedReplyId]: false }); 
       } else {
-        
+        toast.error("댓글을 수정하지 못했습니다. 다시 시도해 주세요.");
       }
     } catch (error) {
-      
+      toast.error("댓글을 수정하는 중 오류가 발생했습니다.");
     }
   };
 
@@ -139,9 +140,9 @@ const Comment = forwardRef(({ feedData }, ref) => {
 
   const deleteComment = (feedReplyId) => {
     fetchDeleteData({ url: `/feed/${feedId}/feedReply/${feedReplyId}` });
-    if (deleteRes) {
+    if (deleteRes && deleteRes.status === 200) {
       setComments((prevComments) =>
-        prevComments.filter((comment) => comment.replyId !== feedReplyId)
+        prevComments.filter((comment) => comment.feedReplyId !== feedReplyId)
       );
     }
   };
@@ -178,7 +179,7 @@ const Comment = forwardRef(({ feedData }, ref) => {
           />
           <button
             className="absolute right-0 top-1/4 pr-4"
-            onClick={postComment}>
+            onClick={() => handleReplySubmit(comments.id)}>
             입력
           </button>
         </div>
@@ -204,9 +205,9 @@ const Comment = forwardRef(({ feedData }, ref) => {
                         value={newContent}
                         onChange={(e) => setNewContent(e.target.value)}
                         onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
+                          if (e.key === "Enter") {
                             e.preventDefault();
-                            patchComment(feedReplyId, newContent);
+                            patchComment(comment.feedReplyId, newContent);
                           }
                         }}
                       />
@@ -280,7 +281,7 @@ const Comment = forwardRef(({ feedData }, ref) => {
                     />
                     <button
                       className="absolute right-0 top-1/4 pr-4"
-                      onClick={() => handleReplySubmit(comments.id)}>
+                      onClick={() => handleReplySubmit(comment.id)}>
                       입력
                     </button>
                   </div>
