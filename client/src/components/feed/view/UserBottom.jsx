@@ -1,16 +1,27 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../../context/userContext";
 
 const button = "flex items-center justify-center h-full";
 
 const UserBottom = ({ feedData }) => {
+  const navigate = useNavigate();
   const { follow, setFollow, toggleFollow } = useUserContext();
+
+console.log(feedData);
 
   return (
     <div className="flex justify-between py-12 border-b">
       <div className="flex items-center">
         <div className="border w-16 h-16 rounded-full mr-4">
-          <img src={feedData.memberImage} alt="" />
+          <img
+            src={`${feedData.memberImage}`}
+            className="w-full h-full rounded-full object-cover"
+            onClick={() => {
+              navigate(`/myinfo/${feedData.memberId}`);
+            }}
+            alt=""
+          />
         </div>
         <div>
           <div className="flex items-center">
