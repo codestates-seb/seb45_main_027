@@ -30,6 +30,7 @@ api.interceptors.response.use(
   async function (error) {
     // 엑세스 토큰 만료시 ERR_NETWORK 에러가 뜨는거같음
     if (error.response && error.response.status === 403) {
+      const accessToken = localStorage.getItem("accessToken");
       const refreshToken = localStorage.getItem("refreshToken");
       if (refreshToken) {
         try {
@@ -43,6 +44,7 @@ api.interceptors.response.use(
             url: `${process.env.REACT_APP_API_URL}${endpoint}`,
             headers: {
               "Authorization-refresh": refreshToken,
+              Authorization: refreshToken,
             },
             data: data,
           };
