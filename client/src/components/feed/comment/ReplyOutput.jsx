@@ -3,6 +3,7 @@ import ReplyDelete from "./ReplyDelete";
 import ReplyPatch from "./ReplyPatch";
 
 const ReplyOutput = ({ feedData, setFeedData }) => {
+  const memberId = localStorage.getItem("memberId");
   const profileImg = localStorage.getItem("profileImg");
   const comments = feedData.replies; // 댓글 안 답글
   return (
@@ -40,18 +41,22 @@ const ReplyOutput = ({ feedData, setFeedData }) => {
                       </div>
 
                       {/* 수정 */}
-                      <button
-                        className="mx-2"
-                        onClick={() => {
-                          // setEditComent({
-                          //   ...editComent,
-                          //   [comment.feedReplyId]: true,
-                          // });
-                        }}>
-                        수정하기
-                      </button>
+                      {memberId == comments.memberId && (
+                        <button
+                          className="mx-2 hover:font-semibold"
+                          onClick={() => {
+                            // setEditComent({
+                            //   ...editComent,
+                            //   [comment.feedReplyId]: true,
+                            // });
+                          }}>
+                          수정하기
+                        </button>
+                      )}
                       {/* 삭제 */}
-                      <ReplyDelete comments={comments} />
+                      {memberId == comments.memberId && (
+                        <ReplyDelete comments={comments} />
+                      )}
                     </div>
                   </div>
                 </div>

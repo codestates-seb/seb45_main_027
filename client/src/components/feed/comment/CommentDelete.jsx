@@ -36,13 +36,13 @@ const CommentDelete = ({ comment, replies, setReplies }) => {
 
   return (
     <div>
-        <button
-          className="mx-2"
-          onClick={() => {
-            deleteComment(comment.feedReplyId);
-          }}>
-          삭제하기
-        </button>
+      <button
+        className="mx-2 hover:font-semibold"
+        onClick={() => {
+          deleteComment(comment.feedReplyId);
+        }}>
+        삭제하기
+      </button>
     </div>
   );
 };

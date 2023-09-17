@@ -38,7 +38,7 @@ const ReplyDelete = ({ comment, feedReplyId,comments, replies, setReplies }) => 
   return (
     <div>
       <button
-        className="mx-1"
+        className="mx-1 hover:font-semibold"
         onClick={() => {
           deleteReply();
         }}>

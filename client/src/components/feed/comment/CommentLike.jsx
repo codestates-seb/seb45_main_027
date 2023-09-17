@@ -34,7 +34,9 @@ const CommentLike = ({  comment }) => {
   console.log(comment.replyLikeYn);
   return (
     <>
-      <button className="flex items-center" onClick={toggleLike}>
+      <button
+        className="flex items-center hover:font-semibold"
+        onClick={toggleLike}>
         <img
           className="w-6 h-6 mr-1"
           src={

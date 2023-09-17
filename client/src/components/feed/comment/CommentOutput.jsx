@@ -5,6 +5,7 @@ import CommentLike from "./CommentLike";
 import ReplyInput from "./ReplyInput";
 
 const CommentOutput = ({ feedData, setFeedData, children }) => {
+  const memberId = localStorage.getItem("memberId");
   const profileImg = localStorage.getItem("profileImg");
   // feedData 안에 댓글 접근
   const [replies, setReplies] = useState("");
@@ -19,6 +20,7 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
     }
   }, [feedData]);
 
+  console.log(replies);
   return (
     <div>
       {/* 댓글 출력창 */}
@@ -56,7 +58,7 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                     {/* 답글 */}
                     <div key={comment.feedReplyId} className="flex flex-col">
                       <button
-                        className="mx-2"
+                        className="mx-2 hover:font-semibold"
                         onClick={() =>
                           setShowReplyBox((prev) => ({
                             ...prev,
@@ -67,24 +69,28 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                       </button>
                     </div>
                     {/* 수정 */}
-                    <button
-                      className="mx-2"
-                      onClick={() => {
-                        setEditComent({
-                          ...editComent,
-                          [comment.feedReplyId]: true,
-                        });
-                      }}>
-                      수정하기
-                    </button>
+                    {memberId == comment.memberId && (
+                      <button
+                        className="mx-2 hover:font-semibold"
+                        onClick={() => {
+                          setEditComent({
+                            ...editComent,
+                            [comment.feedReplyId]: true,
+                          });
+                        }}>
+                        수정하기
+                      </button>
+                    )}
                     {/* 삭제 */}
-                    <CommentDelete
-                      comment={comment}
-                      replies={replies}
-                      setReplies={setReplies}
-                      feedData={feedData}
-                      setFeedData={setFeedData}
-                    />
+                    {memberId == comment.memberId && (
+                      <CommentDelete
+                        comment={comment}
+                        replies={replies}
+                        setReplies={setReplies}
+                        feedData={feedData}
+                        setFeedData={setFeedData}
+                      />
+                    )}
                   </div>
                   {showReplyBox[comment.feedReplyId] && (
                     <ReplyInput
