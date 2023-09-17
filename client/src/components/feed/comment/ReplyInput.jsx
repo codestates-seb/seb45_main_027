@@ -19,6 +19,7 @@ const ReplyInput = ({ comment, commentId, feedData, setFeedData }) => {
     const configParams = {
       method: "POST",
       url: `/feed/${feedId}/feedReply/${feedReplyId}/feedComment`,
+      // 코멘트 아이디까지 가져오기
 
       headers: {
         "ngrok-skip-browser-warning": "69420",

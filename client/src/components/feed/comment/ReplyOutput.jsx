@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { toast } from "react-hot-toast";
-import api from "../../common/tokens";
+import React from "react";
+import ReplyLike from "./ReplyLike";
+import ReplyDelete from "./ReplyDelete";
 
 const ReplyOutput = ({ replies, setReplies, comment, commentId, feedData, setFeedData }) => {
-    const { feedId } = useParams(); // 게시물 번호
     const comments = comment.comments; // 댓글 안 답글
 
     return (
@@ -26,11 +24,20 @@ const ReplyOutput = ({ replies, setReplies, comment, commentId, feedData, setFee
 
                 {/* 댓글 내용 */}
                 <div className="my-4 text-base">{comments.content}</div>
-
-                {/* 작성날짜 */}
                 <div className="flex items-center text-gray-500 font-medium text-base">
                   {/* 작성날짜 */}
-                  <span>{comments.createdDateTime.split("T")[0]}</span>
+                  <div className="flex items-center text-gray-500 font-medium text-base">
+                    {/* 작성날짜 */}
+                    <span className="mr-1">
+                      {comments.createdDateTime.split("T")[0]}
+                    </span>
+                  </div>
+                  {/* 좋아요 */}
+                  <ReplyLike comment={comment} />
+                  {/* 수정 */}
+                  <button className="mx-1">수정하기</button>
+                  {/* 삭제 */}
+                  <ReplyDelete />
                 </div>
               </div>
             </div>
