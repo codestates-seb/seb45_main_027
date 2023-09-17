@@ -74,7 +74,7 @@ const Main = () => {
       setTimeout(() => {
         setIsScrolling(false);
       }, 500); // <- setTimeout
-    }, 200); // <- debounceTimeout
+    }, 500); // <- debounceTimeout
   }
 
   // 지정된 섹션으로 스크롤하는 함수
