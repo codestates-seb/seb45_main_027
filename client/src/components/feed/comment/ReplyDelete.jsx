@@ -3,14 +3,18 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import api from "../../common/tokens";
 
-const ReplyDelete = ({ comment, replies, setReplies }) => {
-  const { feedId } = useParams(); // 게시물 번호
+const ReplyDelete = ({ comment,comments, replies, setReplies }) => {
+    const { feedId } = useParams(); // 게시물 번호
+    
+    const feedReplyId = comment.feedReplyId;
+    const commentId = comments.feedReplyId;
 
   // DELETE 요청
-  const deleteReply = async (feedReplyId) => {
+  const deleteReply = async () => {
     const configParams = {
       method: "DELETE",
-      url: `/feed/${feedId}/feedReply/${feedReplyId}`,
+      url: `/feed/${feedId}/feedReply/${feedReplyId}/feedComment/${commentId}`,
+
       headers: {
         "ngrok-skip-browser-warning": "69420",
       },
@@ -30,13 +34,13 @@ const ReplyDelete = ({ comment, replies, setReplies }) => {
       toast.error("답글을 삭제할 수 없습니다.");
     }
   };
-
+    
   return (
     <div>
       <button
         className="mx-1"
         onClick={() => {
-          deleteReply(comment.feedReplyId);
+          deleteReply();
         }}>
         삭제하기
       </button>

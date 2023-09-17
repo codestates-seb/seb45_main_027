@@ -36,6 +36,7 @@ const CommentLike = ({ comment }) => {
     
   };
 
+  console.log(comment.replyLikeYn);
   return (
     <>
       <button

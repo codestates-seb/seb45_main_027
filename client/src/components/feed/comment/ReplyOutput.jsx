@@ -33,11 +33,21 @@ const ReplyOutput = ({ replies, setReplies, comment, commentId, feedData, setFee
                     </span>
                   </div>
                   {/* 좋아요 */}
-                  <ReplyLike comment={comment} />
+                  <ReplyLike
+                    comments={comments}
+                    feedData={feedData}
+                    comment={comment}
+                    replies={replies}
+                  />
                   {/* 수정 */}
                   <button className="mx-1">수정하기</button>
                   {/* 삭제 */}
-                  <ReplyDelete />
+                  <ReplyDelete
+                    comments={comments}
+                    comment={comment}
+                    replies={replies}
+                    setReplies={setReplies}
+                  />
                 </div>
               </div>
             </div>
