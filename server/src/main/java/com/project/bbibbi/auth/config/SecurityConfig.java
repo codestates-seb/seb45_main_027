@@ -91,7 +91,7 @@ public class SecurityConfig {
 //                .antMatchers(HttpMethod.POST, "/feed/**").permitAll()
 //                .antMatchers(HttpMethod.POST, "/tip/**").permitAll()
 //                .antMatchers(HttpMethod.POST, "/follow/**").permitAll()
-//                .antMatchers(HttpMethod.POST, "/imageUpload/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/imageUpload/**").permitAll()
 //                .antMatchers(HttpMethod.PATCH, "/members/**").permitAll()
 //                .antMatchers(HttpMethod.PATCH, "/feed/**").permitAll()
 //                .antMatchers(HttpMethod.PATCH, "/tip/**").permitAll()
