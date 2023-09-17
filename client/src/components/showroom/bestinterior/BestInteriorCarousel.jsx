@@ -10,6 +10,8 @@ const BestInteriorCarousel = ({ viewportWidth, best10Data, setBest10Data }) => {
   const [numVisibleSlides, setNumVisibleSlides] = useState(20); // 캐러셀 사진 크기를 반응형으로 제어하기 위한 상태
   const navigate = useNavigate();
   // 반응형 구현 로직
+
+  console.log(best10Data);
   const updateVisibleSlides = () => {
     if (viewportWidth <= 1440) {
       if (viewportWidth <= 1024) {
@@ -66,8 +68,7 @@ const BestInteriorCarousel = ({ viewportWidth, best10Data, setBest10Data }) => {
 
           updatedBest10Data[updatedItemIndex].bookMarkYn =
             response.data.data.bookMarkYn;
-          setBest10Data(updatedBest10Data); // 업데이트된 배열을 상태로 설정합니다.
-          console.log(best10Data);
+          setBest10Data(updatedBest10Data); // 업데이트된 배열을 상태로 설정
         }
       }
     } catch (error) {

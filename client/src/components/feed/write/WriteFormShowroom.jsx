@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import PhotoTagging from "./PhotoTagging";
 import ImageEditGuide from "./ImageEditGuide";
 import axios from "axios";
+import { FaBold, FaItalic, FaUnderline, FaStrikethrough } from "react-icons/fa";
 
 const WriteFormShowroom = ({
   editorContent,
@@ -10,8 +11,8 @@ const WriteFormShowroom = ({
 }) => {
   const editorRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(null);
-  const [tags, setTags] = useState([]); // 이미지 내 tags 들의 집합
-  const [currentTag, setCurrentTag] = useState({ x: "0%", y: "0%", text: "" }); // 현재 추가하려는 tag
+  const [tags, setTags] = useState([]);
+  const [currentTag, setCurrentTag] = useState({ x: "0%", y: "0%", text: "" });
 
   useEffect(() => {
     if (editorContent === DEFAULT_EDITOR_TEXT) {
@@ -43,7 +44,7 @@ const WriteFormShowroom = ({
     if (file) {
       reader.readAsDataURL(file);
     }
-    // S3 이미지 업로드 통신 로직은 API(헤더에 토큰정보전달하는 코드) 쓰면 안됨! - 데이터 형식 이슈
+
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/imageUpload/feedImage`,
@@ -55,13 +56,11 @@ const WriteFormShowroom = ({
     } catch (error) {
       console.error("이미지 업로드에 실패하였습니다.", error);
       window.alert("이미지 업로드에 실패하였습니다.");
-      setImageSrc(null); // coverimage 값 초기화
+      setImageSrc(null);
     }
   };
 
-  // 이미지 및 태그 삭제
   const handleDeleteImageAndTags = () => {
-    // 상위 <div id="contentImage"> 요소를 삭제
     const updatedContent = editorContent.replace(
       /<br\s*\/?>\s*<div\s+class="flex justify-center">\s*<div\s+id="contentImage"\s+class="relative mx-5"[\s\S]*?<\/div>\s*<\/div>\s*<br\s*\/?>/g,
       ""
@@ -78,7 +77,6 @@ const WriteFormShowroom = ({
       text: tag.text,
     }));
 
-    // post요청시 이미지 태그 생성, 이미지 태그 내 태그 삽입
     const combinedHTML = `<br/><div class="flex justify-center"><div id="contentImage" class="relative mx-5" style="display: inline-block; justify-content: center; align-items: center; position: relative; text-align: center;"><img src="${imageSrc}" class="" alt="Uploaded Image" contentEditable="false" />${tagsData
       .map(
         (tag) =>
@@ -86,12 +84,14 @@ const WriteFormShowroom = ({
       )
       .join("")}</div></div><br/>`;
 
-    // 에디터 내용에 이미지삽입
     setEditorContent(editorContent + combinedHTML);
-
-    // 이미지 및 태그정보 초기화
     setImageSrc(null);
     setTags([]);
+  };
+
+  const toggleStyle = (style) => {
+    // 에디터내 글자 스타일 설정
+    document.execCommand(style, false, null);
   };
 
   return (
@@ -99,7 +99,7 @@ const WriteFormShowroom = ({
       <div className="flex border-b-[1px] pb-4">
         <label htmlFor="imageUpload" className="cursor-pointer rounded-md">
           <img
-            className="p-2"
+            className="p-2 "
             src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/gallery.png"
             alt="gallery"
           />
@@ -123,28 +123,53 @@ const WriteFormShowroom = ({
         >
           이미지 삭제
         </button>
+        <div className="border-r-[1px] h-7 my-auto mx-3"></div> {/* 구분선 */}
+        <button
+          onClick={() => {
+            toggleStyle("bold");
+          }}
+          className={`p-2 border-[1px] mx-2 rounded-md`}
+        >
+          <FaBold />
+        </button>
+        <button
+          onClick={() => toggleStyle("italic")}
+          className={`p-2 border-[1px] mx-2 rounded-md`}
+        >
+          <FaItalic />
+        </button>
+        <button
+          onClick={() => toggleStyle("underline")}
+          className={`p-2 border-[1px] mx-2 rounded-md`}
+        >
+          <FaUnderline />
+        </button>
+        <button
+          onClick={() => toggleStyle("strikethrough")}
+          className={`p-2 border-[1px] mx-2 rounded-md`}
+        >
+          <FaStrikethrough />
+        </button>
       </div>
 
       <div className="flex-col justify-center content-center">
-        {imageSrc ? (
-          <div className="m-5 p-3 flex flex-col border-[3px] rounded-md">
-            <ImageEditGuide />
-            <PhotoTagging
-              imageSrc={imageSrc}
-              tags={tags}
-              setTags={setTags}
-              currentTag={currentTag}
-              setCurrentTag={setCurrentTag}
-            />
-          </div>
-        ) : null}
+        <div className="m-4 p-3 flex flex-col border-[3px] rounded-md">
+          <ImageEditGuide />
+          <PhotoTagging
+            imageSrc={imageSrc}
+            tags={tags}
+            setTags={setTags}
+            currentTag={currentTag}
+            setCurrentTag={setCurrentTag}
+          />
+        </div>
         <div
           ref={editorRef}
           contentEditable={true}
           dangerouslySetInnerHTML={{ __html: editorContent }}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className="p-2 mt-6 h-full  min-h-[600px] text-md"
+          className="p-2 m-4 h-full  min-h-[600px] text-md border-[3px] rounded-md"
         ></div>
       </div>
     </>
