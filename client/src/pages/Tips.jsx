@@ -14,6 +14,7 @@ const Tips = () => {
   const [isSearch, setIsSearch] = useState(""); // 검색인지의 여부(url 앤드포인트 설정용)
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   const [tipData, setTipData] = useState("");
+  const [isLastPage, setIsLastPage] = useState(false); // page가 end인지를 저장하는 상태
   const page = useRef(1); // 페이지 ref
   const isFirstPageRendered = useRef(false);
   const target = useRef(null);
@@ -58,52 +59,53 @@ const Tips = () => {
   // 로딩시 토스트 및 이미지 처리
   useEffect(() => {
     if (!tipData && loading) {
-      toast.loading("로딩중...");
+      toast.loading("로딩중...", { duration: 1000 });
     } else if (tipData || error) {
-      toast.dismiss();
+      // toast.dismiss();
     }
   }, [loading, error, tipData]);
 
   // IntersectionObserver를 사용하여 스크롤 감지
   useEffect(() => {
-    const newObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !loading) {
-          // 페이지 번호 증가
-          page.current += 1;
-          const updatedUrl = `/tip${isSearch}${searchKeyworld}?page=${page.current}`;
-          loadMoreData(updatedUrl); // 새로운 페이지 데이터를 불러오는 함수 호출
+    if (!isLastPage) {
+      const newObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !loading) {
+            // 페이지 번호 증가
+            page.current += 1;
+            const updatedUrl = `/tip${isSearch}${searchKeyworld}?page=${page.current}`;
+            loadMoreData(updatedUrl); // 새로운 페이지 데이터를 불러오는 함수 호출
+          }
+        },
+        {
+          threshold: 0.1, // 스크롤이 약간 발생하면 로딩 시작
         }
-      },
-      {
-        threshold: 0.1, // 스크롤이 약간 발생하면 로딩 시작
-      }
-    );
+      );
 
-    if (target.current) {
-      newObserver.observe(target.current);
-    }
-
-    return () => {
       if (target.current) {
-        newObserver.unobserve(target.current);
+        newObserver.observe(target.current);
       }
-    };
-  }, [loading, tipData]);
+
+      return () => {
+        if (target.current) {
+          newObserver.unobserve(target.current);
+        }
+      };
+    }
+  }, [loading, tipData, isLastPage, searchKeyworld]);
 
   // 새로운 페이지 데이터를 불러오는 함수
   const loadMoreData = async (url) => {
     try {
-      toast.loading("데이터를 불러오는 중입니다...");
+      toast.loading("로딩중...");
       const res = await api({ ...configParams, url });
-
-      if (res.data.length === 0) {
-        // 서버로부터 받은 데이터의 길이가 0인 경우
-        toast.dismiss(); // 로딩 메시지 닫기
-        return; // 무한 스크롤 중지
+      if (res.data.isLast === false) {
+        // 기존 데이터와 새로운 데이터를 병합
+        setTipData((prevData) => [...prevData, ...res.data.data]);
+      } else {
+        setIsLastPage(res.data.isLast);
       }
-      // 기존 데이터와 새로운 데이터를 병합
-      setTipData((prevData) => [...prevData, ...res.data.data]);
+
       toast.dismiss(); // 로딩 메시지 닫기
     } catch (error) {
       console.error("Error loading more data:", error);
