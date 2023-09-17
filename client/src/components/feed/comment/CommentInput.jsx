@@ -41,6 +41,7 @@ const CommentInput = ({ feedData, setFeedData }) => {
         console.log(res.data);
 
         setInputComment("");
+        toast.success("댓글을 입력하셨습니다.");
       } else {
         console.error("status code:", res?.status, res?.data);
         toast.error("댓글을 추가할 수 없습니다.");
@@ -57,7 +58,6 @@ const CommentInput = ({ feedData, setFeedData }) => {
       postComment();
     }
   };
-
 
   return (
     <>

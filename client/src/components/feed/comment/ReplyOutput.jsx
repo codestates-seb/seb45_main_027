@@ -1,42 +1,70 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { toast } from "react-hot-toast";
-import api from "../../common/tokens";
+import React from "react";
+import ReplyDelete from "./ReplyDelete";
+import ReplyPatch from "./ReplyPatch";
 
-const ReplyOutput = ({ replies, setReplies, comment, commentId, feedData, setFeedData }) => {
-    const { feedId } = useParams(); // 게시물 번호
-    const comments = comment.comments; // 댓글 안 답글
+const ReplyOutput = ({ feedData, setFeedData }) => {
+  const memberId = localStorage.getItem("memberId");
+  const profileImg = localStorage.getItem("profileImg");
+  const comments = feedData.replies; // 댓글 안 답글
+  return (
+    <div>
+      {comments &&
+        comments.map((reply, idx) => (
+          <div key={reply.feedReplyId}>
+            {reply.comments &&
+              reply.comments.map((comments, subIdx) => (
+                <div
+                  key={comments.feedReplyId}
+                  className="flex items-start mt-10 ml-10 bg-[#fceecd75] p-8 rounded-lg shadow">
+                  <img
+                    src={profileImg}
+                    className="w-10 h-10 mr-2.5 rounded-full object-cover"
+                    alt="유저사진"
+                  />
+                  <div className="flex flex-col ml-4 w-full">
+                    {/* 답변 작성자 */}
+                    <span className="text-lg font-semibold">
+                      {comments.nickname}
+                    </span>
 
-    return (
-      <div>
-        {comments &&
-          comments.map((comments, idx) => (
-            <div
-              key={commentId}
-              className="flex items-start mt-10 ml-10 bg-[#fceecd75] p-8 rounded-lg shadow">
-              <img
-                src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userComment.png"
-                alt="유저사진"
-              />
-              <div className="flex flex-col ml-4 w-full">
-                {/* 답변 작성자 */}
-                <span className="text-lg font-semibold">
-                  {comments.nickname}
-                </span>
+                    {/* 수정하기 */}
+                    {/* <ReplyPatch/> */}
+                    {comments.content}
+                    {/* 댓글 내용 */}
+                    <div className="flex items-center text-gray-500 font-medium text-base">
+                      {/* 작성날짜 */}
+                      <div className="flex items-center text-gray-500 font-medium text-base">
+                        {/* 작성날짜 */}
+                        <span className="mr-1">
+                          {comments.createdDateTime.split("T")[0]}
+                        </span>
+                      </div>
 
-                {/* 댓글 내용 */}
-                <div className="my-4 text-base">{comments.content}</div>
-
-                {/* 작성날짜 */}
-                <div className="flex items-center text-gray-500 font-medium text-base">
-                  {/* 작성날짜 */}
-                  <span>{comments.createdDateTime.split("T")[0]}</span>
+                      {/* 수정 */}
+                      {memberId == comments.memberId && (
+                        <button
+                          className="mx-2 hover:font-semibold"
+                          onClick={() => {
+                            // setEditComent({
+                            //   ...editComent,
+                            //   [comment.feedReplyId]: true,
+                            // });
+                          }}>
+                          수정하기
+                        </button>
+                      )}
+                      {/* 삭제 */}
+                      {memberId == comments.memberId && (
+                        <ReplyDelete comments={comments} />
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
-      </div>
-    );
+              ))}
+          </div>
+        ))}
+    </div>
+  );
 };
 
 export default ReplyOutput;
