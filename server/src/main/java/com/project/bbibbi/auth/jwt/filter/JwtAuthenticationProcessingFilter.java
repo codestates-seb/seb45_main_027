@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Optional;
 
 /**
  * Jwt 인증 필터
@@ -42,7 +43,7 @@ import java.util.Collections;
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
-    private static final String NO_CHECK_URL = "auth/login"; // "/login"으로 들어오는 요청은 Filter 작동 X
+    private static final String NO_CHECK_URL = "/auth/login"; // "/login"으로 들어오는 요청은 Filter 작동 X
     // 임시로 바꿔놓기
 
     private final JwtService jwtService;
@@ -52,11 +53,37 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        if (request.getMethod().equals("GET")) {
+            filterChain.doFilter(request, response); // 모든 GET 요청은 필터를 거치지 않고 통과
+            return;
+        }
         if (request.getRequestURI().equals(NO_CHECK_URL)) {
             filterChain.doFilter(request, response); // "/login" 요청이 들어오면, 다음 필터 호출
             return; // return으로 이후 현재 필터 진행 막기 (안해주면 아래로 내려가서 계속 필터 진행시킴)
             // 즉 로그인으로 들어오면 필터에서 막아버려서 진행 더 안되게 Filter 작동 X
         }
+
+        if (request.getRequestURI().equals("/auth/email/password")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        if (request.getRequestURI().equals("/h2")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        if (request.getRequestURI().equals("/auth/signup")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+
+//        if (request.getRequestURI().equals(NO_CHECK_URL)) {
+//            filterChain.doFilter(request, response); // "/login" 요청이 들어오면, 다음 필터 호출
+//            return; // return으로 이후 현재 필터 진행 막기 (안해주면 아래로 내려가서 계속 필터 진행시킴)
+//            // 즉 로그인으로 들어오면 필터에서 막아버려서 진행 더 안되게 Filter 작동 X
+//        }
 
         // 사용자 요청 헤더에서 RefreshToken 추출
         // -> RefreshToken이 없거나 유효하지 않다면(DB에 저장된 RefreshToken과 다르다면) null을 반환
@@ -70,7 +97,9 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         // RefreshToken까지 보낸 것이므로 리프레시 토큰이 DB의 리프레시 토큰과 일치하는지 판단 후,
         // 일치한다면 AccessToken을 재발급해준다.
         if (refreshToken != null) {
+            log.info("리프레쉬 까지 왔으니까 보내줘");
             checkRefreshTokenAndReIssueAccessToken(response, refreshToken);
+            log.info("리프레쉬 토큰이랑 액세스토큰을 발급 함");
             return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
         }
 
@@ -90,6 +119,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
      *  그 후 JwtService.sendAccessTokenAndRefreshToken()으로 응답 헤더에 보내기
      */
     public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, String refreshToken)  {
+        log.info("checkRefreshTokenAndReIssueAccessToken 시작");
         memberRepository.findByRefreshToken(refreshToken)
                 .ifPresent(member -> {
                     String reIssuedRefreshToken = reIssueRefreshToken(member);
@@ -100,6 +130,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                         throw new RuntimeException("입출력 오류입니다", e);
                     }
                 });
+
+        log.info("checkRefreshTokenAndReIssueAccessToken 완료");
     }
 
     /**
@@ -125,13 +157,24 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     public void checkAccessTokenAndAuthentication(HttpServletRequest request, HttpServletResponse response,
                                                   FilterChain filterChain) throws ServletException, IOException {
         log.info("checkAccessTokenAndAuthentication() 호출");
+//        Optional<String> accessToken1 = jwtService.extractAccessToken(request);
+//        if (!accessToken1.isPresent() || !jwtService.isTokenValid(accessToken1.get())) {
+//            // AccessToken이 없거나 유효하지 않은 경우 403 Forbidden 응답을 클라이언트에게 반환하고 필터 체인 종료
+//            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+//            response.getWriter().write("Access Denied"); // 원하는 응답 본문을 설정
+//            return; // 필터를 여기서 종료하고 다음 필터로 진행하지 않음
+//        }
         jwtService.extractAccessToken(request)
                 .filter(jwtService::isTokenValid)
                 .ifPresent(accessToken -> jwtService.extractEmail(accessToken)
                         .ifPresent(email -> memberRepository.findByEmail(email)
                                 .ifPresent(this::saveAuthentication)));
 
+
+        log.info("2.액세스토큰도 완료됐고 인증 처리까지 담겼으니까 완료됐으니까 다음 필터 확인해라");
         filterChain.doFilter(request, response);
+
+
     }
 
     /**
@@ -177,6 +220,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                         authoritiesMapper.mapAuthorities(userDetailsUser.getAuthorities()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        log.info("1.인증 허가도 완료됐으니 다음 필터체인 가기 전에 로그 마지막 보면 끝");
     }
 
 //    public void saveAuthenticationForOauth(Member member) {

@@ -19,11 +19,6 @@ public class NicknameUtil { //
 
         return nickname.toString();
     }
-
-    public static void main(String[] args) {
-        String randomNickname = generateRandomNickname();
-        System.out.println("랜덤 닉네임: " + randomNickname);
-    }
 }
 
 

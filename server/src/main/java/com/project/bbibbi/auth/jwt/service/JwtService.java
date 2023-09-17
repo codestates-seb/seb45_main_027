@@ -2,6 +2,8 @@ package com.project.bbibbi.auth.jwt.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.bbibbi.domain.member.repository.MemberRepository;
 import lombok.Getter;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -144,12 +147,33 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token) {
+//        try {
+//            JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token);
+//            return true;
+//        } catch (Exception e) {
+//            log.error("유효하지 않거나 만료된 토큰입니다. {}", e.getMessage());
+//            return false;
+//        }
+
         try {
-            JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token);
-            return true;
+            DecodedJWT jwt = JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token);
+            Date expiresAt = jwt.getExpiresAt();
+            Date now = new Date();
+
+            // 토큰의 만료 시간을 현재 시간과 비교하여 확인합니다.
+            if (expiresAt != null && expiresAt.after(now)) {
+                return true; // 토큰이 유효하고 만료되지 않았습니다.
+            } else {
+                log.error("토큰이 만료되었습니다.");
+                return false; // 토큰이 만료되었습니다.
+            }
+        } catch (TokenExpiredException e) {
+            log.error("엑세스 토큰 시간이 만료되었습니다." + e.getMessage());
+//            throw new TokenExpiredException("토큰이 만료되었습니다.", Instant.now());
+            return false; // 토큰이 만료되었습니다.
         } catch (Exception e) {
             log.error("유효하지 않은 토큰입니다. {}", e.getMessage());
-            return false;
+            return false; // 토큰이 유효하지 않습니다.
         }
     }
 }
