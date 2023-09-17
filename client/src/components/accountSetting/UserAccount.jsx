@@ -1,24 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-//import axios from "axios";
 import api from "../common/tokens";
 import ChangePassword from "./ChangePassword";
 import EditProfile from "./EditProfile";
 import DeleteAccount from "./DeleteAccount";
 import { toast } from "react-hot-toast";
 
-
 const UserAccount = ({ toggleAccountSettings, userDetails }) => {
   const navigate = useNavigate();
   const memberId = localStorage.getItem("memberId");
-  // const accessToken = localStorage.getItem("accessToken");
-  // const baseURL = process.env.REACT_APP_API_URL;
-
   const [activeTab, setActiveTab] = useState("editProfile");
   const toggleTab = (tabName) => {
     setActiveTab((prevtab) => (prevtab === tabName ? null : tabName));
   };
-
 
   //프로필정보 수정을 위한 state
   const [profileData, setProfileData] = useState({
@@ -49,7 +43,6 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
         profileData,
         {
           headers: {
-            //Authorization: accessToken ? `Bearer ${accessToken}` : "", 
             "ngrok-skip-browser-warning": "69420",
           },
         }
@@ -71,9 +64,6 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
       navigate("/");
     } catch (error) {
       console.error(error);
-      // if (error.response.status === 400 && error.response.data.message) {
-      //   alert("이미 등록된 닉네임입니다.");
-      // }
       toast.error('프로필 업데이트에 실패했습니다')
       navigate("/");
       //alert("Error updating profile");
@@ -82,22 +72,22 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
   };
 
   const inputStyle =
-    "px-4 py-3.5 my-3 border rounded-lg focus:outline-none focus:ring focus:border-blue-300 md:w-[400px]";
+    "px-4 py-3.5 my-3 border rounded-lg focus:outline-none focus:ring focus:border-blue-300 md:w-[400px] cursor-pointer";
   const buttonStyle =
-    "bg-[#14616e]/80 text-white text-lg font-medium rounded-full px-2 py-2 hover:bg-[#14616e]/60";
+    "bg-[#14616e]/80 text-white text-md font-medium rounded-lg px-2 py-2 hover:bg-[#14616e]/60";
   const tabStyle =
-    "bg-[#273a7e]/80 text-white text-xl font-medium rounded-lg px-2 py-2 mt-4 hover:bg-[#273a7e]/60";
+    "bg-[#273a7e]/80 text-white text-xl font-medium rounded-lg px-2 py-2 mt-4 hover:bg-[#273a7e]/60 cursor-pointer";
   const fileInputStyle = "hidden";
 
   return (
     <div>
       <button
         onClick={() => toggleAccountSettings(false)}
-        className={`flex justify-center text-5xl text-[#404040] rounded-full p-4 mb-1 w-[50px] h-[50px]`}
+        className={`flex justify-center text-5xl text-[#404040] rounded-full p-4 `}
       >
         &times;
       </button>
-      <div className="flex flex-col container mx-auto p-4 bg-white opacity-[.9] rounded-lg min-w-[350px] md:min-w-[750px] mb-32">
+      <div className="flex flex-col container mx-auto p-4 bg-white opacity-[.9] rounded-lg min-w-[350px] md:min-w-[750px] mb-40">
         <div className="flex justify-between">
           <div className="text-3xl font-bold px-2 py-2">{`Hello, ${userDetails.nickname}`}</div>
           <DeleteAccount />

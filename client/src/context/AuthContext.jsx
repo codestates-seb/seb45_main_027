@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import api from "../components/common/tokens";
+//import api from "../components/common/tokens";
 import { toast } from "react-hot-toast";
 
 const AuthContext = createContext();
@@ -56,7 +56,7 @@ export function AuthProvider({ children }) {
 
   async function kakaoLogin(code) {
     try {
-      const response = await api.get(`/auth/oauth/kakao?code=${code}`);
+      const response = await axios.get(`${baseURL}/auth/oauth/kakao?code=${code}`);
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
       navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
@@ -68,7 +68,7 @@ export function AuthProvider({ children }) {
 
   async function naverLogin(code) {
     try {
-      const response = await api.get(`/auth/oauth/kakao?code=${code}`);
+      const response = await axios.get(`${baseURL}/auth/oauth/kakao?code=${code}`);
 
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);

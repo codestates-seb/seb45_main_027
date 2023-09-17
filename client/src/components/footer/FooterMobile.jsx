@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 const liPoint = "flex flex-col items-center w-12";
 
 const FooterMobile = () => {
+  const memberId = localStorage.getItem("memberId");
+
   return (
     <footer>
       <div className="flex justify-center border py-4 fixed bottom-0 w-full bg-white">
@@ -53,7 +55,7 @@ const FooterMobile = () => {
           </Link>
 
           {/* 유저 (로그인 여부에 따라 경로 달라져야 함) */}
-          <Link to="/login">
+          <Link to={memberId ? `/myinfo/${memberId}` : "/login"}>
             <li className={liPoint}>
               <img
                 src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/user.png"

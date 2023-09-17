@@ -25,7 +25,6 @@ const UserInfoFollowList = ({ userList, onFollowAction, activeTab }) => {
     try {
       await api.patch(url, {
         headers: {
-          //Authorization: accessToken ? `Bearer ${accessToken}` : "",
           "ngrok-skip-browser-warning": "69420",
         },
       });
@@ -51,9 +50,6 @@ const UserInfoFollowList = ({ userList, onFollowAction, activeTab }) => {
                   ? user.memberImage || "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
                   : user.fromMemberImage || "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
               }
-              // profileData.profileImg
-              //   ? profileData.profileImg
-              //   : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
               alt={user.memberNickname}
             />
             <Link

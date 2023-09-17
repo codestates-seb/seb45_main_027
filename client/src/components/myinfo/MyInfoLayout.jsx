@@ -3,11 +3,9 @@ import { useParams } from "react-router-dom";
 import MyInfoContentList from "./MyInfoContentList";
 import UserProfile from "./UserProfile";
 import UserAccount from "../accountSetting/UserAccount";
-//import axios from "axios";
 import api from "../common/tokens";
 
 const MyInfoLayout = () => {
-  //const baseURL = process.env.REACT_APP_API_URL;
   const { id } = useParams();
 
   const [showAccountSettings, setShowAccountSettings] = useState(false);
@@ -20,13 +18,10 @@ const MyInfoLayout = () => {
     setShowAccountSettings(isOpen);
   };
 
-  //const accessToken = localStorage.getItem("accessToken");
-
   const fetchProfileData = async () => {
     try {
       const response = await api.get(`/members/${id}`, {
         headers: {
-          //Authorization: accessToken ? `Bearer ${accessToken}` : '',
           "ngrok-skip-browser-warning": "69420",
         },
       });
@@ -42,7 +37,6 @@ const MyInfoLayout = () => {
     try {
       const response = await api.get(`/myContent/search/${id}`, {
         headers: {
-          //Authorization: accessToken ? `Bearer ${accessToken}` : "",
           "ngrok-skip-browser-warning": "69420",
         },
       });
@@ -59,7 +53,6 @@ const MyInfoLayout = () => {
         api.get(`/follow/from/${id}`),
         api.get(`/follow/to/${id}`, {
           headers: {
-            //Authorization: accessToken ? `Bearer ${accessToken}` : "",
             "ngrok-skip-browser-warning": "69420",
           },
         }),
@@ -89,7 +82,7 @@ const MyInfoLayout = () => {
 
   if (!profileData || !myinfoData || !followingList || !followersList) {
     return (
-      <div className="flex justify-center h-auto">
+      <div className="flex justify-center mt-[5%] h-full opacity-[80%]">
         <img
           src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/loading.gif"
           alt="로딩중"
@@ -99,7 +92,13 @@ const MyInfoLayout = () => {
   }
   return (
     <div>
-      <div className="flex flex-col justify-center mb-[10%] px-4 w-full md:flex-row">
+      {showAccountSettings && (
+        <UserAccount
+          toggleAccountSettings={toggleAccountSettings}
+          userDetails={profileData}
+        />
+      )}
+      <div className="flex flex-col justify-center md:mb-[10%] w-full md:flex-row ">
         {!showAccountSettings && (
           <>
             <UserProfile
@@ -116,12 +115,6 @@ const MyInfoLayout = () => {
           </>
         )}
       </div>
-      {showAccountSettings && (
-        <UserAccount
-          toggleAccountSettings={toggleAccountSettings}
-          userDetails={profileData}
-        />
-      )}
     </div>
   );
 };

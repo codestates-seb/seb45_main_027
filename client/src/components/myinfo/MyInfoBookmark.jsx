@@ -13,10 +13,10 @@ const MyInfoBookmark = ({
   const memberId = localStorage.getItem("memberId");
 
   return (
-    <div className="m-2 h-full w-[140px] md:w-[150px] xl:w-[170px] text-[#57534e]">
-      <div className="relative">
-        <img
-          className="rounded-lg object-cover w-[130px] h-[120px] md:w-[150px] md:h-[135px]  xl:w-[170px] xl:h-[155px]"
+    <div className="m-2 h-full w-[150px] sm:w-[170px] md:w-[110px] lg:w-[140px] xl:w-[170px] text-[#57534e]">
+    <div className="relative">
+      <img
+        className="rounded-lg object-cover w-[170px] h-[130px] sm:w-[170px] sm:h-[145px] md:w-[110px] md:h-[100px] lg:w-[140px] lg:h-[120px] xl:w-[170px] xl:h-[150px]"
           src={imgSrc}
           alt="content"
           onClick={() => postNavigate(itemId, label)}
