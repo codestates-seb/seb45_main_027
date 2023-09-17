@@ -47,7 +47,6 @@ public class FeedLikeService {
         else {
             updatedFeedLike.setLikeYn(true);
         }
-
         updatedFeedLike.setLikeCount(feedLikeRepository.feedLikeCount(feedLike.getFeed().getFeedId()));
 
         return updatedFeedLike;

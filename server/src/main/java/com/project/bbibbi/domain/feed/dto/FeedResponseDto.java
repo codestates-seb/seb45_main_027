@@ -49,7 +49,6 @@ public class FeedResponseDto {
     private String nickname;
     private String memberImage;
     private String myIntro;
-
     private int likeCount;
     private Boolean likeYn;
     private int repliesCount;

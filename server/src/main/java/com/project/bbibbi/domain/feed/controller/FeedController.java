@@ -53,7 +53,6 @@ public class FeedController {
 
         Feed feed = mapper.feedPostDtoToFeed(requestBody);
 
-
         Feed createdFeed = feedService.createFeed(feed);
 
         URI location = UriComponentsBuilder.newInstance().path(
@@ -68,7 +67,6 @@ public class FeedController {
     @PatchMapping("/{feed-id}")
     public ResponseEntity patchFeed(@PathVariable("feed-id") @Positive long feedId,
                                     @Valid @RequestBody FeedPatchDto requestBody){
-
 
         requestBody.setFeedId(feedId);
 

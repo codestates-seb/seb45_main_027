@@ -31,6 +31,7 @@ public class FeedCommentDto {
                 .memberId(feedComment.getMember().getMemberId())
                 .parentComment(feedComment.getParentComment())
                 .nickname(feedComment.getMember().getNickname())
+                .createdDateTime(feedComment.getCreatedDateTime())
                 .build();
     }
 }

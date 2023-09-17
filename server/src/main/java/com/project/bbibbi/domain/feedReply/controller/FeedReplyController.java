@@ -10,6 +10,7 @@ import com.project.bbibbi.domain.feedReply.entity.FeedReply;
 import com.project.bbibbi.domain.feedReply.repository.FeedReplyRepository;
 import com.project.bbibbi.domain.feedReply.service.FeedReplyService;
 import com.project.bbibbi.domain.member.entity.Member;
+import com.project.bbibbi.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +52,7 @@ public ResponseEntity feedSave(@PathVariable ("feed-id")Long feedId,
     feedReplyResponseDto.setFeedId(savedReply.getFeed().getFeedId());
     feedReplyResponseDto.setMemberId(savedReply.getMember().getMemberId());
     feedReplyResponseDto.setNickname(savedReply.getMember().getNickname());
+    feedReplyResponseDto.setMemberImage(savedReply.getMember().getProfileImg());
     feedReplyResponseDto.setCreatedDateTime(savedReply.getCreatedDateTime());
     //로그인이 구현되면 임시로 만들어 놓은것 삭제
     return ResponseEntity.ok(feedReplyResponseDto);
