@@ -7,7 +7,7 @@ import ViewCoverImg from "../components/feed/view/ViewCoverImg";
 import Sidebar from "../components/feed/view/Sidebar";
 import TipsContents from "../components/feed/view/TipsContents";
 import Edit from "../components/feed/view/Edit";
-// import Comment from "../components/feed/comment/Comment";
+import CommentWrap from "../components/feed/comment/CommentWrap";
 
 const ViewTips = () => {
   // 받아온 API 공유하기 위한 상태
@@ -25,7 +25,7 @@ const ViewTips = () => {
   });
 
   // 멤버아이디 (게시글ID(feedId)와 memberId 일치시에만 On)
-  const userId = response?.data?.data?.feedId;
+  const userId = response?.data?.tipId;
   // 로컬에 저장된 memberID 가져오기
   const memberId = localStorage.getItem("memberId");
 
@@ -58,7 +58,11 @@ const ViewTips = () => {
         divclassName="flex-col my-24 md:my-0">
         <TipsContents setFeedData={setFeedData} feedData={feedData} />
         {memberId === userId && <Edit />}
-        {/* <Comment ref={commentSectionRef} /> */}
+        <CommentWrap
+          feedData={feedData}
+          setFeedData={setFeedData}
+          ref={commentSectionRef}
+        />
       </Background>
     </div>
   );
