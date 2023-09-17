@@ -28,6 +28,8 @@ const ReplyInput = ({ comment, commentId, feedData, setFeedData }) => {
       },
     };
 
+    console.log(feedData);
+    console.log(comment);
     console.log(commentId);
     try {
       const res = await api(configParams);
@@ -46,10 +48,10 @@ const ReplyInput = ({ comment, commentId, feedData, setFeedData }) => {
         // 상위 컴포넌트에서 넘어온 feedData를 기반으로 업데이트
         const updatedFeedData = feedData.map((feedItem) => {
           // 현재 댓글이 속한 피드를 찾음
-          if (feedItem.id === feedId) {
+          if (feedItem.commentId === feedId) {
             const updatedComments = feedItem.comments.map((cmt) => {
               // 현재 댓글을 찾아서 업데이트
-              if (cmt.id === commentId) {
+              if (cmt.commentId === commentId) {
                 return updatedComment;
               }
               return cmt;
