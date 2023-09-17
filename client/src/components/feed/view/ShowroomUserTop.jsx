@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../../context/userContext";
 
 const button =
@@ -8,6 +9,7 @@ const img = "w-10 h-10 mb-2";
 
 const ShowroomUserTop = ({ feedData }) => {
   const { follow, setFollow, toggleFollow } = useUserContext();
+  const navigate = useNavigate();
 
   let datePart = "";
   if (feedData && feedData.createdDateTime) {
@@ -18,10 +20,23 @@ const ShowroomUserTop = ({ feedData }) => {
     <div className="flex-col items-center lg:flex-row flex justify-between p-2 lg:p-8 mt-10 pt-10 rounded-lg shadow bg-white">
       <div className="flex items-center px-5">
         <div className="border w-12 h-12 rounded-full mr-4">
-          <img src={`${feedData.memberImage}`} alt="" />
+          <img
+            onClick={() => {
+              navigate(`/myinfo/${feedData.memberId}`);
+            }}
+            src={`${feedData.memberImage}`}
+            alt="profileImg"
+            className="w-10 h-10 mr-2.5 rounded-full object-cover cursor-pointer"
+          />
         </div>
         <div>
-          <div className="text-lg font-semibold">{feedData.nickname}</div>
+          <div
+            onClick={() => {
+              navigate(`/myinfo/${feedData.memberId}`);
+            }}
+            className="text-lg font-semibold cursor-pointer">
+            {feedData.nickname}
+          </div>
           <div className="text-gray-500">{datePart}</div>
         </div>
       </div>

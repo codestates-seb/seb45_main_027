@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import CommentDelete from "./CommentDelete";
 import CommentPatch from "./CommentPatch";
 import CommentLike from "./CommentLike";
@@ -6,7 +7,8 @@ import ReplyInput from "./ReplyInput";
 
 const CommentOutput = ({ feedData, setFeedData, children }) => {
   const memberId = localStorage.getItem("memberId");
-  const profileImg = localStorage.getItem("profileImg");
+  const navigate = useNavigate();
+  
   // feedData 안에 댓글 접근
   const [replies, setReplies] = useState("");
   // 댓글 수정 상태
@@ -30,12 +32,19 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
             <div className="bg-[#fceecd75] p-8 rounded-lg shadow">
               <div className="flex items-start">
                 <img
-                  src={profileImg}
+                  onClick={() => {
+                    navigate(`/myinfo/${comment.memberId}`);
+                  }}
+                  src={`${comment.memberImage}`}
                   alt="profileImg"
-                  className="w-10 h-10 mr-2.5 rounded-full object-cover"
+                  className="w-10 h-10 mr-2.5 rounded-full object-cover cursor-pointer"
                 />
                 <div className="flex flex-col ml-4 w-full">
-                  <span className="text-lg font-semibold">
+                  <span
+                    onClick={() => {
+                      navigate(`/myinfo/${comment.memberId}`);
+                    }}
+                    className="text-lg font-semibold cursor-pointer">
                     {comment.nickname}
                   </span>
 
