@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.feedComment.controller;
 
+import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.feed.entity.Feed;
 import com.project.bbibbi.domain.feedComment.dto.FeedCommentDto;
 import com.project.bbibbi.domain.feedComment.entity.FeedComment;
@@ -30,10 +31,11 @@ public class FeedCommentController {
             @PathVariable("feed-id" ) Long feedId,
             @PathVariable("feed-reply-id" ) Long feedReplyId,
             @RequestBody FeedCommentDto dto) {
+        Long memberId = loginUtils.getLoginId();
         // 새로운 FeedComment 엔티티를 생성하고 값을 설정합니다.
         FeedComment feedComment = new FeedComment();
         //임의 멤버아이디 1으로 설정
-        feedComment.setMember(Member.builder().memberId(1L).build());
+        feedComment.setMember(Member.builder().memberId(memberId).build());
         //feedId와 feedReplyId 가져오는 설정
         Feed feed = new Feed();
         feed.setFeedId(feedId);

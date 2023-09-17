@@ -77,6 +77,7 @@ public class SecurityConfig {
                 .antMatchers("/","/css/**","/images/**","/js/**","/favicon.ico","/h2/**").permitAll()
 //                .antMatchers("/sign-up").permitAll() // 회원가입 접근 가능 //임시용 // 지우지 마세요~
                 .antMatchers(HttpMethod.GET, "/").permitAll()
+                .antMatchers("/login").permitAll()
 //                .antMatchers("/login").permitAll()
                 .antMatchers("/auth/**").permitAll() // 회원가입 접근 가능
                 .antMatchers(HttpMethod.GET, "/members/**").permitAll()

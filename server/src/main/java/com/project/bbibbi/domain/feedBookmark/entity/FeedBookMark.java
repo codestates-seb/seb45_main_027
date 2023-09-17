@@ -33,6 +33,6 @@ public class FeedBookMark extends BaseEntity {
     private Boolean BookMarkYn = false;
 
     @Transient
-    private Integer BookMarkCount;
+    private Integer BookMarkCount = 0;
 
 }

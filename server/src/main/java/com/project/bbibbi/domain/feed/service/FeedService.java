@@ -8,6 +8,8 @@ import com.project.bbibbi.domain.feed.entity.Feed;
 //import com.project.bbibbi.domain.feed.repository.FeedImageTagRepository;
 import com.project.bbibbi.domain.feed.repository.FeedRepository;
 import com.project.bbibbi.domain.feedBookmark.repository.FeedBookMarkRepository;
+import com.project.bbibbi.domain.feedReply.entity.FeedReply;
+import com.project.bbibbi.domain.feedReplyLike.repository.FeedReplyLikeRepository;
 import com.project.bbibbi.domain.feedlike.repository.FeedLikeRepository;
 import com.project.bbibbi.domain.follow.repository.FollowRepository;
 import com.project.bbibbi.domain.member.entity.Member;
@@ -33,6 +35,7 @@ public class FeedService {
 //    private final FeedImageTagRepository feedImageTagRepository;
     private final FeedLikeRepository feedLikeRepository;
     private final FeedBookMarkRepository feedBookMarkRepository;
+    private final FeedReplyLikeRepository feedReplyLikeRepository;
     private final FollowRepository followRepository;
     private final CustomBeanUtils<Feed> beanUtils;
 
@@ -40,11 +43,13 @@ public class FeedService {
                        FeedLikeRepository feedLikeRepository,
                        FeedBookMarkRepository feedBookMarkRepository,
                        FollowRepository followRepository,
+                       FeedReplyLikeRepository feedReplyLikeRepository,
                        CustomBeanUtils<Feed> beanUtils) {
         this.feedRepository = feedRepository;
         this.feedLikeRepository = feedLikeRepository;
         this.feedBookMarkRepository = feedBookMarkRepository;
         this.followRepository = followRepository;
+        this.feedReplyLikeRepository = feedReplyLikeRepository;
         this.beanUtils = beanUtils;
     }
 
@@ -167,6 +172,33 @@ public class FeedService {
         }
         else {
             viewUpFeed.setFollowYn(true);
+        }
+
+        if(viewUpFeed.getReplies() != null) {
+            if (member == null) {
+
+                // viewUpFeed 안의 replies의 LikeYn들을 전부 처리합시다
+                for (FeedReply feedReply : viewUpFeed.getReplies()) {
+
+                    // member가 null이면 로그인한 사람이 아니라는 것이므로 좋아요 표시를 무조건 false로 처리합니다.
+                    // 그런데 아마 로그인 안한 사람은 null 보단 0으로 뜰 겁니다. 아무튼
+                    feedReply.setReplyLikeYn(false);
+                }
+
+            } else {
+                // member가 null 이 아니라면 그 멤버가 이 게시물에 좋아요 했는지 확인하면 됩니다.
+                // 그런데 이걸 댓글 하나하나 확인해줘야 해서 for문을 쓸거에요.
+
+                for (FeedReply feedReply : viewUpFeed.getReplies()) {
+
+                    int loginUserLikeYn = feedReplyLikeRepository.existCount(feedReply.getFeedReplyId(), member.getMemberId());
+
+                    if (loginUserLikeYn == 0)
+                        feedReply.setReplyLikeYn(false);
+                    else feedReply.setReplyLikeYn(true);
+                }
+
+            }
         }
 
 

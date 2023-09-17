@@ -1,6 +1,7 @@
 package com.project.bbibbi.domain.feedReply.controller;
 
 
+import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.feed.dto.FeedResponseDto;
 import com.project.bbibbi.domain.feed.entity.Feed;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyRequestDto;
@@ -30,9 +31,12 @@ public class FeedReplyController {
 @PostMapping
 public ResponseEntity feedSave(@PathVariable ("feed-id")Long feedId,
     @RequestBody FeedReplyRequestDto dto)
+
 {//dto -> entity 객체로 변환작업
+    //유저 로그인
+    Long memberId = loginUtils.getLoginId();
     FeedReply feedReply = new FeedReply(); // FeedReply 클래스의 기본 생성자 호출
-    feedReply.setMember(Member.builder().memberId(1L).build()); //임시로 memberId 설정
+    feedReply.setMember(Member.builder().memberId(memberId).build()); //임시로 memberId 설정
     Feed feed = new Feed();
     feed.setFeedId(feedId);
     feedReply.setFeed(feed);

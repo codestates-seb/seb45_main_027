@@ -68,6 +68,8 @@ public class FeedController {
     @PatchMapping("/{feed-id}")
     public ResponseEntity patchFeed(@PathVariable("feed-id") @Positive long feedId,
                                     @Valid @RequestBody FeedPatchDto requestBody){
+
+
         requestBody.setFeedId(feedId);
 
         Feed feed = mapper.feedPatchDtoToFeed(requestBody);
