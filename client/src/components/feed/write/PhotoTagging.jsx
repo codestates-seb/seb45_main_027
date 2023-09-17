@@ -56,12 +56,15 @@ const PhotoTagging = ({
         onMouseEnter={() => setPhotoHovered(true)}
         onMouseLeave={() => setPhotoHovered(false)}
       >
-        <img
-          className="max-w-full cursor-crosshair rounded-[10px]"
-          src={imageSrc}
-          alt="Taggable"
-          onClick={handleImageClick}
-        />
+        {imageSrc ? (
+          <img
+            className="max-w-full cursor-crosshair rounded-[10px]"
+            src={imageSrc}
+            alt="사진을 첨부하세요."
+            onClick={handleImageClick}
+          />
+        ) : null}
+
         {tags.map((tag, index) => (
           <Tag
             key={index}

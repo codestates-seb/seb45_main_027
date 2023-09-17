@@ -1,9 +1,9 @@
 import axios from "axios";
 
-// 기본 URL을 기반으로 axios 인스턴스 생성
+// Axios 인스턴스 생성
 const api = axios.create({ baseURL: process.env.REACT_APP_API_URL });
 
-// 토큰 정보를 헤더에 추가하는 함수
+// 요청에 토큰을 추가하는 함수
 const addTokenToHeaders = (config) => {
   const accessToken = localStorage.getItem("accessToken");
 
@@ -15,63 +15,67 @@ const addTokenToHeaders = (config) => {
   config.headers["ngrok-skip-browser-warning"] = "69420";
   config.withCredentials = true;
 
-  // 헤더 값을 콘솔에 출력
-  // console.log("Request Headers:", config.headers);
-
   return config;
 };
 
+// 토큰 갱신 및 재시도 함수 (403에러 반환시 실행함수)
+const handleTokenRefresh = async (error) => {
+  // 로컬스토리지에 저장되어있는 엑세스토큰과 리프레시토큰 추출
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+
+  if (refreshToken) {
+    try {
+      // 요청보낸 메서드와 url, data(바디값) 저장
+      const { method, url, data } = error.config;
+
+      // 요청보낸 메서드, url, 바디값 및
+      // 추가로 헤더에 엑세스토큰과 리프레시 토큰을 전송하도록 config설정
+      const configParams = {
+        method,
+        url: `${process.env.REACT_APP_API_URL}${url}`,
+        headers: {
+          "Authorization-refresh": `Bearer ${refreshToken}`,
+          Authorization: `Bearer ${accessToken}`,
+        },
+        data,
+      };
+
+      // 설정한 config로 다시 서버로 요청을 보냄
+      const response = await axios(configParams);
+
+      // 성공적으로 응답시 새로운 엑세스토큰과 리프레시토큰을 로컬스토리지에 저장
+      const newAccessToken = response.headers.authorization;
+      const newRefreshToken = response.headers["authorization-refresh"];
+      localStorage.setItem("accessToken", newAccessToken);
+      localStorage.setItem("refreshToken", newRefreshToken);
+
+      // 헤더에 새로운 엑세스토큰을 받은뒤 서버로 재요청
+      error.config.headers["Authorization"] = `Bearer ${newAccessToken}`;
+      return api.request(error.config);
+    } catch (err) {
+      // 응답없는경우 로그아웃
+      window.dispatchEvent(new Event("logoutEvent"));
+      console.log(err);
+    }
+  } else {
+    window.dispatchEvent(new Event("logoutEvent"));
+    console.log("리프레시 토큰 없음");
+  }
+};
+
+// 요청 인터셉터 설정
 api.interceptors.request.use(addTokenToHeaders);
 
+// 응답 인터셉터 설정
 api.interceptors.response.use(
   async function (response) {
     return response;
   },
   async function (error) {
-    // 엑세스 토큰 만료시 ERR_NETWORK 에러가 뜨는거같음
     if (error.response && error.response.status === 403) {
-      const accessToken = localStorage.getItem("accessToken");
-      const refreshToken = localStorage.getItem("refreshToken");
-      if (refreshToken) {
-        try {
-          // 엔드포인트를 동적으로 설정할 수 있도록, api를 사용하는 곳에서 엔드포인트를 전달받음
-          const data = JSON.parse(error.config.data);
-          const method = error.config.method; // 현재요청의 메서드 추출
-          const endpoint = error.config.url; // 현재 요청의 엔드포인트 추출
-          // 현재 요청한 곳으로 리프레시 토큰을 실어서 서버로 전송
-          const configParams = {
-            method: method,
-            url: `${process.env.REACT_APP_API_URL}${endpoint}`,
-            headers: {
-              "Authorization-refresh": refreshToken,
-              Authorization: refreshToken,
-            },
-            data: data,
-          };
-
-          const response = await axios(configParams);
-          console.log(response);
-
-          // 유효한 리프레시 토큰일 경우 서버로부터 헤더를 통해 데이터를 전달받음
-          // 새로운 엑세스 토큰과 리프레시 토큰을 받아 로컬 스토리지에 저장
-          const newAccessToken = response.data.accessToken;
-          const newRefreshToken = response.data.refreshToken;
-          localStorage.setItem("accessToken", newAccessToken);
-          localStorage.setItem("refreshToken", newRefreshToken);
-
-          // 오류가 발생한 요청을 재시도 ( 할필요는 없나?)
-          error.config.headers["Authorization"] = `Bearer ${newAccessToken}`;
-          return api.request(error.config);
-        } catch (err) {
-          // 엑세스 토큰 재발급에 실패한 경우 로그아웃 또는 다른 처리 수행
-          window.dispatchEvent(new Event("logoutEvent"));
-          console.log(err);
-        }
-      } else {
-        // 리프레시 토큰이 없는 경우 로그아웃 또는 다른 처리 수행
-        window.dispatchEvent(new Event("logoutEvent"));
-        console.log("리프레시 토큰 없음");
-      }
+      // 엑세스 토큰 만료 시 토큰 갱신 및 재시도
+      return handleTokenRefresh(error);
     }
 
     return Promise.reject(error);

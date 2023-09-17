@@ -14,6 +14,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const baseURL = process.env.REACT_APP_API_URL;
+  const prevPath = localStorage.getItem("prevPath");
 
   async function login(email, password) {
     toast.loading("로딩중...");
@@ -41,7 +42,7 @@ export function AuthProvider({ children }) {
         response.headers["authorization-refresh"]
       );
       toast.dismiss();
-      navigate("/");
+      navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
     } catch (error) {
       //불일치시 401에러
       if (error.response.status === 401) {
@@ -55,12 +56,10 @@ export function AuthProvider({ children }) {
 
   async function kakaoLogin(code) {
     try {
-      const response = await api.get(
-        `/auth/oauth/kakao?code=${code}`
-      );
+      const response = await api.get(`/auth/oauth/kakao?code=${code}`);
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
-      navigate("/");
+      navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
     } catch (error) {
       console.log(code);
       throw error;
@@ -69,13 +68,11 @@ export function AuthProvider({ children }) {
 
   async function naverLogin(code) {
     try {
-      const response = await api.get(
-        `/auth/oauth/kakao?code=${code}`
-      );
+      const response = await api.get(`/auth/oauth/kakao?code=${code}`);
 
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
-      navigate("/");
+      navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
     } catch (error) {
       console.log(code);
 
@@ -119,6 +116,7 @@ export function AuthProvider({ children }) {
       localStorage.removeItem("memberId");
       localStorage.removeItem("nickname");
       localStorage.removeItem("profileImg");
+      localStorage.removeItem("prevPath");
       setUser(null);
 
       navigate("/login");

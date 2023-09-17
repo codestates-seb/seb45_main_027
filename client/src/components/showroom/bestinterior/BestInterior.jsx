@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import BestInteriorHeader from "./BestInteriorHeader";
 import BestInteriorCarousel from "./BestInteriorCarousel";
 import useAxios from "../../../hooks/useAxios";
-import toast from "react-hot-toast";
 
 const BestInterior = ({ viewportWidth }) => {
   const [best10Data, setBest10Data] = useState([]);
@@ -35,6 +34,7 @@ const BestInterior = ({ viewportWidth }) => {
       <BestInteriorCarousel
         viewportWidth={viewportWidth}
         best10Data={best10Data}
+        setBest10Data={setBest10Data}
       />
     </div>
   );
