@@ -252,5 +252,4 @@ public class MemberService {
             throw new MemberNotFoundException(); // 멤버가 존재하지 않는 경우 예외 던지기
         }
     }
-
 }

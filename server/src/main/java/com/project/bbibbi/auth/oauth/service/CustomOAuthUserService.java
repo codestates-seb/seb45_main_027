@@ -71,9 +71,9 @@ public class CustomOAuthUserService implements OAuth2UserService<OAuth2UserReque
     }
 
     private SocialType getSocialType(String registrationId) {
-        if ("NAVER".equals(registrationId)) {
+        if ("naver".equalsIgnoreCase(registrationId)) {
             return SocialType.NAVER;
-        } else if ("KAKAO".equals(registrationId)) {
+        } else if ("kakao".equalsIgnoreCase(registrationId)) {
             return SocialType.KAKAO;
         } else {
             throw new IllegalArgumentException("지원하지 않는 registrationId입니다: " + registrationId);

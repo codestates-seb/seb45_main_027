@@ -60,13 +60,13 @@ public class AuthController {
     public String jwtTest() {
         return "jwtTest 요청 성공";
     }
-    @GetMapping("/oauth/code/naver1")
-    public String naverTest() {
-        return "네이버 코드 완료";}
-
-        @GetMapping("/oauth/code/kakao1")
-        public String cacaoTest() {
-            return "카카오 코드 완료";}
+//    @GetMapping("/oauth/code/naver")
+//    public String naverTest() {
+//        return "네이버 코드 완료";}
+//
+//        @GetMapping("/oauth/code/kakao")
+//        public String kakaoTest() {
+//            return "카카오 코드 완료";}
 
 
 
