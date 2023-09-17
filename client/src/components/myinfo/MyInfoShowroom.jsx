@@ -5,7 +5,6 @@ import MyInfoPost from "./MyInfoPost";
 import MyInfoBookmark from "./MyInfoBookmark";
 import MyInfoLike from "./MyInfoLike";
 import { toast } from "react-hot-toast";
-//import axios from "axios";
 import api from "../common/tokens";
 
 const MyInfoShowroom = ({
@@ -16,9 +15,7 @@ const MyInfoShowroom = ({
   handleFollowAction,
   label,
 }) => {
-  //const baseURL = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
-  // const accessToken = localStorage.getItem("accessToken");
 
   // 게시글, 북마크, 삭제 부분
   const deletePost = async (itemId, label) => {
@@ -95,11 +92,15 @@ const MyInfoShowroom = ({
     navigate(`/${label}/${itemId}`);
   };
 
+  const handleEditNavigate = async (itemId, label) => {
+    navigate(`/${label}/${itemId}/edit`);
+  };
+
   // 페이지네이션 부분
   const [postPage, setPostPage] = useState(1);
   const [bookmarkPage, setBookmarkPage] = useState(1);
   const [likePage, setLikePage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 4;
 
   const visiblePosts = postData
     ? postData.slice((postPage - 1) * itemsPerPage, postPage * itemsPerPage)
@@ -128,13 +129,16 @@ const MyInfoShowroom = ({
     }
   };
 
-  console.log("visiblePosts", visiblePosts);
-  console.log("visibleBookmarks", visibleBookmarks);
-  console.log("visibleLikes", visibleLikes);
+  // console.log("visiblePosts", visiblePosts);
+  // console.log("visibleBookmarks", visibleBookmarks);
+  // console.log("visibleLikes", visibleLikes);
+
+  const noContentStyle =
+    "flex items-center p-28 text-md md:text-2xl text-[#00647B]/90 font-semibold Showcard-Gothic";
 
   return (
     <>
-      <div className="md:min-h-[210px] md:min-w-[400px] flex flex-row flex-wrap items-start">
+      <div className="flex flex-row flex-wrap justify-center md:h-[180px] lg:h-[200px] xl:h-[230px]">
         {activeTab === 1 &&
           visiblePosts.map((item, idx) => (
             <MyInfoPost
@@ -145,6 +149,7 @@ const MyInfoShowroom = ({
               itemId={item.feedId || item.tipId}
               deletePost={deletePost}
               postNavigate={postNavigate}
+              handleEditNavigate={handleEditNavigate}
             />
           ))}
         {activeTab === 2 &&
@@ -173,9 +178,18 @@ const MyInfoShowroom = ({
               postNavigate={postNavigate}
             />
           ))}
+        {activeTab === 1 && postData.length === 0 && (
+          <div className={noContentStyle}>No Content!</div>
+        )}
+        {activeTab === 2 && bookmarkData.length === 0 && (
+          <div className={noContentStyle}>No Content!</div>
+        )}
+        {activeTab === 3 && likeData.length === 0 && (
+          <div className={noContentStyle}>No Content!</div>
+        )}
       </div>
       <div>
-        {activeTab === 1 && (
+        {activeTab === 1 && postData.length > 0 && (
           <Pagination
             currentPage={postPage}
             totalPages={Math.ceil(postData.length / itemsPerPage)}
@@ -189,7 +203,7 @@ const MyInfoShowroom = ({
             onPrevPage={() => handlePrevPage(postPage, setPostPage)}
           />
         )}
-        {activeTab === 2 && (
+        {activeTab === 2 && bookmarkData.length > 0 && (
           <Pagination
             currentPage={bookmarkPage}
             totalPages={Math.ceil(bookmarkData.length / itemsPerPage)}
@@ -203,7 +217,7 @@ const MyInfoShowroom = ({
             onPrevPage={() => handlePrevPage(bookmarkPage, setBookmarkPage)}
           />
         )}
-        {activeTab === 3 && (
+        {activeTab === 3 && likeData.length > 0 && (
           <Pagination
             currentPage={likePage}
             totalPages={Math.ceil(likeData.length / itemsPerPage)}

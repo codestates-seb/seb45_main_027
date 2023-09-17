@@ -16,17 +16,19 @@ const MyInfoContentList = ({myinfoData, fetchMyinfoData}) => {
   const tabStyle = (tabIndex) =>
     `${
       activeTab === tabIndex
-        ? "text-[#F5634A] border-[#F5634A]/20"
+        ? "text-[#F5634A] border-[#F5634A]/60"
         : "text-neutral-600"
-    } text-xl font-bold border-b-4 border-transparent cursor-pointer px-4 py-2 mb-[3%] mr-[6%] md:text-xl`;
+    } font-bold border-b-4 border-transparent cursor-pointer px-3 py-2 mb-[4%] mr-[6%] text-md md:text-xl`;
 
   if (!myinfoData) {
     return <div>loading...</div>;
   }
 
   return (
-    <div className="flex-col bg-white rounded-md w-full shadow-md mb-6 pl-[4%] pt-[2%] 2xl:w-[70%] md:min-h-[800px] md:my-[2%] 2xl:min-w-[800px]">
-      <ul className="flex md:mb-[2%]">
+    <div className="flex-col bg-white rounded-md w-full shadow-md mb-6  md:ml-[2%] px-[4%] py-[2%]
+      md:h-[630px] lg:h-[690px] xl:h-[750px]
+      md:my-[2%]  sm:w-[500px] md:w-[580px] lg:w-[700px] xl:w-[850px]">
+      <ul className="flex ">
         <li className={tabStyle(1)} onClick={() => handleTabs(1)}>
           게시글
         </li>
@@ -40,7 +42,7 @@ const MyInfoContentList = ({myinfoData, fetchMyinfoData}) => {
       <div className="flex flex-col flex-wrap ">
         {myinfoData && myinfoData.showRoom && (
           <>
-            <div className="text-[#F5634A] text-3xl font-bold mb-[2%]">
+            <div className="text-[#F5634A] text-xl md:text-3xl font-semibold my-[2%] Showcard-Gothic ">
               Showroom
             </div>
             <MyInfoShowroom
@@ -55,7 +57,7 @@ const MyInfoContentList = ({myinfoData, fetchMyinfoData}) => {
         )}
         {myinfoData && myinfoData.tipContent && (
           <>
-            <div className="text-[#F5634A] text-3xl font-bold mb-[2%]">
+            <div className="text-[#F5634A] text-xl md:text-3xl font-semibold my-[2%] Showcard-Gothic">
               Tips
             </div>
             <MyInfoShowroom

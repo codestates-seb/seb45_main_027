@@ -1,4 +1,3 @@
-// import axios from "axios";
 import api from "../common/tokens";
 
 const EditProfile = ({
@@ -13,14 +12,10 @@ const EditProfile = ({
 }) => {
   //유저가 사진 업로드시 서버로 보냄
   const handleImageUpload = async (e) => {
-
     const file = e.target.files[0];
     const reader = new FileReader();
     const formData = new FormData();
     formData.append("myInfoImage", file);
-
-    // const baseURL = process.env.REACT_APP_API_URL;
-    // const accessToken = localStorage.getItem("accessToken");
 
     reader.onloadend = () => {
       setProfileData({ ...profileData, profileImg: reader.result });
@@ -31,19 +26,15 @@ const EditProfile = ({
     }
 
     try {
-      const response = await api.post(
-        `/imageUpload/myInfoImage`,
-        formData, 
-        {
-          headers: {
-            //Authorization: accessToken ? `Bearer ${accessToken}` : "",
-            "ngrok-skip-browser-warning": "69420",
-          },
-        }
-      );
+      const response = await api.post(`/imageUpload/myInfoImage`, formData, {
+        headers: {
+          "ngrok-skip-browser-warning": "69420",
+        },
+      });
 
       //이미지 업로드 성공시 응답으로 받은 사진 경로 확인
-      console.log("Image uploaded:", response.data);
+      //console.log("Image uploaded:", response.data);
+      
       // 응답으로 받은 사진을 여기서 저장해서 유저한테 보여줌
       setProfileData({ ...profileData, profileImg: response.data });
     } catch (error) {
@@ -69,11 +60,11 @@ const EditProfile = ({
             : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
         }
         alt="Profile"
-        className="w-[200px] h-[200px] rounded-full object-cover opacity-100"
+        className="w-[200px] h-[200px] mb-6 rounded-full object-cover opacity-100"
       />
       <div className="flex flex-row">
         <label
-          className={`${buttonStyle} cursor-pointer flex justify-center`}
+          className={`${buttonStyle} cursor-pointer flex justify-center mr-1`}
           htmlFor="profilePictureInput"
         >
           Choose Profile Picture
@@ -95,7 +86,7 @@ const EditProfile = ({
         placeholder="Nickname"
         value={profileData.nickname}
         onChange={handleProfileChange}
-        className={`${inputStyle} mt-10`}
+        className={`${inputStyle} mt-8`}
       />
       <textarea
         name="myIntro"
