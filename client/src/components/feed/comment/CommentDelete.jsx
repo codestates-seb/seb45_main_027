@@ -7,7 +7,7 @@ const CommentDelete = ({ comment, replies, setReplies }) => {
   const { feedId } = useParams(); // 게시물 번호
 
   // DELETE 요청
-  const postComment = async (feedReplyId) => {
+  const deleteComment = async (feedReplyId) => {
     const configParams = {
       method: "DELETE",
       url: `/feed/${feedId}/feedReply/${feedReplyId}`,
@@ -38,7 +38,7 @@ const CommentDelete = ({ comment, replies, setReplies }) => {
         <button
           className="mx-2"
           onClick={() => {
-            postComment(comment.feedReplyId);
+            deleteComment(comment.feedReplyId);
           }}>
           삭제하기
         </button>

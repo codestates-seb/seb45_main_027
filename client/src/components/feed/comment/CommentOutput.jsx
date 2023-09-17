@@ -23,19 +23,12 @@ const CommentOutput = ({ feedData, setFeedData }) => {
       setReplies(feedData.replies);
     } 
   }, [feedData]);
-   
-    console.log(replies);
-
-    useEffect(() => {
-      console.log(showReplyBox);
-    }, [showReplyBox]);
-
     
   return (
     <div>
       {/* 댓글 출력창 */}
       {replies &&
-              replies.map((comment, index) => (
+        replies.map((comment, index) => (
           <div key={comment.feedReplyId} className="flex flex-col mt-10">
             <div className="bg-[#fceecd75] p-8 rounded-lg shadow">
               <div className="flex items-start">
@@ -61,7 +54,7 @@ const CommentOutput = ({ feedData, setFeedData }) => {
                   <div className="flex items-center text-gray-500 font-medium text-base">
                     {/* 작성날짜 */}
                     <span className="mr-2.5">
-                      {comment.createdDateTime.split("T")[0]}
+                      {/* {comment.createdDateTime.split("T")[0]} */}
                     </span>
                     {/* 좋아요 */}
                     <CommentLike comment={comment} />
@@ -103,6 +96,9 @@ const CommentOutput = ({ feedData, setFeedData }) => {
                       commentId={comment.feedReplyId}
                       feedData={feedData}
                       setFeedData={setFeedData}
+                      comment={comment}
+                      replies={replies}
+                      setReplies={setReplies}
                     />
                   )}
                 </div>
