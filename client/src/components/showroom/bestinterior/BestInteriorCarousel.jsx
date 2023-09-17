@@ -3,8 +3,10 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { useNavigate } from "react-router-dom";
 import "./BestInteriorCarousel.css";
+import api from "../../common/tokens";
+import toast from "react-hot-toast";
 
-const BestInteriorCarousel = ({ viewportWidth, best10Data }) => {
+const BestInteriorCarousel = ({ viewportWidth, best10Data, setBest10Data }) => {
   const [numVisibleSlides, setNumVisibleSlides] = useState(20); // 캐러셀 사진 크기를 반응형으로 제어하기 위한 상태
   const navigate = useNavigate();
   // 반응형 구현 로직
@@ -29,10 +31,50 @@ const BestInteriorCarousel = ({ viewportWidth, best10Data }) => {
   }, [viewportWidth]);
 
   // 북마크 상태를 변경시켜주는 함수
-  const toggleBookmark = (idx) => {
-    console.log(idx);
-  };
+  const toggleBookmark = async (feedId) => {
+    try {
+      // API 호출을 위한 설정 객체
+      const configParams = {
+        method: "PATCH",
+        url: `/feed/${feedId}/feedBookMark`,
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        },
+      };
 
+      // API 호출
+      const response = await api(configParams);
+
+      // API 호출이 성공했을 때 이미지 상태 업데이트
+      if (response.status === 200) {
+        // showroomData 배열을 복사하여 새로운 배열을 생성
+        const updatedBest10Data = [...best10Data];
+
+        // feedId와 일치하는 요소 찾기
+        const updatedItemIndex = updatedBest10Data.findIndex(
+          (item) => item.feedId === feedId
+        );
+
+        if (updatedItemIndex !== -1) {
+          // feedId가 일치하는 요소가 있다면 bookMarkYn 값을 업데이트
+          if (response.data.data.bookMarkYn === true) {
+            toast.success("북마크가 등록되었습니다!");
+          } else {
+            toast.success("북마크가 해제되었습니다!");
+          }
+
+          updatedBest10Data[updatedItemIndex].bookMarkYn =
+            response.data.data.bookMarkYn;
+          setBest10Data(updatedBest10Data); // 업데이트된 배열을 상태로 설정합니다.
+          console.log(best10Data);
+        }
+      }
+    } catch (error) {
+      toast.error("북마크 처리에 실패하였습니다.");
+      console.error("북마크 토글 실패:", error);
+    }
+  };
   // 게시글 클릭시 해당 게시물로 이동하는 함수
   const handleFeedClick = (feedId) => {
     navigate(`/showroom/${feedId}`);
@@ -53,7 +95,7 @@ const BestInteriorCarousel = ({ viewportWidth, best10Data }) => {
         className="absolute w-12 h-12 bottom-0 right-1"
         onClick={(event) => {
           event.stopPropagation(); // 이벤트캡쳐링 방지
-          toggleBookmark(idx);
+          toggleBookmark(data.feedId);
         }}
       >
         <img
@@ -87,6 +129,7 @@ const BestInteriorCarousel = ({ viewportWidth, best10Data }) => {
         emulateTouch={true}
         selectedItem={5}
         showIndicators={false}
+        stopOnHover={true}
         className=""
         // onClickItem={toggleBookmark}
       >
