@@ -2,28 +2,23 @@ import React, { useState, useEffect } from "react";
 import CommentDelete from "./CommentDelete";
 import CommentPatch from "./CommentPatch";
 import CommentLike from "./CommentLike";
-import ReplyWrap from "./ReplyWrap";
+import ReplyInput from "./ReplyInput";
 
-const CommentOutput = ({ feedData, setFeedData }) => {
+const CommentOutput = ({ feedData, setFeedData, children }) => {
   const profileImg = localStorage.getItem("profileImg");
-  
   // feedData 안에 댓글 접근
   const [replies, setReplies] = useState("");
-    
   // 댓글 수정 상태
-    const [editComent, setEditComent] = useState({});
-    
-    // 답글창
-    const [showReplyBox, setShowReplyBox] = useState({});
-
-
+  const [editComent, setEditComent] = useState({});
+  // 답글창
+  const [showReplyBox, setShowReplyBox] = useState({});
   // 전체데이터에서 댓글 접근
   useEffect(() => {
     if (feedData) {
       setReplies(feedData.replies);
-    } 
+    }
   }, [feedData]);
-    
+
   return (
     <div>
       {/* 댓글 출력창 */}
@@ -54,10 +49,10 @@ const CommentOutput = ({ feedData, setFeedData }) => {
                   <div className="flex items-center text-gray-500 font-medium text-base">
                     {/* 작성날짜 */}
                     <span className="mr-2.5">
-                      {/* {comment.createdDateTime.split("T")[0]} */}
+                      {comment.createdDateTime.split("T")[0]}
                     </span>
                     {/* 좋아요 */}
-                    <CommentLike comment={comment} />
+                    <CommentLike feedData={feedData} comment={comment} />
                     {/* 답글 */}
                     <div key={comment.feedReplyId} className="flex flex-col">
                       <button
@@ -92,17 +87,15 @@ const CommentOutput = ({ feedData, setFeedData }) => {
                     />
                   </div>
                   {showReplyBox[comment.feedReplyId] && (
-                    <ReplyWrap
-                      commentId={comment.feedReplyId}
+                    <ReplyInput
+                      comment={comment}
                       feedData={feedData}
                       setFeedData={setFeedData}
-                      comment={comment}
-                      replies={replies}
-                      setReplies={setReplies}
                     />
                   )}
                 </div>
               </div>
+              {children}
             </div>
           </div>
         ))}

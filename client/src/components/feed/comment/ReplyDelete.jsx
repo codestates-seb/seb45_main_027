@@ -3,11 +3,11 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import api from "../../common/tokens";
 
-const ReplyDelete = ({ comment,comments, replies, setReplies }) => {
-    const { feedId } = useParams(); // 게시물 번호
-    
-    const feedReplyId = comment.feedReplyId;
-    const commentId = comments.feedReplyId;
+const ReplyDelete = ({ comment, feedReplyId,comments, replies, setReplies }) => {
+  const { feedId } = useParams(); // 게시물 번호
+
+  // const feedReplyId = comment.feedReplyId;
+  const commentId = comments.feedReplyId;
 
   // DELETE 요청
   const deleteReply = async () => {
@@ -34,7 +34,7 @@ const ReplyDelete = ({ comment,comments, replies, setReplies }) => {
       toast.error("답글을 삭제할 수 없습니다.");
     }
   };
-    
+
   return (
     <div>
       <button

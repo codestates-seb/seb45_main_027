@@ -26,6 +26,7 @@ const CommentDelete = ({ comment, replies, setReplies }) => {
             );
           }
         })
+        toast.success("댓글이 삭제되었습니다.")
       }
     } catch (err) {
       console.error("err comment:", err);
