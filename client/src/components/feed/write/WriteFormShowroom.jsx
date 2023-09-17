@@ -63,10 +63,12 @@ const WriteFormShowroom = ({
   const handleDeleteImageAndTags = () => {
     // 상위 <div id="contentImage"> 요소를 삭제
     const updatedContent = editorContent.replace(
-      /<br\/><div id="contentImage" class="relative mx-5"[\s\S]*?<\/div><br\/>/,
+      /<br\s*\/?>\s*<div\s+class="flex justify-center">\s*<div\s+id="contentImage"\s+class="relative mx-5"[\s\S]*?<\/div>\s*<\/div>\s*<br\s*\/?>/g,
       ""
     );
     setEditorContent(updatedContent);
+    setImageSrc(null);
+    setTags([]);
   };
 
   const handlePost = () => {
@@ -77,12 +79,12 @@ const WriteFormShowroom = ({
     }));
 
     // post요청시 이미지 태그 생성, 이미지 태그 내 태그 삽입
-    const combinedHTML = `<br/><div id="contentImage" class="relative mx-5" style="display: inline-block; justify-content: center; align-items: center; position: relative; text-align: center;"><img src="${imageSrc}" class="" alt="Uploaded Image" contentEditable="false" />${tagsData
+    const combinedHTML = `<br/><div class="flex justify-center"><div id="contentImage" class="relative mx-5" style="display: inline-block; justify-content: center; align-items: center; position: relative; text-align: center;"><img src="${imageSrc}" class="" alt="Uploaded Image" contentEditable="false" />${tagsData
       .map(
         (tag) =>
           `<span class="bg-[#F5634A] p-2 rounded-xl text-white text-base" style="position: absolute; left: ${tag.x}; top: ${tag.y}; transform: translate(-50%, -50%);" contentEditable="false">${tag.text}</span>`
       )
-      .join("")}</div><br/>`;
+      .join("")}</div></div><br/>`;
 
     // 에디터 내용에 이미지삽입
     setEditorContent(editorContent + combinedHTML);

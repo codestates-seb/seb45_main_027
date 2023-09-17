@@ -9,8 +9,8 @@ const ImageEditGuide = () => {
   return (
     <div>
       <h2 className="flex my-2 text-2xl font-semibold">
-        <img src={guideimgsrc} className="w-[24px]" />
-        <span className="px-3">이미지 편집 Guide</span>
+        {/* <img src={guideimgsrc} className="w-[24px]" /> */}
+        <span className="px-3"> ⭐ 이미지 편집 가이드 ⭐</span>
       </h2>
       <ol className="text-md p-3">
         <li className="py-1">
