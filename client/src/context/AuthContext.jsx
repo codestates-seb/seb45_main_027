@@ -13,13 +13,13 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  //const baseURL = process.env.REACT_APP_API_URL;
+  const baseURL = process.env.REACT_APP_API_URL;
 
   async function login(email, password) {
     toast.loading("로딩중...");
 
     try {
-      const response = await api.post(`/auth/login`, {
+      const response = await axios.post(`${baseURL}/auth/login`, {
         email,
         password,
       });
@@ -87,7 +87,7 @@ export function AuthProvider({ children }) {
     toast.loading("로딩중...");
 
     try {
-      await api.post(`/auth/signup`, {
+      await axios.post(`${baseURL}/auth/signup`, {
         email,
         nickname,
         password,
