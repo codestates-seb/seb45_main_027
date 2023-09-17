@@ -16,7 +16,7 @@ console.log(feedData);
         <div className="border w-16 h-16 rounded-full mr-4">
           <img
             src={`${feedData.memberImage}`}
-            className="w-full h-full rounded-full object-cover"
+            className="w-full h-full rounded-full object-cover cursor-pointer"
             onClick={() => {
               navigate(`/myinfo/${feedData.memberId}`);
             }}
@@ -25,7 +25,13 @@ console.log(feedData);
         </div>
         <div>
           <div className="flex items-center">
-            <div className="text-xl font-semibold">{feedData.nickname}</div>
+            <div
+              onClick={() => {
+                navigate(`/myinfo/${feedData.memberId}`);
+              }}
+              className="text-xl font-semibold cursor-pointer">
+              {feedData.nickname}
+            </div>
             <div className="flex items-center pr-2 pl-2.5 text-2xl">·</div>
             <button className="" onClick={toggleFollow}>
               {follow ? (

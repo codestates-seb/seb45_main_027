@@ -28,7 +28,13 @@ const TipsUserTop = ({ feedData }) => {
           />
         </div>
         <div>
-          <div className="text-lg font-semibold">{feedData.nickname}</div>
+          <div
+            onClick={() => {
+              navigate(`/myinfo/${feedData.memberId}`);
+            }}
+            className="text-lg font-semibold">
+            {feedData.nickname}
+          </div>
           <div className="text-gray-500">{datePart}</div>
         </div>
       </div>

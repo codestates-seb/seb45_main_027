@@ -7,7 +7,6 @@ import ReplyInput from "./ReplyInput";
 
 const CommentOutput = ({ feedData, setFeedData, children }) => {
   const memberId = localStorage.getItem("memberId");
-  const profileImg = localStorage.getItem("profileImg");
   const navigate = useNavigate();
   
   // feedData 안에 댓글 접근
@@ -38,10 +37,14 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                   }}
                   src={`${comment.memberImage}`}
                   alt="profileImg"
-                  className="w-10 h-10 mr-2.5 rounded-full object-cover"
+                  className="w-10 h-10 mr-2.5 rounded-full object-cover cursor-pointer"
                 />
                 <div className="flex flex-col ml-4 w-full">
-                  <span className="text-lg font-semibold">
+                  <span
+                    onClick={() => {
+                      navigate(`/myinfo/${comment.memberId}`);
+                    }}
+                    className="text-lg font-semibold cursor-pointer">
                     {comment.nickname}
                   </span>
 

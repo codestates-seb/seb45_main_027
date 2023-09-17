@@ -23,12 +23,16 @@ const ReplyOutput = ({ feedData, setFeedData }) => {
                     onClick={() => {
                       navigate(`/myinfo/${comments.memberId}`);
                     }}
-                    className="w-10 h-10 mr-2.5 rounded-full object-cover"
+                    className="w-10 h-10 mr-2.5 rounded-full object-cover cursor-pointer"
                     alt="유저사진"
                   />
                   <div className="flex flex-col ml-4 w-full">
                     {/* 답변 작성자 */}
-                    <span className="text-lg font-semibold">
+                    <span
+                      onClick={() => {
+                        navigate(`/myinfo/${feedData.memberId}`);
+                      }}
+                      className="text-lg font-semibold cursor-pointer">
                       {comments.nickname}
                     </span>
 

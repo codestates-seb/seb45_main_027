@@ -26,11 +26,17 @@ const ShowroomUserTop = ({ feedData }) => {
             }}
             src={`${feedData.memberImage}`}
             alt="profileImg"
-            className="w-10 h-10 mr-2.5 rounded-full object-cover"
+            className="w-10 h-10 mr-2.5 rounded-full object-cover cursor-pointer"
           />
         </div>
         <div>
-          <div className="text-lg font-semibold">{feedData.nickname}</div>
+          <div
+            onClick={() => {
+              navigate(`/myinfo/${feedData.memberId}`);
+            }}
+            className="text-lg font-semibold cursor-pointer">
+            {feedData.nickname}
+          </div>
           <div className="text-gray-500">{datePart}</div>
         </div>
       </div>
