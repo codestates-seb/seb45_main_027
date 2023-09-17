@@ -1,46 +1,42 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
-import api from "../../common/tokens";
+import useAxios from "../../../hooks/useAxios";
 
-const CommentLike = ({ comment }) => {
-  const { feedId } = useParams(); // 게시물 번호
-  const [like, setLike] = useState(false);
+const CommentLike = ({  comment }) => {
+  const feedReplyId = comment.feedReplyId;  
+  const [like, setLike] = useState("");
 
-  const likeComment = async (feedReplyId) => {
-    const newLikeStatus = !like;
-    const configParams = {
+  // 좋아요 상태
+  const [resLike, errLike, loadingLike, fetchLikeData] = useAxios(
+    {
       method: "PATCH",
-      url: `/feed/${feedId}/feedReply/${feedReplyId}`,
+      url: `/feed/feedReply/${feedReplyId}/feedReplyLike`,
       headers: {
         "ngrok-skip-browser-warning": "69420",
       },
-      data: {
-        replyLikeYn: newLikeStatus,
-      },
-    };
-    
-    try {
-        const response = await api(configParams);
-        
-      if (response && response.status === 200) {
-        setLike(newLikeStatus);
-        toast.success("해당 댓글을 좋아합니다.");
-      } else {
-        toast.error("다시 시도해주세요");
-      }
-        console.log(response);
-    } catch (err) {
-      toast.error("다시 시도해주세요");
-    }
-    
+    },
+    false
+  );
+
+  const toggleLike = () => {
+    fetchLikeData();
+    setLike(!like);
+    toast.success("클릭하셨습니다.")
   };
 
+  // [좋아요/북마크] 받아온 요청 상태 저장
+  useEffect(() => {
+    if (comment) {
+      setLike(comment.replyLikeYn);
+    }
+  }, [comment]);
+
+  console.log(comment.replyLikeYn);
   return (
     <>
       <button
-        className="flex items-center"
-        onClick={() => likeComment(comment.feedReplyId)}>
+        className="flex items-center hover:font-semibold"
+        onClick={toggleLike}>
         <img
           className="w-6 h-6 mr-1"
           src={

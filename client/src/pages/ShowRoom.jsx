@@ -56,11 +56,12 @@ const ShowRoom = () => {
     };
   }, [viewportWidth]);
 
+  // 무한스크롤 구현하면서 필요없어진 코드같음..
   useEffect(() => {
-    if (!showroomData.length && loading) {
+    if (!showroomData && loading) {
       toast.loading("데이터를 불러오는 중입니다...");
-    } else if (showroomData.length || error) {
-      toast.dismiss();
+    } else if (showroomData || error) {
+      // toast.dismiss();
     }
   }, [showroomData, loading, error]);
 
@@ -151,7 +152,7 @@ const ShowRoom = () => {
   // 새로운 페이지 데이터를 불러오는 함수
   const loadMoreData = async (url) => {
     try {
-      toast.loading("데이터를 불러오는 중입니다..."); // 데이터 로딩 중 토스트 메시지 표시
+      toast.loading("로딩중..."); // 데이터 로딩 중 토스트 메시지 표시
       const res = await api({ ...configParams, url });
       if (res.data.isLast === false) {
         setShowroomData((prevData) => [...prevData, ...res.data.data]);
@@ -193,6 +194,17 @@ const ShowRoom = () => {
       }
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center h-auto">
+        <img
+          src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/loading.gif"
+          alt="로딩중"
+        />
+      </div>
+    );
+  }
 
   return (
     <Background mainclassName="h-full bg-[#FFFAEE]">

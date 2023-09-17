@@ -3,14 +3,18 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import api from "../../common/tokens";
 
-const CommentDelete = ({ comment, replies, setReplies }) => {
+const ReplyDelete = ({ comment, feedReplyId,comments, replies, setReplies }) => {
   const { feedId } = useParams(); // 게시물 번호
 
+  // const feedReplyId = comment.feedReplyId;
+  const commentId = comments.feedReplyId;
+
   // DELETE 요청
-  const deleteComment = async (feedReplyId) => {
+  const deleteReply = async () => {
     const configParams = {
       method: "DELETE",
-      url: `/feed/${feedId}/feedReply/${feedReplyId}`,
+      url: `/feed/${feedId}/feedReply/${feedReplyId}/feedComment/${commentId}`,
+
       headers: {
         "ngrok-skip-browser-warning": "69420",
       },
@@ -21,25 +25,22 @@ const CommentDelete = ({ comment, replies, setReplies }) => {
       if (res && res.status === 200) {
         setReplies((prev) => {
           if (Array.isArray(prev)) {
-            return prev.filter(
-              (reply) => reply.feedReplyId !== feedReplyId
-            );
+            return prev.filter((reply) => reply.feedReplyId !== feedReplyId);
           }
-        })
-        toast.success("댓글이 삭제되었습니다.")
+        });
       }
     } catch (err) {
       console.error("err comment:", err);
-      toast.error("댓글을 삭제할 수 없습니다.");
+      toast.error("답글을 삭제할 수 없습니다.");
     }
   };
 
   return (
     <div>
       <button
-        className="mx-2 hover:font-semibold"
+        className="mx-1 hover:font-semibold"
         onClick={() => {
-          deleteComment(comment.feedReplyId);
+          deleteReply();
         }}>
         삭제하기
       </button>
@@ -47,4 +48,4 @@ const CommentDelete = ({ comment, replies, setReplies }) => {
   );
 };
 
-export default CommentDelete;
+export default ReplyDelete;
