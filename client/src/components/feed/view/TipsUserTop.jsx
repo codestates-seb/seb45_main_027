@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserContext } from "../../../context/userContext";
+import useAxios from "../../../hooks/useAxios";
+import { useParams } from "react-router-dom";
 
 const buttonStyle =
   "flex items-center justify-center rounded-lg shadow w-32 h-full";
-  
-const TipsUserTop = ({ feedData }) => {
-  const { follow, setFollow, toggleFollow } = useUserContext();
+
+const TipsUserTop = ({ feedData,setFollow, follow, res, patchFetchData }) => {
   const navigate = useNavigate();
+
+  if (res && res.data && res.data.data) {
+    console.log(res.data);
+    console.log(res.data.followYn);
+  }
+
+  const toggleFollow = () => {
+    patchFetchData();
+    setFollow(!follow);
+  };
+
+  useEffect(() => {
+    if (res && res.data) {
+      setFollow(res.data.followYn);
+    }
+  }, [res]);
 
   let datePart = "";
   if (feedData && feedData.createdDateTime) {
@@ -38,7 +54,9 @@ const TipsUserTop = ({ feedData }) => {
           <div className="text-gray-500">{datePart}</div>
         </div>
       </div>
-      <button onClick={toggleFollow}>
+      <button
+        // onClick={toggleFollow}
+      >
         {follow ? (
           <div className={`bg-white ${buttonStyle} `}>
             <img
