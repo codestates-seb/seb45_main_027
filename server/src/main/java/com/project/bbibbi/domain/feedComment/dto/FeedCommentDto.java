@@ -21,6 +21,7 @@ public class FeedCommentDto {
     private String nickname;
     private Long feedId;
     private LocalDateTime createdDateTime;
+    private String memberImage;
 
     public static FeedCommentDto toDto(FeedComment feedComment) {
         return FeedCommentDto.builder()
@@ -31,6 +32,7 @@ public class FeedCommentDto {
                 .memberId(feedComment.getMember().getMemberId())
                 .parentComment(feedComment.getParentComment())
                 .nickname(feedComment.getMember().getNickname())
+                .memberImage(feedComment.getMember().getProfileImg())
                 .createdDateTime(feedComment.getCreatedDateTime())
                 .build();
     }

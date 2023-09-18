@@ -313,6 +313,24 @@ public class FeedService {
             }
         }
 
+
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
+        for(Feed feed : selectedFeeds){
+
+            if(member == null){
+
+                feed.setBookMarkYn(false);
+            }
+            else {
+                int loginUserBookYn = feedBookMarkRepository.existCount(feed.getFeedId(), member.getMemberId());
+                if(loginUserBookYn == 0) feed.setBookMarkYn(false);
+                else feed.setBookMarkYn(true);
+            }
+
+        }
+
+
         return selectedFeeds;
 
     }
@@ -331,6 +349,21 @@ public class FeedService {
 
         }
 
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
+        for(Feed feed : selectedFeeds){
+
+            if(member == null){
+
+                feed.setBookMarkYn(false);
+            }
+            else {
+                int loginUserBookYn = feedBookMarkRepository.existCount(feed.getFeedId(), member.getMemberId());
+                if(loginUserBookYn == 0) feed.setBookMarkYn(false);
+                else feed.setBookMarkYn(true);
+            }
+
+        }
 
         return selectedFeeds;
 
@@ -340,6 +373,21 @@ public class FeedService {
 
         List<Feed> selectedTopTenFeeds = feedRepository.findByLikeTopTen();
 
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
+        for(Feed feed : selectedTopTenFeeds){
+
+            if(member == null){
+
+                feed.setBookMarkYn(false);
+            }
+            else {
+                int loginUserBookYn = feedBookMarkRepository.existCount(feed.getFeedId(), member.getMemberId());
+                if(loginUserBookYn == 0) feed.setBookMarkYn(false);
+                else feed.setBookMarkYn(true);
+            }
+
+        }
         return selectedTopTenFeeds;
 
     }
@@ -355,6 +403,21 @@ public class FeedService {
 
         List<Feed> pageFeeds = feedRepository.findByMemberOrderByCreatedDateTimeDesc(Member.builder().memberId(myInfoMemberId).build());
 
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
+        for(Feed feed : pageFeeds){
+
+            if(member == null){
+
+                feed.setBookMarkYn(false);
+            }
+            else {
+                int loginUserBookYn = feedBookMarkRepository.existCount(feed.getFeedId(), member.getMemberId());
+                if(loginUserBookYn == 0) feed.setBookMarkYn(false);
+                else feed.setBookMarkYn(true);
+            }
+
+        }
         return  pageFeeds;
     }
 
@@ -362,12 +425,43 @@ public class FeedService {
 
         List<Feed> pageFeeds = feedRepository.findByMemberLike(myInfoMemberId);
 
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
+        for(Feed feed : pageFeeds){
+
+            if(member == null){
+
+                feed.setBookMarkYn(false);
+            }
+            else {
+                int loginUserBookYn = feedBookMarkRepository.existCount(feed.getFeedId(), member.getMemberId());
+                if(loginUserBookYn == 0) feed.setBookMarkYn(false);
+                else feed.setBookMarkYn(true);
+            }
+
+        }
         return pageFeeds;
     }
 
     public List<Feed> findMyInfoFeedsBookMark(long myInfoMemberId){
 
         List<Feed> pageFeeds = feedRepository.findByMemberBookMark(myInfoMemberId);
+
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
+        for(Feed feed : pageFeeds){
+
+            if(member == null){
+
+                feed.setBookMarkYn(false);
+            }
+            else {
+                int loginUserBookYn = feedBookMarkRepository.existCount(feed.getFeedId(), member.getMemberId());
+                if(loginUserBookYn == 0) feed.setBookMarkYn(false);
+                else feed.setBookMarkYn(true);
+            }
+
+        }
 
         return pageFeeds;
     }
