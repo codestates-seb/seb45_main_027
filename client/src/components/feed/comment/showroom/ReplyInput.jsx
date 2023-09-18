@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import api from "../../../common/tokens";
@@ -27,25 +27,35 @@ const ReplyInput = ({ comment, feedData, setFeedData }) => {
       if (res && res.status === 200) {
         const newReply = res.data;
 
-        // 답글 배열에 새 답글 추가
-        const updatedComments = [...comments, newReply];
-        setEnterReply(updatedComments);
-
-        // 상위 컴포넌트에서 넘어온 comment를 기반으로 업데이트
-        const updatedFeedData = JSON.parse(JSON.stringify(feedData));
-        updatedFeedData.replies.forEach((reply) => {
+        // 기존 feedData를 얕은 복사하여 업데이트 진행
+        const updatedFeedData = { ...feedData };
+        updatedFeedData.replies = updatedFeedData.replies.map((reply) => {
           if (reply.feedReplyId === commentId) {
-            reply.comments.push(newReply);
+            // 해당 답글의 comments 배열에 새로운 답글 추가
+            // 예외를 방지하기 위해 reply.comments가 undefined일 경우 기본적으로 빈 배열로 설정해야함!!
+            const updatedComments = Array.isArray(reply.comments)
+              ? [...reply.comments]
+              : [];
+            return {
+              ...reply,
+              comments: [...updatedComments, newReply],
+            };
           }
+          return reply;
         });
 
+        // 업데이트된 feedData를 설정
         setFeedData(updatedFeedData);
 
         setInputReply("");
         toast.success("답글을 입력하셨습니다.");
+      } else {
+        console.error("POST 요청 실패: " + res.status);
+        toast.error("답글을 추가할 수 없습니다.");
       }
     } catch (err) {
-      toast.error("답글을 추가할 수 없습니다.");
+      console.error("예외 발생: " + err);
+      toast.error("답글을 추가하는 중 오류가 발생했습니다.");
     }
   };
 
@@ -55,9 +65,12 @@ const ReplyInput = ({ comment, feedData, setFeedData }) => {
     }
   };
 
-  if (!comments) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    // 답글 입력 후 상태 업데이트
+    if (comments !== undefined) {
+      setEnterReply(comments);
+    }
+  }, [comments]);
 
   return (
     <div className="w-full flex mt-6">
