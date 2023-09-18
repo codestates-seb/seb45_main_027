@@ -7,7 +7,6 @@ const buttonStyle = "flex items-center justify-center h-full";
 
 const UserBottom = ({ feedData, setFollow, follow, res }) => {
   const memberId = localStorage.getItem("memberId");
-  const userId = feedData.userId;
   const frommemberId = feedData.memberId;
   const navigate = useNavigate();
 
@@ -60,8 +59,11 @@ const UserBottom = ({ feedData, setFollow, follow, res }) => {
               className="text-xl font-semibold cursor-pointer">
               {feedData.nickname}
             </div>
-            {memberId === userId &&
-              (<div className="flex items-center pr-2 pl-2.5 text-2xl">·</div>)(
+            {memberId !== frommemberId ?
+              ((
+                <div className="flex items-center pr-2 pl-2.5 text-2xl">·</div>
+              ),
+              (
                 <button className="" onClick={toggleFollow}>
                   {follow ? (
                     <div className={buttonStyle}>
@@ -85,10 +87,15 @@ const UserBottom = ({ feedData, setFollow, follow, res }) => {
                     </div>
                   )}
                 </button>
-              )}
+                ))
+              :
+              ""
+            }
           </div>
           <div className="text-xl text-gray-500 mt-2">
-            {feedData.myIntro ? feedData.myIntro : `${feedData.nickname}님의 게시글 입니다.`}
+            {feedData.myIntro
+              ? feedData.myIntro
+              : `${feedData.nickname}님의 게시글 입니다.`}
           </div>
         </div>
       </div>

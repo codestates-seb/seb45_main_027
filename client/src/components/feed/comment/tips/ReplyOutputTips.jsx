@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import ReplyDelete from "./ReplyDelete";
-// import ReplyPatch from "./ReplyPatch";
+import ReplyDeleteTips from "./ReplyDeleteTips";
+import ReplyPatchTips from "./ReplyPatchTips";
 
 const ReplyOutput = ({ commentsData, feedData, setFeedData }) => {
   const navigate = useNavigate();
   const memberId = localStorage.getItem("memberId");
+
   const [editReply, setEditReply] = useState({});
 
-  console.log(commentsData);
   if (!commentsData) {
     return;
   }
-
   return (
     <>
       {commentsData.map((comment, idx) => (
@@ -43,14 +42,14 @@ const ReplyOutput = ({ commentsData, feedData, setFeedData }) => {
             </span>
 
             {/* 수정하기 */}
-            {/* <ReplyPatch
+            <ReplyPatchTips
               comment={comment}
               commentsData={commentsData}
               setFeedData={setFeedData}
               feedData={feedData}
               editReply={editReply}
               setEditReply={setEditReply}
-            /> */}
+            />
             {/* 댓글 내용 */}
             <div className="flex items-center text-gray-500 font-medium text-base">
               {/* 작성날짜 */}
@@ -68,21 +67,21 @@ const ReplyOutput = ({ commentsData, feedData, setFeedData }) => {
                   onClick={() => {
                     setEditReply({
                       ...editReply,
-                      [comment.feedCommentId]: true,
+                      [comment.tipCommentId]: true,
                     });
                   }}>
                   수정하기
                 </button>
               )}
               {/* 삭제 */}
-              {/* {memberId == comment.memberId && (
-                <ReplyDelete
+              {memberId == comment.memberId && (
+                <ReplyDeleteTips
                   comment={comment}
                   commentsData={commentsData}
                   setFeedData={setFeedData}
                   feedData={feedData}
                 />
-              )} */}
+              )}
             </div>
           </div>
         </div>
