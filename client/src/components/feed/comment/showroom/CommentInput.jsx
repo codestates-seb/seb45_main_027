@@ -37,7 +37,6 @@ const CommentInput = ({ feedData, setFeedData }) => {
           repliesCount: addCommentCout,
           replies: addComment,
         });
-        console.log(res.data);
 
         setInputComment("");
         toast.success("댓글을 입력하셨습니다.");
@@ -69,7 +68,7 @@ const CommentInput = ({ feedData, setFeedData }) => {
       </div>
       <div className="flex w-full mt-4">
         <img
-          src={profileImg} 
+          src={profileImg}
           alt="profileImg"
           className="w-10 h-10 mr-2.5 rounded-full object-cover"
         />
@@ -82,7 +81,8 @@ const CommentInput = ({ feedData, setFeedData }) => {
           />
           <button
             className="absolute right-0 top-1/4 pr-4"
-            onClick={postComment}>
+            onClick={postComment}
+          >
             입력
           </button>
         </div>

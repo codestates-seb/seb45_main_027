@@ -38,9 +38,9 @@ const ReplyInput = ({ comment, feedData, setFeedData }) => {
             reply.comments.push(newReply);
           }
         });
-        setFeedData(updatedFeedData);
 
-        // Clear the input field
+        setFeedData(...feedData, updatedFeedData);
+
         setInputReply("");
         toast.success("답글을 입력하셨습니다.");
       }
@@ -75,7 +75,8 @@ const ReplyInput = ({ comment, feedData, setFeedData }) => {
         />
         <button
           className="absolute right-0 top-1/4 pr-4"
-          onClick={() => postReply(comment.feedReplyId)}>
+          onClick={() => postReply(comment.feedReplyId)}
+        >
           입력
         </button>
       </div>
