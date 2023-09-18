@@ -76,16 +76,16 @@ public class Feed extends BaseEntity{
     private List<FeedReply> replies;
 
     @Transient
-    private int likeCount;
+    private int likeCount = 0;
 
     @Transient
-    private Boolean likeYn;
+    private Boolean likeYn = false;
 
     @Transient
-    private int bookMarkCount;
+    private int bookMarkCount = 0;
 
     @Transient
-    private Boolean bookMarkYn;
+    private Boolean bookMarkYn = false;
 
     @Transient
     private Boolean finalPage = false;

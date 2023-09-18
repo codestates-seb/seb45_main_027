@@ -50,16 +50,16 @@ public class Tip extends BaseEntity {
     private List<TipReply> replies;
 
     @Transient
-    private int likeCount;
+    private int likeCount = 0;
 
     @Transient
-    private Boolean likeYn;
+    private Boolean likeYn = false;
 
     @Transient
-    private int bookmarkCount;
+    private int bookmarkCount = 0;
 
     @Transient
-    private Boolean bookmarkYn;
+    private Boolean bookmarkYn = false;
 
 //    @OneToMany(mappedBy = "tip", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    private List<TipLike> tipLikes = new ArrayList<>();
