@@ -62,9 +62,11 @@ const CommentInput = ({ feedData, setFeedData }) => {
       {/* 댓글 수 표시 */}
       <div className="flex">
         <span className="text-xl font-semibold">댓글</span>
-        <span className="text-xl font-semibold text-[#35C5F0] ml-2">
-          {feedData.replies.length}
-        </span>
+        {feedData && feedData.replies && (
+          <span className="text-xl font-semibold text-[#35C5F0] ml-2">
+            {feedData.replies.length}
+          </span>
+        )}
       </div>
       <div className="flex w-full mt-4">
         <img

@@ -38,15 +38,14 @@ const ReplyPatch = ({
 
         updatedFeedData.replies.forEach((reply) => {
           if (reply.feedCommentId === feedCommentId) {
-            reply.comments =
-              reply.comments.map((cmt) => {
-                if (cmt.feedCommentId === commentId) {
-                  return { ...cmt, content: newContent };
-                }
-                return cmt;
-              });
-            }
-          });
+            reply.comments = reply.comments.map((cmt) => {
+              if (cmt.feedCommentId === commentId) {
+                return { ...cmt, content: newContent };
+              }
+              return cmt;
+            });
+          }
+        });
         setFeedData(updatedFeedData);
         toast.success("답글이 수정되었습니다.");
       } else {
@@ -57,10 +56,18 @@ const ReplyPatch = ({
     }
   };
 
-  // 엔터 누르면 자동으로 입력
-  const handleEnter = (e) => {
+  // 엔터 누르면 자동으로 입력, esc 누를시 댓글 수정창 닫기
+  const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      patchReply(comment.feedCommentId);
+      patchReply();
+    }
+
+    if (e.key === "Escape") {
+      setNewContent(comment.content);
+      setEditReply({
+        ...editReply,
+        [comment.feedCommentId]: false,
+      });
     }
   };
 
@@ -73,7 +80,7 @@ const ReplyPatch = ({
               className="w-full border rounded-md mr-1 text-lg px-2.5"
               type="text"
               value={newContent}
-              onKeyDown={handleEnter}
+              onKeyDown={handleKeyDown}
               onChange={(e) => setNewContent(e.target.value)}
             />
             <button
@@ -81,7 +88,8 @@ const ReplyPatch = ({
               onClick={() => {
                 patchReply();
                 setEditReply({ ...editReply, [comment.feedCommentId]: false });
-              }}>
+              }}
+            >
               완료
             </button>
             <button
@@ -89,7 +97,8 @@ const ReplyPatch = ({
               onClick={() => {
                 setNewContent(comment.content);
                 setEditReply({ ...editReply, [comment.feedCommentId]: false });
-              }}>
+              }}
+            >
               취소
             </button>
           </div>
