@@ -15,13 +15,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TipReplyResponseDto extends BaseEntity {
+public class TipReplyResponseDto {
     private Long tipReplyId;
     private String content;
     private String nickname;
     private Long tipId;
     private Long memberId;
     private LocalDateTime createdDateTime;
+    private LocalDateTime modifiedDateTime;
     private List<TipCommentDto> comments;
     private String memberImage;
     private Boolean replyLikeYn;

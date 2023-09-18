@@ -1,8 +1,8 @@
 package com.project.bbibbi.domain.tip.service;
 
 import com.project.bbibbi.auth.utils.loginUtils;
-import com.project.bbibbi.domain.feed.entity.Feed;
-import com.project.bbibbi.domain.feedReply.entity.FeedReply;
+import com.project.bbibbi.domain.tip.entity.Tip;
+import com.project.bbibbi.domain.tipReply.entity.TipReply;
 import com.project.bbibbi.domain.follow.repository.FollowRepository;
 import com.project.bbibbi.domain.member.repository.MemberRepository;
 import com.project.bbibbi.domain.tip.entity.Tip;
@@ -101,7 +101,7 @@ public class TipService {
 
         List<Tip> pageTips = tipRepository.findByMemberOrderByCreatedDateTimeDesc(Member.builder().memberId(myInfoMemberId).build()); // 비쿼리 성공
 
-//       List<Feed> pageFeeds = feedRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
+//       List<Tip> pageTips = tipRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
 
         Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
 
@@ -124,7 +124,7 @@ public class TipService {
 
         List<Tip> pageTips = tipRepository.findByMemberLike(myInfoMemberId); // 비쿼리 성공
 
-//       List<Feed> pageFeeds = feedRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
+//       List<Tip> pageTips = tipRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
 
         Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
 
@@ -147,7 +147,7 @@ public class TipService {
 
         List<Tip> pageTips = tipRepository.findByMemberBookMark(myInfoMemberId); // 비쿼리 성공
 
-//       List<Feed> pageFeeds = feedRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
+//       List<Tip> pageTips = tipRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
         Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
 
         for(Tip tip : pageTips){
@@ -286,7 +286,7 @@ public class TipService {
         if(viewUpTip.getReplies() != null) {
             if (member == null) {
 
-                // viewUpFeed 안의 replies의 LikeYn들을 전부 처리합시다
+                // viewUpTip 안의 replies의 LikeYn들을 전부 처리합시다
                 for (TipReply tipReply : viewUpTip.getReplies()) {
 
                     // member가 null이면 로그인한 사람이 아니라는 것이므로 좋아요 표시를 무조건 false로 처리합니다.

@@ -3,6 +3,7 @@ package com.project.bbibbi.domain.tipReply.controller;
 import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tip.entity.Tip;
+import com.project.bbibbi.domain.tipComment.dto.TipCommentDto;
 import com.project.bbibbi.domain.tipReply.dto.TipReplyRequestDto;
 import com.project.bbibbi.domain.tipReply.dto.TipReplyResponseDto;
 import com.project.bbibbi.domain.tipReply.entity.TipReply;
@@ -47,12 +48,14 @@ public class TipReplyController {
         TipReply savedReply = tipReplyService.replySave(tipReply);
         // 생성된 댓글 정보를 Dto로 변환하여 반환
         TipReplyResponseDto tipReplyResponseDto = new TipReplyResponseDto();
-        tipReplyResponseDto.setTipReplyId(savedReply.getTipReplyId());
-        tipReplyResponseDto.setContent(savedReply.getContent());
-        tipReplyResponseDto.setTipId(savedReply.getTip().getTipId());
-        tipReplyResponseDto.setMemberId(savedReply.getMember().getMemberId());
-        tipReplyResponseDto.setNickname(savedReply.getMember().getNickname());
-        tipReplyResponseDto.setCreatedDateTime(savedReply.getCreatedDateTime());
+        tipReplyResponseDto.setTipReplyId(tipReply.getTipReplyId());
+        tipReplyResponseDto.setContent(tipReply.getContent());
+        tipReplyResponseDto.setNickname(tipReply.getMember().getNickname());
+        tipReplyResponseDto.setTipId(tipReply.getTip().getTipId());
+        tipReplyResponseDto.setMemberId(tipReply.getMember().getMemberId());
+        tipReplyResponseDto.setCreatedDateTime(tipReply.getCreatedDateTime());
+        tipReplyResponseDto.setMemberImage(tipReply.getMember().getProfileImg());
+        tipReplyResponseDto.setReplyLikeYn(tipReply.getReplyLikeYn());
         //로그인이 구현되면 임시로 만들어 놓은것 삭제
         return ResponseEntity.ok(tipReplyResponseDto);
     }
@@ -74,17 +77,21 @@ public class TipReplyController {
             TipReply tipReply = optionalTipReply.get();
             // 새로운 내용으로 댓글을 수정합니다.
             tipReply.setContent(dto.getContent());
+            tipReply.setModifiedDateTime(LocalDateTime.now());
             // 수정된 댓글을 저장합니다.
             TipReply updatedReply = tipReplyService.replySave(tipReply);
 
             // 수정된 댓글 정보를 Dto로 변환하여 반환합니다.
             TipReplyResponseDto tipReplyResponseDto = new TipReplyResponseDto();
-            tipReplyResponseDto.setTipReplyId(updatedReply.getTipReplyId());
-            tipReplyResponseDto.setContent(updatedReply.getContent());
-            tipReplyResponseDto.setTipId(updatedReply.getTip().getTipId());
-            tipReplyResponseDto.setMemberId(updatedReply.getMember().getMemberId());
-            tipReplyResponseDto.setNickname(updatedReply.getMember().getNickname());
-            tipReplyResponseDto.setCreatedDateTime(updatedReply.getCreatedDateTime());
+            tipReplyResponseDto.setTipReplyId(tipReply.getTipReplyId());
+            tipReplyResponseDto.setContent(tipReply.getContent());
+            tipReplyResponseDto.setNickname(tipReply.getMember().getNickname());
+            tipReplyResponseDto.setTipId(tipReply.getTip().getTipId());
+            tipReplyResponseDto.setMemberId(tipReply.getMember().getMemberId());
+            tipReplyResponseDto.setCreatedDateTime(tipReply.getCreatedDateTime());
+            tipReplyResponseDto.setModifiedDateTime(tipReply.getModifiedDateTime());
+            tipReplyResponseDto.setMemberImage(tipReply.getMember().getProfileImg());
+            tipReplyResponseDto.setReplyLikeYn(tipReply.getReplyLikeYn());
             return ResponseEntity.ok(tipReplyResponseDto);
         } else {
             throw new TipReplyNotFoundException();
@@ -125,9 +132,27 @@ public class TipReplyController {
         return TipReplyResponseDto.builder()
                 .tipReplyId(reply.getTipReplyId())
                 .content(reply.getContent())
+                .nickname(reply.getMember().getNickname())
                 .tipId(reply.getTip().getTipId())
                 .memberId(reply.getMember().getMemberId())
-                .nickname(reply.getMember().getNickname())
+                .createdDateTime(reply.getCreatedDateTime())
+                .modifiedDateTime(reply.getModifiedDateTime())
+                .comments(reply.getComments().stream().map(tipComment -> TipCommentDto.builder()
+                                .tipCommentId(tipComment.getTipCommentId())
+                                .content(tipComment.getContent())
+                                .parentComment(tipComment.getParentComment())
+                                .commentOrder(tipComment.getParentComment())
+                                .nickname(tipComment.getMember().getNickname())
+                                .tipId(tipComment.getTip().getTipId())
+                                .tipReplyId(tipComment.getTipReply().getTipReplyId())
+                                .memberId(tipComment.getMember().getMemberId())
+                                .memberImage(tipComment.getMember().getProfileImg())
+                                .createdDateTime(tipComment.getCreatedDateTime())
+                                .modifiedDateTime(tipComment.getModifiedDateTime())
+                                .build())
+                        .collect(Collectors.toList()))
+                .memberImage(reply.getMember().getProfileImg())
+                .replyLikeYn(reply.getReplyLikeYn())
                 .build();
     }
 

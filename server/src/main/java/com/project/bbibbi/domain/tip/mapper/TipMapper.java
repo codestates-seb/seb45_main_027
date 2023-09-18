@@ -1,8 +1,10 @@
 package com.project.bbibbi.domain.tip.mapper;
 
 import com.project.bbibbi.auth.utils.loginUtils;
-import com.project.bbibbi.domain.feedReply.dto.FeedReplyResponseDto;
-import com.project.bbibbi.domain.feedReply.entity.FeedReply;
+import com.project.bbibbi.domain.tipComment.dto.TipCommentDto;
+import com.project.bbibbi.domain.tipComment.entity.TipComment;
+import com.project.bbibbi.domain.tipReply.dto.TipReplyResponseDto;
+import com.project.bbibbi.domain.tipReply.entity.TipReply;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tip.dto.TipPatchDto;
 import com.project.bbibbi.domain.tip.dto.TipPostDto;
@@ -143,6 +145,9 @@ public interface TipMapper {
         tipResponseDto.setMemberId(tip.getMember().getMemberId());
         tipResponseDto.setNickname(tip.getMember().getNickname());
         tipResponseDto.setMemberImage(tip.getMember().getProfileImg());
+        tipResponseDto.setMyIntro(tip.getMember().getMyIntro());
+        tipResponseDto.setCreatedDateTime(tip.getCreatedDateTime());
+        tipResponseDto.setModifiedDateTime(tip.getModifiedDateTime());
         tipResponseDto.setLikeCount(tip.getLikeCount());
         tipResponseDto.setLikeYn(tip.getLikeYn());
         tipResponseDto.setBookmarkCount(tip.getBookmarkCount());
@@ -189,11 +194,33 @@ public interface TipMapper {
             for (TipReply tipReply : tip.getReplies()) {
                 TipReplyResponseDto tipReplyResponseDto = new TipReplyResponseDto();
                 tipReplyResponseDto.setTipReplyId(tipReply.getTipReplyId());
-                tipReplyResponseDto.setTipId(tipReply.getTip().getTipId());
                 tipReplyResponseDto.setContent(tipReply.getContent());
                 tipReplyResponseDto.setNickname(tipReply.getMember().getNickname());
+                tipReplyResponseDto.setTipId(tipReply.getTip().getTipId());
                 tipReplyResponseDto.setMemberId(tipReply.getMember().getMemberId());
                 tipReplyResponseDto.setCreatedDateTime(tipReply.getCreatedDateTime());
+                tipReplyResponseDto.setModifiedDateTime(tipReply.getModifiedDateTime());
+                tipReplyResponseDto.setMemberImage(tipReply.getMember().getProfileImg());
+                tipReplyResponseDto.setReplyLikeYn(tipReply.getReplyLikeYn());
+                if (tipReply.getComments() != null) {
+                    List<TipCommentDto> allComments = new ArrayList<>(); // TipCommentDto 타입으로 리스트 생성
+                    for (TipComment tipComment : tipReply.getComments()) {
+                        TipCommentDto commentDto = new TipCommentDto(); // TipCommentDto 객체 생성
+                        commentDto.setTipCommentId(tipComment.getTipCommentId());
+                        commentDto.setContent(tipComment.getContent());
+                        commentDto.setParentComment(tipComment.getParentComment());
+                        commentDto.setCommentOrder(tipComment.getParentComment());
+                        commentDto.setNickname(tipComment.getMember().getNickname());
+                        commentDto.setTipId(tipComment.getTip().getTipId());
+                        commentDto.setTipReplyId(tipComment.getTipReply().getTipReplyId());
+                        commentDto.setMemberId(tipComment.getMember().getMemberId());
+                        commentDto.setMemberImage(tipComment.getMember().getProfileImg());
+                        commentDto.setCreatedDateTime(tipComment.getCreatedDateTime());
+                        commentDto.setModifiedDateTime(tipComment.getModifiedDateTime());
+                        allComments.add(commentDto);
+                    }
+                    tipReplyResponseDto.setComments(allComments); // TipReplyResponseDto에 TipCommentDto 리스트 설정
+                }
                 allReplies.add(tipReplyResponseDto);
             }
             tipResponseDto.setReplies(allReplies);

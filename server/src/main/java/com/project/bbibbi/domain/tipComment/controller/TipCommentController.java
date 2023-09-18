@@ -32,12 +32,10 @@ public class TipCommentController {
             @PathVariable("tip-id") Long tipId,
             @PathVariable("reply-id") Long tipReplyId,
             @RequestBody TipCommentDto dto) {
+        Long memberId = loginUtils.getLoginId();
         // 새로운 TipComment 엔티티를 생성하고 값을 설정합니다.
         TipComment tipComment = new TipComment();
-        //임의 멤버아이디 1으로 설정
-//        tipComment.setMember(Member.builder().memberId(1L).build());
         //로그인한 멤버아이디로 설정
-        Long memberId = loginUtils.getLoginId();
         tipComment.setMember(Member.builder().memberId(memberId).build());
         //tipId와 tipReplyId 가져오는 설정
         Tip tip = new Tip();
@@ -47,13 +45,23 @@ public class TipCommentController {
         tipComment.setTipReply(TipReply.builder().tipReplyId(tipReplyId).build());
         System.out.println("tipComment.tipReply //////////" + tipComment.getTipReply().getTipReplyId());
         tipComment.setContent(dto.getContent());
-        tipComment.setParentComment(dto.getParentComment());
+        tipComment.setParentComment(tipReplyId);
         // 나머지 필드도 필요한 대로 설정합니다.
         // 저장 로직
         TipComment savedComment = tipCommentService.saveComment(tipComment);
         // 저장된 엔티티를 DTO로 변환하여 응답합니다.
 
-        TipCommentDto responseDto = TipCommentDto.toDto(savedComment);
+        TipCommentDto responseDto = new TipCommentDto();
+        responseDto.setTipCommentId(savedComment.getTipCommentId());
+        responseDto.setContent(savedComment.getContent());
+        responseDto.setParentComment(savedComment.getParentComment());
+        responseDto.setMemberId(savedComment.getMember().getMemberId());
+        responseDto.setNickname(savedComment.getMember().getNickname());
+        responseDto.setTipId(savedComment.getTip().getTipId());
+        responseDto.setTipReplyId(savedComment.getTipReply().getTipReplyId());
+        responseDto.setMemberId(savedComment.getMember().getMemberId());
+        responseDto.setMemberImage(savedComment.getMember().getProfileImg());
+        responseDto.setCreatedDateTime(savedComment.getCreatedDateTime());
         return ResponseEntity.ok(responseDto);
     }
 
@@ -64,6 +72,8 @@ public class TipCommentController {
 //        TipComment tipComment = tipCommentService.addComment(parentCommentId, dto);
 //        return ResponseEntity.ok(convertToDto(tipComment));
 //    }
+
+
 
     @GetMapping("/{comment-id}")
     public ResponseEntity<TipCommentDto> findComment(@PathVariable("comment-id") Long commentId) {
@@ -100,7 +110,15 @@ public class TipCommentController {
         return TipCommentDto.builder()
                 .tipCommentId(tipComment.getTipCommentId())
                 .content(tipComment.getContent())
+                .parentComment(tipComment.getParentComment())
+                .commentOrder(tipComment.getParentComment())
+                .nickname(tipComment.getMember().getNickname())
+                .tipId(tipComment.getTip().getTipId())
+                .tipReplyId(tipComment.getTipReply().getTipReplyId())
                 .memberId(tipComment.getMember().getMemberId())
+                .memberImage(tipComment.getMember().getProfileImg())
+                .createdDateTime(tipComment.getCreatedDateTime())
+                .modifiedDateTime(tipComment.getModifiedDateTime())
                 .build();
     }
 }
