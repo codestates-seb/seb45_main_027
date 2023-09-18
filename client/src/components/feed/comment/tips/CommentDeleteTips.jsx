@@ -3,7 +3,13 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import api from "../../../common/tokens";
 
-const CommentDelete = ({ comment, replies, setReplies }) => {
+const CommentDelete = ({
+  comment,
+  replies,
+  setReplies,
+  setFeedData,
+  feedData,
+}) => {
   const { tipId } = useParams(); // 게시물 번호
 
   // DELETE 요청
@@ -11,7 +17,6 @@ const CommentDelete = ({ comment, replies, setReplies }) => {
     const configParams = {
       method: "DELETE",
       url: `/tip/${tipId}/tipreply/${tipReplyId}`,
-
       headers: {
         "ngrok-skip-browser-warning": "69420",
       },
@@ -20,11 +25,17 @@ const CommentDelete = ({ comment, replies, setReplies }) => {
     try {
       const res = await api(configParams);
       if (res && res.status === 200) {
-        setReplies((prev) => {
-          if (Array.isArray(prev)) {
-            return prev.filter((reply) => reply.tipReplyId !== tipReplyId);
-          }
-        });
+        setReplies((prevReplies) =>
+          prevReplies.filter((reply) => reply.tipReplyId !== tipReplyId)
+        );
+
+        setFeedData((prevFeedData) => ({
+          ...prevFeedData,
+          replies: prevFeedData.replies.filter(
+            (reply) => reply.tipReplyId !== tipReplyId
+          ),
+        }));
+
         toast.success("댓글이 삭제되었습니다.");
       }
     } catch (err) {

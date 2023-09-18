@@ -29,15 +29,14 @@ const CommentInput = ({ feedData, setFeedData }) => {
         const newComment = res.data;
         setEnterComment((prevComments) => [...prevComments, newComment]);
 
-        const addCommentCount = feedData.repliesCount + 1; // 기존 댓글 수 +1
+        const addCommentCout = feedData.repliesCount + 1; // 기존 댓글 수 +1
         const addComment = [...feedData.replies, newComment];
         // feedData 업데이트
         setFeedData({
           ...feedData,
-          repliesCount: addCommentCount,
+          repliesCount: addCommentCout,
           replies: addComment,
         });
-        console.log(res.data);
 
         setInputComment("");
         toast.success("댓글을 입력하셨습니다.");
@@ -63,9 +62,11 @@ const CommentInput = ({ feedData, setFeedData }) => {
       {/* 댓글 수 표시 */}
       <div className="flex">
         <span className="text-xl font-semibold">댓글</span>
-        <span className="text-xl font-semibold text-[#35C5F0] ml-2">
-          {feedData.repliesCount}
-        </span>
+        {feedData && feedData.replies && (
+          <span className="text-xl font-semibold text-[#35C5F0] ml-2">
+            {feedData.replies.length}
+          </span>
+        )}
       </div>
       <div className="flex w-full mt-4">
         <img
