@@ -54,31 +54,58 @@ export function AuthProvider({ children }) {
     }
   }
 
-  async function kakaoLogin(code) {
+  async function kakaoLogin() {
     try {
-      const response = await axios.get(`${baseURL}/auth/oauth/kakao?code=${code}`);
+      const response = await axios.get(`${baseURL}/oauth2/authorization/kakao`);
+      console.log(response);
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
-      navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
+      //navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
     } catch (error) {
-      console.log(code);
+      //console.log(code);
       throw error;
     }
   }
 
-  async function naverLogin(code) {
+  async function naverLogin() {
     try {
-      const response = await axios.get(`${baseURL}/auth/oauth/kakao?code=${code}`);
-
+      const response = await axios.get(`${baseURL}/oauth2/authorization/naver`);
+      console.log(response);
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
-      navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
+      //navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
     } catch (error) {
-      console.log(code);
-
+      //console.log(code);
       throw error;
     }
   }
+
+  // async function kakaoLogin(code) {
+  //   try {
+  //     const response = await axios.get(`${baseURL}/auth/oauth/kakao?code=${code}`);
+  //     localStorage.setItem("accessToken", response.data.accessToken);
+  //     localStorage.setItem("refreshToken", response.data.refreshToken);
+  //     navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
+  //   } catch (error) {
+  //     console.log(code);
+  //     throw error;
+  //   }
+  // }
+
+
+  // async function naverLogin(code) {
+  //   try {
+  //     const response = await axios.get(`${baseURL}/auth/oauth/kakao?code=${code}`);
+
+  //     localStorage.setItem("accessToken", response.data.accessToken);
+  //     localStorage.setItem("refreshToken", response.data.refreshToken);
+  //     navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
+  //   } catch (error) {
+  //     console.log(code);
+
+  //     throw error;
+  //   }
+  // }
 
   async function register(email, nickname, password) {
     toast.loading("로딩중...");

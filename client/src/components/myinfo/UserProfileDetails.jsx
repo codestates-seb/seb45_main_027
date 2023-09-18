@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import api from "../common/tokens";
 
 const UserProfileDetails = ({ toggleAccountSettings, profileData }) => {
   const { id } = useParams();
@@ -22,7 +23,7 @@ const UserProfileDetails = ({ toggleAccountSettings, profileData }) => {
             <div className="text-md pb-1 md:text-xl font-semibold ">
               {profileData.nickname}
             </div>
-            <div className="text-sm pb-4 md:mx-16 md:my-4 break-all">
+            <div className=" text-xs md:text-sm pb-4 md:mx-16 md:my-4 break-all">
               {profileData.myIntro}
             </div>
             {memberId === id && (

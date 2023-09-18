@@ -16,7 +16,7 @@ const UserProfile = ({
       bg-white rounded-md
       my-[3%] shadow-md md:my-[2%]
       w-full md:w-[180px] lg:w-[200px] xl:w-[230px]
-      h-[100px] md:h-[630px] lg:h-[690px] xl:h-[750px]"
+      h-[140px] md:h-[630px] lg:h-[690px] xl:h-[750px]"
     >
       <UserProfileDetails
         toggleAccountSettings={toggleAccountSettings}
