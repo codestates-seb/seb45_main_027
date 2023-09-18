@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.tip.mapper;
 
+import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyResponseDto;
 import com.project.bbibbi.domain.feedReply.entity.FeedReply;
 import com.project.bbibbi.domain.member.entity.Member;
@@ -9,6 +10,8 @@ import com.project.bbibbi.domain.tip.dto.TipResponseDto;
 import com.project.bbibbi.domain.tip.entity.Tip;
 import com.project.bbibbi.domain.tipReply.dto.TipReplyResponseDto;
 import com.project.bbibbi.domain.tipReply.entity.TipReply;
+import com.project.bbibbi.domain.tipTag.dto.TagDto;
+import com.project.bbibbi.domain.tipTag.entity.Tag;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
@@ -37,7 +40,11 @@ public interface TipMapper {
         tip.setTitle(tipPostDto.getTitle());
         tip.setCoverPhoto(tipPostDto.getCoverPhoto());
         tip.setContent(tipPostDto.getContent());
-        tip.setMember(Member.builder().memberId(tipPostDto.getMemberId()).build());
+//        tip.setMember(Member.builder().memberId(tipPostDto.getMemberId()).build());
+
+        //멤버 아이디 가져오기
+        Long memberId = loginUtils.getLoginId();
+        tip.setMember(Member.builder().memberId(memberId).build());
 
 //        List<TipImage> tipImages = new ArrayList<>();
 //
@@ -52,6 +59,19 @@ public interface TipMapper {
 //        }
 //
 //        tip.setTipImages(tipImages);
+
+        if(tipPostDto.getTagContents() != null){
+
+            List<Tag> tags = new ArrayList<>();
+            for( String s : tipPostDto.getTagContents()){
+                Tag tag = new Tag();
+                tag.setTagContent(s);
+                tag.setTip(tip);
+                tags.add(tag);
+            }
+
+            tip.setTags(tags);
+        }
 
         tip.setCreatedDateTime(LocalDateTime.now());
 
@@ -69,7 +89,11 @@ public interface TipMapper {
         tip.setTitle(tipPatchDto.getTitle());
         tip.setCoverPhoto(tipPatchDto.getCoverPhoto());
         tip.setContent(tipPatchDto.getContent());
-        tip.setMember(Member.builder().memberId(tipPatchDto.getMemberId()).build());
+//        tip.setMember(Member.builder().memberId(tipPatchDto.getMemberId()).build());
+
+        //멤버 아이디 가져오기
+        Long memberId = loginUtils.getLoginId();
+        tip.setMember(Member.builder().memberId(memberId).build());
 
 //        List<TipImage> tipImages = new ArrayList<>();
 //
@@ -85,6 +109,19 @@ public interface TipMapper {
 //        }
 //
 //        tip.setTipImages(tipImages);
+
+        if(tipPatchDto.getTagContents() != null){
+
+            List<Tag> tags = new ArrayList<>();
+            for( String s : tipPatchDto.getTagContents()){
+                Tag tag = new Tag();
+                tag.setTagContent(s);
+                tag.setTip(tip);
+                tags.add(tag);
+            }
+
+            tip.setTags(tags);
+        }
 
         tip.setModifiedDateTime(LocalDateTime.now());
 
@@ -112,6 +149,24 @@ public interface TipMapper {
         tipResponseDto.setBookmarkYn(tip.getBookmarkYn());
         tipResponseDto.setRepliesCount( (tip.getReplies() == null) ? 0: tip.getReplies().size());
         tipResponseDto.setFollowYn(tip.getFollowYn());
+        tipResponseDto.setFixYn(tip.getFixYn());
+
+        if(tip.getTags() != null){
+            List<TagDto> tagDtos = new ArrayList<>();
+
+            for(Tag tag : tip.getTags()){
+                TagDto tagDto = new TagDto();
+
+                tagDto.setTagId(tag.getTagId());
+                tagDto.setTagContent(tag.getTagContent());
+
+                tagDtos.add(tagDto);
+
+            }
+
+            tipResponseDto.setTags(tagDtos);
+
+        }
 
 
 //        List<TipImageDto> tipImageDtos = new ArrayList<>();

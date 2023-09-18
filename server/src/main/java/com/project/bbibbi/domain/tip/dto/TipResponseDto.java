@@ -1,6 +1,8 @@
 package com.project.bbibbi.domain.tip.dto;
 
 import com.project.bbibbi.domain.tipReply.dto.TipReplyResponseDto;
+import com.project.bbibbi.domain.tipTag.dto.TagDto;
+import com.project.bbibbi.domain.tipTag.entity.Tag;
 import com.project.bbibbi.domain.tipTag.entity.TipTag;
 import lombok.*;
 
@@ -45,14 +47,12 @@ public class TipResponseDto {
     private Boolean bookmarkYn;
     private int repliesCount;
     private Boolean followYn;
+    private Boolean fixYn;
 
     private List<TipReplyResponseDto> replies;
 
-    private List<TipTag> tipTags;
+    private List<TagDto> tags;
 
-    public void setTiptags(List<TipTag> tipTags) {
-        this.tipTags = tipTags;
-    }
 
 //    private List<TipImageDto> tipImages;
 

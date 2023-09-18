@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.tipReply.controller;
 
+import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tip.entity.Tip;
 import com.project.bbibbi.domain.tipReply.dto.TipReplyRequestDto;
@@ -8,6 +9,7 @@ import com.project.bbibbi.domain.tipReply.entity.TipReply;
 import com.project.bbibbi.domain.tipReply.service.TipReplyService;
 import com.project.bbibbi.global.exception.tipexception.TipReplyNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,16 +22,22 @@ import java.util.stream.Collectors;
 @RequestMapping("/tip/{tip-id}/tipreply")
 @RequiredArgsConstructor
 public class TipReplyController {
+
+    private final static String TIP_REPLY_DEFAULT_URL = "/tipReply";
+
     private final TipReplyService tipReplyService;
     /* CREATE */
 // {reply-id}
 
     @PostMapping
-    public ResponseEntity tipSave(@PathVariable ("tip-id")Long tipId,
+    public ResponseEntity tipSave(@PathVariable("tip-id") Long tipId,
                                    @RequestBody TipReplyRequestDto dto)
     {//dto -> entity 객체로 변환작업
         TipReply tipReply = new TipReply(); // TipReply 클래스의 기본 생성자 호출
-        tipReply.setMember(Member.builder().memberId(1L).build()); //임시로 memberId 설정
+//        tipReply.setMember(Member.builder().memberId(1L).build()); //임시로 memberId 설정
+        //로그인한 멤버아이디로 설정
+        Long memberId = loginUtils.getLoginId();
+        tipReply.setMember(Member.builder().memberId(memberId).build());
         Tip tip = new Tip();
         tip.setTipId(tipId);
         tipReply.setTip(tip);
@@ -79,8 +87,6 @@ public class TipReplyController {
             tipReplyResponseDto.setCreatedDateTime(updatedReply.getCreatedDateTime());
             return ResponseEntity.ok(tipReplyResponseDto);
         } else {
-            // 댓글이 존재하지 않는 경우 404 Not Found를 반환합니다.
-//            return ResponseEntity.notFound().build();
             throw new TipReplyNotFoundException();
         }
     }
@@ -97,9 +103,15 @@ public class TipReplyController {
     //게시물에 붙어있는 댓글 전체조회 리스트화해서 보여주기
 
     @GetMapping("/replies")
-    public ResponseEntity<List<TipReplyResponseDto>> getAllReplyForTip(@PathVariable("tip-id") Long tipId) {
-        // 특정 게시물에 붙어있는 댓글 목록을 조회합니다.
-        List<TipReply> replyList = tipReplyService.getAllReplyForTip(tipId);
+    public ResponseEntity<List<TipReplyResponseDto>> getAllReplyForTip(
+            @PathVariable("tip-id") Long tipId,
+            @RequestParam int page) {
+
+        int size = 5;
+        Page<TipReply> pageFeedReply = tipReplyService.getAllReplyForTip(tipId, page - 1, size);
+
+        // 페이징된 결과에서 컨텐츠를 가져옵니다.
+        List<TipReply> replyList = pageFeedReply.getContent();
 
         // 댓글 목록을 Dto로 변환합니다.
         List<TipReplyResponseDto> replyDtoList = replyList.stream()

@@ -32,9 +32,9 @@ public class TipReplyLikeService {
         updatedTipReplyLike.setMember(tipReplyLike.getMember());
 
         if (updatedLikeCount == 0) {
-            updatedTipReplyLike.setLikeYn(false);
+            updatedTipReplyLike.setReplyLikeYn(false);
         } else {
-            updatedTipReplyLike.setLikeYn(true);
+            updatedTipReplyLike.setReplyLikeYn(true);
         }
 
         updatedTipReplyLike.setLikeCount(tipReplyLikeRepository.replyLikeCount(tipReplyLike.getTipReply().getTipReplyId()));

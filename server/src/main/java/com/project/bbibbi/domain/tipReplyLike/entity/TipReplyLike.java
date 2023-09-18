@@ -28,9 +28,8 @@ public class TipReplyLike extends BaseEntity {
     private Member member;
 
     @Transient
-    private Boolean likeYn;
+    private Boolean replyLikeYn = false;
 
     @Transient
-    private Integer likeCount;
-
+    private Integer likeCount = 0;
 }

@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.tipLike.controller;
 
+import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.tipLike.dto.TipLikeRequestDto;
 import com.project.bbibbi.domain.tipLike.dto.TipLikeResponseDto;
 import com.project.bbibbi.domain.tipLike.entity.TipLike;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class TipLikeController {
 
-    private final static String TIP_LIKE_DEFAULT_URL = "/tiplike";
+    private final static String TIP_LIKE_DEFAULT_URL = "/tipLike";
 
     private final TipLikeService tipLikeService;
 
@@ -38,7 +39,7 @@ public class TipLikeController {
 
         TipLikeRequestDto requestBody = new TipLikeRequestDto();
 
-        requestBody.setMemberId(1L);
+        requestBody.setMemberId(loginUtils.getLoginId());
         requestBody.setTipId(tipId);
 
         TipLike tipLike = mapper.tipLikeRequestDtoToTipLike(requestBody);

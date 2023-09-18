@@ -14,6 +14,6 @@ import lombok.*;
 public class TipReplyLikeResponseDto {
     private Long tipReplyId;
     private Long memberId;
-    private Boolean likeYn;
+    private Boolean replyLikeYn;
     private Integer likeCount;
 }

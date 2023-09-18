@@ -1,17 +1,23 @@
 package com.project.bbibbi.domain.tipReply.service;
 
+import com.project.bbibbi.auth.utils.loginUtils;
+import com.project.bbibbi.domain.member.entity.Member;
+import com.project.bbibbi.domain.member.repository.MemberRepository;
 import com.project.bbibbi.domain.tipComment.dto.TipCommentDto;
 import com.project.bbibbi.domain.tip.repository.TipRepository;
 import com.project.bbibbi.domain.tipReply.dto.TipReplyRequestDto;
 import com.project.bbibbi.domain.tipReply.dto.TipReplyResponseDto;
 import com.project.bbibbi.domain.tipReply.entity.TipReply;
 import com.project.bbibbi.domain.tipReply.repository.TipReplyRepository;
+import com.project.bbibbi.domain.tipReplyLike.repository.TipReplyLikeRepository;
 import com.project.bbibbi.global.exception.tipexception.TipReplyNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -22,17 +28,40 @@ public class TipReplyService {
 
     private final TipReplyRepository tipReplyRepository;
 
-    private final TipRepository tipRepository;
+    private final TipReplyLikeRepository tipReplyLikeRepository;
+
+    private final MemberRepository memberRepository;
 
     public TipReply replySave(TipReply tipReply) {
-        // 저장 전 로직이 필요한 경우 여기에 추가
+        TipReply insertTipReply = tipReplyRepository.save(tipReply);
 
-        return tipReplyRepository.save(tipReply);
+        Optional<Member> optionalMember = memberRepository.findById(tipReply.getMember().getMemberId());
+
+        Member member = optionalMember.orElseThrow(() -> {throw new RuntimeException() ; });
+
+        insertTipReply.setMember(Member.builder().memberId
+                (tipReply.getMember().getMemberId()).nickname
+                (member.getNickname()).profileImg(member.getProfileImg()).build());
+
+        return insertTipReply;
     }
 
     public TipReplyResponseDto findReply(Long replyId) {
         TipReply reply = tipReplyRepository.findById(replyId)
                 .orElseThrow(TipReplyNotFoundException::new);
+
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
+        if(member == null){
+            reply.setReplyLikeYn(false);
+        }
+        else {
+            int loginUserLikeYn = tipReplyLikeRepository.existCount(reply.getTipReplyId(), member.getMemberId());
+            if(loginUserLikeYn == 0)
+                reply.setReplyLikeYn(false);
+            else reply.setReplyLikeYn(true);
+        }
+
         return TipReplyResponseDto.builder()
                 .tipReplyId(reply.getTipReplyId())
                 .content(reply.getContent())
@@ -40,15 +69,17 @@ public class TipReplyService {
                 .memberId(reply.getMember().getMemberId())
                 .nickname(reply.getMember().getNickname())
                 .createdDateTime(reply.getCreatedDateTime())
+                .memberImage(reply.getMember().getProfileImg())
+                .replyLikeYn(reply.getReplyLikeYn())
                 .comments(reply.getComments().stream().map(tipComment -> TipCommentDto.builder()
                 .tipCommentId(tipComment.getTipCommentId())
                 .content(tipComment.getContent())
                 .memberId(tipComment.getMember().getMemberId())
-        //        .tipReplyId(tipComment.getTipReply().getTipReplyId())
-        //        .parentComment(tipComment.getParentComment())
-       //         .commentOrder(tipComment.getParentComment())
-       //         .nickname(tipComment.getMember().getNickname())
-       //         .tipId(tipComment.getTip().getTipId())
+                .tipReplyId(tipComment.getTipReply().getTipReplyId())
+                .parentComment(tipComment.getParentComment())
+                .commentOrder(tipComment.getParentComment())
+                .nickname(tipComment.getMember().getNickname())
+                .tipId(tipComment.getTip().getTipId())
                 .build())
                 .collect(Collectors.toList()))
                 .build();
@@ -66,6 +97,8 @@ public class TipReplyService {
 
             // 새로운 내용으로 댓글을 수정합니다.
             tipReply.setContent(dto.getContent());
+            // replyLikeYn 값을 업데이트합니다.
+            tipReply.setReplyLikeYn(dto.getReplyLikeYn());
             // 수정된 댓글을 저장합니다.
             TipReply updatedReply = tipReplyRepository.save(tipReply);
             return updatedReply;
@@ -82,8 +115,11 @@ public class TipReplyService {
         tipReplyRepository.deleteById(replyId);
     }
 
-    public List<TipReply> getAllReplyForTip(Long tipId) {
-        // 특정 팁에 대한 댓글 목록을 조회합니다.
-        return tipReplyRepository.findAllByTip_TipId(tipId);
+    public Page<TipReply> getAllReplyForTip(Long tipId, int page, int size) {
+        // 주어진 페이지와 크기로 Pageable을 생성합니다.
+        Pageable pageable = PageRequest.of(page, size);
+
+        // 리포지토리에서 페이지별 결과를 가져옵니다.
+        return tipReplyRepository.findAllByTip_TipId(tipId, pageable);
     }
 }

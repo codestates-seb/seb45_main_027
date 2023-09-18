@@ -2,7 +2,9 @@ package com.project.bbibbi.domain.tip.service;
 
 import com.project.bbibbi.auth.utils.loginUtils;
 import com.project.bbibbi.domain.feed.entity.Feed;
+import com.project.bbibbi.domain.feedReply.entity.FeedReply;
 import com.project.bbibbi.domain.follow.repository.FollowRepository;
+import com.project.bbibbi.domain.member.repository.MemberRepository;
 import com.project.bbibbi.domain.tip.entity.Tip;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tip.repository.TipRepository;
@@ -12,6 +14,11 @@ import com.project.bbibbi.domain.tipBookmark.repository.TipBookmarkRepository;
 import com.project.bbibbi.domain.tipLike.repository.TipLikeRepository;
 //import com.project.bbibbi.domain.tipTag.entity.TipTag;
 //import com.project.bbibbi.domain.tipTag.service.TipTagService;
+import com.project.bbibbi.domain.tipReply.entity.TipReply;
+import com.project.bbibbi.domain.tipReplyLike.repository.TipReplyLikeRepository;
+import com.project.bbibbi.domain.tipTag.entity.Tag;
+import com.project.bbibbi.domain.tipTag.repository.TagRepository;
+import com.project.bbibbi.global.exception.businessexception.memberexception.MemberAccessDeniedException;
 import com.project.bbibbi.global.exception.tipexception.TipNotFoundException;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -29,7 +36,11 @@ public class TipService {
     private final TipLikeRepository tipLikeRepository;
 
     private final TipBookmarkRepository tipBookmarkRepository;
+    private final TipReplyLikeRepository tipReplyLikeRepository;
     private final FollowRepository followRepository;
+    private final MemberRepository memberRepository;
+    private final TagRepository tagRepository;
+
 
 //    private final TipMapper tipMapper;
 
@@ -39,12 +50,18 @@ public class TipService {
 
     public TipService(TipRepository tipRepository,
                       TipLikeRepository tipLikeRepository,
+                      TipBookmarkRepository tipBookmarkRepository,
                       FollowRepository followRepository,
-                      TipBookmarkRepository tipBookmarkRepository) {
+                      TipReplyLikeRepository tipReplyLikeRepository,
+                      MemberRepository memberRepository,
+                      TagRepository tagRepository) {
         this.tipRepository = tipRepository;
         this.tipLikeRepository = tipLikeRepository;
-        this.followRepository = followRepository;
         this.tipBookmarkRepository = tipBookmarkRepository;
+        this.tipReplyLikeRepository = tipReplyLikeRepository;
+        this.followRepository = followRepository;
+        this.memberRepository = memberRepository;
+        this.tagRepository = tagRepository;
 //        this.tipMapper = tipMapper;
 //        this.tipTagService = tipTagService;
 //        this.tipImageService = tipImageService;
@@ -109,6 +126,22 @@ public class TipService {
         return searchTips;
     }
 
+    public List<Tip> getAllSearchTipTags(String searchTag, int page, int size) {
+
+        List<Tip> searchTips = tipRepository.findAllSearchTag(searchTag,page,size );
+
+        Integer searchTipsCount = tipRepository.findAllSearchCount(searchTag);
+
+        if(((page+1)*size) >= searchTipsCount){
+            for(Tip tip : searchTips){
+                tip.setFinalPage(true);
+            }
+
+        }
+
+        return searchTips;
+    }
+
     public Tip getTip(Long tipId) {
         Tip findTip = findVerifiedTip(tipId);
 
@@ -125,8 +158,8 @@ public class TipService {
         viewUpTip.setBookmarkCount(bookmarkCount);
 
         // 로그인한 사람의 좋아요 여부... 로그인한 사람 memberId를 1L 로 가정
-        Member member = Member.builder().memberId(1L).build();
-//        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+//        Member member = Member.builder().memberId(1L).build();
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
 
 
         if(member == null){
@@ -148,6 +181,52 @@ public class TipService {
             else viewUpTip.setBookmarkYn(true);
         }
 
+        Integer existCount = followRepository.existCount(loginUtils.getLoginId(),viewUpTip.getMember().getMemberId());
+
+        if(existCount == 0){
+            viewUpTip.setFollowYn(false);
+        }
+        else {
+            viewUpTip.setFollowYn(true);
+        }
+
+        if(loginUtils.getLoginId() == null){
+            viewUpTip.setFixYn(false);
+        }
+        else {
+            long tipAuthorId = viewUpTip.getMember().getMemberId();
+            if(tipAuthorId != loginUtils.getLoginId())
+                viewUpTip.setFixYn(false);
+            else viewUpTip.setFixYn(true);
+        }
+
+        if(viewUpTip.getReplies() != null) {
+            if (member == null) {
+
+                // viewUpFeed 안의 replies의 LikeYn들을 전부 처리합시다
+                for (TipReply tipReply : viewUpTip.getReplies()) {
+
+                    // member가 null이면 로그인한 사람이 아니라는 것이므로 좋아요 표시를 무조건 false로 처리합니다.
+                    // 그런데 아마 로그인 안한 사람은 null 보단 0으로 뜰 겁니다. 아무튼
+                    tipReply.setReplyLikeYn(false);
+                }
+
+            } else {
+                // member가 null 이 아니라면 그 멤버가 이 게시물에 좋아요 했는지 확인하면 됩니다.
+                // 그런데 이걸 댓글 하나하나 확인해줘야 해서 for문을 쓸거에요.
+
+                for (TipReply tipReply : viewUpTip.getReplies()) {
+
+                    int loginUserLikeYn = tipReplyLikeRepository.existCount(tipReply.getTipReplyId(), member.getMemberId());
+
+                    if (loginUserLikeYn == 0)
+                        tipReply.setReplyLikeYn(false);
+                    else tipReply.setReplyLikeYn(true);
+                }
+
+            }
+        }
+
 //        List<TipTag> tipTags = tipTagService.findTagListByTip(viewUpTip);
 //        TipResponseDto tipResponseDto = tipMapper.tipToTipResponseDto(viewUpTip);
 //        tipResponseDto.setTiptags(tipTags);
@@ -167,6 +246,7 @@ public class TipService {
         return viewUpTip;
     }
 
+
     public Tip findVerifiedTip(Long tipId){
         Optional<Tip> optionalTip = tipRepository.findById(tipId);
 
@@ -176,7 +256,17 @@ public class TipService {
     }
 
     public Tip createTip(Tip tip) {
-        return tipRepository.save(tip);
+
+        Tip insertTip = tipRepository.save(tip);
+
+        Optional<Member> optionalMember = memberRepository.findById(tip.getMember().getMemberId());
+
+        Member member = optionalMember.orElseThrow(() -> {throw new RuntimeException() ; });
+
+        insertTip.setMember(Member.builder().memberId(tip.getMember().getMemberId()).nickname(member.getNickname()).profileImg(member.getProfileImg()).build());
+
+
+        return insertTip;
     }
 
     public Tip updateTip(Long tipId, Tip updatedTip) {
@@ -209,12 +299,28 @@ public class TipService {
 //            tipRepository.deleteImageById(long1);
 //        }
 
+        tagRepository.deleteByTipId(tipId);
+
         Tip updatingTip = tipRepository.save(tip);
 
+        updateTags(updatedTip, tipId);
 
 //        updatingTip.setTipImages(updatedTip.getTipImages());
 
         return updatingTip;
+    }
+
+    public void updateTags(Tip tip, long tipId){
+
+
+        tip.setTipId(tipId);
+
+        if(tip.getTags() != null) {
+            for (Tag tag : tip.getTags()) {
+                tagRepository.save(tag);
+            }
+        }
+
     }
 
     public void deleteTip(Long tipId) {

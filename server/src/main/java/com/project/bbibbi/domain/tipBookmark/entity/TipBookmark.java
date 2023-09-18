@@ -20,16 +20,16 @@ public class TipBookmark extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tipBookmarkId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tip_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "tip_id")
     private Tip tip;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @Transient
-    private Boolean bookmarkYn;
+    private Boolean bookmarkYn = false;
 
     @Transient
     private Integer bookmarkCount;

@@ -61,14 +61,26 @@ public interface TipRepository extends JpaRepository<Tip, Long>, TipRepositoryCu
             "order by created_date_time desc limit :size ", nativeQuery = true)
     List<Tip> findAllSearch (@Param("searchString") String searchString, @Param("page") int page, @Param("size") int size);
 
+
+    @Query(value = "select tip.* from (select b.tip_id, row_number() over(order by b.created_date_time desc) as row_num " +
+            "from (select * from tip where tip_id in (select tip_id from tag where tag_content = :searchTag) ) as b ) as tag_tip " +
+            "inner join (select * from tip where tip_id in (select tip_id from tag where tag_content = :searchTag) ) as tip " +
+            "on tag_tip.tip_id = tip.tip_id " +
+            "where tag_tip.row_num > :page * :size " +
+            "order by created_date_time desc limit :size ", nativeQuery = true)
+    List<Tip> findAllSearchTag (@Param("searchTag") String searchTag, @Param("page") int page, @Param("size") int size);
+
     @Query(value = "select count(*) from tip where title like %:searchString% or content like %:searchString% ", nativeQuery = true)
     Integer findAllSearchCount (@Param("searchString") String searchString);
 
-    @Query(value = "select feed.* from feed " +
-            "inner join (select a.feed_id, ( select count(*) from feed_like where feed_id = a.feed_id) as like_count from feed a ) as feed_likecount " +
-            "on feed.feed_id = feed_likecount.feed_id " +
-            "order by feed_likecount.like_count desc, feed.created_date_time desc ", nativeQuery = true)
-    List<Feed> findByOrderByLike();
+//    @Query(value = "select feed.* from feed " +
+//            "inner join (select a.feed_id, ( select count(*) from feed_like where feed_id = a.feed_id) as like_count from feed a ) as feed_likecount " +
+//            "on feed.feed_id = feed_likecount.feed_id " +
+//            "order by feed_likecount.like_count desc, feed.created_date_time desc ", nativeQuery = true)
+//    List<Feed> findByOrderByLike();
+//
+//    Page<Feed> findByOrderByViewsDesc(Pageable pageable);
 
-    Page<Feed> findByOrderByViewsDesc(Pageable pageable);
+    @Query(value = "SELECT member_id FROM tip WHERE tip_id = :tipId", nativeQuery = true)
+    Long findMemberIdByTipId(@Param("tipId") long tipId);
 }

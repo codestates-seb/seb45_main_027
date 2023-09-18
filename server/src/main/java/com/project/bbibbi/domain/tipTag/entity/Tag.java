@@ -1,5 +1,6 @@
 package com.project.bbibbi.domain.tipTag.entity;
 
+import com.project.bbibbi.domain.tip.entity.Tip;
 import com.project.bbibbi.global.entity.BaseEntity;
 import lombok.*;
 
@@ -20,8 +21,9 @@ public class Tag extends BaseEntity {
     @Column
     private String tagContent;
 
-    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TipTag> tipTags;
+    @ManyToOne
+    @JoinColumn(name = "tip_id", nullable = false)
+    private Tip tip;
 
     @Builder
     public Tag(String tagContent) {

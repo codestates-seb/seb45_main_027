@@ -36,7 +36,7 @@ public interface TipReplyLikeMapper {
 
         tipReplyLikeResponseDto.setMemberId(tipReplyLike.getMember().getMemberId());
         tipReplyLikeResponseDto.setTipReplyId(tipReplyLike.getTipReply().getTipReplyId());
-        tipReplyLikeResponseDto.setLikeYn(tipReplyLike.getLikeYn());
+        tipReplyLikeResponseDto.setReplyLikeYn(tipReplyLike.getReplyLikeYn());
         tipReplyLikeResponseDto.setLikeCount(tipReplyLike.getLikeCount());
 
         return tipReplyLikeResponseDto;
