@@ -35,8 +35,8 @@ const Tips = () => {
 
       api(apiOptions)
         .then((res) => {
-          console.log(res);
-          setTipData(res.data.data);
+          // 직접 res.data.data를 사용하여 setTipData 호출
+          setTipData(res.data);
         })
         .catch((error) => {
           console.error("Error:", error);
