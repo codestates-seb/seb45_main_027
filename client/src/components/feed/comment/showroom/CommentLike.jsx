@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
-import api from "../../../common/tokens"
+import api from "../../../common/tokens";
 
-const CommentLike = ({  comment }) => {
+const CommentLike = ({ comment }) => {
   const feedReplyId = comment.feedReplyId;
   // 좋아요 상태
   const [like, setLike] = useState(false);
@@ -32,14 +32,13 @@ const CommentLike = ({  comment }) => {
       setLike(comment.replyLikeYn);
     }
   }, [comment]);
-  console.log(comment.replyLikeYn);
-
 
   return (
     <>
       <button
         className="flex items-center hover:font-semibold"
-        onClick={patchLike}>
+        onClick={patchLike}
+      >
         <img
           className="w-6 h-6 mr-1"
           src={
