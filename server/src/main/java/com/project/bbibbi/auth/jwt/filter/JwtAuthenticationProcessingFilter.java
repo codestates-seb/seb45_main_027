@@ -53,30 +53,30 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getMethod().equals("GET")) {
-            filterChain.doFilter(request, response); // 모든 GET 요청은 필터를 거치지 않고 통과
-            return;
-        }
+//        if (request.getMethod().equals("GET")) {
+//            filterChain.doFilter(request, response); // 모든 GET 요청은 필터를 거치지 않고 통과
+//            return;
+//        }
         if (request.getRequestURI().equals(NO_CHECK_URL)) {
             filterChain.doFilter(request, response); // "/login" 요청이 들어오면, 다음 필터 호출
             return; // return으로 이후 현재 필터 진행 막기 (안해주면 아래로 내려가서 계속 필터 진행시킴)
             // 즉 로그인으로 들어오면 필터에서 막아버려서 진행 더 안되게 Filter 작동 X
         }
 
-        if (request.getRequestURI().equals("/auth/email/password")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        if (request.getRequestURI().equals("/h2")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        if (request.getRequestURI().equals("/auth/signup")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+//        if (request.getRequestURI().equals("/auth/email/password")) {
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
+//
+//        if (request.getRequestURI().equals("/h2")) {
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
+//
+//        if (request.getRequestURI().equals("/auth/signup")) {
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
 
 
 //        if (request.getRequestURI().equals(NO_CHECK_URL)) {
