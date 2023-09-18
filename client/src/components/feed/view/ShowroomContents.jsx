@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useAxios from "../../../hooks/useAxios";
 import { useParams } from "react-router-dom";
 import ViewTitle from "../view/ViewTitle";
@@ -7,10 +7,7 @@ import ViewForm from "../view/ViewForm";
 import ViewPoint from "../view/ViewPoint";
 import ShowroomUserTop from "../view/ShowroomUserTop";
 
-const ShowroomContents = ({ feedData, setFeedData }) => {
-  const memberId = localStorage.getItem("memberId");
-  const frommemberId = feedData.memberId;
-  console.log(feedData.memberId);
+const ShowroomContents = ({ feedData}) => {
   const [follow, setFollow] = useState("");
   const { feedId } = useParams();
 
@@ -31,7 +28,6 @@ const ShowroomContents = ({ feedData, setFeedData }) => {
         feedData={feedData}
         setFollow={setFollow}
         follow={follow}
-        res={res}
       />
       <ViewForm feedData={feedData} />
       <ViewPoint feedData={feedData} />

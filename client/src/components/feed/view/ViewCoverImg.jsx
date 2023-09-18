@@ -4,6 +4,7 @@ const coverImg =
   "flex items-center justify-center aspectRatioImage_16_9 object-cover w-full h-full"; 
 
 const ViewCoverImg = ({ setFeedData, feedData }) => {
+  console.log(feedData);
   return (
     <div className="relative pt-0 md:pt-24 max-h-[calc(100vh-350px)] aspectRatioImage_16_9 bg-white">
       {feedData.coverPhoto ? (

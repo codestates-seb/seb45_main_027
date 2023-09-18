@@ -17,8 +17,8 @@ const UserInfoFollow = ({ followingList, followersList, fetchFollowData }) => {
       {followingList && followersList && (
         <div className="
         flex flex-row justify-end md:justify-center 
-        p-2 mb-6 t
-        ext-[#525252] text-[10px] md:text-base font-medium">
+        py-2 px-4 mb-0 md:mb-6 
+        text-[#525252] text-[10px] md:text-base font-medium">
           <button
             className={`flex items-center ${
               activeTab === "following" ? "text-[#00647B]" : ""
