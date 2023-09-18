@@ -18,7 +18,6 @@ import ViewTips from "./pages/ViewTips";
 import EditShowRoom from "./pages/EditShowRoom";
 import EditTips from "./pages/EditTips";
 import { AuthProvider } from "./context/AuthContext";
-import { UserProvider } from "./context/userContext";
 import Verify from "./pages/Verify";
 import { Toaster } from "react-hot-toast";
 import scrollToTop from "./components/common/scrollToTop";
@@ -57,7 +56,6 @@ function App() {
 
   return (
     <AuthProvider>
-      <UserProvider>
         <Toaster />
         <div className="flex flex-col min-h-screen">
           {isHeader && <HeaderPc />}
@@ -118,7 +116,6 @@ function App() {
           </div>
           {isFooter && <HiddenFooter />}
         </div>
-      </UserProvider>
     </AuthProvider>
   );
 }

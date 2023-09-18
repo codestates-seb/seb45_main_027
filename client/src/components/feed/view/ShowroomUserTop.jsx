@@ -1,20 +1,55 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserContext } from "../../../context/userContext";
+import useAxios from "../../../hooks/useAxios";
 
-const button =
+const buttonStyle =
   "flex items-center justify-center rounded-lg shadow h-full px-5 py-4";
 const div = "flex flex-col items-center px-6";
 const img = "w-10 h-10 mb-2";
 
-const ShowroomUserTop = ({ feedData }) => {
-  const { follow, setFollow, toggleFollow } = useUserContext();
+const ShowroomUserTop = ({ feedData, setFollow, follow, res }) => {
+  const memberId = localStorage.getItem("memberId");
+  const frommemberId = feedData.memberId;
   const navigate = useNavigate();
+
+  const [patchRes, patchErr, patchLoading, patchFetchData] = useAxios(
+    {
+      method: "PATCH",
+      url: `/follow/choose/${frommemberId}/${memberId}`,
+      headers: {
+        "ngrok-skip-browser-warning": "69420",
+      },
+    },
+    false
+  );
 
   let datePart = "";
   if (feedData && feedData.createdDateTime) {
     datePart = feedData.createdDateTime.split("T")[0];
   }
+
+  if (res && res.data && res.data.data) {
+    console.log(res.data);
+    console.log(res.data.data.followYn);
+  }
+
+  const toggleFollow = () => {
+    patchFetchData();
+    setFollow(!follow);
+  };
+
+  useEffect(() => {
+    if (res && res.data && res.data.data) {
+      setFollow(res.data.data.followYn);
+    }
+  }, [res]);
+
+  // 팔로우 받아온 요청 상태 저장
+  useEffect(() => {
+    if (feedData) {
+      setFollow(feedData.followYn);
+    }
+  }, [feedData]);
 
   return (
     <div className="flex-col items-center lg:flex-row flex justify-between p-2 lg:p-8 mt-10 pt-10 rounded-lg shadow bg-white">
@@ -84,18 +119,18 @@ const ShowroomUserTop = ({ feedData }) => {
       </div>
       <button className="h-full p-10" onClick={toggleFollow}>
         {follow ? (
-          <div className={`bg-gray-200 hover:bg-gray-300 ${button} `}>
+          <div className={`bg-white ${buttonStyle} `}>
             <img
               src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/check.png"
-              alt=""
+              alt="팔로잉"
             />
             <span className=" text-gray-800 font-semibold pl-1">팔로잉</span>
           </div>
         ) : (
-          <div className={`bg-[#00647B] hover:bg-[#3b98ad] ${button} `}>
+          <div className={`bg-[#00647B] ${buttonStyle} `}>
             <img
               src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/plus.png"
-              alt=""
+              alt="팔로우"
             />
             <span className="text-white font-semibold pl-1">팔로우</span>
           </div>
