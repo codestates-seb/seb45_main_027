@@ -7,10 +7,8 @@ const buttonStyle =
 
 const TipsUserTop = ({ feedData, setFollow, follow, res }) => {
   const memberId = localStorage.getItem("memberId");
-  const userId = feedData.userId;
   const frommemberId = feedData.memberId;
   const navigate = useNavigate();
-  console.log(feedData);
 
   const [patchRes, patchErr, patchLoading, patchFetchData] = useAxios(
     {
@@ -70,18 +68,16 @@ const TipsUserTop = ({ feedData, setFollow, follow, res }) => {
           <div className="text-gray-500">{datePart}</div>
         </div>
       </div>
-      {
-        memberId === userId &&
-        <button
-          onClick={toggleFollow}
-        >
-          {follow ? (
+      {memberId !== frommemberId && (
+        <button onClick={toggleFollow}>
+          {follow
+            ? (
             <div className={`bg-white ${buttonStyle} `}>
               <img
                 src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/check.png"
                 alt="팔로잉"
               />
-              <span className=" text-gray-800 font-semibold pl-1">팔로잉</span>
+              <span className="text-gray-800 font-semibold pl-1">팔로잉</span>
             </div>
           ) : (
             <div className={`bg-[#00647B] ${buttonStyle} `}>
@@ -93,7 +89,7 @@ const TipsUserTop = ({ feedData, setFollow, follow, res }) => {
             </div>
           )}
         </button>
-      }
+      )}
     </div>
   );
 };

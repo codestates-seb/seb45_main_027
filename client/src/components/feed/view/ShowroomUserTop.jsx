@@ -9,9 +9,9 @@ const img = "w-10 h-10 mb-2";
 
 const ShowroomUserTop = ({ feedData, setFollow, follow }) => {
   const memberId = localStorage.getItem("memberId");
-  const userId = feedData.userId;
   const frommemberId = feedData.memberId;
   const navigate = useNavigate();
+
 
   const [patchRes, patchErr, patchLoading, patchFetchData] = useAxios(
     {
@@ -111,8 +111,7 @@ const ShowroomUserTop = ({ feedData, setFollow, follow }) => {
           <span>{feedData.locationName}</span>
         </div>
       </div>
-      {
-        memberId === userId &&
+      {memberId !== frommemberId && (
         <button className="h-full p-10" onClick={toggleFollow}>
           {follow ? (
             <div className={`bg-white ${buttonStyle} `}>
@@ -132,7 +131,7 @@ const ShowroomUserTop = ({ feedData, setFollow, follow }) => {
             </div>
           )}
         </button>
-      }
+      )}
     </div>
   );
 };

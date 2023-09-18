@@ -29,12 +29,12 @@ const CommentInput = ({ feedData, setFeedData }) => {
         const newComment = res.data;
         setEnterComment((prevComments) => [...prevComments, newComment]);
 
-        const addCommentCout = feedData.repliesCount + 1; // 기존 댓글 수 +1
+        const addCommentCount = feedData.repliesCount + 1; // 기존 댓글 수 +1
         const addComment = [...feedData.replies, newComment];
         // feedData 업데이트
         setFeedData({
           ...feedData,
-          repliesCount: addCommentCout,
+          repliesCount: addCommentCount,
           replies: addComment,
         });
         console.log(res.data);

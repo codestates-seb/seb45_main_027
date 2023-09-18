@@ -5,7 +5,7 @@ import CommentPatchTips from "./CommentPatchTips";
 import CommentLikeTips from "./CommentLikeTips";
 import ReplyInputTips from "./ReplyInputTips";
 import ReplyOutputTips from "./ReplyOutputTips";
-// import CommentPaginationTips from "../showroom/CommentPaginationTips";
+import CommentPaginationTips from "./CommentPaginationTips";
 
 const CommentOutputTips = ({ feedData, setFeedData, children }) => {
   const memberId = localStorage.getItem("memberId");
@@ -125,21 +125,21 @@ const CommentOutputTips = ({ feedData, setFeedData, children }) => {
                 </div>
               </div>
               {/* 답글 출력창 */}
-              {/* <ReplyOutput
+              <ReplyOutputTips
                 commentsData={comment.comments}
                 feedData={feedData}
                 setFeedData={setFeedData}
-              /> */}
+              />
             </div>
           </div>
         ))}
-      {/* {replies && (
-        <CommentPagination
+      {replies && (
+        <CommentPaginationTips
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={setCurrentPage}
         />
-      )} */}
+      )}
     </div>
   );
 };
