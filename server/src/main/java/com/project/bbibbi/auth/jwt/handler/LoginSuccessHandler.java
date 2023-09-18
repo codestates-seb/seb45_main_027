@@ -3,6 +3,7 @@ package com.project.bbibbi.auth.jwt.handler;
 import com.project.bbibbi.auth.jwt.service.CustomJwtUserDetails;
 import com.project.bbibbi.auth.jwt.service.JwtService;
 import com.project.bbibbi.domain.member.repository.MemberRepository;
+import com.project.bbibbi.global.entity.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,17 +37,18 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         Long memberId = userDetails.getMemberId();
         String profileImg = userDetails.getProfileImg();
         String nickname = userDetails.getNickname();
+        Role role = userDetails.getRole();
 
 
         String accessToken = jwtService.createAccessToken(email); // JwtService의 createAccessToken을 사용하여 AccessToken 발급
         String refreshToken = jwtService.createRefreshToken(); // JwtService의 createRefreshToken을 사용하여 RefreshToken 발급
 
-        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken, memberId, profileImg, nickname); // 응답 헤더에 AccessToken, RefreshToken 실어서 응답
+        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken, memberId, profileImg, nickname, role); // 응답 헤더에 AccessToken, RefreshToken 실어서 응답
 
         memberRepository.findByEmail(email)
                 .ifPresent(member -> {
                     member.updateRefreshToken(refreshToken);
-                    memberRepository.saveAndFlush(member); // 안된다면 고치자 user
+                    memberRepository.saveAndFlush(member);
                 });
         log.info("로그인에 성공하였습니다. 이메일 : {}", email);
         log.info("로그인에 성공하였습니다. AccessToken : {}", accessToken);

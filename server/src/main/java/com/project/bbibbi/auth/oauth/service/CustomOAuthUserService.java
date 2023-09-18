@@ -71,13 +71,20 @@ public class CustomOAuthUserService implements OAuth2UserService<OAuth2UserReque
     }
 
     private SocialType getSocialType(String registrationId) {
-        if ("naver".equalsIgnoreCase(registrationId)) {
+        if (NAVER.equalsIgnoreCase(registrationId)) {
             return SocialType.NAVER;
-        } else if ("kakao".equalsIgnoreCase(registrationId)) {
+        } else if (KAKAO.equalsIgnoreCase(registrationId)) {
             return SocialType.KAKAO;
         } else {
             throw new IllegalArgumentException("지원하지 않는 registrationId입니다: " + registrationId);
         }
+//        if ("naver".equalsIgnoreCase(registrationId)) {
+//            return SocialType.NAVER;
+//        } else if ("kakao".equalsIgnoreCase(registrationId)) {
+//            return SocialType.KAKAO;
+//        } else {
+//            throw new IllegalArgumentException("지원하지 않는 registrationId입니다: " + registrationId);
+//        }
 
     }
 

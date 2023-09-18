@@ -76,6 +76,9 @@ public class SecurityConfig {
                 // 기본 페이지, css, image, js 하위 폴더에 있는 자료들은 모두 접근 가능, h2-console에 접근 가능
                 .antMatchers("/","/css/**","/images/**","/js/**","/favicon.ico","/h2/**").permitAll()
 //                .antMatchers("/sign-up").permitAll() // 회원가입 접근 가능 //임시용 // 지우지 마세요~
+                .antMatchers(HttpMethod.GET, "/").permitAll()
+                .antMatchers("/login/**").permitAll()
+                .antMatchers("/oauth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/**").permitAll()
                 .antMatchers("/login").permitAll()
 //                .antMatchers("/login").permitAll()
@@ -207,4 +210,9 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+//    @Override
+//    public void addFormatters(FormatterRegistry registry) {
+//        registry.addConverter(new OauthServerTypeConverter());
+//    }
 }

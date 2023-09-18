@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7af85bbc-e29f-477e-b5fb-707812c8b0ef" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/controller/TestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/oauth2/domain/AuthCodeRequestUrlProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/oauth2/domain/OauthServerType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/oauth2/domain/authcode/AuthCodeRequestUrlProviderComposite.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/oauth2/infra/KakaoAuthCodeRequestUrlProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/oauth2/presentation/OauthServerTypeConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/oauth2/service/OauthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/domain/member/controller/dto/MemberProfile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/server/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/BbibbiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/BbibbiApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/jwt/filter/JwtAuthenticationProcessingFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/jwt/filter/JwtAuthenticationProcessingFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/jwt/handler/LoginSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/jwt/handler/LoginSuccessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/jwt/service/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/jwt/service/JwtService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/oauth/handler/OAuthLoginSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/oauth/handler/OAuthLoginSuccessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/oauth/oauthUserInfo/CustomOAuth2User.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/oauth/oauthUserInfo/CustomOAuth2User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/oauth/service/CustomOAuthUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/project/bbibbi/auth/oauth/service/CustomOAuthUserService.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2VYAtlaZdnPSTdSBz10oagkxpET" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7af85bbc-e29f-477e-b5fb-707812c8b0ef" name="Changes" comment="" />
+      <created>1695002856484</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1695002856484</updated>
+      <workItem from="1695002859407" duration="26000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
