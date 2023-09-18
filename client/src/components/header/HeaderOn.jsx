@@ -28,7 +28,7 @@ const HeaderOn = () => {
           className="flex items-center cursor-pointer"
           onClick={handleUserClick}>
             <img
-              src={profileImg}
+              src={profileImg ? profileImg : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"}
               alt="profileImg"
               className='w-8 h-8 mr-2.5 rounded-full object-cover'
             />

@@ -1,17 +1,16 @@
 import { useState } from "react";
 import MyInfoShowroom from "./MyInfoShowroom";
 
-const MyInfoContentList = ({myinfoData, fetchMyinfoData}) => {
-  
+const MyInfoContentList = ({ myinfoData, fetchMyinfoData }) => {
   const [activeTab, setActiveTab] = useState(1);
-
 
   const handleTabs = (tabIdx) => {
     setActiveTab(tabIdx);
   };
 
-  const handleFollowAction = () => { fetchMyinfoData();};
-
+  const handleFollowAction = () => {
+    fetchMyinfoData();
+  };
 
   const tabStyle = (tabIndex) =>
     `${
@@ -25,9 +24,13 @@ const MyInfoContentList = ({myinfoData, fetchMyinfoData}) => {
   }
 
   return (
-    <div className="flex-col bg-white rounded-md w-full shadow-md mb-6  md:ml-[2%] px-[4%] py-[2%]
+    <div
+      className="
+      flex-col bg-white rounded-md shadow-md 
+      mb-6 md:ml-[2%] md:my-[2%] px-[4%] py-[2%]
       md:h-[630px] lg:h-[690px] xl:h-[750px]
-      md:my-[2%]  sm:w-[500px] md:w-[580px] lg:w-[700px] xl:w-[850px]">
+      w-full sm:w-[500px] md:w-[580px] lg:w-[700px] xl:w-[850px]"
+    >
       <ul className="flex ">
         <li className={tabStyle(1)} onClick={() => handleTabs(1)}>
           게시글
@@ -46,7 +49,7 @@ const MyInfoContentList = ({myinfoData, fetchMyinfoData}) => {
               Showroom
             </div>
             <MyInfoShowroom
-              label={'showroom'}
+              label={"showroom"}
               postData={myinfoData.showRoom.post}
               bookmarkData={myinfoData.showRoom.bookMark}
               likeData={myinfoData.showRoom.like}
@@ -61,7 +64,7 @@ const MyInfoContentList = ({myinfoData, fetchMyinfoData}) => {
               Tips
             </div>
             <MyInfoShowroom
-              label={'tips'}
+              label={"tips"}
               postData={myinfoData.tipContent.post}
               bookmarkData={myinfoData.tipContent.bookMark}
               likeData={myinfoData.tipContent.like}

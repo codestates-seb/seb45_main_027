@@ -1,4 +1,5 @@
-import api from "../common/tokens";
+import React, { useState } from "react";
+import axios from "axios";
 
 const EditProfile = ({
   profileData,
@@ -10,12 +11,16 @@ const EditProfile = ({
 
   handleProfileUpdate,
 }) => {
+  const [imageUploadInProgress, setImageUploadInProgress] = useState(false);
+
   //유저가 사진 업로드시 서버로 보냄
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
     const formData = new FormData();
     formData.append("myInfoImage", file);
+
+    setImageUploadInProgress(true);
 
     reader.onloadend = () => {
       setProfileData({ ...profileData, profileImg: reader.result });
@@ -26,19 +31,22 @@ const EditProfile = ({
     }
 
     try {
-      const response = await api.post(`/imageUpload/myInfoImage`, formData, {
+      const response = await axios.post(`/imageUpload/myInfoImage`, formData, {
         headers: {
           "ngrok-skip-browser-warning": "69420",
         },
       });
 
       //이미지 업로드 성공시 응답으로 받은 사진 경로 확인
-      //console.log("Image uploaded:", response.data);
-      
+      console.log("Image uploaded:", response.data);
+
       // 응답으로 받은 사진을 여기서 저장해서 유저한테 보여줌
       setProfileData({ ...profileData, profileImg: response.data });
     } catch (error) {
       console.error("Image upload failed:", error);
+      setProfileData({ ...profileData, profileImg: null });
+    } finally {
+      setImageUploadInProgress(false);
     }
   };
 
@@ -95,7 +103,11 @@ const EditProfile = ({
         onChange={handleProfileChange}
         className={`${inputStyle} pb-20`}
       />
-      <button onClick={handleProfileUpdate} className={buttonStyle}>
+      <button
+        onClick={handleProfileUpdate}
+        className={buttonStyle}
+        disabled={imageUploadInProgress}
+      >
         Update Profile
       </button>
     </div>

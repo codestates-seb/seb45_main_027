@@ -11,10 +11,12 @@ const UserProfile = ({
 }) => {
   return (
     <div
-      className="flex justify-between md:flex-col md:justify-start md:items-center bg-white rounded-md
-      my-[3%] w-full md:w-[180px] lg:w-[200px] xl:w-[230px]
-      h-[100px] md:h-[630px] lg:h-[690px] xl:h-[750px]
-     shadow-md md:my-[2%]"
+      className="
+      flex justify-between md:flex-col md:justify-start md:items-center 
+      bg-white rounded-md
+      my-[3%] shadow-md md:my-[2%]
+      w-full md:w-[180px] lg:w-[200px] xl:w-[230px]
+      h-[100px] md:h-[630px] lg:h-[690px] xl:h-[750px]"
     >
       <UserProfileDetails
         toggleAccountSettings={toggleAccountSettings}

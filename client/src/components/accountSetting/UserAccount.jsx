@@ -18,7 +18,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
   const [profileData, setProfileData] = useState({
     nickname: userDetails.nickname,
     profileImg: userDetails.profileImg,
-    myIntro: userDetails.myIntro,
+    myIntro: userDetails.myIntro || '',
   });
 
   //최종으로 수정된 프로필정보를 서버에 보냄
@@ -87,7 +87,8 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
       >
         &times;
       </button>
-      <div className="flex flex-col container mx-auto p-4 bg-white opacity-[.9] rounded-lg min-w-[350px] md:min-w-[750px] mb-40">
+      <div className="
+      flex flex-col container mx-auto p-4 bg-white opacity-[.9] rounded-lg min-w-[350px] md:min-w-[750px] mb-40">
         <div className="flex justify-between">
           <div className="text-3xl font-bold px-2 py-2">{`Hello, ${userDetails.nickname}`}</div>
           <DeleteAccount />
