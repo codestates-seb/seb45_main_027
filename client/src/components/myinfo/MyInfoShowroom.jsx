@@ -138,7 +138,11 @@ const MyInfoShowroom = ({
 
   return (
     <>
-      <div className="flex flex-row flex-wrap justify-center md:h-[180px] lg:h-[200px] xl:h-[230px]">
+      <div
+        className="
+          flex flex-row flex-wrap justify-center 
+          md:h-[180px] lg:h-[200px] xl:h-[230px]"
+      >
         {activeTab === 1 &&
           visiblePosts.map((item, idx) => (
             <MyInfoPost

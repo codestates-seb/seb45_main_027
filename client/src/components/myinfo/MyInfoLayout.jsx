@@ -7,7 +7,6 @@ import api from "../common/tokens";
 
 const MyInfoLayout = () => {
   const { id } = useParams();
-
   const [showAccountSettings, setShowAccountSettings] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const [myinfoData, setMyinfoData] = useState(null);
@@ -50,7 +49,11 @@ const MyInfoLayout = () => {
   const fetchFollowData = async () => {
     try {
       const [followingResponse, followersResponse] = await Promise.all([
-        api.get(`/follow/from/${id}`),
+        api.get(`/follow/from/${id}`, {
+          headers: {
+            "ngrok-skip-browser-warning": "69420",
+          },
+        }),
         api.get(`/follow/to/${id}`, {
           headers: {
             "ngrok-skip-browser-warning": "69420",
@@ -70,15 +73,15 @@ const MyInfoLayout = () => {
 
   useEffect(() => {
     fetchFollowData();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     fetchProfileData();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     fetchMyinfoData();
-  }, []);
+  }, [id]);
 
   if (!profileData || !myinfoData || !followingList || !followersList) {
     return (
