@@ -195,18 +195,9 @@ public class TipService {
         return searchTips;
     }
 
-    public List<Tip> getAllSearchTipTags(String searchTag, int page, int size) {
+    public List<Tip> getAllSearchTipTags(String searchTag) {
 
-        List<Tip> searchTips = tipRepository.findAllSearchTag(searchTag,page,size );
-
-        Integer searchTipsCount = tipRepository.findAllSearchCount(searchTag);
-
-        if(((page+1)*size) >= searchTipsCount){
-            for(Tip tip : searchTips){
-                tip.setFinalPage(true);
-            }
-
-        }
+        List<Tip> searchTips = tipRepository.findAllSearchTag(searchTag);
 
         Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
 

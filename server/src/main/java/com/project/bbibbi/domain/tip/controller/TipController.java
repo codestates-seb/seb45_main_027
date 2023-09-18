@@ -191,30 +191,19 @@ public class TipController {
     public ResponseEntity getAllSearchTipTags(@PathVariable("search-tag") String searchTag,
                                            @RequestParam int page) {
 
+        // 페이지 네이션 제외
         // 사이즈는 12로 고정
-        int size = 12;
 
 
-        List<Tip> pageTips = tipService.getAllSearchTipTags(searchTag, page - 1, size);
+        List<Tip> pageTips = tipService.getAllSearchTipTags(searchTag);
 
 
         List<TipResponseDto> tipResponseDtos = pageTips.stream()
                 .map(tipMapper::tipToTipResponseDto)
                 .collect(Collectors.toList());
 
-        PageAbleResponseDto pageAbleResponseDto = new PageAbleResponseDto<>();
 
-        if(pageTips.get(0).getFinalPage()){
-            pageAbleResponseDto.setIsLast(true);
-        }
-        else {
-            pageAbleResponseDto.setIsLast(false);
-        }
-
-        pageAbleResponseDto.setData(tipResponseDtos);
-
-
-        return ResponseEntity.ok(pageAbleResponseDto);
+        return ResponseEntity.ok(tipResponseDtos);
     }
 
 //    @GetMapping("/search/{search-string}")

@@ -62,13 +62,8 @@ public interface TipRepository extends JpaRepository<Tip, Long>, TipRepositoryCu
     List<Tip> findAllSearch (@Param("searchString") String searchString, @Param("page") int page, @Param("size") int size);
 
 
-    @Query(value = "select tip.* from (select b.tip_id, row_number() over(order by b.created_date_time desc) as row_num " +
-            "from (select * from tip where tip_id in (select tip_id from tag where tag_content = :searchTag) ) as b ) as tag_tip " +
-            "inner join (select * from tip where tip_id in (select tip_id from tag where tag_content = :searchTag) ) as tip " +
-            "on tag_tip.tip_id = tip.tip_id " +
-            "where tag_tip.row_num > :page * :size " +
-            "order by created_date_time desc limit :size ", nativeQuery = true)
-    List<Tip> findAllSearchTag (@Param("searchTag") String searchTag, @Param("page") int page, @Param("size") int size);
+    @Query(value = "select * from tip where tip_id in (select a.tip_id from tag a where a.tag_content = :searchTag ) order by created_date_time desc ", nativeQuery = true)
+    List<Tip> findAllSearchTag (@Param("searchTag") String searchTag);
 
     @Query(value = "select count(*) from tip where title like %:searchString% or content like %:searchString% ", nativeQuery = true)
     Integer findAllSearchCount (@Param("searchString") String searchString);
