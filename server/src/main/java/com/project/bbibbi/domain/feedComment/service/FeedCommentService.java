@@ -31,7 +31,7 @@ public class FeedCommentService {
 
         insertFeedComment.setMember(Member.builder().memberId
                 (feedComment.getMember().getMemberId()).nickname
-                (member.getNickname()).build());
+                (member.getNickname()).profileImg(member.getProfileImg()).build());
 
         return insertFeedComment;
 
@@ -45,6 +45,7 @@ public class FeedCommentService {
                 .feedCommentId(comment.getFeedCommentId())
                 .content(comment.getContent())
                 .memberId(comment.getMember().getMemberId())
+                .memberImage(comment.getMember().getProfileImg())
                 .build();
     }
 
@@ -92,6 +93,7 @@ public class FeedCommentService {
 
         // 새로운 답글을 생성합니다.
         FeedComment feedComment = new FeedComment();
+        feedComment.setFeedCommentId(feedComment.getFeedCommentId());
         feedComment.setContent(dto.getContent());
         feedComment.setMember(parentComment.getMember());
         feedComment.setParentComment(parentComment.getFeedCommentId()); // 부모 댓글 ID를 저장

@@ -255,8 +255,10 @@ public interface FeedMapper {
                     List<FeedCommentDto> allComments = new ArrayList<>(); // FeedCommentDto 타입으로 리스트 생성
                     for (FeedComment feedComment : feedReply.getComments()) {
                         FeedCommentDto commentDto = new FeedCommentDto(); // FeedCommentDto 객체 생성
-                        commentDto.setFeedReplyId(feedComment.getFeedCommentId());
+                        commentDto.setFeedCommentId(feedComment.getFeedCommentId());
+                        commentDto.setFeedReplyId(feedComment.getFeedReply().getFeedReplyId());
                         commentDto.setContent(feedComment.getContent());
+                        commentDto.setMemberImage(feedComment.getMember().getProfileImg());
                         commentDto.setNickname(feedComment.getMember().getNickname());
                         commentDto.setMemberId(feedComment.getMember().getMemberId());
                         commentDto.setCreatedDateTime(feedComment.getCreatedDateTime());

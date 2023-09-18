@@ -84,6 +84,7 @@ public class FeedReplyService {
                         .content(feedComment.getContent())
                         .memberId(feedComment.getMember().getMemberId())
                         .feedReplyId(feedComment.getFeedReply().getFeedReplyId())
+                        .memberImage(feedComment.getMember().getProfileImg())
                         .parentComment(feedComment.getParentComment())
                         .commentOrder(feedComment.getParentComment())
                         .nickname(feedComment.getMember().getNickname())
