@@ -7,7 +7,7 @@ import ViewCoverImg from "../components/feed/view/ViewCoverImg";
 import Sidebar from "../components/feed/view/Sidebar";
 import ShowroomContents from "../components/feed/view/ShowroomContents";
 import Edit from "../components/feed/view/Edit";
-import CommentWrap from "../components/feed/comment/CommentWrap";
+import CommentWrap from "../components/feed/comment/showroom/CommentWrap";
 
 const ViewShowRoom = () => {
   // 받아온 API 공유하기 위한 상태

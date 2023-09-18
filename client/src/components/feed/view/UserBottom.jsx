@@ -33,8 +33,6 @@ const UserBottom = ({ feedData, setFollow, follow, res }) => {
     }
   }, [feedData]);
 
-  console.log(feedData);
-  console.log(feedData.followYn);
 
   return (
     <div className="flex justify-between py-12 border-b">

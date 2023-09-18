@@ -7,7 +7,7 @@ import ViewCoverImg from "../components/feed/view/ViewCoverImg";
 import Sidebar from "../components/feed/view/Sidebar";
 import TipsContents from "../components/feed/view/TipsContents";
 import Edit from "../components/feed/view/Edit";
-import CommentWrap from "../components/feed/comment/CommentWrap";
+import CommentWrapTips from "../components/feed/comment/tips/CommentWrapTips";
 
 const ViewTips = () => {
   // 받아온 API 공유하기 위한 상태
@@ -61,7 +61,7 @@ const ViewTips = () => {
         <TipsContents setFeedData={setFeedData} feedData={feedData} />
         {memberId == writeMemberId ? <Edit /> : null}
 
-        <CommentWrap
+        <CommentWrapTips
           feedData={feedData}
           setFeedData={setFeedData}
           ref={commentSectionRef}

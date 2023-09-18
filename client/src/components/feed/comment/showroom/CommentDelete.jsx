@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import api from "../../common/tokens";
+import api from "../../../common/tokens";
 
 const CommentDelete = ({ comment, replies, setReplies }) => {
   const { feedId } = useParams(); // 게시물 번호

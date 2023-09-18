@@ -1,42 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
-import useAxios from "../../../hooks/useAxios";
+import api from "../../../common/tokens"
 
 const CommentLike = ({  comment }) => {
-  const feedReplyId = comment.feedReplyId;  
-  const [like, setLike] = useState("");
-
+  const feedReplyId = comment.feedReplyId;
   // 좋아요 상태
-  const [resLike, errLike, loadingLike, fetchLikeData] = useAxios(
-    {
+  const [like, setLike] = useState(false);
+
+  // const [resLike, errLike, loadingLike, fetchLikeData] = useAxios(
+  const patchLike = async () => {
+    const configParams = {
       method: "PATCH",
       url: `/feed/feedReply/${feedReplyId}/feedReplyLike`,
       headers: {
         "ngrok-skip-browser-warning": "69420",
       },
-    },
-    false
-  );
-
-  const toggleLike = () => {
-    fetchLikeData();
-    setLike(!like);
-    toast.success("클릭하셨습니다.")
+    };
+    try {
+      const response = await api(configParams);
+      if (response && response.status === 200) {
+        setLike(!like);
+        toast.success("클릭하셨습니다.");
+      }
+    } catch (err) {
+      toast.error("오류가 발생했습니다.");
+    }
   };
-
   // [좋아요/북마크] 받아온 요청 상태 저장
   useEffect(() => {
     if (comment) {
       setLike(comment.replyLikeYn);
     }
   }, [comment]);
-
   console.log(comment.replyLikeYn);
+
+
   return (
     <>
       <button
         className="flex items-center hover:font-semibold"
-        onClick={toggleLike}>
+        onClick={patchLike}>
         <img
           className="w-6 h-6 mr-1"
           src={
