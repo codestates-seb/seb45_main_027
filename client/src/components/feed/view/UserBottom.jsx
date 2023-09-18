@@ -62,36 +62,36 @@ const UserBottom = ({ feedData, setFollow, follow, res }) => {
               className="text-xl font-semibold cursor-pointer">
               {feedData.nickname}
             </div>
-            {
-              memberId === userId &&
-              <div className="flex items-center pr-2 pl-2.5 text-2xl">·</div>
-             (
-            <button className="" onClick={toggleFollow}>
-                {follow ? (
-                  <div className={buttonStyle}>
-                    <img
-                      src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/check.png"
-                      alt="팔로잉"
-                    />
-                    <span className=" text-xl hover:text-gray-300 text-gray-600 font-semibold pl-1">
-                      팔로잉
-                    </span>
-                  </div>
-                ) : (
-                  <div className={buttonStyle}>
-                    <img
-                      src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/plus.png"
-                      alt="팔로우"
-                    />
-                    <span className="text-xl hover:text-[#96dbf0] text-[#35c5f0] font-semibold pl-1">
-                      팔로우
-                    </span>
-                  </div>
-                )}
-              </button>
-            )}
+            {memberId === userId &&
+              (<div className="flex items-center pr-2 pl-2.5 text-2xl">·</div>)(
+                <button className="" onClick={toggleFollow}>
+                  {follow ? (
+                    <div className={buttonStyle}>
+                      <img
+                        src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/check.png"
+                        alt="팔로잉"
+                      />
+                      <span className=" text-xl hover:text-gray-300 text-gray-600 font-semibold pl-1">
+                        팔로잉
+                      </span>
+                    </div>
+                  ) : (
+                    <div className={buttonStyle}>
+                      <img
+                        src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/plus.png"
+                        alt="팔로우"
+                      />
+                      <span className="text-xl hover:text-[#96dbf0] text-[#35c5f0] font-semibold pl-1">
+                        팔로우
+                      </span>
+                    </div>
+                  )}
+                </button>
+              )}
           </div>
-          <div className="text-xl text-gray-500">{feedData.myIntro}</div>
+          <div className="text-xl text-gray-500">
+            {feedData.myIntro ? feedData.myIntro : `${feedData.nickname}님의 게시글 입니다.`}
+          </div>
         </div>
       </div>
     </div>
