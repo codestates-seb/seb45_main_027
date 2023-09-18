@@ -125,7 +125,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                     String reIssuedRefreshToken = reIssueRefreshToken(member);
                     try {
                         jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(member.getEmail()),
-                                reIssuedRefreshToken, member.getMemberId(),member.getProfileImg(),member.getNickname());
+                                reIssuedRefreshToken, member.getMemberId(),member.getProfileImg(),member.getNickname(),
+                                member.getRole());
                     } catch (IOException e) {
                         throw new RuntimeException("입출력 오류입니다", e);
                     }
@@ -208,7 +209,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         CustomJwtUserDetails userDetailsUser = new CustomJwtUserDetails( //되면 수정
                 member.getMemberId(),
                 member.getEmail(),
-                member.getPassword(),// 비밀번호는 null
+                password,// 비밀번호는 null
                 member.getRole(),
                 true, // checkUser 값은 true
                 member.getProfileImg(),
