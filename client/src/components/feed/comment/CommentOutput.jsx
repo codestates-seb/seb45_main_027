@@ -4,12 +4,12 @@ import CommentDelete from "./CommentDelete";
 import CommentPatch from "./CommentPatch";
 import CommentLike from "./CommentLike";
 import ReplyInput from "./ReplyInput";
-import ReplyOutput from './ReplyOutput';
+import ReplyOutput from "./ReplyOutput";
 
 const CommentOutput = ({ feedData, setFeedData, children }) => {
   const memberId = localStorage.getItem("memberId");
   const navigate = useNavigate();
-  
+
   // feedData 안에 댓글 접근
   const [replies, setReplies] = useState("");
   // 댓글 수정 상태
@@ -23,7 +23,6 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
     }
   }, [feedData]);
 
-  console.log(replies);
   return (
     <div>
       {/* 댓글 출력창 */}
@@ -45,7 +44,8 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                     onClick={() => {
                       navigate(`/myinfo/${comment.memberId}`);
                     }}
-                    className="text-lg font-semibold cursor-pointer">
+                    className="text-lg font-semibold cursor-pointer"
+                  >
                     {comment.nickname}
                   </span>
 
@@ -74,7 +74,8 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                             ...prev,
                             [comment.feedReplyId]: !prev[comment.feedReplyId],
                           }))
-                        }>
+                        }
+                      >
                         답글 달기
                       </button>
                     </div>
@@ -87,7 +88,8 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                             ...editComent,
                             [comment.feedReplyId]: true,
                           });
-                        }}>
+                        }}
+                      >
                         수정하기
                       </button>
                     )}
@@ -113,7 +115,7 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
               </div>
               {/* 답글 출력창 */}
               <ReplyOutput
-                data={comment.comments}
+                commentsData={comment.comments}
                 feedData={feedData}
                 setFeedData={setFeedData}
               />
