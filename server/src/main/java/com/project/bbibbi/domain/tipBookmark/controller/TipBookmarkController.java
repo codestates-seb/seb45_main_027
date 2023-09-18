@@ -1,5 +1,7 @@
 package com.project.bbibbi.domain.tipBookmark.controller;
 
+import com.project.bbibbi.auth.utils.loginUtils;
+import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tipBookmark.dto.TipBookmarkRequestDto;
 import com.project.bbibbi.domain.tipBookmark.dto.TipBookmarkResponseDto;
 import com.project.bbibbi.domain.tipBookmark.entity.TipBookmark;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class TipBookmarkController {
 
-    private final static String TIP_BOOKMARK_DEFAULT_URL = "/tipbookmark";
+    private final static String TIP_BOOKMARK_DEFAULT_URL = "/tipBookmark";
 
     private final TipBookmarkService tipBookmarkService;
 
@@ -38,7 +40,7 @@ public class TipBookmarkController {
 
         TipBookmarkRequestDto requestBody = new TipBookmarkRequestDto();
 
-        requestBody.setMemberId(1L);
+        requestBody.setMemberId(loginUtils.getLoginId());
         requestBody.setTipId(tipId);
 
         TipBookmark tipBookmark = mapper.tipBookmarkRequestDtoToTipBookmark(requestBody);

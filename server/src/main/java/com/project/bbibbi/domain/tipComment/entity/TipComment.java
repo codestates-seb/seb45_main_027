@@ -25,18 +25,19 @@ public class TipComment extends BaseEntity {
     @Column
     private Long parentComment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tip_reply_id", nullable = false)
-    private TipReply tipReply;
+    @Transient
+    private String nickname;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
-    private Member member;
-
-    // 이하는 추가된 내용
     @ManyToOne
     @JoinColumn(name = "tip_id")
     private Tip tip;
 
+    @ManyToOne
+    @JoinColumn(name = "tip_reply_id")
+    private TipReply tipReply;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
 }

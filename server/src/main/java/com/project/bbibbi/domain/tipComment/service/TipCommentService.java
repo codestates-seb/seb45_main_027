@@ -1,5 +1,7 @@
 package com.project.bbibbi.domain.tipComment.service;
 
+import com.project.bbibbi.domain.member.entity.Member;
+import com.project.bbibbi.domain.member.repository.MemberRepository;
 import com.project.bbibbi.domain.tipComment.dto.TipCommentDto;
 import com.project.bbibbi.domain.tipComment.entity.TipComment;
 import com.project.bbibbi.global.exception.tipexception.TipCommentNotFoundException;
@@ -17,14 +19,24 @@ import java.util.Optional;
 public class TipCommentService {
 
     private final TipCommentRepository tipCommentRepository;
+    private final MemberRepository memberRepository;
     public TipComment saveComment(TipComment tipComment) {
-        // 저장 전 로직이 필요한 경우 여기에 추가
-        return tipCommentRepository.save(tipComment);
+        TipComment insertTipComment= tipCommentRepository.save(tipComment);
+
+        Optional<Member> optionalMember = memberRepository.findById(tipComment.getMember().getMemberId());
+
+        Member member = optionalMember.orElseThrow(() -> {throw new RuntimeException() ; });
+
+        insertTipComment.setMember(Member.builder().memberId
+                (tipComment.getMember().getMemberId()).nickname
+                (member.getNickname()).build());
+
+        return insertTipComment;
     }
 
     public TipCommentDto findComment(Long commentId) {
         TipComment comment = tipCommentRepository.findById(commentId)
-                .orElseThrow(() -> new TipCommentNotFoundException("댓글이 존재하지 않습니다."));
+                .orElseThrow(TipCommentNotFoundException::new);
         return TipCommentDto.builder()
                 .tipCommentId(comment.getTipCommentId())
                 .content(comment.getContent())
@@ -49,14 +61,14 @@ public class TipCommentService {
             TipComment updateComment = tipCommentRepository.save(tipComment);
             return updateComment;
         } else {
-            throw new TipCommentNotFoundException("답글을 찾을 수 없습니다. ID: " + commentId);
+            throw new TipCommentNotFoundException();
         }
     }
 //    이렇게 하면 댓글을 찾지 못한 경우에 예외가 발생하며, 이를 적절하게 처리할 수 있습니다.
 //    필요에 따라 반환값을 null로 설정하고 호출하는 측에서 처리하는 방법도 가능합니다.
     public void deleteComment(Long commentId) {
         TipComment comment = tipCommentRepository.findById(commentId)
-                .orElseThrow(() -> new TipCommentNotFoundException("답글이 존재하지 않습니다."));
+                .orElseThrow(TipCommentNotFoundException::new);
 
         // 댓글을 삭제합니다.
         tipCommentRepository.deleteById(commentId);
@@ -70,8 +82,7 @@ public class TipCommentService {
     public TipComment addComment(Long parentCommentId, TipCommentDto dto) {
         // 부모 댓글을 찾습니다.
         TipComment parentComment = tipCommentRepository.findById(parentCommentId)
-                .orElseThrow(() -> new TipCommentNotFoundException
-                        ("부모 댓글이 존재하지 않습니다. ID: " + parentCommentId));
+                .orElseThrow(TipCommentNotFoundException::new);
 
         // 새로운 답글을 생성합니다.
         TipComment tipComment = new TipComment();

@@ -1,5 +1,7 @@
 package com.project.bbibbi.domain.tip.controller;
 
+import com.project.bbibbi.auth.utils.loginUtils;
+import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.tip.dto.TipPatchDto;
 import com.project.bbibbi.domain.tip.dto.TipPostDto;
 import com.project.bbibbi.domain.tip.dto.TipResponseDto;
@@ -53,8 +55,8 @@ public class TipController {
     @PostMapping
     public ResponseEntity<TipResponseDto> createTip(@RequestBody @Valid TipPostDto tipPostDto) {
 
-        // 로그인한 사용자 memberId가 1 이라고 가정
-        tipPostDto.setMemberId(1L);
+        // 로그인한 사용자 memberId
+//        tipPostDto.setMemberId(loginUtils.getLoginId());
         Tip tip = tipMapper.tipPostDtoToTip(tipPostDto);
         Tip createdTip = tipService.createTip(tip);
 //        tipTagService.saveTags(createdTip, tipPostDto.tagContents());
@@ -66,13 +68,14 @@ public class TipController {
     public ResponseEntity<TipResponseDto> updateTip(
             @PathVariable("tip-id") Long tipId, @RequestBody @Valid TipPatchDto tipPatchDto) {
 
-        // 로그인한 사용자 memberId가 1 이라고 가정
-        tipPatchDto.setMemberId(1L);
+        // 로그인한 사용자 memberId
+//        tipPatchDto.setMemberId(loginUtils.getLoginId());
+
+        tipPatchDto.setTipId(tipId);
 
         Tip tip = tipMapper.tipPatchDtoToTip(tipPatchDto);
         Tip updatedTip = tipService.updateTip(tipId, tip);
         if (updatedTip == null) {
-//            System.out.println("null!");
             throw new TipNotFoundException();
         }
 //        tipTagService.saveTags(updatedTip, tipPatchDto.tagContents());
@@ -82,6 +85,9 @@ public class TipController {
     @GetMapping("/{tip-id}")
     public ResponseEntity<TipResponseDto> getTip(@PathVariable("tip-id") Long tipId) {
         Tip tip = tipService.getTip(tipId);
+        if (tip == null) {
+            throw new TipNotFoundException();
+        }
 //        List<TipTag> tipTags = tipTagService.findTagListByTip(tipService.findVerifiedTip(tipId));
         TipResponseDto tipResponseDto = tipMapper.tipToTipResponseDto(tip);
 //        tipResponseDto.setTiptags(tipTags); // tiptags를 TipResponseDto에 설정
@@ -89,7 +95,7 @@ public class TipController {
     }
 
     @DeleteMapping("/{tip-id}")
-    public ResponseEntity<Void> deleteTip(@PathVariable Long tipId) {
+    public ResponseEntity<Void> deleteTip(@PathVariable("tip-id") Long tipId) {
         tipService.deleteTip(tipId);
         return ResponseEntity.noContent().build();
     }
@@ -98,7 +104,7 @@ public class TipController {
     public ResponseEntity getMyInfoTips(@RequestParam int page) {
 
         // myInfo 대상 memberId가 1번이라고 가정한다. 로그인 기능 구현되면 아랫줄 대신 로그인대상을 받는 코드를 쓴다.
-        Long myInfoMemberId = 1L;
+        Long myInfoMemberId = loginUtils.getLoginId();
 
         // 사이즈는 4로 고정
         int size = 4;
@@ -159,6 +165,36 @@ public class TipController {
 
 
         List<Tip> pageTips = tipService.getAllSearchTips(searchString, page - 1, size);
+
+
+        List<TipResponseDto> tipResponseDtos = pageTips.stream()
+                .map(tipMapper::tipToTipResponseDto)
+                .collect(Collectors.toList());
+
+        PageAbleResponseDto pageAbleResponseDto = new PageAbleResponseDto<>();
+
+        if(pageTips.get(0).getFinalPage()){
+            pageAbleResponseDto.setIsLast(true);
+        }
+        else {
+            pageAbleResponseDto.setIsLast(false);
+        }
+
+        pageAbleResponseDto.setData(tipResponseDtos);
+
+
+        return ResponseEntity.ok(pageAbleResponseDto);
+    }
+
+    @GetMapping("/searchTag/{search-tag}")
+    public ResponseEntity getAllSearchTipTags(@PathVariable("search-tag") String searchTag,
+                                           @RequestParam int page) {
+
+        // 사이즈는 12로 고정
+        int size = 12;
+
+
+        List<Tip> pageTips = tipService.getAllSearchTipTags(searchTag, page - 1, size);
 
 
         List<TipResponseDto> tipResponseDtos = pageTips.stream()

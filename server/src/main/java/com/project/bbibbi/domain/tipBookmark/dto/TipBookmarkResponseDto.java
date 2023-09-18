@@ -6,11 +6,9 @@ import lombok.*;
 /**
  * DTO for {@link TipBookmark}
  */
-@Builder
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class TipBookmarkResponseDto {
     private Long tipId;
     private Long memberId;
