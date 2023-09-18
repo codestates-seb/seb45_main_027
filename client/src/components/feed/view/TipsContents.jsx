@@ -13,7 +13,6 @@ const TipsContents = ({ feedData, setFeedData }) => {
   const frommemberId = localStorage.getItem("memberId");
   const [follow, setFollow] = useState("");
   const { feedId } = useParams();
-  console.log(feedId);
 
   // 팔로우 상태
   const [res, err, loading, fetchData] = useAxios({

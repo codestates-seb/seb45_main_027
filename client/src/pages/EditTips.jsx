@@ -45,7 +45,6 @@ const EditTips = () => {
       "ngrok-skip-browser-warning": "69420",
     },
   };
-  console.log(editData);
 
   const [response, error, loading] = useAxios(configParams);
   // 초기 렌더링시 해당 수정글의 정보를 렌더링
@@ -57,7 +56,7 @@ const EditTips = () => {
         setCoverImage(editData.coverPhoto);
         setTitle(editData.title);
         setEditorContent(editData.content);
-        // 태그정보 업데이트 되면 추가 ***
+        setTags(editData.tags.map((el) => el.tagContent));
       }
     } else if (error) {
       console.error("Error:", error);
@@ -133,7 +132,7 @@ const EditTips = () => {
           coverPhoto: coverImage,
           title: title,
           content: editorContent,
-          // tipTags: tags, 서버에서 태그작업중 ***
+          tagContents: tags,
         },
       };
 
