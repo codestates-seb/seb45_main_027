@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ public class TipCommentService {
     private final TipCommentRepository tipCommentRepository;
     private final MemberRepository memberRepository;
     public TipComment saveComment(TipComment tipComment) {
+
         TipComment insertTipComment= tipCommentRepository.save(tipComment);
 
         Optional<Member> optionalMember = memberRepository.findById(tipComment.getMember().getMemberId());
@@ -29,9 +31,11 @@ public class TipCommentService {
 
         insertTipComment.setMember(Member.builder().memberId
                 (tipComment.getMember().getMemberId()).nickname
-                (member.getNickname()).build());
+                (member.getNickname()).profileImg(member.getProfileImg()).build());
 
         return insertTipComment;
+
+
     }
 
     public TipCommentDto findComment(Long commentId) {
@@ -41,6 +45,7 @@ public class TipCommentService {
                 .tipCommentId(comment.getTipCommentId())
                 .content(comment.getContent())
                 .memberId(comment.getMember().getMemberId())
+                .memberImage(comment.getMember().getProfileImg())
                 .build();
     }
 
@@ -56,6 +61,7 @@ public class TipCommentService {
 
             // 새로운 내용으로 댓글을 수정합니다.
             tipComment.setContent(dto.getContent());
+            tipComment.setModifiedDateTime(LocalDateTime.now());
 
             // 수정된 댓글을 저장합니다.
             TipComment updateComment = tipCommentRepository.save(tipComment);
@@ -86,6 +92,7 @@ public class TipCommentService {
 
         // 새로운 답글을 생성합니다.
         TipComment tipComment = new TipComment();
+        tipComment.setTipCommentId(dto.getTipCommentId());
         tipComment.setContent(dto.getContent());
         tipComment.setMember(parentComment.getMember());
         tipComment.setParentComment(parentComment.getTipCommentId()); // 부모 댓글 ID를 저장

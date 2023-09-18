@@ -12,4 +12,7 @@ public interface TipCommentRepository extends JpaRepository<TipComment, Long> {
     @Query (value = "select * from tip_comment where tip_reply_id =:tipReplyId  ",
             nativeQuery = true )
     List<TipComment> findByTipReplyId(@Param("tipReplyId") Long tipReplyId);
+
+    @Query(value = "select count(*) from tip_comment where tip_reply_id = tipReplyId", nativeQuery = true)
+    Integer getCommentCount (@Param("tipReplyId") Long tipReplyId);
 }

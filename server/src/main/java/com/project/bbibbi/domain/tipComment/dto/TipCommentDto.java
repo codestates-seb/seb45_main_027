@@ -34,7 +34,11 @@ public class TipCommentDto {
 
     private Long memberId;
 
+    private String memberImage;
+
     private LocalDateTime createdDateTime;
+
+    private LocalDateTime modifiedDateTime;
 
     public static TipCommentDto toDto(TipComment tipComment) {
         return TipCommentDto.builder()
@@ -45,7 +49,9 @@ public class TipCommentDto {
                 .memberId(tipComment.getMember().getMemberId())
                 .parentComment(tipComment.getParentComment())
                 .nickname(tipComment.getMember().getNickname())
+                .memberImage(tipComment.getMember().getProfileImg())
                 .createdDateTime(tipComment.getCreatedDateTime())
+                .modifiedDateTime(tipComment.getModifiedDateTime())
                 .build();
     }
 }
