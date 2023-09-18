@@ -89,7 +89,7 @@ const UserBottom = ({ feedData, setFollow, follow, res }) => {
                 </button>
               )}
           </div>
-          <div className="text-xl text-gray-500">
+          <div className="text-xl text-gray-500 mt-2">
             {feedData.myIntro ? feedData.myIntro : `${feedData.nickname}님의 게시글 입니다.`}
           </div>
         </div>
