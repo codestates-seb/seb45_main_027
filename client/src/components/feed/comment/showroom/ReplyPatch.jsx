@@ -15,6 +15,7 @@ const ReplyPatch = ({
   const commentId = comment.feedCommentId;
   const feedCommentId = comment.feedCommentId;
   const [newContent, setNewContent] = useState(comment.content); // 수정하기를 누를때 기존 값 유지하기 위해서!
+  const [afterContent, setAfterContent] = useState(""); // 수정후 결과값
 
   // PATCH 요청
   const patchReply = async () => {
@@ -33,21 +34,22 @@ const ReplyPatch = ({
       const response = await api(configParams);
 
       if (response && response.status === 200) {
-        // feedData를 복사해서 업데이트
-        const updatedFeedData = JSON.parse(JSON.stringify(feedData));
+        // feedData를 얕은복사
+        const updatedFeedData = { ...feedData };
 
         updatedFeedData.replies.forEach((reply) => {
           if (reply.feedCommentId === feedCommentId) {
-            reply.comments =
-              reply.comments.map((cmt) => {
-                if (cmt.feedCommentId === commentId) {
-                  return { ...cmt, content: newContent };
-                }
-                return cmt;
-              });
-            }
-          });
+            reply.comments = reply.comments.map((comment) => {
+              if (comment.feedCommentId === commentId) {
+                // 새로운 객체 생성하여 내용 수정
+                return { ...comment, content: newContent };
+              }
+              return comment;
+            });
+          }
+        });
         setFeedData(updatedFeedData);
+        setAfterContent(newContent);
         toast.success("답글이 수정되었습니다.");
       } else {
         toast.error("답글을 수정하지 못했습니다. 다시 시도해 주세요.");
@@ -57,10 +59,22 @@ const ReplyPatch = ({
     }
   };
 
-  // 엔터 누르면 자동으로 입력
-  const handleEnter = (e) => {
+  // 엔터 누르면 자동으로 입력, esc 누를시 댓글 수정창 닫기
+  const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      patchReply(comment.feedCommentId);
+      patchReply();
+      setEditReply({
+        ...editReply,
+        [comment.feedCommentId]: false,
+      });
+    }
+
+    if (e.key === "Escape") {
+      setNewContent(comment.content);
+      setEditReply({
+        ...editReply,
+        [comment.feedCommentId]: false,
+      });
     }
   };
 
@@ -73,7 +87,7 @@ const ReplyPatch = ({
               className="w-full border rounded-md mr-1 text-lg px-2.5"
               type="text"
               value={newContent}
-              onKeyDown={handleEnter}
+              onKeyDown={handleKeyDown}
               onChange={(e) => setNewContent(e.target.value)}
             />
             <button
@@ -81,7 +95,8 @@ const ReplyPatch = ({
               onClick={() => {
                 patchReply();
                 setEditReply({ ...editReply, [comment.feedCommentId]: false });
-              }}>
+              }}
+            >
               완료
             </button>
             <button
@@ -89,11 +104,14 @@ const ReplyPatch = ({
               onClick={() => {
                 setNewContent(comment.content);
                 setEditReply({ ...editReply, [comment.feedCommentId]: false });
-              }}>
+              }}
+            >
               취소
             </button>
           </div>
         </>
+      ) : afterContent ? (
+        afterContent
       ) : (
         comment.content
       )}

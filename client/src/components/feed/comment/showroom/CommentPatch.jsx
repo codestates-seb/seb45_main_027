@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import api from "../../../common/tokens";
 
-const CommentPatch = ({ comment, setReplies,editComent, setEditComent }) => {
+const CommentPatch = ({ comment, setReplies, editComent, setEditComent }) => {
   const { feedId } = useParams(); // 게시물 번호
   const [newContent, setNewContent] = useState(comment.content); // 수정하기를 누를때 기존 값 유지하기 위해서!
 
@@ -41,10 +41,17 @@ const CommentPatch = ({ comment, setReplies,editComent, setEditComent }) => {
     }
   };
 
-  // 엔터 누르면 자동으로 입력
+  // 엔터 누르면 자동으로 입력, esc 누를시 댓글 수정창 닫기
   const handleEnter = (e) => {
     if (e.key === "Enter") {
       patchComment(comment.feedReplyId);
+    }
+    if (e.key === "Escape") {
+      setNewContent(comment.content);
+      setEditComent({
+        ...editComent,
+        [comment.feedReplyId]: false,
+      });
     }
   };
 
@@ -63,7 +70,8 @@ const CommentPatch = ({ comment, setReplies,editComent, setEditComent }) => {
             className="min-w-max border rounded-md bg-white mr-1 px-2"
             onClick={() => {
               patchComment(comment.feedReplyId);
-            }}>
+            }}
+          >
             완료
           </button>
           <button
@@ -71,7 +79,8 @@ const CommentPatch = ({ comment, setReplies,editComent, setEditComent }) => {
             onClick={() => {
               setNewContent(comment.content);
               setEditComent({ ...editComent, [comment.feedReplyId]: false });
-            }}>
+            }}
+          >
             취소
           </button>
         </div>
