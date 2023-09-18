@@ -1,13 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import api from "../../common/tokens";
+import api from "../../../common/tokens";
 
-const ReplyDelete = ({ comment, feedReplyId, setReplies }) => {
+const ReplyDelete = ({ comment, commentsData, setFeedData, feedData }) => {
   const { feedId } = useParams(); // 게시물 번호
-
-  // const feedReplyId = comment.feedReplyId;
-  const commentId = comment.feedReplyId;
+  const commentId = comment.feedCommentId;
+  const feedReplyId = comment.feedReplyId;
 
   // DELETE 요청
   const deleteReply = async () => {
@@ -23,11 +22,18 @@ const ReplyDelete = ({ comment, feedReplyId, setReplies }) => {
     try {
       const res = await api(configParams);
       if (res && res.status === 200) {
-        setReplies((prev) => {
-          if (Array.isArray(prev)) {
-            return prev.filter((reply) => reply.feedReplyId !== feedReplyId);
+        // feedData를 복사해서 업데이트
+        const updatedFeedData = JSON.parse(JSON.stringify(feedData));
+
+        updatedFeedData.replies.forEach((reply) => {
+          if (reply.feedReplyId === feedReplyId) {
+            reply.comments = reply.comments.filter(
+              (comment) => comment.feedCommentId !== commentId
+            ); // 답글을 삭제
           }
         });
+        setFeedData(updatedFeedData); // 상태를 업데이트
+        toast.success("답글을 삭제했습니다.")
       }
     } catch (err) {
       console.error("err comment:", err);
@@ -41,8 +47,7 @@ const ReplyDelete = ({ comment, feedReplyId, setReplies }) => {
         className="mx-1 hover:font-semibold"
         onClick={() => {
           deleteReply();
-        }}
-      >
+        }}>
         삭제하기
       </button>
     </div>
