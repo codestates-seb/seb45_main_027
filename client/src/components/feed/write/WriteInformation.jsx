@@ -89,7 +89,7 @@ const optionsData = [
       "LOCATION05",
       "LOCATION06",
       "LOCATION07",
-      "LOCATION08",
+      "LOCATION00",
     ],
   },
 ];
