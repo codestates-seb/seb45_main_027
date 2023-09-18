@@ -4,6 +4,7 @@ import CommentDelete from "./CommentDelete";
 import CommentPatch from "./CommentPatch";
 import CommentLike from "./CommentLike";
 import ReplyInput from "./ReplyInput";
+import ReplyOutput from './ReplyOutput';
 
 const CommentOutput = ({ feedData, setFeedData, children }) => {
   const memberId = localStorage.getItem("memberId");
@@ -110,7 +111,12 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                   )}
                 </div>
               </div>
-              {children}
+              {/* 답글 출력창 */}
+              <ReplyOutput
+                data={comment.comments}
+                feedData={feedData}
+                setFeedData={setFeedData}
+              />
             </div>
           </div>
         ))}

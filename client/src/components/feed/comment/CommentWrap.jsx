@@ -10,10 +10,8 @@ const CommentWrap = forwardRef(({ feedData, setFeedData }, ref) => {
       {/* 댓글 입력창 */}
       <CommentInput feedData={feedData} setFeedData={setFeedData} />
       {/* 댓글 출력창 */}
-      <CommentOutput feedData={feedData} setFeedData={setFeedData}>
-        {/* 답글 출력창 */}
-        <ReplyOutput feedData={feedData} setFeedData={setFeedData} />
-      </CommentOutput>
+      <CommentOutput feedData={feedData} setFeedData={setFeedData}/>
+        
     </div>
   );
 });
