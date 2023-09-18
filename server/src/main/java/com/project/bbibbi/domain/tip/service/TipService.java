@@ -79,6 +79,20 @@ public class TipService {
             }
         }
 
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
+        for(Tip tip : tipPages){
+            if(member == null){
+                tip.setBookmarkYn(false);
+            }
+            else {
+                int loginUserBookYn = tipBookmarkRepository.existCount(tip.getTipId(), member.getMemberId());
+                if(loginUserBookYn == 0) tip.setBookmarkYn(false);
+                else tip.setBookmarkYn(true);
+            }
+
+        }
+
 
         return tipPages;
     }
@@ -89,6 +103,20 @@ public class TipService {
 
 //       List<Feed> pageFeeds = feedRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
 
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
+        for(Tip tip : pageTips){
+            if(member == null){
+                tip.setBookmarkYn(false);
+            }
+            else {
+                int loginUserBookYn = tipBookmarkRepository.existCount(tip.getTipId(), member.getMemberId());
+                if(loginUserBookYn == 0) tip.setBookmarkYn(false);
+                else tip.setBookmarkYn(true);
+            }
+
+        }
+
         return  pageTips;
     }
 
@@ -98,6 +126,20 @@ public class TipService {
 
 //       List<Feed> pageFeeds = feedRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
 
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
+        for(Tip tip : pageTips){
+            if(member == null){
+                tip.setBookmarkYn(false);
+            }
+            else {
+                int loginUserBookYn = tipBookmarkRepository.existCount(tip.getTipId(), member.getMemberId());
+                if(loginUserBookYn == 0) tip.setBookmarkYn(false);
+                else tip.setBookmarkYn(true);
+            }
+
+        }
+
         return  pageTips;
     }
 
@@ -106,6 +148,19 @@ public class TipService {
         List<Tip> pageTips = tipRepository.findByMemberBookMark(myInfoMemberId); // 비쿼리 성공
 
 //       List<Feed> pageFeeds = feedRepository.findByMember(myInfoMemberId, page, size);  // 쿼리 방법
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
+        for(Tip tip : pageTips){
+            if(member == null){
+                tip.setBookmarkYn(false);
+            }
+            else {
+                int loginUserBookYn = tipBookmarkRepository.existCount(tip.getTipId(), member.getMemberId());
+                if(loginUserBookYn == 0) tip.setBookmarkYn(false);
+                else tip.setBookmarkYn(true);
+            }
+
+        }
 
         return  pageTips;
     }
@@ -123,6 +178,20 @@ public class TipService {
 
         }
 
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
+        for(Tip tip : searchTips){
+            if(member == null){
+                tip.setBookmarkYn(false);
+            }
+            else {
+                int loginUserBookYn = tipBookmarkRepository.existCount(tip.getTipId(), member.getMemberId());
+                if(loginUserBookYn == 0) tip.setBookmarkYn(false);
+                else tip.setBookmarkYn(true);
+            }
+
+        }
+
         return searchTips;
     }
 
@@ -135,6 +204,20 @@ public class TipService {
         if(((page+1)*size) >= searchTipsCount){
             for(Tip tip : searchTips){
                 tip.setFinalPage(true);
+            }
+
+        }
+
+        Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
+        for(Tip tip : searchTips){
+            if(member == null){
+                tip.setBookmarkYn(false);
+            }
+            else {
+                int loginUserBookYn = tipBookmarkRepository.existCount(tip.getTipId(), member.getMemberId());
+                if(loginUserBookYn == 0) tip.setBookmarkYn(false);
+                else tip.setBookmarkYn(true);
             }
 
         }
