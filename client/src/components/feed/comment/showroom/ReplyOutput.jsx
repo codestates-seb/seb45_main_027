@@ -9,7 +9,6 @@ const ReplyOutput = ({ commentsData, feedData, setFeedData }) => {
 
   const [editReply, setEditReply] = useState({});
 
-  console.log(commentsData);
   if (!commentsData) {
     return;
   }
@@ -19,7 +18,8 @@ const ReplyOutput = ({ commentsData, feedData, setFeedData }) => {
       {commentsData.map((comment, idx) => (
         <div
           key={idx}
-          className="flex items-start mt-10 ml-10 bg-[#fceecd75] p-8 rounded-lg shadow">
+          className="flex items-start mt-10 ml-10 bg-[#fceecd75] p-8 rounded-lg shadow"
+        >
           <img
             src={
               comment.memberImage
@@ -39,7 +39,8 @@ const ReplyOutput = ({ commentsData, feedData, setFeedData }) => {
               onClick={() => {
                 navigate(`/myinfo/${comment.memberId}`);
               }}
-              className="text-lg font-semibold cursor-pointer">
+              className="text-lg font-semibold cursor-pointer"
+            >
               {comment.nickname}
             </span>
 
@@ -71,7 +72,8 @@ const ReplyOutput = ({ commentsData, feedData, setFeedData }) => {
                       ...editReply,
                       [comment.feedCommentId]: true,
                     });
-                  }}>
+                  }}
+                >
                   수정하기
                 </button>
               )}

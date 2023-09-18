@@ -15,6 +15,8 @@ const ViewShowRoom = () => {
   // 사이드바 댓글 이동 버튼
   const commentSectionRef = useRef(null);
 
+  console.log(feedData);
+
   const { feedId } = useParams();
   const [response, error, loading] = useAxios({
     method: "GET",
@@ -57,7 +59,8 @@ const ViewShowRoom = () => {
       />
       <Background
         mainclassName="bg-[#FFFAEE] h-full px-14 md:px-56 pb-40"
-        divclassName="flex-col my-24 md:my-0">
+        divclassName="flex-col my-24 md:my-0"
+      >
         <ShowroomContents setFeedData={setFeedData} feedData={feedData} />
 
         {memberId == userId && <Edit feedData={feedData} />}
