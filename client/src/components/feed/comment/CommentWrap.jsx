@@ -1,7 +1,6 @@
 import React, { forwardRef } from "react";
 import CommentInput from "./CommentInput";
 import CommentOutput from "./CommentOutput";
-import ReplyOutput from "./ReplyOutput";
 
 const CommentWrap = forwardRef(({ feedData, setFeedData }, ref) => {
   return (
@@ -10,8 +9,7 @@ const CommentWrap = forwardRef(({ feedData, setFeedData }, ref) => {
       {/* 댓글 입력창 */}
       <CommentInput feedData={feedData} setFeedData={setFeedData} />
       {/* 댓글 출력창 */}
-      <CommentOutput feedData={feedData} setFeedData={setFeedData}/>
-        
+      <CommentOutput feedData={feedData} setFeedData={setFeedData} />
     </div>
   );
 });
