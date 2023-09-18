@@ -7,6 +7,8 @@ import useAxios from "../hooks/useAxios";
 import { toast } from "react-hot-toast";
 import useInput from "../hooks/useInput";
 import api from "../components/common/tokens";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const Tips = () => {
   const [inputValue, handleInputChange, clearInput] = useInput(""); // 검색창 인풋값 상태
@@ -18,6 +20,29 @@ const Tips = () => {
   const page = useRef(1); // 페이지 ref
   const isFirstPageRendered = useRef(false);
   const target = useRef(null);
+  // tip 해시태그 검색을 위해 넘겨받은 keyword를 저장
+  const location = useLocation();
+
+  // tip 해시태그 검색 로직 수행
+  useEffect(() => {
+    if (location.state) {
+      const tagSearchState = location.state;
+      const apiOptions = {
+        method: tagSearchState.method,
+        url: tagSearchState.url,
+        headers: tagSearchState.headers,
+      };
+
+      api(apiOptions)
+        .then((res) => {
+          console.log(res);
+          setTipData(res.data.data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  }, []);
 
   const configParams = {
     method: "GET",
@@ -31,7 +56,8 @@ const Tips = () => {
   const [response, error, loading] = useAxios(configParams);
 
   useEffect(() => {
-    if (response) {
+    // 해시태그 클릭으로 들어온 경우 초기렌더링 예외처리
+    if (response && !location.state) {
       if (isFirstPageRendered.current === false) {
         setTipData(response.data.data);
         isFirstPageRendered.current = true;
@@ -67,7 +93,8 @@ const Tips = () => {
 
   // IntersectionObserver를 사용하여 스크롤 감지
   useEffect(() => {
-    if (!isLastPage) {
+    if (!location.state && !isLastPage) {
+      // Check if location.state is falsy
       const newObserver = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting && !loading) {
@@ -92,7 +119,7 @@ const Tips = () => {
         }
       };
     }
-  }, [loading, tipData, isLastPage, searchKeyworld]);
+  }, [location.state, loading, isLastPage, searchKeyworld]);
 
   // 새로운 페이지 데이터를 불러오는 함수
   const loadMoreData = async (url) => {
