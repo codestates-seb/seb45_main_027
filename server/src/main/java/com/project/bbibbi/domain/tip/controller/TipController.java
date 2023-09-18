@@ -57,6 +57,7 @@ public class TipController {
 
         // 로그인한 사용자 memberId
 //        tipPostDto.setMemberId(loginUtils.getLoginId());
+
         Tip tip = tipMapper.tipPostDtoToTip(tipPostDto);
         Tip createdTip = tipService.createTip(tip);
 //        tipTagService.saveTags(createdTip, tipPostDto.tagContents());
