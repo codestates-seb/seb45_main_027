@@ -12,12 +12,10 @@ import com.project.bbibbi.auth.jwt.service.JwtService;
 import com.project.bbibbi.auth.oauth.handler.OAuthLoginFailureHandler;
 import com.project.bbibbi.auth.oauth.handler.OAuthLoginSuccessHandler;
 import com.project.bbibbi.auth.oauth.service.CustomOAuthUserService;
-import com.project.bbibbi.auth.oauth2.presentation.OauthServerTypeConverter;
 import com.project.bbibbi.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.format.FormatterRegistry;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -32,9 +30,7 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.annotation.security.PermitAll;
 import java.util.Arrays;
 
 @Configuration
@@ -83,6 +79,8 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET, "/").permitAll()
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/oauth/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/**").permitAll()
+                .antMatchers("/login").permitAll()
 //                .antMatchers("/login").permitAll()
                 .antMatchers("/auth/**").permitAll() // 회원가입 접근 가능
                 .antMatchers(HttpMethod.GET, "/members/**").permitAll()
@@ -96,7 +94,7 @@ public class SecurityConfig {
 //                .antMatchers(HttpMethod.POST, "/feed/**").permitAll()
 //                .antMatchers(HttpMethod.POST, "/tip/**").permitAll()
 //                .antMatchers(HttpMethod.POST, "/follow/**").permitAll()
-//                .antMatchers(HttpMethod.POST, "/imageUpload/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/imageUpload/**").permitAll()
 //                .antMatchers(HttpMethod.PATCH, "/members/**").permitAll()
 //                .antMatchers(HttpMethod.PATCH, "/feed/**").permitAll()
 //                .antMatchers(HttpMethod.PATCH, "/tip/**").permitAll()

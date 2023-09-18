@@ -13,6 +13,7 @@ import com.project.bbibbi.domain.feedReplyLike.repository.FeedReplyLikeRepositor
 import com.project.bbibbi.domain.feedlike.repository.FeedLikeRepository;
 import com.project.bbibbi.domain.follow.repository.FollowRepository;
 import com.project.bbibbi.domain.member.entity.Member;
+import com.project.bbibbi.domain.member.repository.MemberRepository;
 import com.project.bbibbi.global.entity.*;
 import com.project.bbibbi.global.utils.CustomBeanUtils;
 import org.springframework.data.domain.Page;
@@ -29,14 +30,14 @@ import java.util.Optional;
 @Transactional
 @Service
 public class FeedService {
-
     private final FeedRepository feedRepository;
-//    private final FeedImageRepository feedImageRepository;
+    //    private final FeedImageRepository feedImageRepository;
 //    private final FeedImageTagRepository feedImageTagRepository;
     private final FeedLikeRepository feedLikeRepository;
     private final FeedBookMarkRepository feedBookMarkRepository;
     private final FeedReplyLikeRepository feedReplyLikeRepository;
     private final FollowRepository followRepository;
+    private final MemberRepository memberRepository;
     private final CustomBeanUtils<Feed> beanUtils;
 
     public FeedService(FeedRepository feedRepository,
@@ -44,12 +45,14 @@ public class FeedService {
                        FeedBookMarkRepository feedBookMarkRepository,
                        FollowRepository followRepository,
                        FeedReplyLikeRepository feedReplyLikeRepository,
+                       MemberRepository memberRepository,
                        CustomBeanUtils<Feed> beanUtils) {
         this.feedRepository = feedRepository;
         this.feedLikeRepository = feedLikeRepository;
         this.feedBookMarkRepository = feedBookMarkRepository;
         this.followRepository = followRepository;
         this.feedReplyLikeRepository = feedReplyLikeRepository;
+        this.memberRepository = memberRepository;
         this.beanUtils = beanUtils;
     }
 
@@ -59,9 +62,18 @@ public class FeedService {
 
 //        createFeedImages(feed.getImages());
 
+        Optional<Member> optionalMember = memberRepository.findById(feed.getMember().getMemberId());
+
+        Member member = optionalMember.orElseThrow(() -> {throw new RuntimeException() ; });
+
+        insertFeed.setMember(Member.builder().memberId(feed.getMember().getMemberId()).nickname(member.getNickname()).profileImg(member.getProfileImg()).build());
+
+//        optionalFeed.orElseThrow(() -> { throw new RuntimeException(); });
+
         return insertFeed;
 
     }
+
 
 //    public void createFeedImages(List<FeedImage> feedImages){
 //        for(FeedImage feedImage : feedImages){

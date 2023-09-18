@@ -1,6 +1,7 @@
 package com.project.bbibbi.domain.feedReply.service;
 
 import com.project.bbibbi.auth.utils.loginUtils;
+import com.project.bbibbi.domain.feed.entity.Feed;
 import com.project.bbibbi.domain.feedComment.dto.FeedCommentDto;
 import com.project.bbibbi.domain.feedReply.FeedReplyNotFoundException.FeedReplyNotFoundException;
 import com.project.bbibbi.domain.feedReply.dto.FeedReplyRequestDto;
@@ -9,6 +10,7 @@ import com.project.bbibbi.domain.feedReply.entity.FeedReply;
 import com.project.bbibbi.domain.feedReply.repository.FeedReplyRepository;
 import com.project.bbibbi.domain.feedReplyLike.repository.FeedReplyLikeRepository;
 import com.project.bbibbi.domain.member.entity.Member;
+import com.project.bbibbi.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,13 +29,25 @@ public class FeedReplyService {
     private final FeedReplyRepository feedReplyRepository;
 
     private final FeedReplyLikeRepository feedReplyLikeRepository;
+    private final MemberRepository memberRepository;
 
 
     public FeedReply replySave(FeedReply feedReply) {
-        // 저장 전 로직이 필요한 경우 여기에 추가
 
-        return feedReplyRepository.save(feedReply);
-    }
+            FeedReply insertFeedReply = feedReplyRepository.save(feedReply);
+
+            Optional<Member> optionalMember = memberRepository.findById(feedReply.getMember().getMemberId());
+
+            Member member = optionalMember.orElseThrow(() -> {throw new RuntimeException() ; });
+
+            insertFeedReply.setMember(Member.builder().memberId
+                    (feedReply.getMember().getMemberId()).nickname
+                    (member.getNickname()).profileImg(member.getProfileImg()).build());
+
+            return insertFeedReply;
+
+        }
+
 
 
 

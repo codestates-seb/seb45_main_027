@@ -4,6 +4,9 @@ import com.project.bbibbi.domain.feedComment.dto.FeedCommentDto;
 import com.project.bbibbi.domain.feedComment.exception.FeedCommentNotFoundException;
 import com.project.bbibbi.domain.feedComment.repository.FeedCommentRepository;
 import com.project.bbibbi.domain.feedComment.entity.FeedComment;
+import com.project.bbibbi.domain.feedReply.entity.FeedReply;
+import com.project.bbibbi.domain.member.entity.Member;
+import com.project.bbibbi.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +20,22 @@ import java.util.Optional;
 public class FeedCommentService {
 
     private final FeedCommentRepository feedCommentRepository;
+    private final MemberRepository memberRepository;
     public FeedComment saveComment(FeedComment feedComment) {
-        // 저장 전 로직이 필요한 경우 여기에 추가
-        return feedCommentRepository.save(feedComment);
+
+        FeedComment insertFeedComment= feedCommentRepository.save(feedComment);
+
+        Optional<Member> optionalMember = memberRepository.findById(feedComment.getMember().getMemberId());
+
+        Member member = optionalMember.orElseThrow(() -> {throw new RuntimeException() ; });
+
+        insertFeedComment.setMember(Member.builder().memberId
+                (feedComment.getMember().getMemberId()).nickname
+                (member.getNickname()).build());
+
+        return insertFeedComment;
+
+
     }
 
     public FeedCommentDto findComment(Long commentId) {
@@ -72,6 +88,7 @@ public class FeedCommentService {
         FeedComment parentComment = feedCommentRepository.findById(parentCommentId)
                 .orElseThrow(() -> new FeedCommentNotFoundException
                         ("부모 댓글이 존재하지 않습니다. ID: " + parentCommentId));
+
 
         // 새로운 답글을 생성합니다.
         FeedComment feedComment = new FeedComment();

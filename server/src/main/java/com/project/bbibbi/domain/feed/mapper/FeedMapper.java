@@ -39,9 +39,10 @@ public interface FeedMapper {
 
         // 이런 멤버값이 들어온다고 가정한다.
         Long memberId = loginUtils.getLoginId();
-        feed.setMember(Member.builder().memberId(memberId).nickname("").build());
-
-
+        Member member = Member.builder()
+                .memberId(memberId)
+                .build();
+        feed.setMember(member);
         // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.
 //        if(feedPostDto.getFeedImages() != null) {
 //
@@ -106,8 +107,11 @@ public interface FeedMapper {
 //        feed.setMemberId(feedPatchDto.getMemberId());
 
         // 이런 멤버값이 들어온다고 가정한다.
-        feed.setMember(Member.builder().memberId(1L).nickname("nickname1").build());
-
+        Long memberId = loginUtils.getLoginId();
+        Member member = Member.builder()
+                .memberId(memberId)// 원하는 닉네임 설정
+                .build();
+        feed.setMember(member);
         // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.
 //        if(feedPatchDto.getFeedImages() != null) {
 //            List<FeedImage> feedImages = new ArrayList<>();
@@ -298,7 +302,7 @@ public interface FeedMapper {
                                 .likeCount(feed.getLikeCount())
                                 .likeYn(feed.getLikeYn())
                                 .bookMarkCount(feed.getBookMarkCount())
-                                .bookMarkYn(feed.getLikeYn())
+                                .bookMarkYn(feed.getBookMarkYn())
                                 .repliesCount((feed.getReplies() == null) ? 0 : feed.getReplies().size())
                                 .followYn(feed.getFollowYn())
                                 // Content에 이미지정보를 텍스트 형태로 저장하므로 image 사용 안함.
