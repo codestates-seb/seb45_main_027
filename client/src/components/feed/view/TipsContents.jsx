@@ -24,11 +24,7 @@ const TipsContents = ({ feedData }) => {
   return (
     <div>
       <ViewTitle feedData={feedData} />
-      <TipsUserTop
-        feedData={feedData}
-        setFollow={setFollow}
-        follow={follow}
-      />
+      <TipsUserTop feedData={feedData} setFollow={setFollow} follow={follow} />
       <ViewForm feedData={feedData} />
       <TagForm feedData={feedData} />
       <ViewPoint feedData={feedData} />
