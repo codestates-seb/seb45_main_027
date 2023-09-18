@@ -53,30 +53,30 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getMethod().equals("GET")) {
-            filterChain.doFilter(request, response); // 모든 GET 요청은 필터를 거치지 않고 통과
-            return;
-        }
+//        if (request.getMethod().equals("GET")) {
+//            filterChain.doFilter(request, response); // 모든 GET 요청은 필터를 거치지 않고 통과
+//            return;
+//        }
         if (request.getRequestURI().equals(NO_CHECK_URL)) {
             filterChain.doFilter(request, response); // "/login" 요청이 들어오면, 다음 필터 호출
             return; // return으로 이후 현재 필터 진행 막기 (안해주면 아래로 내려가서 계속 필터 진행시킴)
             // 즉 로그인으로 들어오면 필터에서 막아버려서 진행 더 안되게 Filter 작동 X
         }
 
-        if (request.getRequestURI().equals("/auth/email/password")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        if (request.getRequestURI().equals("/h2")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        if (request.getRequestURI().equals("/auth/signup")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+//        if (request.getRequestURI().equals("/auth/email/password")) {
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
+//
+//        if (request.getRequestURI().equals("/h2")) {
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
+//
+//        if (request.getRequestURI().equals("/auth/signup")) {
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
 
 
 //        if (request.getRequestURI().equals(NO_CHECK_URL)) {
@@ -125,7 +125,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                     String reIssuedRefreshToken = reIssueRefreshToken(member);
                     try {
                         jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(member.getEmail()),
-                                reIssuedRefreshToken, member.getMemberId(),member.getProfileImg(),member.getNickname());
+                                reIssuedRefreshToken, member.getMemberId(),member.getProfileImg(),member.getNickname(),
+                                member.getRole());
                     } catch (IOException e) {
                         throw new RuntimeException("입출력 오류입니다", e);
                     }
@@ -208,7 +209,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         CustomJwtUserDetails userDetailsUser = new CustomJwtUserDetails( //되면 수정
                 member.getMemberId(),
                 member.getEmail(),
-                member.getPassword(),// 비밀번호는 null
+                password,// 비밀번호는 null
                 member.getRole(),
                 true, // checkUser 값은 true
                 member.getProfileImg(),

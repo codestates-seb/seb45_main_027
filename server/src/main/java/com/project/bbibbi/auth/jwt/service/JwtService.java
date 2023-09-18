@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.bbibbi.domain.member.repository.MemberRepository;
+import com.project.bbibbi.global.entity.Role;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -85,13 +86,14 @@ public class JwtService {
     // AccessToken + RefreshToken 같이 헤더에 실어 보내기
     public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken,
                                           String refreshToken, Long memberId, String profileImg,
-                                          String nickname) throws IOException {
+                                          String nickname, Role role) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> data = new HashMap<>();
         data.put("memberId", memberId);
-        data.put("profileImg", profileImg);
+        data.put("role", role);
         data.put("nickname", nickname);
+        data.put("profileImg", profileImg);
         // string nickname =
         response.setStatus(HttpServletResponse.SC_OK);
         setAccessTokenHeader(response, accessToken);
@@ -100,7 +102,7 @@ public class JwtService {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8");
         PrintWriter writer = response.getWriter();
         objectMapper.writeValue(writer, data);
-        log.info("Access Token, Refresh Token 헤더 설정 완료");
+        log.info("Access Token, Refresh Token 헤더 설정 완료 및 전송로직");
     }
     //헤더에서 RefreshToken 추출 후 토큰형식으로 BEARER 제거 후 순수 토큰만 가져오기 위해 헤더 갖고온 뒤 "BEARER 삭제 로직("" 로 만들어버림)
     public Optional<String> extractRefreshToken(HttpServletRequest request) {
