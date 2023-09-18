@@ -40,11 +40,10 @@ const UserInfoFollowList = ({ userList, onFollowAction, activeTab }) => {
       {userList.map((user) => (
         <div
           key={activeTab === "following" ? user.memberId : user.fromMemberId}
-          className="flex justify-between pl-5 pr-3 mb-1.5 "
+          className="flex justify-between items-center px-4 md:pl-5 md:pr-3 mb-1.5 "
         >
-          <div className="flex">
             <img
-              className="h-12 w-12 object-cover rounded-full"
+              className="h-6 w-6 md:h-8 md:w-8 object-cover rounded-full"
               src={
                 activeTab === "following"
                   ? user.memberImage || "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
@@ -57,15 +56,14 @@ const UserInfoFollowList = ({ userList, onFollowAction, activeTab }) => {
                 activeTab === "following" ? user.memberId : user.fromMemberId
               }`}
             >
-              <button className="mx-2.5 font-md truncate overflow-hidden max-w-[85px]">
+              <button className="md:mx-2.5 text-xs md:text-sm font-md truncate overflow-hidden max-w-[85px]">
                 {activeTab === "following"
                   ? user.memberNickname
                   : user.fromMemberNickname}
               </button>
             </Link>
-          </div>
           <button
-            className="text-xs text-white font-bold"
+            className="text-[6px] md:text-xs text-white font-bold"
             onClick={() => {
               handleFollow(user.fromMemberId, user.memberId);
             }}
