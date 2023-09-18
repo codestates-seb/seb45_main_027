@@ -39,7 +39,7 @@ const ReplyInput = ({ comment, feedData, setFeedData }) => {
           }
         });
 
-        setFeedData(...feedData, updatedFeedData);
+        setFeedData(updatedFeedData);
 
         setInputReply("");
         toast.success("답글을 입력하셨습니다.");
