@@ -65,7 +65,7 @@ public interface TipMapper {
             List<Tag> tags = new ArrayList<>();
             for( String s : tipPostDto.getTagContents()){
                 Tag tag = new Tag();
-                tag.setTagContent(s);
+                tag.setTagContent(s.substring(1));
                 tag.setTip(tip);
                 tags.add(tag);
             }
@@ -115,7 +115,7 @@ public interface TipMapper {
             List<Tag> tags = new ArrayList<>();
             for( String s : tipPatchDto.getTagContents()){
                 Tag tag = new Tag();
-                tag.setTagContent(s);
+                tag.setTagContent(s.substring(1));
                 tag.setTip(tip);
                 tags.add(tag);
             }
