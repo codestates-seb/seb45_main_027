@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useAxios from "../../../hooks/useAxios";
 import { useParams } from "react-router-dom";
 import ViewTitle from "../view/ViewTitle";
@@ -8,43 +8,27 @@ import ViewForm from "../view/ViewForm";
 import TagForm from "../view/TagForm";
 import ViewPoint from "../view/ViewPoint";
 
-const TipsContents = ({ feedData, setFeedData }) => {
-  const memberId = localStorage.getItem("memberId");
-  const frommemberId = localStorage.getItem("memberId");
+const TipsContents = ({ feedData }) => {
   const [follow, setFollow] = useState("");
-  const { feedId } = useParams();
-  console.log(feedId);
+  const { tipId } = useParams();
 
   // 팔로우 상태
   const [res, err, loading, fetchData] = useAxios({
     method: "GET",
-    url: `/tip/${feedId}`,
+    url: `/tip/${tipId}`,
     headers: {
       "ngrok-skip-browser-warning": "69420",
     },
   });
 
-  const [patchRes, patchErr, patchLoading, patchFetchData] = useAxios(
-    {
-      method: "PATCH",
-      url: `/follow/choose/${frommemberId}/${memberId}`,
-      headers: {
-        "ngrok-skip-browser-warning": "69420",
-      },
-    },
-    false
-  );
-
   return (
     <div>
-      <ViewTitle
+      <ViewTitle feedData={feedData} />
+      <TipsUserTop
         feedData={feedData}
         setFollow={setFollow}
         follow={follow}
-        res={res}
-        patchFetchData={patchFetchData}
       />
-      <TipsUserTop feedData={feedData} />
       <ViewForm feedData={feedData} />
       <TagForm feedData={feedData} />
       <ViewPoint feedData={feedData} />
@@ -53,7 +37,6 @@ const TipsContents = ({ feedData, setFeedData }) => {
         setFollow={setFollow}
         follow={follow}
         res={res}
-        patchFetchData={patchFetchData}
       />
     </div>
   );

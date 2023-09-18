@@ -1,17 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxios from "../../../hooks/useAxios";
-import { useParams } from "react-router-dom";
 
 const buttonStyle =
   "flex items-center justify-center rounded-lg shadow w-32 h-full";
 
-const TipsUserTop = ({ feedData,setFollow, follow, res, patchFetchData }) => {
+const TipsUserTop = ({ feedData, setFollow, follow, res }) => {
+  const memberId = localStorage.getItem("memberId");
+  const userId = feedData.userId;
+  const frommemberId = feedData.memberId;
   const navigate = useNavigate();
+  console.log(feedData);
 
-  if (res && res.data && res.data.data) {
-    console.log(res.data);
-    console.log(res.data.followYn);
+  const [patchRes, patchErr, patchLoading, patchFetchData] = useAxios(
+    {
+      method: "PATCH",
+      url: `/follow/choose/${memberId}/${frommemberId}`,
+      headers: {
+        "ngrok-skip-browser-warning": "69420",
+      },
+    },
+    false
+  );
+
+  let datePart = "";
+  if (feedData && feedData.createdDateTime) {
+    datePart = feedData.createdDateTime.split("T")[0];
   }
 
   const toggleFollow = () => {
@@ -19,16 +33,14 @@ const TipsUserTop = ({ feedData,setFollow, follow, res, patchFetchData }) => {
     setFollow(!follow);
   };
 
+  // 팔로우 받아온 요청 상태 저장
   useEffect(() => {
-    if (res && res.data) {
-      setFollow(res.data.followYn);
+    if (feedData) {
+      setFollow(feedData.followYn);
     }
-  }, [res]);
+  }, [feedData]);
 
-  let datePart = "";
-  if (feedData && feedData.createdDateTime) {
-    datePart = feedData.createdDateTime.split("T")[0];
-  }
+  console.log(feedData.followYn);
 
   return (
     <div className="flex justify-between pt-20">
@@ -38,7 +50,11 @@ const TipsUserTop = ({ feedData,setFollow, follow, res, patchFetchData }) => {
             onClick={() => {
               navigate(`/myinfo/${feedData.memberId}`);
             }}
-            src={`${feedData.memberImage}`}
+            src={
+              feedData.memberImage
+                ? feedData.memberImage
+                : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
+            }
             alt="profileImg"
             className="w-10 h-10 mr-2.5 rounded-full object-cover"
           />
@@ -54,27 +70,30 @@ const TipsUserTop = ({ feedData,setFollow, follow, res, patchFetchData }) => {
           <div className="text-gray-500">{datePart}</div>
         </div>
       </div>
-      <button
-        // onClick={toggleFollow}
-      >
-        {follow ? (
-          <div className={`bg-white ${buttonStyle} `}>
-            <img
-              src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/check.png"
-              alt="팔로잉"
-            />
-            <span className=" text-gray-800 font-semibold pl-1">팔로잉</span>
-          </div>
-        ) : (
-          <div className={`bg-[#00647B] ${buttonStyle} `}>
-            <img
-              src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/plus.png"
-              alt="팔로우"
-            />
-            <span className="text-white font-semibold pl-1">팔로우</span>
-          </div>
-        )}
-      </button>
+      {
+        memberId === userId &&
+        <button
+          onClick={toggleFollow}
+        >
+          {follow ? (
+            <div className={`bg-white ${buttonStyle} `}>
+              <img
+                src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/check.png"
+                alt="팔로잉"
+              />
+              <span className=" text-gray-800 font-semibold pl-1">팔로잉</span>
+            </div>
+          ) : (
+            <div className={`bg-[#00647B] ${buttonStyle} `}>
+              <img
+                src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/plus.png"
+                alt="팔로우"
+              />
+              <span className="text-white font-semibold pl-1">팔로우</span>
+            </div>
+          )}
+        </button>
+      }
     </div>
   );
 };

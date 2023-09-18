@@ -35,7 +35,11 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                   onClick={() => {
                     navigate(`/myinfo/${comment.memberId}`);
                   }}
-                  src={`${comment.memberImage}`}
+                  src={
+                    comment.memberImage
+                      ? comment.memberImage
+                      : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
+                  }
                   alt="profileImg"
                   className="w-10 h-10 mr-2.5 rounded-full object-cover cursor-pointer"
                 />
@@ -44,8 +48,7 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                     onClick={() => {
                       navigate(`/myinfo/${comment.memberId}`);
                     }}
-                    className="text-lg font-semibold cursor-pointer"
-                  >
+                    className="text-lg font-semibold cursor-pointer">
                     {comment.nickname}
                   </span>
 
@@ -74,8 +77,7 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                             ...prev,
                             [comment.feedReplyId]: !prev[comment.feedReplyId],
                           }))
-                        }
-                      >
+                        }>
                         답글 달기
                       </button>
                     </div>
@@ -88,8 +90,7 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                             ...editComent,
                             [comment.feedReplyId]: true,
                           });
-                        }}
-                      >
+                        }}>
                         수정하기
                       </button>
                     )}
