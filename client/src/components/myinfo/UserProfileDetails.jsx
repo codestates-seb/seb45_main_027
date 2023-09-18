@@ -1,6 +1,5 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import api from "../common/tokens";
 
 const UserProfileDetails = ({ toggleAccountSettings, profileData }) => {
   const { id } = useParams();

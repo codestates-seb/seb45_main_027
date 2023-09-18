@@ -5,6 +5,7 @@ import CommentPatch from "./CommentPatch";
 import CommentLike from "./CommentLike";
 import ReplyInput from "./ReplyInput";
 import ReplyOutput from "./ReplyOutput";
+import CommentPagination from "./CommentPagination";
 
 const CommentOutput = ({ feedData, setFeedData, children }) => {
   const memberId = localStorage.getItem("memberId");
@@ -23,11 +24,20 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
     }
   }, [feedData]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const repliesPerPage = 5;
+  const totalPages = replies ? Math.ceil(replies.length / repliesPerPage) : 0;
+  const indexOfLastReply = currentPage * repliesPerPage;
+  const indexOfFirstReply = indexOfLastReply - repliesPerPage;
+  const currentReplies = replies
+    ? replies.slice(indexOfFirstReply, indexOfLastReply)
+    : [];
+
   return (
     <div>
       {/* 댓글 출력창 */}
       {replies &&
-        replies.map((comment, index) => (
+        currentReplies.map((comment, index) => (
           <div key={comment.feedReplyId} className="flex flex-col mt-10">
             <div className="bg-[#fceecd75] p-8 rounded-lg shadow">
               <div className="flex items-start">
@@ -48,7 +58,8 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                     onClick={() => {
                       navigate(`/myinfo/${comment.memberId}`);
                     }}
-                    className="text-lg font-semibold cursor-pointer">
+                    className="text-lg font-semibold cursor-pointer"
+                  >
                     {comment.nickname}
                   </span>
 
@@ -77,7 +88,8 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                             ...prev,
                             [comment.feedReplyId]: !prev[comment.feedReplyId],
                           }))
-                        }>
+                        }
+                      >
                         답글 달기
                       </button>
                     </div>
@@ -90,7 +102,8 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                             ...editComent,
                             [comment.feedReplyId]: true,
                           });
-                        }}>
+                        }}
+                      >
                         수정하기
                       </button>
                     )}
@@ -123,6 +136,13 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
             </div>
           </div>
         ))}
+      {replies && (
+        <CommentPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
+      )}
     </div>
   );
 };
