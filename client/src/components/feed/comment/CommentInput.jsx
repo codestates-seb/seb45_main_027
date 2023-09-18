@@ -5,8 +5,8 @@ import api from "../../common/tokens";
 
 const CommentInput = ({ feedData, setFeedData }) => {
   const profileImg = localStorage.getItem("profileImg");
-  const { feedId } = useParams(); // 게시물 번호
-
+  const { feedId, tipId } = useParams(); // 게시물 번호
+const someCondition = feedId ? true : false;
   // 입력할 댓글
   const [inputComment, setInputComment] = useState("");
   // 입력한 댓글
@@ -16,7 +16,9 @@ const CommentInput = ({ feedData, setFeedData }) => {
   const postComment = async () => {
     const configParams = {
       method: "POST",
-      url: `/feed/${feedId}/feedReply`,
+      url: someCondition
+        ? `/feed/${feedId}/feedReply`
+        : `/tip/${tipId}/tipreply`,
       headers: {
         "ngrok-skip-browser-warning": "69420",
       },
@@ -70,7 +72,7 @@ const CommentInput = ({ feedData, setFeedData }) => {
       </div>
       <div className="flex w-full mt-4">
         <img
-          src={profileImg} // 아직 유저 이미지 API에 없어서 일단 넣음..
+          src={profileImg} 
           alt="profileImg"
           className="w-10 h-10 mr-2.5 rounded-full object-cover"
         />

@@ -18,10 +18,13 @@ const ReplyOutput = ({ commentsData, feedData, setFeedData }) => {
       {commentsData.map((comment, idx) => (
         <div
           key={idx}
-          className="flex items-start mt-10 ml-10 bg-[#fceecd75] p-8 rounded-lg shadow"
-        >
+          className="flex items-start mt-10 ml-10 bg-[#fceecd75] p-8 rounded-lg shadow">
           <img
-            src={`${comment.memberImage}`}
+            src={
+              comment.memberImage
+                ? comment.memberImage
+                : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
+            }
             onClick={() => {
               navigate(`/myinfo/${comment.memberId}`);
             }}
@@ -35,8 +38,7 @@ const ReplyOutput = ({ commentsData, feedData, setFeedData }) => {
               onClick={() => {
                 navigate(`/myinfo/${comment.memberId}`);
               }}
-              className="text-lg font-semibold cursor-pointer"
-            >
+              className="text-lg font-semibold cursor-pointer">
               {comment.nickname}
             </span>
 
@@ -61,8 +63,7 @@ const ReplyOutput = ({ commentsData, feedData, setFeedData }) => {
                       //   ...editComent,
                       //   [comment.feedReplyId]: true,
                       // });
-                    }}
-                  >
+                    }}>
                     수정하기
                   </button>
                   {/* 삭제 */}
