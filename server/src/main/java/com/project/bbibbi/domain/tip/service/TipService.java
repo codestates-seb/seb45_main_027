@@ -71,7 +71,9 @@ public class TipService {
 
         PageRequest pageRequest =  PageRequest.of(page, size, Sort.by("createdDateTime").descending());
 
+
         Page<Tip> tipPages = tipRepository.findAll(pageRequest);
+
 
         if(tipPages.isLast()){
             for(Tip tip : tipPages){
@@ -79,7 +81,10 @@ public class TipService {
             }
         }
 
+
+
         Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
 
         for(Tip tip : tipPages){
             if(member == null){
@@ -92,6 +97,7 @@ public class TipService {
             }
 
         }
+
 
 
         return tipPages;

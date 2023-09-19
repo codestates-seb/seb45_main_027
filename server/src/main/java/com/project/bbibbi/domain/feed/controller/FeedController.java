@@ -114,11 +114,13 @@ public class FeedController {
         List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(feeds);
 
         PageAbleResponseDto pageAbleResponseDto = new PageAbleResponseDto();
-        if(feeds.get(0).getFinalPage()){
-            pageAbleResponseDto.setIsLast(true);
-        }
-        else {
-            pageAbleResponseDto.setIsLast(false);
+
+        if(feeds.size() != 0) {
+            if (feeds.get(0).getFinalPage()) {
+                pageAbleResponseDto.setIsLast(true);
+            } else {
+                pageAbleResponseDto.setIsLast(false);
+            }
         }
 
         pageAbleResponseDto.setData(feedResponseDtos);
@@ -138,12 +140,15 @@ public class FeedController {
 
         List<FeedResponseDto> feedResponseDtos = mapper.feedsToFeedResponseDtos(pageFeeds);
 
-        PageAbleResponseDto pageAbleResponseDto = new PageAbleResponseDto();
-        if(pageFeeds.get(0).getFinalPage()){
-            pageAbleResponseDto.setIsLast(true);
-        }
-        else {
-            pageAbleResponseDto.setIsLast(false);
+
+            PageAbleResponseDto pageAbleResponseDto = new PageAbleResponseDto();
+
+        if(pageFeeds.size() != 0) {
+            if (pageFeeds.get(0).getFinalPage()) {
+                pageAbleResponseDto.setIsLast(true);
+            } else {
+                pageAbleResponseDto.setIsLast(false);
+            }
         }
 
         pageAbleResponseDto.setData(feedResponseDtos);

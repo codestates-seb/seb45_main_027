@@ -55,6 +55,7 @@ public class TipController {
     @PostMapping
     public ResponseEntity<TipResponseDto> createTip(@RequestBody @Valid TipPostDto tipPostDto) {
 
+
         // 로그인한 사용자 memberId
 //        tipPostDto.setMemberId(loginUtils.getLoginId());
 
@@ -129,19 +130,28 @@ public class TipController {
 
         Page<Tip> pageTips = tipService.getAllTips(page - 1, size);
 
+
+
         List<Tip> tips = pageTips.getContent();
+
 
         List<TipResponseDto> tipResponseDtos = tips.stream()
                 .map(tipMapper::tipToTipResponseDto)
                 .collect(Collectors.toList());
 
+
         PageAbleResponseDto pageAbleResponseDto = new PageAbleResponseDto<>();
 
-        if(tips.get(0).getFinalPage()){
-            pageAbleResponseDto.setIsLast(true);
-        }
-        else {
-            pageAbleResponseDto.setIsLast(false);
+
+        if(tips.size() != 0) {
+
+            if (tips.get(0).getFinalPage()) {
+                pageAbleResponseDto.setIsLast(true);
+
+            } else {
+
+                pageAbleResponseDto.setIsLast(false);
+            }
         }
 
         pageAbleResponseDto.setData(tipResponseDtos);
@@ -174,11 +184,12 @@ public class TipController {
 
         PageAbleResponseDto pageAbleResponseDto = new PageAbleResponseDto<>();
 
-        if(pageTips.get(0).getFinalPage()){
-            pageAbleResponseDto.setIsLast(true);
-        }
-        else {
-            pageAbleResponseDto.setIsLast(false);
+        if(pageTips.size() != 0) {
+            if (pageTips.get(0).getFinalPage()) {
+                pageAbleResponseDto.setIsLast(true);
+            } else {
+                pageAbleResponseDto.setIsLast(false);
+            }
         }
 
         pageAbleResponseDto.setData(tipResponseDtos);
