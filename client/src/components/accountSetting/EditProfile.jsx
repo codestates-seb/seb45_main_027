@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const EditProfile = ({
   profileData,
@@ -30,6 +31,8 @@ const EditProfile = ({
       reader.readAsDataURL(file);
     }
 
+    toast.loading("이미지를 업로드중입니다...");
+
     try {
       const response = await axios.post(`/imageUpload/myInfoImage`, formData, {
         headers: {
@@ -38,15 +41,17 @@ const EditProfile = ({
       });
 
       //이미지 업로드 성공시 응답으로 받은 사진 경로 확인
-      console.log("Image uploaded:", response.data);
+      //console.log("Image uploaded:", response.data);
 
       // 응답으로 받은 사진을 여기서 저장해서 유저한테 보여줌
       setProfileData({ ...profileData, profileImg: response.data });
     } catch (error) {
-      console.error("Image upload failed:", error);
+      //console.error("Image upload failed:", error);
+      toast.error("사진 업로드에 실패했습니다. 이미지는 10mb 이하로 업로드해주세요.");
       setProfileData({ ...profileData, profileImg: null });
     } finally {
       setImageUploadInProgress(false);
+      toast.dismiss();
     }
   };
 
