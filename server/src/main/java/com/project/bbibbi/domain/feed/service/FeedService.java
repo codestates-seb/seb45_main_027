@@ -314,6 +314,7 @@ public class FeedService {
         }
 
 
+
         Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
 
         for(Feed feed : selectedFeeds){
@@ -330,6 +331,18 @@ public class FeedService {
 
         }
 
+        //좋아요 개수
+        for(Feed feed : selectedFeeds){
+            Integer feedLikeCount = feedLikeRepository.feedLikeCount(feed.getFeedId());
+            feed.setLikeCount(feedLikeCount);
+        }
+        //좋아요 개수
+        for(Feed feed : selectedFeeds){
+            Integer bookmarkCount = feedBookMarkRepository.feedBookMarkCount(feed.getFeedId());
+            feed.setBookMarkCount(bookmarkCount);
+        }
+
+
 
         return selectedFeeds;
 
@@ -340,8 +353,16 @@ public class FeedService {
         List<Feed> selectedFeeds = feedRepository.findBySearch(searchString, page, size);
 
         Integer selectedFeedsCount = feedRepository.findBySearchCount(searchString);
-
-
+        //좋아요 개수
+        for(Feed feed : selectedFeeds){
+            Integer feedLikeCount = feedLikeRepository.feedLikeCount(feed.getFeedId());
+            feed.setLikeCount(feedLikeCount);
+        }
+        //좋아요 개수
+        for(Feed feed : selectedFeeds){
+            Integer bookmarkCount = feedBookMarkRepository.feedBookMarkCount(feed.getFeedId());
+            feed.setBookMarkCount(bookmarkCount);
+        }
         if(((page+1)*size) >= selectedFeedsCount){
             for(Feed feed : selectedFeeds){
                 feed.setFinalPage(true);
@@ -375,6 +396,17 @@ public class FeedService {
 
         Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
 
+        //좋아요 개수
+        for(Feed feed : selectedTopTenFeeds){
+            Integer feedLikeCount = feedLikeRepository.feedLikeCount(feed.getFeedId());
+            feed.setLikeCount(feedLikeCount);
+        }
+        //좋아요 개수
+        for(Feed feed : selectedTopTenFeeds){
+            Integer bookmarkCount = feedBookMarkRepository.feedBookMarkCount(feed.getFeedId());
+            feed.setBookMarkCount(bookmarkCount);
+        }
+
         for(Feed feed : selectedTopTenFeeds){
 
             if(member == null){
@@ -405,6 +437,17 @@ public class FeedService {
 
         Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
 
+        //좋아요 개수
+        for(Feed feed : pageFeeds) {
+            Integer feedLikeCount = feedLikeRepository.feedLikeCount(feed.getFeedId());
+            feed.setLikeCount(feedLikeCount);
+        }
+        //좋아요 개수
+        for(Feed feed : pageFeeds){
+            Integer bookmarkCount = feedBookMarkRepository.feedBookMarkCount(feed.getFeedId());
+            feed.setBookMarkCount(bookmarkCount);
+        }
+
         for(Feed feed : pageFeeds){
 
             if(member == null){
@@ -427,6 +470,18 @@ public class FeedService {
 
         Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
 
+
+        //좋아요 개수
+        for(Feed feed : pageFeeds) {
+            Integer feedLikeCount = feedLikeRepository.feedLikeCount(feed.getFeedId());
+            feed.setLikeCount(feedLikeCount);
+        }
+        //좋아요 개수
+        for(Feed feed : pageFeeds){
+            Integer bookmarkCount = feedBookMarkRepository.feedBookMarkCount(feed.getFeedId());
+            feed.setBookMarkCount(bookmarkCount);
+        }
+
         for(Feed feed : pageFeeds){
 
             if(member == null){
@@ -448,6 +503,18 @@ public class FeedService {
         List<Feed> pageFeeds = feedRepository.findByMemberBookMark(myInfoMemberId);
 
         Member member = Member.builder().memberId(loginUtils.getLoginId()).build();
+
+
+        //좋아요 개수
+        for(Feed feed : pageFeeds) {
+            Integer feedLikeCount = feedLikeRepository.feedLikeCount(feed.getFeedId());
+            feed.setLikeCount(feedLikeCount);
+        }
+        //좋아요 개수
+        for(Feed feed : pageFeeds){
+            Integer bookmarkCount = feedBookMarkRepository.feedBookMarkCount(feed.getFeedId());
+            feed.setBookMarkCount(bookmarkCount);
+        }
 
         for(Feed feed : pageFeeds){
 
