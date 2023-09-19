@@ -5,7 +5,7 @@ const TipsInfo = ({ handleTipClick, item }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex-col pt-2 my-7">
+    <div className="grid pt-10">
       <div
         className="flex justify-center"
         onClick={() => handleTipClick(item.tipId)}>
