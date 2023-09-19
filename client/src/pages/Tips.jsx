@@ -101,7 +101,6 @@ const Tips = () => {
             page.current += 1;
             const updatedUrl = `/tip${isSearch}${searchKeyworld}?page=${page.current}`;
             loadMoreData(updatedUrl); // 새로운 페이지 데이터를 불러오는 함수 호출
-            console.log("무한스크롤");
           }
         },
         {
@@ -127,7 +126,6 @@ const Tips = () => {
   const loadMoreData = async (url) => {
     try {
       toast.loading("로딩중...");
-      console.log("무한스크롤2");
       const res = await api({ ...configParams, url });
       if (res.data.isLast === false) {
         // 기존 데이터와 새로운 데이터를 병합
@@ -160,7 +158,7 @@ const Tips = () => {
           url: `/tip${isSearch}${searchKeyworld}?page=${page.current}`,
         };
         const res = await api(updatedConfigParams);
-        console.log(res);
+
         setTipData(res.data.data);
         clearInput();
       } catch (error) {
