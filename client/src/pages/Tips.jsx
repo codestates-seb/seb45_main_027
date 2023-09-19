@@ -60,7 +60,6 @@ const Tips = () => {
       if (isFirstPageRendered.current === false) {
         setTipData(response.data.data);
         isFirstPageRendered.current = true;
-        setIsLastPage(response.data.isLast);
       } else {
         setTipData((prevData) => [...prevData, ...response.data]);
       }
@@ -80,7 +79,7 @@ const Tips = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [viewportWidth]);
 
   // 로딩시 토스트 및 이미지 처리
   useEffect(() => {
@@ -160,6 +159,7 @@ const Tips = () => {
         const res = await api(updatedConfigParams);
 
         setTipData(res.data.data);
+        setIsLastPage(res.data.isLast);
         clearInput();
       } catch (error) {
         console.error("Error sending GET request:", error);
