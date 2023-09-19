@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import api from "../../common/tokens";
 
@@ -7,6 +7,8 @@ const display =
   "flex justify-center items-center w-20 h-20 bg-white border rounded-full shadow my-8 ";
 
 const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
+  const navigate = useNavigate();
+  const memberId = localStorage.getItem("memberId");
   const [like, setLike] = useState("");
   const [bookmark, setBookmark] = useState("");
   const { feedId, tipId } = useParams();
@@ -46,6 +48,9 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
         likeCount: response.data.data.likeCount,
       }));
     } catch (error) {
+      toast.error("로그인이 필요한 서비스 입니다.");
+      localStorage.setItem("prevPath", window.location.pathname);
+      navigate("/login");
       console.error("좋아요 토글 실패:", error);
     }
   };
@@ -88,6 +93,9 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
         bookmarkCount: response.data.data.bookmarkCount,
       }));
     } catch (error) {
+      toast.error("로그인이 필요한 서비스 입니다.");
+      localStorage.setItem("prevPath", window.location.pathname);
+      navigate("/login");
       console.error("북마크 토글 실패:", error);
     }
   };

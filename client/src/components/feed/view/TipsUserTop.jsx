@@ -39,8 +39,6 @@ const TipsUserTop = ({ feedData, setFollow, follow, res }) => {
     }
   }, [feedData]);
 
-  console.log(feedData.followYn);
-
   return (
     <div className="flex justify-between pt-20">
       <div className="flex items-center">
@@ -63,7 +61,8 @@ const TipsUserTop = ({ feedData, setFollow, follow, res }) => {
             onClick={() => {
               navigate(`/myinfo/${feedData.memberId}`);
             }}
-            className="text-lg font-semibold">
+            className="text-lg font-semibold"
+          >
             {feedData.nickname}
           </div>
           <div className="text-gray-500">{datePart}</div>

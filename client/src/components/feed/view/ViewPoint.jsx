@@ -19,7 +19,6 @@ const ViewPoint = ({ feedData }) => {
     setRepliesCount(feedData.repliesCount);
     setViews(feedData.views);
   }, [feedData]);
-  console.log(feedData);
 
   if (!feedData) {
     return null;
