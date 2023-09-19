@@ -10,6 +10,8 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
   const [like, setLike] = useState("");
   const [bookmark, setBookmark] = useState("");
   const { feedId, tipId } = useParams();
+  const [animationLike, setAnimationLike] = useState("");
+  const [animationBookmark, setAnimationBookmark] = useState("");
 
   const someCondition = feedId ? true : false;
   // 북마크 상태
@@ -27,9 +29,29 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
       false
     );
 
+  // 북마크
   const toggleBookmark = () => {
     fetchBookmarkData();
     setBookmark(!bookmark);
+    // 애니메이션 클래스 설정
+  setAnimationBookmark("animate__bounceIn");
+
+  // 애니메이션이 끝난 후 클래스를 제거
+  setTimeout(() => {
+    setAnimationBookmark("");
+  }, 500);  // 애니메이션 지속 시간
+  };
+
+  // 좋아요
+  const toggleLike = () => {
+    fetchLikeData();
+    setLike(!like);
+    setAnimationLike("animate__bounceIn");
+
+    // 애니메이션이 끝난 후 클래스를 제거
+    setTimeout(() => {
+      setAnimationLike("");
+    }, 500); // 애니메이션 지속 시간
   };
 
   // 좋아요 상태
@@ -46,10 +68,7 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
     false
   );
 
-  const toggleLike = () => {
-    fetchLikeData();
-    setLike(!like);
-  };
+  
 
   // [좋아요/북마크] 받아온 요청 상태 저장
   useEffect(() => {
@@ -85,7 +104,7 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
       {/* 좋아요 */}
       <button className={display} onClick={toggleLike}>
         <img
-          className="m-4"
+          className={`m-4 ${animationLike}`}
           src={
             like
               ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/heart-on.png"
@@ -98,7 +117,7 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
       {/* 북마크 */}
       <button className={display} onClick={toggleBookmark}>
         <img
-          className="m-4"
+          className={`m-4 ${animationBookmark}`}
           src={
             bookmark
               ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark-on.png"
