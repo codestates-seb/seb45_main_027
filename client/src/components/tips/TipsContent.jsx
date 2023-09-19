@@ -30,10 +30,9 @@ const TipsContent = ({ tipData, setTipData }) => {
         const updatedItemIndex = updatedTipData.findIndex(
           (item) => item.tipId === tipId
         );
-
         if (updatedItemIndex !== -1) {
           // feedId가 일치하는 요소가 있다면 bookMarkYn 값을 업데이트
-          if (response.data.data.bookMarkYn === true) {
+          if (response.data.data.bookmarkYn === true) {
             toast.success("북마크가 등록되었습니다!");
           } else {
             toast.success("북마크가 해제되었습니다!");
@@ -44,7 +43,9 @@ const TipsContent = ({ tipData, setTipData }) => {
         }
       }
     } catch (error) {
-      toast.error("북마크 처리에 실패하였습니다.");
+      toast.error("로그인이 필요한 서비스 입니다.");
+      localStorage.setItem("prevPath", window.location.pathname);
+      navigate("/login");
       console.error("북마크 토글 실패:", error);
     }
   };

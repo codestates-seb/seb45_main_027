@@ -63,7 +63,9 @@ const AllContent = ({ showroomData, setShowroomData }) => {
         }
       }
     } catch (error) {
-      toast.error("북마크 처리에 실패하였습니다.");
+      toast.error("로그인이 필요한 서비스 입니다.");
+      localStorage.setItem("prevPath", window.location.pathname);
+      navigate("/login");
       console.error("북마크 토글 실패:", error);
     }
   };

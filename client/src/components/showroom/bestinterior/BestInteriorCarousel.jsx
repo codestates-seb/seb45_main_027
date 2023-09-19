@@ -130,8 +130,7 @@ const BestInteriorCarousel = ({ viewportWidth, best10Data, setBest10Data }) => {
         selectedItem={5}
         showIndicators={false}
         stopOnHover={true}
-        className=""
-        // onClickItem={toggleBookmark}
+        swipeScrollTolerance={0.00001}
       >
         {renderSlides}
       </Carousel>
