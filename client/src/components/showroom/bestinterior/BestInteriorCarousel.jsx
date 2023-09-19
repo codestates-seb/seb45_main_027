@@ -11,7 +11,6 @@ const BestInteriorCarousel = ({ viewportWidth, best10Data, setBest10Data }) => {
   const navigate = useNavigate();
   // 반응형 구현 로직
 
-  console.log(best10Data);
   const updateVisibleSlides = () => {
     if (viewportWidth <= 1440) {
       if (viewportWidth <= 1024) {
