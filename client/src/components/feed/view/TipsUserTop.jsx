@@ -9,6 +9,7 @@ const TipsUserTop = ({ feedData, setFollow, follow, res }) => {
   const memberId = localStorage.getItem("memberId");
   const frommemberId = feedData.memberId;
   const navigate = useNavigate();
+  const memberWhether = memberId;
 
   const [patchRes, patchErr, patchLoading, patchFetchData] = useAxios(
     {
@@ -54,7 +55,7 @@ const TipsUserTop = ({ feedData, setFollow, follow, res }) => {
                 : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
             }
             alt="profileImg"
-            className="w-10 h-10 mr-2.5 rounded-full object-cover"
+            className="w-full h-full mr-2.5 rounded-full object-cover"
           />
         </div>
         <div>
@@ -68,10 +69,9 @@ const TipsUserTop = ({ feedData, setFollow, follow, res }) => {
           <div className="text-gray-500">{datePart}</div>
         </div>
       </div>
-      {memberId != frommemberId && (
+      {(memberWhether ? memberId != frommemberId : memberId === "") && (
         <button onClick={toggleFollow}>
-          {follow
-            ? (
+          {follow ? (
             <div className={`bg-white ${buttonStyle} `}>
               <img
                 src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/check.png"

@@ -11,6 +11,7 @@ const ShowroomUserTop = ({ feedData, setFollow, follow }) => {
   const memberId = localStorage.getItem("memberId");
   const frommemberId = feedData.memberId;
   const navigate = useNavigate();
+  const memberWhether = memberId;
 
 
   const [patchRes, patchErr, patchLoading, patchFetchData] = useAxios(
@@ -111,7 +112,7 @@ const ShowroomUserTop = ({ feedData, setFollow, follow }) => {
           <span>{feedData.locationName}</span>
         </div>
       </div>
-      {memberId != frommemberId && (
+      {(memberWhether ? memberId != frommemberId : memberId === "") && (
         <button className="h-full p-10" onClick={toggleFollow}>
           {follow ? (
             <div className={`bg-white ${buttonStyle} `}>
