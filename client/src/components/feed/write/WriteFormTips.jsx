@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { FaBold, FaItalic, FaUnderline, FaStrikethrough } from "react-icons/fa";
 
 const WriteFormTips = ({
   editorContent,
@@ -47,14 +48,13 @@ const WriteFormTips = ({
         `${process.env.REACT_APP_API_URL}/imageUpload/tipImage`,
         formData
       );
-      console.log(response.data);
       console.log("S3 업로드 성공");
       setImageSrc(response.data);
       // 에디터에 이미지 추가
       const currentEditorContent = editorRef.current.innerHTML;
       const newEditorContent =
         currentEditorContent +
-        `<img src="${response.data}" alt="Uploaded Image" />`;
+        `<div class="flex justify-center"><img src="${response.data}" alt="Uploaded Image" /> </div>`;
       setEditorContent(newEditorContent);
       e.target.value = null;
       toast.dismiss();
@@ -65,13 +65,27 @@ const WriteFormTips = ({
     }
   };
 
+  const toggleStyle = (style) => {
+    // 에디터내 글자 스타일 설정
+    document.execCommand(style, false, null);
+  };
+
+  // 이미지삭제 핸들러 함수
+  const handleDeleteImage = () => {
+    const images = editorRef.current.querySelectorAll("img");
+
+    images.forEach((image) => {
+      image.remove();
+    });
+  };
+
   return (
     <>
       {/* 이미지 입력 버튼 */}
-      <div className="mb-2 pb-2 border-b">
+      <div className="flex mb-2 pb-[11px] border-b">
         <label htmlFor="imageUpload" className="cursor-pointer">
           <img
-            className="p-2  mb-1"
+            className="p-[3px]  mb-1"
             src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/gallery.png"
             alt=""
           />
@@ -83,6 +97,39 @@ const WriteFormTips = ({
           className="hidden"
           onChange={ImageUpload}
         />
+        <button
+          className="p-2 border-[1px] mx-2 rounded-md"
+          onClick={handleDeleteImage}
+        >
+          이미지 삭제
+        </button>
+        <div className="border-r-[1px] h-7 my-auto mx-3"></div> {/* 구분선 */}
+        <button
+          onClick={() => {
+            toggleStyle("bold");
+          }}
+          className={`p-2 border-[1px] mx-2 rounded-md`}
+        >
+          <FaBold />
+        </button>
+        <button
+          onClick={() => toggleStyle("italic")}
+          className={`p-2 border-[1px] mx-2 rounded-md`}
+        >
+          <FaItalic />
+        </button>
+        <button
+          onClick={() => toggleStyle("underline")}
+          className={`p-2 border-[1px] mx-2 rounded-md`}
+        >
+          <FaUnderline />
+        </button>
+        <button
+          onClick={() => toggleStyle("strikethrough")}
+          className={`p-2 border-[1px] mx-2 rounded-md`}
+        >
+          <FaStrikethrough />
+        </button>
       </div>
 
       <div

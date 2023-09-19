@@ -38,12 +38,6 @@ const WriteShowRoom = () => {
     location: null,
   }); // 드랍다운 선택 결과를 담은 상태
 
-  // console.log(coverImage);
-  // console.log(title);
-  // console.log(editorContent);
-  // console.log(selectedValues);
-  // console.log(selectedValues);
-
   const navigate = useNavigate();
 
   // 로컬스토리지에 임시저장값이 있으면 해당값 불러오기 위한 useEffect
