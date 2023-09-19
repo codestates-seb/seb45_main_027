@@ -8,6 +8,7 @@ import com.project.bbibbi.domain.feed.entity.Feed;
 //import com.project.bbibbi.domain.feed.repository.FeedImageTagRepository;
 import com.project.bbibbi.domain.feed.repository.FeedRepository;
 import com.project.bbibbi.domain.feedBookmark.repository.FeedBookMarkRepository;
+import com.project.bbibbi.domain.feedComment.repository.FeedCommentRepository;
 import com.project.bbibbi.domain.feedReply.entity.FeedReply;
 import com.project.bbibbi.domain.feedReplyLike.repository.FeedReplyLikeRepository;
 import com.project.bbibbi.domain.feedlike.repository.FeedLikeRepository;
@@ -38,6 +39,7 @@ public class FeedService {
     private final FeedReplyLikeRepository feedReplyLikeRepository;
     private final FollowRepository followRepository;
     private final MemberRepository memberRepository;
+    private final FeedCommentRepository feedCommentRepository;
     private final CustomBeanUtils<Feed> beanUtils;
 
     public FeedService(FeedRepository feedRepository,
@@ -46,6 +48,7 @@ public class FeedService {
                        FollowRepository followRepository,
                        FeedReplyLikeRepository feedReplyLikeRepository,
                        MemberRepository memberRepository,
+                       FeedCommentRepository feedCommentRepository,
                        CustomBeanUtils<Feed> beanUtils) {
         this.feedRepository = feedRepository;
         this.feedLikeRepository = feedLikeRepository;
@@ -53,6 +56,7 @@ public class FeedService {
         this.followRepository = followRepository;
         this.feedReplyLikeRepository = feedReplyLikeRepository;
         this.memberRepository = memberRepository;
+        this.feedCommentRepository = feedCommentRepository;
         this.beanUtils = beanUtils;
     }
 
@@ -573,6 +577,14 @@ public class FeedService {
         feedLikeRepository.deleteByFeedId(feedId);
 
         feedBookMarkRepository.deleteByFeedId(feedId);
+
+        feedCommentRepository.deleteByFeedId(feedId);
+
+        if(feed.getReplies() != null){
+            for(FeedReply feedReply : feed.getReplies()){
+                feedReplyLikeRepository.deleteByFeedReplyId(feedReply.getFeedReplyId());
+            }
+        }
 
 
         feedRepository.delete(feed);

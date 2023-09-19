@@ -1,7 +1,10 @@
 package com.project.bbibbi.domain.tip.service;
 
 import com.project.bbibbi.auth.utils.loginUtils;
+import com.project.bbibbi.domain.feed.entity.Feed;
+import com.project.bbibbi.domain.feedReply.entity.FeedReply;
 import com.project.bbibbi.domain.tip.entity.Tip;
+import com.project.bbibbi.domain.tipComment.repository.TipCommentRepository;
 import com.project.bbibbi.domain.tipReply.entity.TipReply;
 import com.project.bbibbi.domain.follow.repository.FollowRepository;
 import com.project.bbibbi.domain.member.repository.MemberRepository;
@@ -38,6 +41,9 @@ public class TipService {
     private final TipBookmarkRepository tipBookmarkRepository;
     private final TipReplyLikeRepository tipReplyLikeRepository;
     private final FollowRepository followRepository;
+
+    private final TipCommentRepository tipCommentRepository;
+
     private final MemberRepository memberRepository;
     private final TagRepository tagRepository;
 
@@ -53,6 +59,7 @@ public class TipService {
                       TipBookmarkRepository tipBookmarkRepository,
                       FollowRepository followRepository,
                       TipReplyLikeRepository tipReplyLikeRepository,
+                      TipCommentRepository tipCommentRepository,
                       MemberRepository memberRepository,
                       TagRepository tagRepository) {
         this.tipRepository = tipRepository;
@@ -61,6 +68,7 @@ public class TipService {
         this.tipReplyLikeRepository = tipReplyLikeRepository;
         this.followRepository = followRepository;
         this.memberRepository = memberRepository;
+        this.tipCommentRepository = tipCommentRepository;
         this.tagRepository = tagRepository;
 //        this.tipMapper = tipMapper;
 //        this.tipTagService = tipTagService;
@@ -98,6 +106,15 @@ public class TipService {
 
         }
 
+        for(Tip tip : tipPages) {
+            Integer tipLikeCount = tipLikeRepository.tipLikeCount(tip.getTipId());
+            tip.setLikeCount(tipLikeCount);
+        }
+        //좋아요 개수
+        for(Tip tip : tipPages){
+            Integer bookmarkCount = tipBookmarkRepository.tipBookmarkCount(tip.getTipId());
+            tip.setBookmarkCount(bookmarkCount);
+        }
 
 
         return tipPages;
@@ -121,6 +138,16 @@ public class TipService {
                 else tip.setBookmarkYn(true);
             }
 
+        }
+
+        for(Tip tip : pageTips) {
+            Integer tipLikeCount = tipLikeRepository.tipLikeCount(tip.getTipId());
+            tip.setLikeCount(tipLikeCount);
+        }
+        //좋아요 개수
+        for(Tip tip : pageTips){
+            Integer bookmarkCount = tipBookmarkRepository.tipBookmarkCount(tip.getTipId());
+            tip.setBookmarkCount(bookmarkCount);
         }
 
         return  pageTips;
@@ -168,6 +195,16 @@ public class TipService {
 
         }
 
+        for(Tip tip : pageTips) {
+            Integer tipLikeCount = tipLikeRepository.tipLikeCount(tip.getTipId());
+            tip.setLikeCount(tipLikeCount);
+        }
+        //좋아요 개수
+        for(Tip tip : pageTips){
+            Integer bookmarkCount = tipBookmarkRepository.tipBookmarkCount(tip.getTipId());
+            tip.setBookmarkCount(bookmarkCount);
+        }
+
         return  pageTips;
     }
 
@@ -198,6 +235,16 @@ public class TipService {
 
         }
 
+        for(Tip tip : searchTips) {
+            Integer tipLikeCount = tipLikeRepository.tipLikeCount(tip.getTipId());
+            tip.setLikeCount(tipLikeCount);
+        }
+        //좋아요 개수
+        for(Tip tip : searchTips){
+            Integer bookmarkCount = tipBookmarkRepository.tipBookmarkCount(tip.getTipId());
+            tip.setBookmarkCount(bookmarkCount);
+        }
+
         return searchTips;
     }
 
@@ -217,6 +264,16 @@ public class TipService {
                 else tip.setBookmarkYn(true);
             }
 
+        }
+
+        for(Tip tip : searchTips) {
+            Integer tipLikeCount = tipLikeRepository.tipLikeCount(tip.getTipId());
+            tip.setLikeCount(tipLikeCount);
+        }
+        //좋아요 개수
+        for(Tip tip : searchTips){
+            Integer bookmarkCount = tipBookmarkRepository.tipBookmarkCount(tip.getTipId());
+            tip.setBookmarkCount(bookmarkCount);
         }
 
         return searchTips;
@@ -409,6 +466,14 @@ public class TipService {
         tipLikeRepository.deleteByTipId(tipId);
 
         tipBookmarkRepository.deleteByTipId(tipId);
+
+        tipCommentRepository.deleteByTipId(tipId);
+
+        if(tip.getReplies() != null){
+            for(TipReply tipReply : tip.getReplies()){
+                tipReplyLikeRepository.deleteByTipReplyId(tipReply.getTipReplyId());
+            }
+        }
 
         tipRepository.delete(tip);
     }
