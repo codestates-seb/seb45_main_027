@@ -3,28 +3,40 @@ import { useAuth } from "../../context/AuthContext";
 
 const OauthLayout = ({ path }) => {
   const { kakaoLogin, naverLogin } = useAuth();
-  const params = new URLSearchParams(window.location.search);
-  const code = params.get("code");
+//   const params = new URLSearchParams(window.location.search);
+//   const code = params.get("code");
   
- // console.log("Code from URL:", code);//확인용 추후 삭제
+//  // console.log("Code from URL:", code);//확인용 추후 삭제
 
-  const kakaoRestApiKey = process.env.REACT_APP_KAKAO_REST_API_KEY;
-  const kakaoRedirectUrl = `http://localhost:3000/${path}`;//s3주소로 업데이트 해야됨
-  const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoRestApiKey}&redirect_uri=${kakaoRedirectUrl}&response_type=code`;
+//   const kakaoRestApiKey = process.env.REACT_APP_KAKAO_REST_API_KEY;
+//   const kakaoRedirectUrl = `http://localhost:3000/${path}`;//s3주소로 업데이트 해야됨
+//   const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoRestApiKey}&redirect_uri=${kakaoRedirectUrl}&response_type=code`;
 
-  const naverRestApiKey = process.env.REACT_APP_NAVER_REST_API_KEY;
-  const naverRedirectUrl = `http://localhost:3000/${path}`;//s3주소로 업데이트 해야됨
-  const naverState = process.env.REACT_APP_NAVER_SECRET_KEY;
-  const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?client_id=${naverRestApiKey}&response_type=code&redirect_uri=${naverRedirectUrl}&state=${naverState}`;
+//   const naverRestApiKey = process.env.REACT_APP_NAVER_REST_API_KEY;
+//   const naverRedirectUrl = `http://localhost:3000/${path}`;//s3주소로 업데이트 해야됨
+//   const naverState = process.env.REACT_APP_NAVER_SECRET_KEY;
+//   const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?client_id=${naverRestApiKey}&response_type=code&redirect_uri=${naverRedirectUrl}&state=${naverState}`;
+
+
+//   const handleKaKaologin = () => {
+//     window.location.href = kakaoLoginUrl;
+//     kakaoLogin(code);
+//   };
+
+//   const handleNaverLogin = () => {
+//     window.location.href = naverLoginUrl;
+//     naverLogin(code);
+//   };
+
 
   const handleKaKaologin = () => {
-    window.location.href = kakaoLoginUrl;
-    kakaoLogin(code);
+    //window.location.href = kakaoLoginUrl;
+    kakaoLogin();
   };
 
   const handleNaverLogin = () => {
-    window.location.href = naverLoginUrl;
-    naverLogin(code);
+    //window.location.href = naverLoginUrl;
+    naverLogin();
   };
 
   

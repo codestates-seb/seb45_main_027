@@ -27,7 +27,7 @@ const UserProfileDetails = ({ toggleAccountSettings, profileData }) => {
             </div>
             {memberId === id && (
               <button
-                className="bg-[#00647B] text-white font-semibold hover:bg-[#00647B]/50 rounded-full p-1 md:p-2 text-xs md:text-md"
+                className="bg-[#00647B] text-white font-semibold hover:bg-[#00647B]/50 rounded-full p-1 md:px-2 py-1 text-xs md:text-md"
                 onClick={() => toggleAccountSettings(true)}
               >
                 계정설정

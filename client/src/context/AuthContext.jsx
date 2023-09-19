@@ -56,67 +56,11 @@ export function AuthProvider({ children }) {
 
   
 
-  async function kakaoLogin(code) {
-    try {
-      const response = await axios.post(`${baseURL}/auth/kakao`, code);
-
-      //role 추가하고 바밀번호 변경 조건부 하러 가기
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
-      localStorage.setItem("memberId", response.data.memberId);
-      localStorage.setItem("nickname", response.data.nickname);
-
-      if (response.data.profileImg === null) {
-        localStorage.setItem(
-          "profileImg",
-          "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
-        );
-      } else {
-        localStorage.setItem("profileImg", response.data.profileImg);
-      }
-
-      console.log(response.data);
-
-      navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
-    } catch (error) {
-      console.log(code);
-      throw error;
-    }
-  }
-
-
-  async function naverLogin(code) {
-    try {
-      const response = await axios.post(`${baseURL}/auth/naver`, code);
-
-      //role 추가하고 바밀번호 변경 조건부 하러 가기
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
-      localStorage.setItem("memberId", response.data.memberId);
-      localStorage.setItem("nickname", response.data.nickname);
-
-      if (response.data.profileImg === null) {
-        localStorage.setItem(
-          "profileImg",
-          "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
-        );
-      } else {
-        localStorage.setItem("profileImg", response.data.profileImg);
-      }
-
-      console.log(response.data);
-
-      navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
-    } catch (error) {
-      console.log(code);
-
-      throw error;
-    }
-  }
-
   // async function kakaoLogin(code) {
   //   try {
-  //     const response = await axios.get(`${baseURL}/auth/oauth/kakao?code=${code}`);
+  //     const response = await axios.post(`${baseURL}/auth/kakao`, code);
+
+  //     //role 추가하고 바밀번호 변경 조건부 하러 가기
   //     localStorage.setItem("accessToken", response.data.accessToken);
   //     localStorage.setItem("refreshToken", response.data.refreshToken);
   //     localStorage.setItem("memberId", response.data.memberId);
@@ -130,6 +74,8 @@ export function AuthProvider({ children }) {
   //     } else {
   //       localStorage.setItem("profileImg", response.data.profileImg);
   //     }
+
+  //     console.log(response.data);
 
   //     navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
   //   } catch (error) {
@@ -141,9 +87,9 @@ export function AuthProvider({ children }) {
 
   // async function naverLogin(code) {
   //   try {
-  //     const response = await axios.get(`${baseURL}/auth/oauth/naver?code=${code}`);
+  //     const response = await axios.post(`${baseURL}/auth/naver`, code);
 
-  //     //role 추가
+  //     //role 추가하고 바밀번호 변경 조건부 하러 가기
   //     localStorage.setItem("accessToken", response.data.accessToken);
   //     localStorage.setItem("refreshToken", response.data.refreshToken);
   //     localStorage.setItem("memberId", response.data.memberId);
@@ -158,6 +104,8 @@ export function AuthProvider({ children }) {
   //       localStorage.setItem("profileImg", response.data.profileImg);
   //     }
 
+  //     console.log(response.data);
+
   //     navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
   //   } catch (error) {
   //     console.log(code);
@@ -165,6 +113,58 @@ export function AuthProvider({ children }) {
   //     throw error;
   //   }
   // }
+
+  async function kakaoLogin() {
+    try {
+      const response = await axios.get(`${baseURL}/oauth2/authorization/kakao`);
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      localStorage.setItem("memberId", response.data.memberId);
+      localStorage.setItem("nickname", response.data.nickname);
+
+      if (response.data.profileImg === null) {
+        localStorage.setItem(
+          "profileImg",
+          "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
+        );
+      } else {
+        localStorage.setItem("profileImg", response.data.profileImg);
+      }
+
+      navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
+    } catch (error) {
+      //console.log(code);
+      throw error;
+    }
+  }
+
+
+  async function naverLogin(code) {
+    try {
+      const response = await axios.get(`${baseURL}/auth/oauth/naver?code=${code}`);
+
+      //role 추가
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      localStorage.setItem("memberId", response.data.memberId);
+      localStorage.setItem("nickname", response.data.nickname);
+
+      if (response.data.profileImg === null) {
+        localStorage.setItem(
+          "profileImg",
+          "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
+        );
+      } else {
+        localStorage.setItem("profileImg", response.data.profileImg);
+      }
+
+      navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
+    } catch (error) {
+      console.log(code);
+
+      throw error;
+    }
+  }
 
   async function register(email, nickname, password) {
     toast.loading("로딩중...");

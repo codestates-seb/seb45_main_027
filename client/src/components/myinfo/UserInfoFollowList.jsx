@@ -68,9 +68,9 @@ const UserInfoFollowList = ({ userList, onFollowAction, activeTab }) => {
               handleFollow(user.fromMemberId, user.memberId);
             }}
           >
-            <span className="bg-[#00647B]/80 rounded-full p-1.5">
+            <div className="bg-[#00647B]/80 rounded-full py-1 px-1.5">
               {user.followYn ? "Following" : "Follow"}
-            </span>
+            </div>
           </button>
         </div>
       ))}
