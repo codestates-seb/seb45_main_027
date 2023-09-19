@@ -14,12 +14,21 @@ const MainWrap = ({ style, wrap, mainTitle, subTitle, intro1, intro2, intro3, pa
     return () => clearInterval(timer);
   }, [currentIndex]);
 
+
+
   return (
     <div
-      className={`h-screen w-full flex justify-center md:justify-normal ${wrap}`}
+      className="h-screen w-full sm:w-max flex justify-center md:justify-normal mx-5"
       style={style}>
-      <div className="p-8 flex flex-col justify-end md:justify-center w-max h-full">
-        <div className="flex flex-col items-center bg-[#ffffffc2] w-full h-auto rounded-3xl shadow p-20">
+      <div className="pb-16 flex flex-col items-center justify-end md:justify-center w-full h-full">
+        <div>
+          <img
+            className="w-20 mb-12 animate__animated animate__wobble animate__infinite animate__slow"
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/logo.png"
+            alt=""
+          />
+        </div>
+        <div className="flex flex-col items-center bg-[#ffffffc2] w-full h-auto rounded-xl shadow p-20">
           <span className="text-3xl font-semibold text-gray-700">
             {mainTitle}
           </span>
@@ -32,7 +41,7 @@ const MainWrap = ({ style, wrap, mainTitle, subTitle, intro1, intro2, intro3, pa
         </div>
         <Link to={linkTo}>
           <button
-            className={`bg-[#ffffffc2] hover:bg-[#F5634A] text-[#00647bbd] hover:text-white w-full h-auto rounded-full shadow py-5 mt-12 mb-24 ${paddingX}`}>
+            className={`bg-[#ffffffc2] hover:bg-[#F5634A] text-[#00647bbd] hover:text-white w-full h-auto rounded-xl shadow py-5 mt-12 mb-24 ${paddingX}`}>
             <span className="Showcard-Gothic text-3xl font-semibold px-2">
               Go! {subTitle}!
             </span>
