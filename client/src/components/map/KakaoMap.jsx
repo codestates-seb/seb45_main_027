@@ -184,7 +184,7 @@ const KakaoMap = ({ viewportWidth }) => {
       ></div>
       <div
         id="search-results"
-        className="mt-4  overflow-y-auto max-h-[300px] rounded-md "
+        className="mt-4  overflow-y-auto max-h-full rounded-md "
       >
         {viewportWidth < 720 && (
           <div className="mb-5 rounded-md p-2">

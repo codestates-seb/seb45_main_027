@@ -14,12 +14,13 @@ const MainSection = ({
   intro3,
   paddingX,
   linkTo,
+  pageImg
 }) => {
   return (
     <div id={id}>
       <Background
         mainclassName=""
-        divclassName=""
+        divclassName="items-center justify-around"
         style={{
           background,
           backgroundPosition: "center",
@@ -34,9 +35,10 @@ const MainSection = ({
           intro3={intro3}
           paddingX={paddingX}
           linkTo={linkTo}
+          pageImg={pageImg}
         />
-        </Background>
-        <MainSrogan/>
+      </Background>
+      <MainSrogan />
     </div>
   );
 };

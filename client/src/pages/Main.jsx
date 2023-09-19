@@ -15,6 +15,7 @@ const Main = () => {
       intro3: "회원님의 공간도 자랑할 수 있는!",
       paddingX: "px-[75px]",
       linkTo: "/showroom",
+      pageImg: "asset/FeedPage.png",
     },
     {
       id: "main1",
@@ -27,6 +28,7 @@ const Main = () => {
       intro3: "또 보고 싶은 글은 북마크 할 수 있습니다.",
       paddingX: "px-[140px]",
       linkTo: "/tips",
+      pageImg: "asset/MapPage.png",
     },
     {
       id: "main2",
@@ -39,6 +41,7 @@ const Main = () => {
       intro3: "주소와 연락처를 제공해 드립니다.",
       paddingX: "px-[148px]",
       linkTo: "/map",
+      pageImg: "asset/MapPage.png",
     },
   ];
 
