@@ -27,7 +27,7 @@ const MyInfoShowroom = ({
       url = `/tip/${itemId}`;
     }
     const confirmDeletion = window.confirm(
-      `${itemId} ${label}Are you sure you want to delete this post? This action cannot be undone.`
+      `정말 삭제하시겠습니까? 한 번 삭제된 게시물은 복구할 수 없습니다.`
     );
     if (confirmDeletion) {
       try {
