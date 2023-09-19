@@ -1,15 +1,20 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import api from "../../../common/tokens";
 
 const CommentInput = ({ feedData, setFeedData }) => {
+  const memberId = localStorage.getItem("memberId");
   const profileImg = localStorage.getItem("profileImg");
   const { feedId } = useParams(); // 게시물 번호
   // 입력할 댓글
   const [inputComment, setInputComment] = useState("");
   // 입력한 댓글
   const [enterComment, setEnterComment] = useState([]);
+  const defalutImage =
+    "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png";
+
+  const navigate = useNavigate();
 
   //POST 요청
   const postComment = async () => {
@@ -70,24 +75,38 @@ const CommentInput = ({ feedData, setFeedData }) => {
       </div>
       <div className="flex w-full mt-4">
         <img
-          src={profileImg}
+          src={profileImg ? profileImg : defalutImage}
           alt="profileImg"
           className="w-10 h-10 mr-2.5 rounded-full object-cover"
         />
-        <div className="flex w-full relative">
-          <input
-            className="h-full w-full ml-4 border rounded-lg pl-4"
-            value={inputComment}
-            onKeyDown={handleEnter}
-            onChange={(e) => setInputComment(e.target.value)}
-          />
-          <button
-            className="absolute right-0 top-1/4 pr-4"
-            onClick={postComment}
+        {memberId ? (
+          <div className="flex w-full relative">
+            <input
+              className="h-full w-full ml-4 border rounded-lg pl-4"
+              value={inputComment}
+              onKeyDown={handleEnter}
+              onChange={(e) => setInputComment(e.target.value)}
+            />
+            <button
+              className="absolute right-0 top-1/4 pr-4"
+              onClick={postComment}
+            >
+              입력
+            </button>
+          </div>
+        ) : (
+          <div
+            className="flex w-full relative"
+            onClick={() => navigate("/login")}
           >
-            입력
-          </button>
-        </div>
+            <input
+              className="h-full w-full ml-4 border rounded-lg pl-4"
+              disabled={true}
+              placeholder="로그인이 필요한 서비스 입니다."
+              onClick={() => navigate("/login")}
+            />
+          </div>
+        )}
       </div>
     </>
   );

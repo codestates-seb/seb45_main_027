@@ -58,7 +58,8 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                     onClick={() => {
                       navigate(`/myinfo/${comment.memberId}`);
                     }}
-                    className="text-lg font-semibold cursor-pointer">
+                    className="text-lg font-semibold cursor-pointer"
+                  >
                     {comment.nickname}
                   </span>
 
@@ -76,23 +77,28 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                     <span className="mr-2.5">
                       {comment.createdDateTime.split("T")[0]}
                     </span>
-                    {/* 좋아요 */}
-                    <CommentLikeTips feedData={feedData} comment={comment} />
+                    {memberId /* 좋아요 */ && (
+                      <CommentLikeTips feedData={feedData} comment={comment} />
+                    )}
                     {/* 답글 */}
-                    <div key={comment.tipReplyId} className="flex flex-col">
-                      <button
-                        className="mx-2 hover:font-semibold"
-                        onClick={() =>
-                          setShowReplyBox((prev) => ({
-                            ...prev,
-                            [comment.tipReplyId]: !prev[comment.tipReplyId],
-                          }))
-                        }>
-                        답글 달기
-                      </button>
-                    </div>
-                    {/* 수정 */}
+                    {memberId && (
+                      <div key={comment.tipReplyId} className="flex flex-col">
+                        <button
+                          className="mx-2 hover:font-semibold"
+                          onClick={() =>
+                            setShowReplyBox((prev) => ({
+                              ...prev,
+                              [comment.tipReplyId]: !prev[comment.tipReplyId],
+                            }))
+                          }
+                        >
+                          답글 달기
+                        </button>
+                      </div>
+                    )}
+
                     {memberId == comment.memberId && (
+                      /* 수정 */
                       <button
                         className="mx-2 hover:font-semibold"
                         onClick={() => {
@@ -100,10 +106,12 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                             ...editComent,
                             [comment.tipReplyId]: true,
                           });
-                        }}>
+                        }}
+                      >
                         수정하기
                       </button>
                     )}
+
                     {/* 삭제 */}
                     {memberId == comment.memberId && (
                       <CommentDeleteTips

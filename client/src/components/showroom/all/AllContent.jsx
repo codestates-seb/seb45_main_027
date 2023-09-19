@@ -9,7 +9,8 @@ const AllContent = ({ showroomData, setShowroomData }) => {
   console.log(showroomData);
 
   const navigate = useNavigate();
-  const defalutImage = localStorage.getItem("profileImg");
+  const defalutImage =
+    "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png";
 
   // useEffect(() => {
   //   // showroomData가 변경될 때마다 bookmarkCount 상태를 업데이트
