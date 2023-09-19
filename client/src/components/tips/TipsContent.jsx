@@ -57,20 +57,17 @@ const TipsContent = ({ tipData, setTipData }) => {
     navigate(`/tips/${tipId}`);
   };
   return (
-    <div className="flex-col m-4">
-      <div className="flex justify-between flex-wrap">
+    <div>
+      <div className="w-full h-full my-5 align-between sm:grid grid-cols-2 md:grid-cols-3 lg:grid-rows-4 gap-12 px-8">
         {tipData.map((item, idx) => (
-          <div
-            key={idx}
-            className="flex-col mx-3 mb-3 w-full sm:w-[45%] md:w-[30%] lg:w-[23%] h-full"
-          >
+          <div key={idx} className="mb-3 h-full">
             <div className="relative">
               <img
                 // 이미지 주소 바꿔줘야함
                 // src="/asset/image.png"
                 src={item.coverPhoto}
                 alt="tipsimg"
-                className="aspectRatioImage_1_1 rounded-md cursor-pointer"
+                className="h-full aspectRatioImage_1_1 rounded-md cursor-pointer"
                 onClick={() => handleTipClick(item.tipId)}
               />
               <p>

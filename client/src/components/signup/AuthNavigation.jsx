@@ -14,14 +14,16 @@ const AuthNavigation = ({ path }) => {
       {path === "login" && (
         <>
           <div>
-            <span onClick={toggleResetPassword} className="cursor-pointer">
+            <span
+              onClick={toggleResetPassword}
+              className="cursor-pointer hover:font-semibold">
               Forgot password?
             </span>
           </div>
           {showResetPassword && <ResetPassword />}
         </>
       )}
-      <div className="flex flex-row text-[#555] my-5">
+      <div className="flex flex-row text-[#555] mb-10 mt-2">
         <div className="mr-2">
           {path === "signup"
             ? "Already have an account?"
@@ -29,15 +31,16 @@ const AuthNavigation = ({ path }) => {
         </div>
         {path === "signup" ? (
           <Link to="/login">
-            <div className="text-red-600 ">Login</div>
+            <div className="text-red-600 hover:font-semibold">Login</div>
           </Link>
         ) : (
           <Link to="/signup">
-            <div className="text-red-600 ">Sign Up</div>
+            <div className="mx-2 text-red-600 hover:font-semibold">
+              Sign Up
+            </div>
           </Link>
         )}
       </div>
-      <div className="text-[#555]">or</div>
     </>
   );
 };
