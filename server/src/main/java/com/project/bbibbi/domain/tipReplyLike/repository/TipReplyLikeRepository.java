@@ -17,4 +17,9 @@ public interface TipReplyLikeRepository extends JpaRepository<TipReplyLike, Long
 
     @Query(value = "select count(*) from tip_reply_like where tip_reply_id = :tipReplyId", nativeQuery = true)
     Integer replyLikeCount(@Param("tipReplyId") Long tipReplyId);
+
+    @Modifying
+    @Query(value = "delete from tip_reply_like where tip_reply_id = :tipReplyId ", nativeQuery = true)
+    void deleteByTipReplyId(@Param("tipReplyId") Long tipReplyId);
+
 }

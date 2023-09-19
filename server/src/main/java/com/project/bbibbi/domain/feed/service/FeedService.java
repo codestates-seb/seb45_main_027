@@ -569,6 +569,12 @@ public class FeedService {
 
     public void deleteFeed(Long feedId){
         Feed feed = findVerifiedFeed(feedId);
+
+        feedLikeRepository.deleteByFeedId(feedId);
+
+        feedBookMarkRepository.deleteByFeedId(feedId);
+
+
         feedRepository.delete(feed);
     }
 

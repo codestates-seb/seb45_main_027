@@ -128,6 +128,8 @@ public class FeedReplyService {
             FeedReply reply = feedReplyRepository.findById(replyId)
                     .orElseThrow(() -> new FeedReplyNotFoundException("댓글이 존재하지 않습니다."));
 
+            feedReplyLikeRepository.deleteByFeedReplyId(replyId);
+
             // 댓글을 삭제합니다.
             feedReplyRepository.deleteById(replyId);
         }

@@ -20,6 +20,10 @@ public interface FeedBookMarkRepository extends JpaRepository<FeedBookMark, Long
     @Query(value = "select count(*) from feed_book_mark where feed_id = :feedId", nativeQuery = true)
     Integer feedBookMarkCount(@Param("feedId") Long feedId);
 
+    @Modifying
+    @Query(value = "delete from feed_book_mark where feed_id = :feedId ", nativeQuery = true)
+    void deleteByFeedId(@Param("feedId") Long feedId);
+
 
 //    Integer findByFeedIdAndMemberId(Long feedId, Long memberId);
 

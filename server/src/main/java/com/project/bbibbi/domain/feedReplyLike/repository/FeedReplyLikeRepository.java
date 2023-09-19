@@ -23,4 +23,9 @@ public interface FeedReplyLikeRepository extends JpaRepository<FeedReplyLike, Lo
     @Query(value = "SELECT COUNT(*) FROM feed_reply_like WHERE feed_reply_id = :feedReplyId",
             nativeQuery = true)
     Integer feedReplyLikeCount(@Param("feedReplyId") Long feedReplyId);
+
+    @Modifying
+    @Query(value = "delete from feed_reply_like where feed_reply_id = :feedReplyId ", nativeQuery = true)
+    void deleteByFeedReplyId(@Param("feedReplyId") Long feedReplyId);
+
 };

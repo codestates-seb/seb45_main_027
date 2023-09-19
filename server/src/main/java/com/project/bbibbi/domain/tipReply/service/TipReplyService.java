@@ -115,6 +115,8 @@ public class TipReplyService {
         TipReply reply = tipReplyRepository.findById(replyId)
                 .orElseThrow(TipReplyNotFoundException::new);
 
+        tipReplyLikeRepository.deleteByTipReplyId(replyId);
+
         // 댓글을 삭제합니다.
         tipReplyRepository.deleteById(replyId);
     }

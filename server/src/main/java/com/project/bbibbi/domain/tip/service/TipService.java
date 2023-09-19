@@ -406,6 +406,10 @@ public class TipService {
     public void deleteTip(Long tipId) {
         Tip tip = findVerifiedTip(tipId);
 
+        tipLikeRepository.deleteByTipId(tipId);
+
+        tipBookmarkRepository.deleteByTipId(tipId);
+
         tipRepository.delete(tip);
     }
 

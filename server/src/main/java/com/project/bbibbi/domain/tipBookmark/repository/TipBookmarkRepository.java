@@ -17,4 +17,9 @@ public interface TipBookmarkRepository extends JpaRepository<TipBookmark, Long> 
 
     @Query(value = "select count(*) from tip_bookmark where tip_id = :tipId", nativeQuery = true)
     Integer tipBookmarkCount(@Param("tipId") Long tipId);
+
+    @Modifying
+    @Query(value = "delete from tip_bookmark where tip_id = :tipId ", nativeQuery = true)
+    void deleteByTipId(@Param("tipId") Long tipId);
+
 }
