@@ -14,6 +14,7 @@ const MainSection = ({
   intro3,
   paddingX,
   linkTo,
+  pageImg
 }) => {
   return (
     <div id={id}>
@@ -34,6 +35,7 @@ const MainSection = ({
           intro3={intro3}
           paddingX={paddingX}
           linkTo={linkTo}
+          pageImg={pageImg}
         />
       </Background>
       <MainSrogan />

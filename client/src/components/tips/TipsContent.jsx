@@ -62,7 +62,7 @@ const TipsContent = ({ tipData, setTipData }) => {
         {tipData.map((item, idx) => (
           <div
             key={idx}
-            className="flex-col mx-3 mb-3 w-full sm:w-[45%] md:w-[30%] lg:w-[23%] h-[20%]"
+            className="flex-col mx-3 mb-3 w-full sm:w-[45%] md:w-[30%] lg:w-[23%] h-full"
           >
             <div className="relative">
               <img

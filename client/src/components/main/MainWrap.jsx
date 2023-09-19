@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const MainWrap = ({ style, wrap, mainTitle, subTitle, intro1, intro2, intro3, paddingX, linkTo }) => {
+const MainWrap = ({ style, pageImg, wrap, mainTitle, subTitle, intro1, intro2, intro3, paddingX, linkTo }) => {
   // intro 텍스트를 배열에 담습니다.
   const texts = [intro1, intro2, intro3];
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -51,7 +51,7 @@ const MainWrap = ({ style, wrap, mainTitle, subTitle, intro1, intro2, intro3, pa
         </div>
       </div>
       <div className="hidden sm:flex mb-16 animate__animated animate__zoomInRight animate__slow">
-        <img className="h-[650px]" src="/asset/MapPage.png" alt="맵 미리보기" />
+        <img className="h-[650px]" src={pageImg} alt="바로가기" />
       </div>
     </>
   );
