@@ -6,7 +6,11 @@ const HeaderOff = () => {
 
   const handleLoginClick = () => {
     // 현재 경로를 로컬 스토리지에 저장
-    localStorage.setItem("prevPath", window.location.pathname);
+    if (window.location.pathname == "/signup") {
+      localStorage.setItem("prevPath", "/");
+    } else {
+      localStorage.setItem("prevPath", window.location.pathname);
+    }
     navigate("/login");
   };
 

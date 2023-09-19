@@ -198,11 +198,13 @@ const ShowRoom = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center h-auto">
-        <img
-          src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/loading.gif"
-          alt="로딩중"
-        />
+      <div className="bg-[#fdfdfe] w-screen h-[810px]">
+        <div className="flex justify-center h-auto">
+          <img
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/loading.gif"
+            alt="로딩중"
+          />
+        </div>
       </div>
     );
   }
