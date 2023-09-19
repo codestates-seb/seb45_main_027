@@ -21,7 +21,7 @@ const MyInfoPost = ({
       <div className="relative">
         <img
           className="
-          rounded-lg object-cover 
+          rounded-lg object-cover cursor-pointer
           w-[170px] h-[130px] 
           sm:w-[170px] sm:h-[145px] 
           md:w-[110px] md:h-[100px] 
@@ -34,7 +34,7 @@ const MyInfoPost = ({
       </div>
       <div className="flex flex-col items-center md:mb-4">
         <div
-          className="text-lg font-semibold p-2 max-w-[130px] lg:max-w-[150px] truncate overflow-hidden"
+          className="text-lg font-semibold p-2 max-w-[130px] lg:max-w-[150px] truncate overflow-hidden cursor-pointer"
           onClick={() => postNavigate(itemId, label)}
         >
           {title}
