@@ -170,7 +170,7 @@ const KakaoMap = ({ viewportWidth }) => {
   // };
 
   return (
-    <div className="flex flex-col relative  rounded-md">
+    <div className="flex flex-col relative rounded-md">
       <SearchBar
         returnToCurrentLocation={fetchCurrentPositionAndInitializeMap}
         onSearch={handleSearch}
@@ -180,15 +180,15 @@ const KakaoMap = ({ viewportWidth }) => {
       />
       <div
         id="map"
-        className="w-full h-[500px] sm:h-[800px]  shadow-[0px_0px_3px_rgba(3,102,214,0.3)]"
+        className="w-full h-[360px] sm:h-[800px]  shadow-[0px_0px_3px_rgba(3,102,214,0.3)]"
       ></div>
       <div
         id="search-results"
-        className="mt-4  overflow-y-auto max-h-[300px]  rounded-md "
+        className="mt-4  overflow-y-auto max-h-[300px] rounded-md "
       >
         {viewportWidth < 720 && (
-          <div className="mb-5  rounded-md p-4">
-            <h2 className="text-2xl text-[#f5634a] font-semibold  mb-5">
+          <div className="mb-5 rounded-md p-2">
+            <h2 className="text-2xl text-[#f5634a] font-semibold mb-5">
               업체목록
             </h2>
             {searchResults.map((result, index) => (
