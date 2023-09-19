@@ -6,7 +6,7 @@ const OauthLayout = ({ path }) => {
   const params = new URLSearchParams(window.location.search);
   const code = params.get("code");
   
-  console.log("Code from URL:", code);//확인용 추후 삭제
+ // console.log("Code from URL:", code);//확인용 추후 삭제
 
   const kakaoRestApiKey = process.env.REACT_APP_KAKAO_REST_API_KEY;
   const kakaoRedirectUrl = `http://localhost:3000/${path}`;//s3주소로 업데이트 해야됨

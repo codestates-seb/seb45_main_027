@@ -26,7 +26,7 @@ const MyInfoLayout = () => {
       });
 
       setProfileData(response.data.data);
-      console.log("profileData: ", profileData);
+      //console.log("profileData: ", profileData);
     } catch (err) {
       console.log("Error: ", err);
     }

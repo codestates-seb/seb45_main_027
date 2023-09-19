@@ -13,7 +13,7 @@ const UserInfoFollow = ({ followingList, followersList, fetchFollowData }) => {
   };
 
   return (
-    <div className="z-50">
+    <div className="">
       {followingList && followersList && (
         <div className="
         flex flex-row justify-end md:justify-center 
