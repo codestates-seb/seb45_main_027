@@ -42,7 +42,12 @@ export function AuthProvider({ children }) {
       );
 
       toast.dismiss();
-      navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
+      if (prevPath === "/signup") {
+        navigate("/");
+      } else {
+        navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
+      }
+      localStorage.removeItem(prevPath); //초기화
     } catch (error) {
       //불일치시 401에러
       if (error.response.status === 401) {
@@ -73,11 +78,8 @@ export function AuthProvider({ children }) {
         localStorage.setItem("profileImg", response.data.profileImg);
       }
 
-      console.log(response.data);
-
       navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
     } catch (error) {
-      console.log(code);
       throw error;
     }
   }
