@@ -67,7 +67,12 @@ public interface TipMapper {
             List<Tag> tags = new ArrayList<>();
             for( String s : tipPostDto.getTagContents()){
                 Tag tag = new Tag();
-                tag.setTagContent(s.substring(1));
+                if(s.toCharArray()[0] == '#') {
+                    tag.setTagContent(s.substring(1));
+                }
+                else {
+                    tag.setTagContent(s);
+                }
                 tag.setTip(tip);
                 tags.add(tag);
             }
@@ -117,7 +122,12 @@ public interface TipMapper {
             List<Tag> tags = new ArrayList<>();
             for( String s : tipPatchDto.getTagContents()){
                 Tag tag = new Tag();
-                tag.setTagContent(s.substring(1));
+                if(s.toCharArray()[0] == '#') {
+                    tag.setTagContent(s.substring(1));
+                }
+                else {
+                    tag.setTagContent(s);
+                }
                 tag.setTip(tip);
                 tags.add(tag);
             }

@@ -386,6 +386,39 @@ public class FeedService {
 
         }
 
+        for(int i = 0; i < selectedFeeds.size(); i++){
+            Feed feed = selectedFeeds.get(i);
+
+            String originalString = feed.getContent();
+
+            StringBuilder result = new StringBuilder();
+            boolean insideTag = false;
+
+            for(char c : originalString.toCharArray()){
+                if(c == '<'){
+                    insideTag = true;
+                }
+                else if(c == '>'){
+                    insideTag = false;
+                }
+                else if(!insideTag){
+                    result.append(c);
+                }
+            }
+
+            String finalString = result.toString();
+
+            String parameter = searchString;
+
+            if(!finalString.contains(parameter)){
+                selectedFeeds.remove(i);
+                i--;
+            }
+
+        }
+
+
+
         return selectedFeeds;
 
     }
