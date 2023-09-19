@@ -77,22 +77,32 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                     <span className="mr-2.5">
                       {comment.createdDateTime.split("T")[0]}
                     </span>
-                    {/* 좋아요 */}
-                    <CommentLike feedData={feedData} comment={comment} />
-                    {/* 답글 */}
-                    <div key={comment.feedReplyId} className="flex flex-col">
-                      <button
-                        className="mx-2 hover:font-semibold"
-                        onClick={() =>
-                          setShowReplyBox((prev) => ({
-                            ...prev,
-                            [comment.feedReplyId]: !prev[comment.feedReplyId],
-                          }))
-                        }
-                      >
-                        답글 달기
-                      </button>
-                    </div>
+                    {memberId && (
+                      <>
+                        {/* 좋아요 */}
+                        <CommentLike feedData={feedData} comment={comment} />
+
+                        {/* 답글 */}
+                        <div
+                          key={comment.feedReplyId}
+                          className="flex flex-col"
+                        >
+                          <button
+                            className="mx-2 hover:font-semibold"
+                            onClick={() =>
+                              setShowReplyBox((prev) => ({
+                                ...prev,
+                                [comment.feedReplyId]:
+                                  !prev[comment.feedReplyId],
+                              }))
+                            }
+                          >
+                            답글 달기
+                          </button>
+                        </div>
+                      </>
+                    )}
+
                     {/* 수정 */}
                     {memberId == comment.memberId && (
                       <button
@@ -123,6 +133,7 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                       comment={comment}
                       feedData={feedData}
                       setFeedData={setFeedData}
+                      setShowReplyBox={setShowReplyBox}
                     />
                   )}
                 </div>

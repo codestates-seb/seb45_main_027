@@ -120,7 +120,7 @@ const ShowRoom = () => {
   // IntersectionObserver를 사용하여 스크롤 감지
   useEffect(() => {
     // IntersectionObserver를 생성하고 등록
-    if (!isLastPage) {
+    if (!isLastPage && !loading && isFirstPageRendered.current == true) {
       // isLast가 false일 때만 IntersectionObserver 등록
       const newObserver = new IntersectionObserver(
         ([entry]) => {
@@ -157,6 +157,7 @@ const ShowRoom = () => {
       if (res.data.isLast === false) {
         setShowroomData((prevData) => [...prevData, ...res.data.data]);
       } else {
+        setShowroomData((prevData) => [...prevData, ...res.data.data]);
         // 마지막 페이지 설정
         setIsLastPage(res.data.isLast);
       }

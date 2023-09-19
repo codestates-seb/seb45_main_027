@@ -35,7 +35,6 @@ const Tips = () => {
 
       api(apiOptions)
         .then((res) => {
-          // 직접 res.data.data를 사용하여 setTipData 호출
           setTipData(res.data);
         })
         .catch((error) => {
@@ -61,6 +60,7 @@ const Tips = () => {
       if (isFirstPageRendered.current === false) {
         setTipData(response.data.data);
         isFirstPageRendered.current = true;
+        setIsLastPage(response.data.isLast);
       } else {
         setTipData((prevData) => [...prevData, ...response.data]);
       }
@@ -93,15 +93,15 @@ const Tips = () => {
 
   // IntersectionObserver를 사용하여 스크롤 감지
   useEffect(() => {
-    if (!location.state && !isLastPage) {
-      // Check if location.state is falsy
+    if (!isLastPage && !loading && isFirstPageRendered.current == true) {
       const newObserver = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting && !loading) {
+          if (entry.isIntersecting) {
             // 페이지 번호 증가
             page.current += 1;
             const updatedUrl = `/tip${isSearch}${searchKeyworld}?page=${page.current}`;
             loadMoreData(updatedUrl); // 새로운 페이지 데이터를 불러오는 함수 호출
+            console.log("무한스크롤");
           }
         },
         {
@@ -109,27 +109,31 @@ const Tips = () => {
         }
       );
 
+      // 현재 컴포넌트의 target 요소를 설정합니다.
       if (target.current) {
         newObserver.observe(target.current);
       }
 
+      // 컴포넌트가 언마운트될 때 Observer를 해제합니다.
       return () => {
         if (target.current) {
           newObserver.unobserve(target.current);
         }
       };
     }
-  }, [location.state, loading, isLastPage, searchKeyworld]);
+  }, [location.state, loading, isLastPage, searchKeyworld, tipData]);
 
   // 새로운 페이지 데이터를 불러오는 함수
   const loadMoreData = async (url) => {
     try {
       toast.loading("로딩중...");
+      console.log("무한스크롤2");
       const res = await api({ ...configParams, url });
       if (res.data.isLast === false) {
         // 기존 데이터와 새로운 데이터를 병합
         setTipData((prevData) => [...prevData, ...res.data.data]);
       } else {
+        setTipData((prevData) => [...prevData, ...res.data.data]);
         setIsLastPage(res.data.isLast);
       }
 
@@ -189,9 +193,8 @@ const Tips = () => {
           <TipsContent tipData={tipData} setTipData={setTipData} />
         </div>
       </Background>
-
+      <div className="infinite-scroll w-full " ref={target}></div>
       {viewportWidth < 720 && <FooterMobile />}
-      <div className="infinite-scroll" ref={target}></div>
     </>
   );
 };

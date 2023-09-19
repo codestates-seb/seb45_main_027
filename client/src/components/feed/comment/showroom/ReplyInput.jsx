@@ -3,13 +3,15 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import api from "../../../common/tokens";
 
-const ReplyInput = ({ comment, feedData, setFeedData }) => {
+const ReplyInput = ({ comment, feedData, setFeedData, setShowReplyBox }) => {
   const { feedId } = useParams();
   const profileImg = localStorage.getItem("profileImg");
   const comments = comment.comments;
   const commentId = comment.feedReplyId;
   const [inputReply, setInputReply] = useState("");
   const [enterReply, setEnterReply] = useState([]);
+  const defalutImage =
+    "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png";
 
   const postReply = async (feedReplyId) => {
     const configParams = {
@@ -59,9 +61,16 @@ const ReplyInput = ({ comment, feedData, setFeedData }) => {
     }
   };
 
-  const handleEnter = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       postReply(comment.feedReplyId);
+    }
+    // ESC 키를 눌렀을 때 인풋 창을 닫음
+    if (e.key === "Escape") {
+      setShowReplyBox((prevShowReplyBox) => ({
+        ...prevShowReplyBox,
+        [comment.feedReplyId]: false,
+      }));
     }
   };
 
@@ -75,7 +84,7 @@ const ReplyInput = ({ comment, feedData, setFeedData }) => {
   return (
     <div className="w-full flex mt-6">
       <img
-        src={profileImg}
+        src={profileImg ? profileImg : defalutImage}
         className="w-10 h-10 mr-2.5 rounded-full object-cover"
         alt="유저사진"
       />
@@ -83,7 +92,7 @@ const ReplyInput = ({ comment, feedData, setFeedData }) => {
         <input
           className="h-full w-full ml-4 border rounded-lg pl-4"
           value={inputReply}
-          onKeyDown={handleEnter}
+          onKeyDown={handleKeyDown}
           onChange={(e) => setInputReply(e.target.value)}
         />
         <button

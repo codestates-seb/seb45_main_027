@@ -35,8 +35,8 @@ const EditTips = () => {
   const [editorContent, setEditorContent] = useState(""); // Editor 내용을 관리
   const [tags, setTags] = useState([]); // 팁에있는 해시태그 상태!
   const [isEditPage, setIsEditPage] = useState(false); // edit page여부를 확인하는 상태
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const configParams = {
     method: "GET",
     url: `/tip/${tipId}`,
@@ -47,9 +47,12 @@ const EditTips = () => {
   };
 
   const [response, error, loading] = useAxios(configParams);
+
   // 초기 렌더링시 해당 수정글의 정보를 렌더링
+  // 로컬스토리지에 저장값이 있는경우 로컬스토리지 값 우선
   useEffect(() => {
-    if (response) {
+    const savedData = localStorage.getItem("tempSaveTipDataEdit");
+    if (response && !savedData) {
       setEditData(response.data);
       if (editData) {
         setIsEditPage(true);

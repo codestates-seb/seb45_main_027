@@ -1,11 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../common/tokens";
 import { toast } from "react-hot-toast";
 
 const AllContent = ({ showroomData, setShowroomData }) => {
+  const [bookmarkCount, setBookmarkCount] = useState({});
+
+  console.log(showroomData);
+
   const navigate = useNavigate();
-  const defalutImage = localStorage.getItem("profileImg");
+  const defalutImage =
+    "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png";
+
+  // useEffect(() => {
+  //   // showroomData가 변경될 때마다 bookmarkCount 상태를 업데이트
+  //   const newBookmarkCount = {};
+  //   showroomData.forEach((item) => {
+  //     newBookmarkCount[item.feedId] = item.bookMarkCount;
+  //   });
+  //   setBookmarkCount(newBookmarkCount);
+  // }, [showroomData]);
 
   // 북마크 상태를 변경시켜주는 함수
   const toggleBookmark = async (feedId) => {
@@ -37,13 +51,15 @@ const AllContent = ({ showroomData, setShowroomData }) => {
           // feedId가 일치하는 요소가 있다면 bookMarkYn 값을 업데이트
           if (response.data.data.bookMarkYn === true) {
             toast.success("북마크가 등록되었습니다!");
+            updatedShowroomData[updatedItemIndex].bookMarkYn = true;
+            // bookmarkCount 상태를 업데이트
+            updatedShowroomData[updatedItemIndex].bookMarkCount += 1;
           } else {
             toast.success("북마크가 해제되었습니다!");
+            updatedShowroomData[updatedItemIndex].bookMarkYn = false;
+            updatedShowroomData[updatedItemIndex].bookMarkCount -= 1;
           }
-          updatedShowroomData[updatedItemIndex].bookMarkYn =
-            response.data.data.bookMarkYn;
           setShowroomData(updatedShowroomData); // 업데이트된 배열을 상태로 설정합니다.
-          console.log(showroomData);
         }
       }
     } catch (error) {
@@ -67,8 +83,6 @@ const AllContent = ({ showroomData, setShowroomData }) => {
           >
             <div className="relative">
               <img
-                // 이미지 들어오면 수정 **
-                // src="./asset/image.png"
                 src={item.coverPhoto}
                 alt="shroomimg"
                 className="aspectRatioImage_4_3 rounded-md cursor-pointer"
@@ -76,7 +90,6 @@ const AllContent = ({ showroomData, setShowroomData }) => {
               />
               <p>
                 <img
-                  // isBookmarked 변수명 수정요함 **
                   src={
                     item.bookMarkYn
                       ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isBookmarked.png"
@@ -97,8 +110,6 @@ const AllContent = ({ showroomData, setShowroomData }) => {
               </div>
               <div className="flex justify-center items-center mb-3 text-gray-800">
                 <img
-                  // 멤버 이미지 수정 **
-                  // src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Wonho.png"
                   src={
                     item.memberImage == null ? defalutImage : item.memberImage
                   }
@@ -109,7 +120,6 @@ const AllContent = ({ showroomData, setShowroomData }) => {
               </div>
               <div className="flex justify-center text-lg text-gray-500">
                 <div className="mr-10">
-                  {/* 스크랩 수정** */}
                   <span>스크랩 :</span>
                   <span className="ml-1">{item.bookMarkCount}</span>
                 </div>

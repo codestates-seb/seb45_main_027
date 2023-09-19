@@ -50,10 +50,10 @@ const EditShowRoom = () => {
 
   // 초기 렌더링시 해당 수정글의 정보를 렌더링
   useEffect(() => {
+    // 로컬스토리지에 저장값이 있는경우 로컬스토리지 값 우선 ( 동작안함)
     if (response) {
       setEditData(response.data.data);
       if (editData) {
-        setIsEditPage(true);
         setCoverImage(editData.coverPhoto);
         setTitle(editData.title);
         setEditorContent(editData.content);
@@ -87,6 +87,7 @@ const EditShowRoom = () => {
       }
     } else if (error) {
       console.error("Error:", error);
+    } else {
     }
   }, [response, error, editData]);
 
@@ -135,7 +136,6 @@ const EditShowRoom = () => {
         "tempSaveShowroomDataEdit",
         JSON.stringify(tempSaveData)
       );
-
       // 성공메세지
       toast.success("임시저장이 완료되었습니다!");
     } catch (error) {
