@@ -7,7 +7,7 @@ import ReplyInputTips from "./ReplyInputTips";
 import ReplyOutputTips from "./ReplyOutputTips";
 import CommentPaginationTips from "./CommentPaginationTips";
 
-const CommentOutputTips = ({ feedData, setFeedData, children }) => {
+const CommentOutput = ({ feedData, setFeedData, children }) => {
   const memberId = localStorage.getItem("memberId");
   const navigate = useNavigate();
 
@@ -144,4 +144,4 @@ const CommentOutputTips = ({ feedData, setFeedData, children }) => {
   );
 };
 
-export default CommentOutputTips;
+export default CommentOutput;

@@ -68,7 +68,7 @@ const TipsUserTop = ({ feedData, setFollow, follow, res }) => {
           <div className="text-gray-500">{datePart}</div>
         </div>
       </div>
-      {memberId !== frommemberId && (
+      {memberId != frommemberId && (
         <button onClick={toggleFollow}>
           {follow
             ? (

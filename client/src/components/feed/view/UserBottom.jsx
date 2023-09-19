@@ -59,7 +59,7 @@ const UserBottom = ({ feedData, setFollow, follow, res }) => {
               className="text-xl font-semibold cursor-pointer">
               {feedData.nickname}
             </div>
-            {memberId !== frommemberId ?
+            {memberId != frommemberId ?
               ((
                 <div className="flex items-center pr-2 pl-2.5 text-2xl">·</div>
               ),

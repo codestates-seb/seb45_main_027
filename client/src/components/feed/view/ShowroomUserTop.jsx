@@ -111,7 +111,7 @@ const ShowroomUserTop = ({ feedData, setFollow, follow }) => {
           <span>{feedData.locationName}</span>
         </div>
       </div>
-      {memberId !== frommemberId && (
+      {memberId != frommemberId && (
         <button className="h-full p-10" onClick={toggleFollow}>
           {follow ? (
             <div className={`bg-white ${buttonStyle} `}>
