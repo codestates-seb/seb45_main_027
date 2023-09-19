@@ -101,8 +101,6 @@ export function AuthProvider({ children }) {
         localStorage.setItem("profileImg", response.data.profileImg);
       }
 
-      console.log(response.data);
-
       navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
     } catch (error) {
       console.log(code);

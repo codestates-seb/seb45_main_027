@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import useAxios from "../../../hooks/useAxios";
+import api from "../../common/tokens";
 
 const display =
   "flex justify-center items-center w-20 h-20 bg-white border rounded-full shadow my-8 ";
@@ -14,61 +14,82 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
   const [animationBookmark, setAnimationBookmark] = useState("");
 
   const someCondition = feedId ? true : false;
-  // 북마크 상태
-  const [resBookMark, errBookMark, loadingBookMark, fetchBookmarkData] =
-    useAxios(
-      {
-        method: "PATCH",
-        url: someCondition
+  // 좋아요 PATCH 요청 함수
+  const toggleLike = async () => {
+    try {
+      // PATCH 요청 보내기
+      const response = await api.patch(
+        someCondition ? `/feed/${feedId}/feedlike` : `/tip/${tipId}/tiplike`,
+        {},
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "69420",
+          },
+        }
+      );
+
+      // 좋아요 상태 업데이트
+      setLike(response.data.data.likeYn);
+
+      // 애니메이션 클래스 설정
+      setAnimationLike("animate__bounceIn");
+
+      // 애니메이션이 끝난 후 클래스를 제거
+      setTimeout(() => {
+        setAnimationLike("");
+      }, 500); // 애니메이션 지속 시간
+
+      // feedData 상태 업데이트
+      setFeedData((prevFeedData) => ({
+        ...prevFeedData,
+        likeYn: response.data.data.likeYn, // feedData의 likeYn을 업데이트
+        likeCount: response.data.data.likeCount,
+      }));
+    } catch (error) {
+      console.error("좋아요 토글 실패:", error);
+    }
+  };
+
+  // 북마크 PATCH 요청 함수
+  const toggleBookmark = async () => {
+    try {
+      // PATCH 요청 보내기
+      const response = await api.patch(
+        someCondition
           ? `/feed/${feedId}/feedBookMark`
           : `/tip/${tipId}/tipbookmark`,
-        headers: {
-          "ngrok-skip-browser-warning": "69420",
-        },
-      },
-      false
-    );
+        {},
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "69420",
+          },
+        }
+      );
 
-  // 북마크
-  const toggleBookmark = () => {
-    fetchBookmarkData();
-    setBookmark(!bookmark);
-    // 애니메이션 클래스 설정
-  setAnimationBookmark("animate__bounceIn");
+      // 북마크 상태 업데이트
+      setBookmark(
+        response.data.data.bookMarkYn || response.data.data.bookmarkYn
+      );
 
-  // 애니메이션이 끝난 후 클래스를 제거
-  setTimeout(() => {
-    setAnimationBookmark("");
-  }, 500);  // 애니메이션 지속 시간
+      // 애니메이션 클래스 설정
+      setAnimationBookmark("animate__bounceIn");
+
+      // 애니메이션이 끝난 후 클래스를 제거
+      setTimeout(() => {
+        setAnimationBookmark("");
+      }, 500); // 애니메이션 지속 시간
+
+      // feedData 상태 업데이트
+      setFeedData((prevFeedData) => ({
+        ...prevFeedData,
+        bookMarkYn: response.data.data.bookMarkYn, // feedData의 bookMarkYn을 업데이트
+        bookmarkYn: response.data.data.bookmarkYn, // feedData의 bookmarkYn을 업데이트
+        bookMarkCount: response.data.data.bookMarkCount,
+      }));
+    } catch (error) {
+      console.error("북마크 토글 실패:", error);
+    }
   };
-
-  // 좋아요
-  const toggleLike = () => {
-    fetchLikeData();
-    setLike(!like);
-    setAnimationLike("animate__bounceIn");
-
-    // 애니메이션이 끝난 후 클래스를 제거
-    setTimeout(() => {
-      setAnimationLike("");
-    }, 500); // 애니메이션 지속 시간
-  };
-
-  // 좋아요 상태
-  const [resLike, errLike, loadingLike, fetchLikeData] = useAxios(
-    {
-      method: "PATCH",
-      url: someCondition
-        ? `/feed/${feedId}/feedlike`
-        : `/tip/${tipId}/tiplike`,
-      headers: {
-        "ngrok-skip-browser-warning": "69420",
-      },
-    },
-    false
-  );
-
-  
 
   // [좋아요/북마크] 받아온 요청 상태 저장
   useEffect(() => {
@@ -77,7 +98,6 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
       setLike(feedData.likeYn);
     }
   }, [feedData]);
-
 
   // 댓글 스크롤이동
   const scrollToComments = () => {
@@ -97,8 +117,6 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
       });
   };
 
-  
-  
   return (
     <div className="hidden md:flex flex-col w-max h-0 sticky top-48 float-right mr-20 z-50">
       {/* 좋아요 */}
