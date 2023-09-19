@@ -22,6 +22,7 @@ public class TipReply extends BaseEntity {
     private Long tipReplyId;
 
     @Column(nullable = false)
+    @Lob
     private String content;
 
     @ManyToOne

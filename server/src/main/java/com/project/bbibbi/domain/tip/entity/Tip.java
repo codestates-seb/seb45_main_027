@@ -30,6 +30,7 @@ public class Tip extends BaseEntity {
     private String coverPhoto;
     
     @Column(nullable = false)
+    @Lob
     private String content;
 
     @Column
