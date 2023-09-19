@@ -14,11 +14,12 @@ const ViewPoint = ({ feedData }) => {
     // feedData prop이 변경될 때 상태를 업데이트
     setLikeCount(feedData.likeCount);
     setBookMarkCount(
-      feedData.bookMarkCount || feedData.bookmarkCount || feedData.bookmarkCount
+      feedData.bookMarkCount ? feedData.bookmarkCount : feedData.bookmarkCount
     );
     setRepliesCount(feedData.repliesCount);
     setViews(feedData.views);
   }, [feedData]);
+  console.log(feedData);
 
   if (!feedData) {
     return null;

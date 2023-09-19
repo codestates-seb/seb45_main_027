@@ -85,6 +85,7 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
         bookMarkYn: response.data.data.bookMarkYn, // feedData의 bookMarkYn을 업데이트
         bookmarkYn: response.data.data.bookmarkYn, // feedData의 bookmarkYn을 업데이트
         bookMarkCount: response.data.data.bookMarkCount,
+        bookmarkCount: response.data.data.bookmarkCount,
       }));
     } catch (error) {
       console.error("북마크 토글 실패:", error);
