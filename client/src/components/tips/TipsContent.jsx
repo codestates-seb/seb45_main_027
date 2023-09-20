@@ -57,11 +57,11 @@ const TipsContent = ({ tipData, setTipData }) => {
     navigate(`/tips/${tipId}`);
   };
   return (
-    <div>
-      <div className="w-full h-full my-5 align-between sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-20 gap-y-4 px-8">
+    <div className="">
+      <div className="w-full h-full my-5 align-between sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-20 gap-y-8 px-8">
         {tipData.map((item, idx) => (
           <div key={idx} className="mb-3 h-full">
-            <div className="relative">
+            <div className="">
               <img
                 // 이미지 주소 바꿔줘야함
                 // src="/asset/image.png"
@@ -70,7 +70,7 @@ const TipsContent = ({ tipData, setTipData }) => {
                 className="h-full aspectRatioImage_1_1 rounded-md cursor-pointer"
                 onClick={() => handleTipClick(item.tipId)}
               />
-              <p>
+              <p className=" relative">
                 <img
                   src={
                     item.bookmarkYn
@@ -78,7 +78,7 @@ const TipsContent = ({ tipData, setTipData }) => {
                       : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark.png"
                   }
                   alt="Bookmark"
-                  className="absolute w-10 h-10 bottom-4 right-4 cursor-pointer"
+                  className=" absolute w-10 h-10 bottom-4 right-4 cursor-pointer"
                   onClick={() => toggleBookmark(item.tipId)}
                 />
               </p>

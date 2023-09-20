@@ -5,12 +5,11 @@ const TipsInfo = ({ handleTipClick, item }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="grid">
+    <div className="h-[100px] flex flex-col justify-between">
       <div
         className="flex justify-center"
-        onClick={() => handleTipClick(item.tipId)}
-      >
-        <span className="text-2xl font-bold my-4">{item.title}</span>
+        onClick={() => handleTipClick(item.tipId)}>
+        <span className="text-2xl font-bold mt-8">{item.title}</span>
       </div>
 
       <div className="flex justify-between text-xl">
@@ -50,8 +49,7 @@ const TipsInfo = ({ handleTipClick, item }) => {
           onClick={() => {
             navigate(`/myinfo/${item.memberId}`);
           }}
-          className="flex items-center text-lg font-semibold text-gray-600 cursor-pointer"
-        >
+          className="flex items-center text-lg font-semibold text-gray-600 cursor-pointer">
           {item.nickname}
         </span>
       </div>

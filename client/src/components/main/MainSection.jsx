@@ -14,13 +14,16 @@ const MainSection = ({
   intro3,
   paddingX,
   linkTo,
-  pageImg
+  pageImg,
+  pageImgStyle,
+  flexWrap,
+  animate,
 }) => {
   return (
     <div id={id}>
       <Background
         mainclassName=""
-        divclassName="items-center justify-around"
+        divclassName={flexWrap}
         style={{
           background,
           backgroundPosition: "center",
@@ -36,6 +39,8 @@ const MainSection = ({
           paddingX={paddingX}
           linkTo={linkTo}
           pageImg={pageImg}
+          pageImgStyle={pageImgStyle}
+          animate={animate}
         />
       </Background>
       <MainSrogan />
