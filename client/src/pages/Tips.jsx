@@ -92,7 +92,12 @@ const Tips = () => {
 
   // IntersectionObserver를 사용하여 스크롤 감지
   useEffect(() => {
-    if (!isLastPage && !loading && isFirstPageRendered.current == true) {
+    if (
+      !isLastPage &&
+      !loading &&
+      isFirstPageRendered.current == true &&
+      isLastPage !== null
+    ) {
       const newObserver = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
@@ -100,7 +105,6 @@ const Tips = () => {
             page.current += 1;
             const updatedUrl = `/tip${isSearch}${searchKeyworld}?page=${page.current}`;
             loadMoreData(updatedUrl); // 새로운 페이지 데이터를 불러오는 함수 호출
-            console.log("무한스크롤");
           }
         },
         {
@@ -126,7 +130,7 @@ const Tips = () => {
   const loadMoreData = async (url) => {
     try {
       toast.loading("로딩중...");
-      console.log("무한스크롤2");
+
       const res = await api({ ...configParams, url });
       if (res.data.isLast === false) {
         // 기존 데이터와 새로운 데이터를 병합
