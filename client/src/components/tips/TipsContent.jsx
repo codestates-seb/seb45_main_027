@@ -69,7 +69,7 @@ const TipsContent = ({ tipData, setTipData }) => {
                 // src="/asset/image.png"
                 src={item.coverPhoto}
                 alt="tipsimg"
-                className="h-full aspectRatioImage_1_1 rounded-md cursor-pointer"
+                className="h-full aspectRatioImage_1_1 rounded-t-md cursor-pointer"
                 onClick={() => handleTipClick(item.tipId)}
               />
               <p className=" relative">
