@@ -85,8 +85,8 @@ const [animatedSection, setAnimatedSection] = useState(null);
 
       setTimeout(() => {
         setIsScrolling(false);
-      }, 500); // <- setTimeout
-    }, 500); // <- debounceTimeout
+      },0); // <- setTimeout
+    }, 250); // <- debounceTimeout
   }
 
   // 지정된 섹션으로 스크롤하는 함수
