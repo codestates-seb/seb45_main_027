@@ -32,8 +32,7 @@ const WriteBtn = ({
         <div className="flex">
           <div className={`${buttonBgColor} text-white ${btn}`}>주제</div>
           <div
-            className={`${buttonBorderColor} ${buttonTextColor} border bg-white ${btn} pt-[1px]`}
-          >
+            className={`${buttonBorderColor} ${buttonTextColor} border bg-white ${btn} pt-[1px]`}>
             {Title}
           </div>
         </div>
@@ -41,18 +40,15 @@ const WriteBtn = ({
       <div
         className={`flex font-semibold ${
           viewportWidth <= 900 ? "justify-evenly w-full" : ""
-        }`}
-      >
+        }`}>
         <button
-          className={`${buttonBorderColor} ${buttonTextColor} border bg-white ${btn}`}
-          onClick={saveToLocalStorage}
-        >
+          className={`${buttonBorderColor} ${buttonTextColor} border bg-white ${btn} hover:bg-opacity-20`}
+          onClick={saveToLocalStorage}>
           임시저장
         </button>
         <button
-          className={`${buttonBgColor} text-white ${btn}`}
-          onClick={handlePublish}
-        >
+          className={`${buttonBgColor} border ${buttonBorderColor} text-white ${btn}  hover:bg-opacity-60`}
+          onClick={handlePublish}>
           {isEditPage ? "수정하기" : "작성하기"}
         </button>
       </div>

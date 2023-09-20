@@ -37,8 +37,7 @@ const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
   return (
     <div className="w-full h-full flex mt-10">
       <div
-        className={`${bgColor} w-full h-[500px] flex flex-col justify-center items-center text-xl rounded-md shadow`}
-      >
+        className={`${bgColor} w-full h-[500px] flex flex-col justify-center items-center text-xl rounded-md shadow`}>
         {coverImage ? (
           <img
             src={coverImage}
@@ -47,7 +46,7 @@ const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
             onClick={handleUpload}
           />
         ) : (
-          <span className="font-semibold text-gray-500 mb-10">
+          <span className="font-semibold text-xl text-gray-500 mb-10">
             추가하기 버튼으로 커버사진을 업로드 해주세요.
           </span>
         )}
@@ -61,9 +60,8 @@ const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
 
         {!coverImage ? (
           <button
-            className={`${btnColor} text-white px-10 py-2 rounded-md shadow mt-10`}
-            onClick={handleUpload}
-          >
+            className={`${btnColor} flex items-center bg-[#F5634A] hover:bg-opacity-60 mx-4 px-8 py-2.5 rounded-md shadow text-xl text-white font-semibold`}
+            onClick={handleUpload}>
             커버사진 추가하기
           </button>
         ) : null}
