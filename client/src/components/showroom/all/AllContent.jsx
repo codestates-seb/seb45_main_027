@@ -136,6 +136,11 @@ const AllContent = ({ showroomData, setShowroomData }) => {
           </div>
         ))}
       </div>
+      {showroomData.length === 0 ? (
+        <div className=" h-full w-full text-center  p-28 text-3xl md:text-4xl text-[#00647B]/90 font-semibold Showcard-Gothic">
+          No Content
+        </div>
+      ) : null}
     </div>
   );
 };

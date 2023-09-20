@@ -57,7 +57,7 @@ const TipsContent = ({ tipData, setTipData }) => {
     navigate(`/tips/${tipId}`);
   };
   return (
-    <div className="">
+    <div className="flex-col items-center justify-center">
       <div className="w-full h-full my-5 align-between sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-20 gap-y-8 px-8">
         {tipData.map((item, idx) => (
           <div key={idx} className="mb-3 h-full">
@@ -87,6 +87,11 @@ const TipsContent = ({ tipData, setTipData }) => {
           </div>
         ))}
       </div>
+      {tipData.length === 0 ? (
+        <div className=" h-full w-full text-center  p-28 text-3xl md:text-4xl text-[#00647B]/90 font-semibold Showcard-Gothic">
+          No Content
+        </div>
+      ) : null}
     </div>
   );
 };
