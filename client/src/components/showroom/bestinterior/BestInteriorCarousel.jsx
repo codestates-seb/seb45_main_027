@@ -71,7 +71,9 @@ const BestInteriorCarousel = ({ viewportWidth, best10Data, setBest10Data }) => {
         }
       }
     } catch (error) {
-      toast.error("북마크 처리에 실패하였습니다.");
+      toast.error("로그인이 필요한 서비스 입니다.");
+      localStorage.setItem("prevPath", window.location.pathname);
+      navigate("/login");
       console.error("북마크 토글 실패:", error);
     }
   };
@@ -92,7 +94,7 @@ const BestInteriorCarousel = ({ viewportWidth, best10Data, setBest10Data }) => {
         className="rounded-xl "
       />
       <p
-        className="absolute w-12 h-12 bottom-0 right-1"
+        className="absolute w-20 h-12 bottom-[1px] right-7"
         onClick={(event) => {
           event.stopPropagation(); // 이벤트캡쳐링 방지
           toggleBookmark(data.feedId);
@@ -105,7 +107,7 @@ const BestInteriorCarousel = ({ viewportWidth, best10Data, setBest10Data }) => {
               : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark.png"
           }
           alt="Bookmark"
-          className="absolute bottom-3 right-7 cursor-pointer"
+          className="absolute cursor-pointer"
           style={{
             width: "30px",
             height: "30px",
