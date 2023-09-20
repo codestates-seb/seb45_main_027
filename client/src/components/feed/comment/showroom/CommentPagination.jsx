@@ -1,34 +1,34 @@
 import React from "react";
 
-const CommentPagination = ({ currentPage, totalPages, onPageChange }) => {
+const CommentPaginationTips = ({ currentPage, totalPages, onPageChange }) => {
   const canGoBack = currentPage > 1;
   const canGoForward = currentPage < totalPages;
 
   return (
-    <div className="flex justify-center items-center mt-10">
+    <div className="flex justify-center mt-10">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={!canGoBack}
-        className={`bg-[#d1d5db] hover:bg-[#e4e4e7] text-white font-bold px-2.5 py-1.5 rounded-lg ${
-          !canGoBack ? "cursor-not-allowed" : ""
-        }`}
-      >
-        Prev
+        className={`bg-[#d1d5db] hover:bg-[#e4e4e7] text-white font-bold py-2 px-4 shadow rounded ${
+          !canGoBack ? "cursor-default" : ""
+        }`}>
+        {"<"}
       </button>
-      <span className="bg-[#0891b2] text-white font-bold px-2.5 py-1.5 mx-4 rounded-lg">
-        {currentPage}
-      </span>
+      <button>
+        <span className="bg-[#0891b2] text-white font-bold py-2 px-4 mx-6 shadow rounded">
+          {currentPage}
+        </span>
+      </button>
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={!canGoForward}
-        className={`bg-[#d1d5db] hover:bg-[#e4e4e7] text-white font-bold px-2.5 py-1.5 rounded-lg ${
-          !canGoForward ? "cursor-not-allowed" : ""
-        }`}
-      >
-        Next
+        className={`bg-[#d1d5db] hover:bg-[#e4e4e7] text-white font-bold py-2 px-4 shadow rounded ${
+          !canGoForward ? "cursor-default" : ""
+        }`}>
+        {">"}
       </button>
     </div>
   );
 };
 
-export default CommentPagination;
+export default CommentPaginationTips;
