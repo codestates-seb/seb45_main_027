@@ -162,7 +162,10 @@ const Tips = () => {
           ...configParams,
           url: `/tip${isSearch}${searchKeyworld}?page=${page.current}`,
         };
+        toast.loading("검색중입니다.");
         const res = await api(updatedConfigParams);
+        toast.dismiss();
+
         setTipData(res.data.data);
         setIsLastPage(res.data.isLast);
         clearInput();
@@ -192,6 +195,7 @@ const Tips = () => {
             inputValue={inputValue}
             handleInputChange={handleInputChange}
             handleSearch={handleSearch}
+            isSearch={isSearch}
           />
           <TipsContent tipData={tipData} setTipData={setTipData} />
         </div>
