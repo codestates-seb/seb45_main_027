@@ -74,7 +74,7 @@ const AllHeaderFilter = ({ handleFilterClick, handleFilterClick2 }) => {
   ];
 
   return (
-    <div className="relative text-xl pl-4 cursor-pointer grid grid-cols-3 gap-1 sm:flex">
+    <div className="relative text-l sm:text-xl pl-4 cursor-pointer grid grid-cols-3 gap-1 sm:flex">
       {filters.map((filter) => (
         <span
           key={filter.key}
