@@ -58,7 +58,7 @@ const TipsContent = ({ tipData, setTipData }) => {
   };
   return (
     <div>
-      <div className="w-full h-full my-5 align-between sm:grid grid-cols-2 md:grid-cols-3 lg:grid-rows-4 gap-12 px-8">
+      <div className="w-full h-full my-5 align-between sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-20 gap-y-4 px-8">
         {tipData.map((item, idx) => (
           <div key={idx} className="mb-3 h-full">
             <div className="relative">

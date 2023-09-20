@@ -159,7 +159,6 @@ const Tips = () => {
           url: `/tip${isSearch}${searchKeyworld}?page=${page.current}`,
         };
         const res = await api(updatedConfigParams);
-        console.log(res);
         setTipData(res.data.data);
         setIsLastPage(res.data.isLast);
         clearInput();
