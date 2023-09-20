@@ -188,7 +188,7 @@ const WriteFormShowroom = ({
           dangerouslySetInnerHTML={{ __html: editorContent }}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className="p-10 m-4 h-full border min-h-[600px] text-md rounded-md shadow text-xl focus:outline-none focus:shadow-xl"></div>
+          className="p-10 m-4 h-full min-h-[600px] text-md rounded-md shadow text-xl focus:outline-none"></div>
       </div>
     </>
   );
