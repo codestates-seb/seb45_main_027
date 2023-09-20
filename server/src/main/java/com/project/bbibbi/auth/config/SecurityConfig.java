@@ -200,7 +200,8 @@ public class SecurityConfig {
                 "http://localhost:3000",
                 "https://bbibbiapp.s3.ap-northeast-2.amazonaws.com",
                 "http://bbibbiapp.s3-website.ap-northeast-2.amazonaws.com",
-                "https://bbibbi.bbibbiapp.click"
+                "https://bbibbi.bbibbiapp.click",
+                "https://bbibbiapp.click"
         ));
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));

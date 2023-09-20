@@ -356,6 +356,8 @@ public class FeedService {
 
         List<Feed> selectedFeeds = feedRepository.findBySearch(searchString, page, size);
 
+        System.out.println("string : "+searchString);
+
         Integer selectedFeedsCount = feedRepository.findBySearchCount(searchString);
         //좋아요 개수
         for(Feed feed : selectedFeeds){
@@ -391,8 +393,12 @@ public class FeedService {
         }
 
         for(int i = 0; i < selectedFeeds.size(); i++){
+
             Feed feed = selectedFeeds.get(i);
 
+            if(feed.getTitle().contains(searchString)){
+                continue;
+            }
             String originalString = feed.getContent();
 
             StringBuilder result = new StringBuilder();
