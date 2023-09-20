@@ -18,7 +18,7 @@ const Main = () => {
       pageImg: "asset/FeedPage.png",
       pageImgStyle: "",
       flexWrap: "items-center justify-around",
-      animate: "animate__animated animate__zoomInRight animate__slow",
+      animate: "animate__animated animate__backInDown animate__slow",
     },
     {
       id: "main1",
@@ -32,9 +32,9 @@ const Main = () => {
       paddingX: "px-[140px]",
       linkTo: "/tips",
       pageImg: "asset/TagPage.png",
-      pageImgStyle: "",
-      flexWrap: "items-center justify-around flex-row-reverse",
-      animate: "animate__animated animate__zoomInLeft animate__slow",
+      pageImgStyle: "h-[500px]",
+      flexWrap: "items-center justify-around flex-row-reverse ",
+      animate: "animate__animated animate__backInLeft animate__slow",
     },
     {
       id: "main2",
@@ -50,7 +50,7 @@ const Main = () => {
       pageImg: "asset/MapPage.png",
       pageImgStyle: "h-[650px]",
       flexWrap: "items-center justify-around",
-      animate: "animate__animated animate__zoomInRight animate__slow",
+      animate: "animate__animated animate__backInRight animate__slow",
     },
   ];
 const [animatedSection, setAnimatedSection] = useState(null);

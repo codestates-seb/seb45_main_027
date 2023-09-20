@@ -18,7 +18,7 @@ const HeaderOff = () => {
     <div className="flex">
       <ul className="flex text-[#F5634A] text-xl font-bold">
         {/* 로그인 */}
-        <li className="flex items-center" onClick={handleLoginClick}>
+        <li className="flex items-center cursor-pointer" onClick={handleLoginClick}>
           <img
             className="flex pr-2.5 h-5"
             src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/vector.png"

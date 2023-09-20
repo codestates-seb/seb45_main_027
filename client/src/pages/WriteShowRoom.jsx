@@ -196,16 +196,16 @@ const WriteShowRoom = () => {
             setEditorContent={setEditorContent}
             DEFAULT_EDITOR_TEXT={DEFAULT_EDITOR_TEXT}
           />
-          <div className="-mt-20 mx-2 pb-4">
-            <WriteBtn
-              saveToLocalStorage={saveToLocalStorage}
-              buttonBgColor="bg-[#00647B]"
-              buttonBorderColor="border-[#00647B]"
-              buttonTextColor="text-[#00647B]"
-              Title="Tips"
-              handlePublish={handlePublish}
-            />
-          </div>
+        </div>
+        <div className="-mt-36 mx-2 pb-40">
+          <WriteBtn
+            saveToLocalStorage={saveToLocalStorage}
+            buttonBgColor="bg-[#F5634A]"
+            buttonBorderColor="border-[#F5634A]"
+            buttonTextColor="text-[#F5634A]"
+            Title="Tips"
+            handlePublish={handlePublish}
+          />
         </div>
       </Background>
     </>

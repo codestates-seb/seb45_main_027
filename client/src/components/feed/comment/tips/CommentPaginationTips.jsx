@@ -5,25 +5,27 @@ const CommentPaginationTips = ({ currentPage, totalPages, onPageChange }) => {
   const canGoForward = currentPage < totalPages;
 
   return (
-    <div className="flex justify-center items-center mt-10">
+    <div className="flex justify-center mt-10">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={!canGoBack}
-        className={`bg-[#d1d5db] hover:bg-[#e4e4e7] text-white font-bold px-2.5 py-1.5 rounded-lg ${
-          !canGoBack ? "cursor-not-allowed" : ""
+        className={`bg-[#d1d5db] hover:bg-[#e4e4e7] text-white font-bold py-2 px-4 shadow rounded ${
+          !canGoBack ? "cursor-default" : ""
         }`}>
-        Prev
+        {"<"}
       </button>
-      <span className="bg-[#0891b2] text-white font-bold px-2.5 py-1.5 mx-4 rounded-lg">
-        {currentPage}
-      </span>
+      <button>
+        <span className="bg-[#0891b2] text-white font-bold py-2 px-4 mx-6 shadow rounded">
+          {currentPage}
+        </span>
+      </button>
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={!canGoForward}
-        className={`bg-[#d1d5db] hover:bg-[#e4e4e7] text-white font-bold px-2.5 py-1.5 rounded-lg ${
-          !canGoForward ? "cursor-not-allowed" : ""
+        className={`bg-[#d1d5db] hover:bg-[#e4e4e7] text-white font-bold py-2 px-4 shadow rounded ${
+          !canGoForward ? "cursor-default" : ""
         }`}>
-        Next
+        {">"}
       </button>
     </div>
   );

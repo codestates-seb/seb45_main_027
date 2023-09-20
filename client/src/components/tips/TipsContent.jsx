@@ -57,17 +57,19 @@ const TipsContent = ({ tipData, setTipData }) => {
     navigate(`/tips/${tipId}`);
   };
   return (
-    <div className="flex-col items-center justify-center">
-      <div className="w-full h-full my-5 align-between sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-20 gap-y-8 px-8">
+    <div className="flex-col items-center justify-center cursor-pointer">
+      <div className="w-full h-full my-5 align-between sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-16 gap-y-12 px-8">
         {tipData.map((item, idx) => (
-          <div key={idx} className="mb-3 h-full">
+          <div
+            key={idx}
+            className=" bg-white bg-opacity-50 hover:bg-white hover:bg-opacity-95 mb-3 h-full rounded-xl shadow-sm">
             <div className="">
               <img
                 // 이미지 주소 바꿔줘야함
                 // src="/asset/image.png"
                 src={item.coverPhoto}
                 alt="tipsimg"
-                className="h-full aspectRatioImage_1_1 rounded-md cursor-pointer"
+                className="h-full aspectRatioImage_1_1 rounded-t-md cursor-pointer"
                 onClick={() => handleTipClick(item.tipId)}
               />
               <p className=" relative">
@@ -78,7 +80,7 @@ const TipsContent = ({ tipData, setTipData }) => {
                       : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark.png"
                   }
                   alt="Bookmark"
-                  className=" absolute w-10 h-10 bottom-4 right-4 cursor-pointer"
+                  className="rounded-t-xl absolute w-10 h-10 bottom-4 right-4 cursor-pointer"
                   onClick={() => toggleBookmark(item.tipId)}
                 />
               </p>
