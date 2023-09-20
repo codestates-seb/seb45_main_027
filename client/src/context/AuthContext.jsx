@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
       );
 
       toast.dismiss();
-      if (prevPath === "/signup") {
+      if (prevPath === "/signup" || prevPath === "/login") {
         navigate("/");
       } else {
         navigate(prevPath || "/"); // 이전 경로가 없으면 홈페이지로 이동
