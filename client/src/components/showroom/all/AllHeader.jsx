@@ -25,8 +25,8 @@ const AllHeader = ({
         />
       </div>
       <div
-        className={`relative flex items-center my-5 ${
-          isMobileView ? "mx-auto pr-5" : ""
+        className={`relative flex items-center ${
+          isMobileView ? "mx-auto pr-5 mt-7" : "my-2"
         }`}
       >
         <img

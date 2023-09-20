@@ -50,7 +50,7 @@ const roomInfo = [
 
 const RoomInfoFilter = ({ handleFilterClick }) => {
   return (
-    <div className="absolute top-20 sm:top-12 left-5 grid grid-cols-2 gap-1 z-10 sm:flex min-w-max py-2 text-gray-700 font-semibold bg-[#ffffff7a] rounded-md shadow">
+    <div className="absolute top-12 sm:top-12 left-5 grid sm:grid-cols-2 grid-cols-3 gap-1 z-10 sm:flex min-w-max py-1 text-gray-700 font-semibold sm:bg-[#ffffffd6] bg-[#ffffff] rounded-md shadow">
       {roomInfo.map((room, index) => (
         <button
           key={index}

@@ -2,7 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import PhotoTagging from "./PhotoTagging";
 import ImageEditGuide from "./ImageEditGuide";
 import axios from "axios";
-import { FaBold, FaItalic, FaUnderline, FaStrikethrough } from "react-icons/fa";
+import {
+  FaBold,
+  FaItalic,
+  FaUnderline,
+  FaStrikethrough,
+  FaTrashAlt,
+} from "react-icons/fa";
+import { LuImageOff } from "react-icons/lu";
 
 const WriteFormShowroom = ({
   editorContent,
@@ -111,18 +118,13 @@ const WriteFormShowroom = ({
           className="hidden"
           onChange={handleImageUpload}
         />
-        <button
-          onClick={handlePost}
-          className="p-2 border-[1px] mx-2 rounded-md"
-        >
-          이미지 등록
-        </button>
-        <button
+        <LuImageOff size={"25px"} color="gray"></LuImageOff>
+        {/* <button
           onClick={handleDeleteImageAndTags}
           className="p-2 border-[1px] mx-2 rounded-md"
         >
           이미지 삭제
-        </button>
+        </button> */}
         <div className="border-r-[1px] h-7 my-auto mx-3"></div> {/* 구분선 */}
         <button
           onClick={() => {
@@ -155,6 +157,7 @@ const WriteFormShowroom = ({
       <div className="flex-col justify-center content-center">
         <div className="m-4 p-3 flex flex-col border-[3px] rounded-md">
           <ImageEditGuide />
+          {imageSrc && <div>이미지 편집기</div>}
           <PhotoTagging
             imageSrc={imageSrc}
             tags={tags}
@@ -162,6 +165,16 @@ const WriteFormShowroom = ({
             currentTag={currentTag}
             setCurrentTag={setCurrentTag}
           />
+          {imageSrc && (
+            <div className="flex justify-center mt-2">
+              <button
+                onClick={handlePost}
+                className="p-2 border-[1px] mx-2 w-1/8 rounded-md"
+              >
+                이미지 등록
+              </button>
+            </div>
+          )}
         </div>
         <div
           ref={editorRef}
