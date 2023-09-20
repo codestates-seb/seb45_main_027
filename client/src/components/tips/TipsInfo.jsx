@@ -5,7 +5,7 @@ const TipsInfo = ({ handleTipClick, item }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="h-[100px] flex flex-col justify-between">
+    <div className="h-[100px] flex flex-col justify-between px-4 mb-4">
       <div
         className="flex justify-center"
         onClick={() => handleTipClick(item.tipId)}>

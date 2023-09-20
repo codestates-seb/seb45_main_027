@@ -60,7 +60,9 @@ const TipsContent = ({ tipData, setTipData }) => {
     <div className="flex-col items-center justify-center">
       <div className="w-full h-full my-5 align-between sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-20 gap-y-8 px-8">
         {tipData.map((item, idx) => (
-          <div key={idx} className="mb-3 h-full">
+          <div
+            key={idx}
+            className=" bg-white bg-opacity-50 mb-3 h-full rounded-xl border">
             <div className="">
               <img
                 // 이미지 주소 바꿔줘야함
@@ -78,7 +80,7 @@ const TipsContent = ({ tipData, setTipData }) => {
                       : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/bookmark.png"
                   }
                   alt="Bookmark"
-                  className=" absolute w-10 h-10 bottom-4 right-4 cursor-pointer"
+                  className="rounded-t-xl absolute w-10 h-10 bottom-4 right-4 cursor-pointer"
                   onClick={() => toggleBookmark(item.tipId)}
                 />
               </p>
