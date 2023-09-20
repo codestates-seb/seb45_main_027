@@ -57,12 +57,12 @@ const TipsContent = ({ tipData, setTipData }) => {
     navigate(`/tips/${tipId}`);
   };
   return (
-    <div className="flex-col items-center justify-center">
-      <div className="w-full h-full my-5 align-between sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-20 gap-y-8 px-8">
+    <div className="flex-col items-center justify-center cursor-pointer">
+      <div className="w-full h-full my-5 align-between sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-16 gap-y-12 px-8">
         {tipData.map((item, idx) => (
           <div
             key={idx}
-            className=" bg-white bg-opacity-50 mb-3 h-full rounded-xl border">
+            className=" bg-white bg-opacity-50 hover:bg-white hover:bg-opacity-95 mb-3 h-full rounded-xl shadow-sm">
             <div className="">
               <img
                 // 이미지 주소 바꿔줘야함
