@@ -103,14 +103,14 @@ const AllContent = ({ showroomData, setShowroomData }) => {
                 />
               </p>
             </div>
-            <div className="flex-col pt-2 mb-14">
+            <div className="flex-col pt-2 mb-4">
               <div
                 className="flex justify-center my-3 cursor-pointer"
                 onClick={() => handleFeedClick(item.feedId)}
               >
-                <span className="text-3xl font-semibold">{item.title}</span>
+                <span className="text-2xl font-semibold">{item.title}</span>
               </div>
-              <div className="flex justify-center items-center mb-3 text-gray-800">
+              <div className="flex justify-center items-center mb-2 text-gray-800">
                 <img
                   src={
                     item.memberImage == null ? defalutImage : item.memberImage
@@ -121,11 +121,13 @@ const AllContent = ({ showroomData, setShowroomData }) => {
                 <span className="text-xl">{item.nickname} </span>
               </div>
               <div className="flex justify-center text-lg text-gray-500">
-                <div className="mr-10">
+                <div className="mr-3">
                   <span>스크랩 :</span>
-                  <span className="ml-1">{item.bookMarkCount}</span>
+                  <span className="ml-3">{item.bookMarkCount}</span>
                 </div>
-                <div>
+                <div className="border-r-[1px] h-7 my-auto mx-2"></div>
+                {/* 구분선 */}
+                <div className="ml-3">
                   <span>조회수 :</span>
                   <span className="ml-1">{item.views}</span>
                 </div>
