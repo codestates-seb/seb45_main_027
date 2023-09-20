@@ -1,6 +1,7 @@
 package com.project.bbibbi.domain.member.service;
 
 import com.project.bbibbi.auth.utils.loginUtils;
+import com.project.bbibbi.domain.follow.repository.FollowRepository;
 import com.project.bbibbi.domain.member.entity.Member;
 import com.project.bbibbi.domain.member.repository.MemberRepository;
 import com.project.bbibbi.domain.member.service.dto.request.MemberCreateServiceRequest;
@@ -25,12 +26,17 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     private final MailService mailService;
+    private final FollowRepository followRepository;
 
     private final PasswordEncoder passwordEncoder; // config에서 bean으로 먼저 등록안해서 생긴 문제
 
-    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder,MailService mailService) {
+    public MemberService(MemberRepository memberRepository,
+                         PasswordEncoder passwordEncoder,
+                         MailService mailService,
+                         FollowRepository followRepository) {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
+        this.followRepository = followRepository;
         this.mailService = mailService;
     }
 
@@ -130,6 +136,10 @@ public class MemberService {
 
 
         try {
+
+            followRepository.deleteByMemberId(member.getMemberId());
+            followRepository.deleteByFromMemberId(member.getMemberId());
+
             memberRepository.deleteById(member.getMemberId());
         } catch (EmptyResultDataAccessException ex) {
             throw new MemberNotFoundException();

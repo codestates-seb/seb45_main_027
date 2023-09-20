@@ -30,4 +30,13 @@ public interface FollowRepository  extends JpaRepository<Follow, Long> {
     @Query(value = "select n from Member n where n.memberId = :memberId ")
     Member toMember(@Param("memberId") Long memberId);
 
+    @Modifying
+    @Query(value = "delete from follow where member_id = :memberId", nativeQuery = true)
+    void deleteByMemberId(@Param("memberId") Long memberId);
+
+    @Modifying
+    @Query(value = "delete from follow where from_member_id = :memberId", nativeQuery = true)
+    void deleteByFromMemberId(@Param("memberId") Long memberId);
+
+
 }

@@ -245,6 +245,41 @@ public class TipService {
             tip.setBookmarkCount(bookmarkCount);
         }
 
+        for(int i = 0; i < searchTips.size(); i++){
+
+            Tip tip = searchTips.get(i);
+
+            if(tip.getTitle().contains(searchString)){
+                continue;
+            }
+            String originalString = tip.getContent();
+
+            StringBuilder result = new StringBuilder();
+            boolean insideTag = false;
+
+            for(char c : originalString.toCharArray()){
+                if(c == '<'){
+                    insideTag = true;
+                }
+                else if(c == '>'){
+                    insideTag = false;
+                }
+                else if(!insideTag){
+                    result.append(c);
+                }
+            }
+
+            String finalString = result.toString();
+
+            String parameter = searchString;
+
+            if(!finalString.contains(parameter)){
+                searchTips.remove(i);
+                i--;
+            }
+
+        }
+
         return searchTips;
     }
 
