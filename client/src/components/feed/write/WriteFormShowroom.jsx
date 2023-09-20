@@ -10,6 +10,7 @@ import {
   FaTrashAlt,
 } from "react-icons/fa";
 import { LuImageOff } from "react-icons/lu";
+import { LuImage } from "react-icons/lu";
 
 const WriteFormShowroom = ({
   editorContent,
@@ -104,52 +105,53 @@ const WriteFormShowroom = ({
   return (
     <>
       <div className="flex border-b-[1px] pb-4">
-        <label htmlFor="imageUpload" className="cursor-pointer rounded-md">
-          <img
-            className="p-2 "
-            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/gallery.png"
-            alt="gallery"
+        {/* 등록 */}
+        <label className="text-lg font-semibold text-white flex items-center bg-[#F5634A] bg-opacity-40 hover:bg-opacity-20 mx-4 px-5 py-2 rounded-md shadow">
+          <LuImage size={"25px"} color={"#F5634A "} />
+          <input
+            id="imageUpload"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleImageUpload}
           />
+          <span className="pl-4 text-lg font-semibold text-white">
+            이미지 등록하기
+          </span>
         </label>
-        <input
-          id="imageUpload"
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleImageUpload}
-        />
-        <LuImageOff size={"25px"} color="gray"></LuImageOff>
-        {/* <button
+
+        {/* 삭제 */}
+        <button
           onClick={handleDeleteImageAndTags}
-          className="p-2 border-[1px] mx-2 rounded-md"
-        >
-          이미지 삭제
-        </button> */}
-        <div className="border-r-[1px] h-7 my-auto mx-3"></div> {/* 구분선 */}
+          className="flex items-center bg-[#F5634A] bg-opacity-40 hover:bg-opacity-20 mx-4 px-5 py-2 rounded-md shadow">
+          <LuImageOff size={"25px"} color={"#F5634A "} />
+          <span className="pl-4 text-lg font-semibold text-white">
+            이미지 삭제하기
+          </span>
+        </button>
+
+        {/* 구분선 */}
+        <div className="border-r-[1px] h-10 my-auto mx-3"></div>
         <button
           onClick={() => {
             toggleStyle("bold");
           }}
-          className={`p-2 border-[1px] mx-2 rounded-md`}
-        >
+          className={`py-2 px-4 border-[1px] mx-2 rounded-md`}>
           <FaBold />
         </button>
         <button
           onClick={() => toggleStyle("italic")}
-          className={`p-2 border-[1px] mx-2 rounded-md`}
-        >
+          className={`py-2 px-4 border-[1px] mx-2 rounded-md`}>
           <FaItalic />
         </button>
         <button
           onClick={() => toggleStyle("underline")}
-          className={`p-2 border-[1px] mx-2 rounded-md`}
-        >
+          className={`py-2 px-4 border-[1px] mx-2 rounded-md`}>
           <FaUnderline />
         </button>
         <button
           onClick={() => toggleStyle("strikethrough")}
-          className={`p-2 border-[1px] mx-2 rounded-md`}
-        >
+          className={`py-2 px-4 border-[1px] mx-2 rounded-md`}>
           <FaStrikethrough />
         </button>
       </div>
@@ -169,8 +171,7 @@ const WriteFormShowroom = ({
             <div className="flex justify-center mt-2">
               <button
                 onClick={handlePost}
-                className="p-2 border-[1px] mx-2 w-1/8 rounded-md"
-              >
+                className="p-2 border-[1px] mx-2 w-1/8 rounded-md">
                 이미지 등록
               </button>
             </div>
@@ -182,8 +183,7 @@ const WriteFormShowroom = ({
           dangerouslySetInnerHTML={{ __html: editorContent }}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className="p-2 m-4 h-full  min-h-[600px] text-md border-[3px] rounded-md"
-        ></div>
+          className="p-2 m-4 h-full  min-h-[600px] text-md border-[3px] rounded-md"></div>
       </div>
     </>
   );
