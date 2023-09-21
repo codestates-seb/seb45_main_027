@@ -2,6 +2,12 @@ import React, { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { FaBold, FaItalic, FaUnderline, FaStrikethrough } from "react-icons/fa";
+import { LuImageOff } from "react-icons/lu";
+import { LuImage } from "react-icons/lu";
+
+// 버튼효과
+const buttonStyle =
+  "sm:mt-0 py-2 px-2 sm:px-4 border-[1px] mx-2 rounded-md hover:bg-gray-200 hover:bg-opacity-50";
 
 const WriteFormTips = ({
   editorContent,
@@ -82,51 +88,59 @@ const WriteFormTips = ({
   return (
     <>
       {/* 이미지 입력 버튼 */}
-      <div className="flex mb-2 pb-[11px] border-b">
-        <label htmlFor="imageUpload" className="cursor-pointer">
-          <img
-            className="p-[3px]  mb-1"
-            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/gallery.png"
-            alt=""
-          />
+      <div className="flex border-b-[1px] pb-4 flex-wrap sm:flex-nowrap">
+        <label
+          htmlFor="imageUpload"
+          className="text-lg font-semibold text-white flex items-center bg-[#00647b1c] bg-opacity-40 hover:bg-opacity-20 mx-1 sm:mx-4 px-2 sm:px-5 py-2 rounded-md shadow"
+        >
+          <div>
+            <LuImage size={"25px"} color="#00647B" />
+            <input
+              id="imageUpload"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={ImageUpload}
+            />
+          </div>
+          <span className="hidden sm:block pl-4 text-lg font-semibold text-[#808080]">
+            이미지 등록하기
+          </span>
         </label>
-        <input
-          id="imageUpload"
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={ImageUpload}
-        />
         <button
-          className="p-2 border-[1px] mx-2 rounded-md"
+          className="flex items-center bg-[#00647b1c] bg-opacity-40 hover:bg-opacity-20 mx-2 sm:mx-4 px-2 sm:px-5 py-2 rounded-md shadow"
           onClick={handleDeleteImage}
         >
-          이미지 삭제
+          <div>
+            <LuImageOff size={"25px"} color={"#00647B"} />
+          </div>
+          <span className="hidden sm:block pl-4 text-lg font-semibold text-[#808080]">
+            이미지 삭제하기
+          </span>
         </button>
-        <div className="border-r-[1px] h-7 my-auto mx-3"></div> {/* 구분선 */}
+        {/* 구분선 */}
+        <div className="border-r-[1px] h-7 my-auto mx-3" />
+
         <button
           onClick={() => {
             toggleStyle("bold");
           }}
-          className={`p-2 border-[1px] mx-2 rounded-md`}
+          className={buttonStyle}
         >
           <FaBold />
         </button>
-        <button
-          onClick={() => toggleStyle("italic")}
-          className={`p-2 border-[1px] mx-2 rounded-md`}
-        >
+        <button onClick={() => toggleStyle("italic")} className={buttonStyle}>
           <FaItalic />
         </button>
         <button
           onClick={() => toggleStyle("underline")}
-          className={`p-2 border-[1px] mx-2 rounded-md`}
+          className={buttonStyle}
         >
           <FaUnderline />
         </button>
         <button
           onClick={() => toggleStyle("strikethrough")}
-          className={`p-2 border-[1px] mx-2 rounded-md`}
+          className={buttonStyle}
         >
           <FaStrikethrough />
         </button>
