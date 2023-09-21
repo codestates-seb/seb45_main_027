@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useInput from "../../hooks/useInput";
 import FormLayout from "./FormLayout";
-import { useAuth } from "../../context/AuthContext"
+import { useAuth } from "../../context/AuthContext";
 
 const FormValidation = ({ path }) => {
   const [nickname, handleNameChange] = useInput("");
@@ -12,53 +12,75 @@ const FormValidation = ({ path }) => {
   const hasSpaces = (value) => {
     return /\s/.test(value);
   };
-  
-  const isNameValid = nickname.trim().length >= 2 && nickname.trim().length <= 10 && !hasSpaces(nickname);
-  const isEmailValid = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(
-    email
-  );
-  const isPasswordValid = !hasSpaces(password) &&
-  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&()+|=])[A-Za-z\d~!@#$%^&()+|=]{6,15}$/.test(
-      password
-    ); 
+
+  const validateForm = () => {
+    const nameError = validateName();
+    const emailError = validateEmail();
+    const passwordError = validatePassword();
+    return { nameError, emailError, passwordError };
+  };
+
+  const validateName = () => {
+    if (path === "signup") {
+      if (!nickname) {
+        return "닉네임을 입력하세요.";
+      }
+      if (nickname.length < 2 || nickname.length > 10) {
+        return "닉네임은 2글자 이상 10글자 이하이어야 합니다.";
+      }
+      if (hasSpaces(nickname)) {
+        return "닉네임에 공백을 사용할 수 없습니다.";
+      }
+    }
+    return "";
+  };
+
+  const validateEmail = () => {
+    if (!email) {
+      return "이메일을 입력하세요.";
+    }
+    if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
+      return "유효한 이메일을 입력하세요.";
+    }
+    return "";
+  };
+
+  const validatePassword = () => {
+    if (!password) {
+      return "비밀번호를 입력하세요.";
+    }
+    if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&()+|=])[A-Za-z\d~!@#$%^&()+|=]{6,15}$/.test(password)) {
+      return "비밀번호는 6글자 이상 15글자 이하이어야 하며 영문, 숫자, 특수문자를 포함해야 합니다.";
+    }
+    return "";
+  };
 
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  const handleFormChange = () => {
+    const { nameError, emailError, passwordError } = validateForm();
+    setNameError(nameError);
+    setEmailError(emailError);
+    setPasswordError(passwordError);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    setNameError("");
-    setEmailError("");
-    setPasswordError("");
+    handleFormChange();
 
     if (path === "signup") {
-      if (!isNameValid) {
-        setNameError("닉네임은 2글자 이상 10글자 이하로 입력해주세요. 공백은 사용할 수 없습니다.");
-      }
-      if (!isEmailValid) {
-        setEmailError("유요한 이메일을 입력해주세요.");
-      }
-      if (!isPasswordValid) {
-        setPasswordError(
-          "비밀번호는 6글자 이상 15글자 이하로 입력해주세요. 영문, 숫자, 특수문자가 반드시 포함되어야 하며 공백은 사용할 수 없습니다."
-        );
-      }
-
-      if (!isNameValid || !isEmailValid || !isPasswordValid) {
+      if (nameError || emailError || passwordError) {
         return;
       }
-
       // signup logic
       console.log("Signing up with data:", { email, nickname, password });
       try {
         await register(email, nickname, password);
-      } catch (error) {
-      }
+      } catch (error) {}
     } else {
-      // login logic 
+      // login logic
       try {
         await login(email, password);
       } catch (error) {
@@ -76,9 +98,19 @@ const FormValidation = ({ path }) => {
       nameError={nameError}
       emailError={emailError}
       passwordError={passwordError}
-      handleNameChange={handleNameChange}
-      handleEmailChange={handleEmailChange}
-      handlePasswordChange={handlePasswordChange}
+      handleNameChange={(e) => {
+        handleNameChange(e);
+        handleFormChange();
+      }}
+      handleEmailChange={
+        (e) => {
+          handleEmailChange(e);
+          handleFormChange();
+        }}
+      handlePasswordChange={(e) => {
+        handlePasswordChange(e);
+        handleFormChange();
+      }}
       handleSubmit={handleSubmit}
     />
   );
