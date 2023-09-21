@@ -72,6 +72,7 @@ const ShowRoom = () => {
       setFeedCode("filter");
       setFilterCode(filterCode);
       page.current = 1;
+      isFirstPageRendered.current = true;
 
       const updatedConfigParams = {
         ...configParams,
@@ -79,8 +80,9 @@ const ShowRoom = () => {
       };
 
       const res = await api(updatedConfigParams);
-      toast.dismiss(filterToast); // 필터링 중 토스트 메시지 닫기
+      // toast.dismiss(filterToast); // 필터링 중 토스트 메시지 닫기
       setShowroomData(res.data.data);
+      setIsLastPage(res.data.isLast);
       page.current = 1; // 필터링 시 페이지를 다시 1로 설정
     } catch (error) {
       console.error("Error sending GET request:", error);
@@ -98,6 +100,7 @@ const ShowRoom = () => {
       setFeedCode("filter");
       setFilterCode(filterCode);
       page.current = 1;
+      isFirstPageRendered.current = true;
 
       const updatedConfigParams = {
         ...configParams,
@@ -105,8 +108,9 @@ const ShowRoom = () => {
       };
 
       const res = await api(updatedConfigParams);
-      toast.dismiss(filterToast); // 필터링 중 토스트 메시지 닫기
+      // toast.dismiss(filterToast); // 필터링 중 토스트 메시지 닫기
       setShowroomData(res.data.data);
+      setIsLastPage(res.data.isLast);
       page.current = 1; // 필터링 시 페이지를 다시 1로 설정
     } catch (error) {
       console.error("Error sending GET request:", error);
@@ -173,6 +177,7 @@ const ShowRoom = () => {
   const handleSearch = async (e, inputValue) => {
     // 추후 앤터 누를시 서버와 통신해서 해당 게시물을 보여주는 로직 작성 ****
     page.current = 1;
+    isFirstPageRendered.current = true;
     setFeedCode("search");
     setFilterCode("");
     setSearchKeyworld(inputValue);
@@ -184,11 +189,13 @@ const ShowRoom = () => {
 
     if (e.key === "Enter") {
       // API 호출을 기다리기 위해 try-catch 블록 내에서 비동기로 처리.
+
+      toast.loading("검색중입니다.");
       try {
         const res = await api(updatedConfigParams);
+        toast.dismiss();
         setShowroomData(res.data.data);
         clearInput();
-        console.log("검색누름");
       } catch (error) {
         console.error("Error sending GET request:", error);
         toast.error("검색 실패");
