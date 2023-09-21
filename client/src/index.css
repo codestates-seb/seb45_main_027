@@ -1,7 +1,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import 'animate.css';
+@import "animate.css";
 @import url(https://db.onlinewebfonts.com/c/d66fa62dabed66f2226a1b2d17da0579?family=Showcard+Gothic);
 /* reset */
 html {
@@ -100,14 +100,16 @@ a {
 
 /* 메인 슬로건 에니메이션 효과 */
 @keyframes slogan {
+  0% {
+    transform: translateX(0);
+  }
   100% {
-    transform: translateX(-2126px);
-    opacity: 1;
+    transform: translateX(-100%);
   }
 }
 
 .animate-slogan {
-  animation: slogan 30s linear;
+  animation: slogan 8s linear;
   animation-iteration-count: infinite;
 }
 

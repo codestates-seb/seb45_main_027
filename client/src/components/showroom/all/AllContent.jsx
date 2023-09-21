@@ -65,12 +65,9 @@ const AllContent = ({ showroomData, setShowroomData, filterLoading }) => {
   return (
     <div className="flex-col mx-4">
       {filterLoading && <div>로딩중</div>}
-      <div className="flex justify-between flex-wrap">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-20 mr-6">
         {showroomData.map((item, idx) => (
-          <div
-            key={idx}
-            className="flex-col mx-3 mt-3 mb-3 w-full sm:w-[45%] lg:w-[30%] h-[20%]"
-          >
+          <div key={idx} className="flex-col mx-3 mt-3 mb-3 w-full">
             <div className="relative">
               <img
                 src={item.coverPhoto}
