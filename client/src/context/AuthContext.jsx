@@ -176,14 +176,16 @@ export function AuthProvider({ children }) {
       navigate("/login");
     } catch (error) {
       //409시 중복닉네임,아이디
+      toast.dismiss();
+
       if (error.response.status === 409) {
         toast.error("이미 등록된 이메일입니다.");
+
       }
       if (error.response.status === 400 && error.response.data.message) {
         toast.error("이미 등록된 닉네임입니다.");
-      }
 
-      toast.dismiss();
+      }
 
       toast.error("회원가입에 실패했습니다.");
       throw error;
