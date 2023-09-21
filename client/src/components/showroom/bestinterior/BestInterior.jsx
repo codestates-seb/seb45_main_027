@@ -34,11 +34,11 @@ const BestInterior = ({ viewportWidth }) => {
 
   return (
     <div className="flex-col">
-      {loading ? (
-        <>
-          <BestInteriorHeader />
-          <div className="w-full pb-16 flex items-center justify-between md:justify-center h-[420px]">
-            <div className="m-10">
+      <>
+        <BestInteriorHeader />
+        {loading && (
+          <div className="w-full pb-16 flex items-center justify-center h-[420px]">
+            <div className="m-10 flex justify-center ">
               <img
                 className="w-20 mb-12 animate__animated animate__wobble animate__infinite animate__slow"
                 src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/logo.png"
@@ -46,17 +46,13 @@ const BestInterior = ({ viewportWidth }) => {
               />
             </div>
           </div>
-        </>
-      ) : (
-        <>
-          <BestInteriorHeader />
-          <BestInteriorCarousel
-            viewportWidth={viewportWidth}
-            best10Data={best10Data}
-            setBest10Data={setBest10Data}
-          />
-        </>
-      )}
+        )}
+        <BestInteriorCarousel
+          viewportWidth={viewportWidth}
+          best10Data={best10Data}
+          setBest10Data={setBest10Data}
+        />
+      </>
     </div>
   );
 };
