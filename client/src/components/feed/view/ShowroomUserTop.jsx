@@ -13,7 +13,6 @@ const ShowroomUserTop = ({ feedData, setFollow, follow }) => {
   const navigate = useNavigate();
   const memberWhether = memberId;
 
-
   const [patchRes, patchErr, patchLoading, patchFetchData] = useAxios(
     {
       method: "PATCH",
@@ -64,13 +63,14 @@ const ShowroomUserTop = ({ feedData, setFollow, follow }) => {
             onClick={() => {
               navigate(`/myinfo/${feedData.memberId}`);
             }}
-            className="text-lg font-semibold cursor-pointer">
+            className="text-lg font-semibold cursor-pointer"
+          >
             {feedData.nickname}
           </div>
           <div className="text-gray-500">{datePart}</div>
         </div>
       </div>
-      <div className="flex p-10">
+      <div className="grid grid-cols-3 gap-y-4 pt-10 sm:flex lg:p-10">
         <div className={div}>
           <img
             className={img}
