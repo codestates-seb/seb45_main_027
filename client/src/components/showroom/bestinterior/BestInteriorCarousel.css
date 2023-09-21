@@ -13,16 +13,28 @@
 }
 
 .carousel .control-next.control-arrow:before {
-  border-left: 15px solid #f5634a;
+  border-left: 13px solid #f5634a;
   border-radius: 2px;
 }
 
 .carousel .control-prev.control-arrow:before {
-  border-right: 15px solid #f5634a;
+  border-right: 13px solid #f5634a;
   border-radius: 2px;
 }
 
 .carousel .control-arrow,
 .carousel.carousel-slider .control-arrow {
   opacity: 1;
+  margin-right: 12px;
+  margin-left: 12px;
+  border-radius: 10px;
+}
+
+/*모바일 - 캐러셀 <,> 버튼 margin설정*/
+@media (max-width: 639px) {
+  .carousel .control-arrow,
+  .carousel.carousel-slider .control-arrow {
+    margin-right: 0;
+    margin-left: 0;
+  }
 }
