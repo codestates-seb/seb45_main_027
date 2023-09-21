@@ -29,3 +29,12 @@
   margin-left: 12px;
   border-radius: 10px;
 }
+
+/*모바일 - 캐러셀 <,> 버튼 margin설정*/
+@media (max-width: 639px) {
+  .carousel .control-arrow,
+  .carousel.carousel-slider .control-arrow {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
