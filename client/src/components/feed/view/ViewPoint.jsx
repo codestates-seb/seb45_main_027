@@ -10,6 +10,8 @@ const ViewPoint = ({ feedData }) => {
   );
   const [views, setViews] = useState(feedData.views || "0");
 
+  console.log(feedData.bookMarkCount);
+  console.log(feedData.bookmarkCount);
   useEffect(() => {
     // feedData prop이 변경될 때 상태를 업데이트
     setLikeCount(feedData.likeCount);
@@ -32,7 +34,9 @@ const ViewPoint = ({ feedData }) => {
       </div>
       <div className="flex mr-4 text-lg text-gray-600">
         <span>스크랩</span>
-        <span className=" font-semibold ml-1">{bookMarkCount}</span>
+        <span className=" font-semibold ml-1">
+          {bookMarkCount === undefined ? 0 : bookMarkCount}
+        </span>
       </div>
       <div className="flex mr-4 text-lg text-gray-600">
         <span>댓글</span>
