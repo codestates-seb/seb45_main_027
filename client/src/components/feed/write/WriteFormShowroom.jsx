@@ -14,7 +14,7 @@ import { LuImage } from "react-icons/lu";
 
 // 버튼효과
 const buttonStyle =
-  "sm:mt-0 py-2 px-2 sm:px-4 border-[1px] mx-2 rounded-md hover:bg-gray-200 hover:bg-opacity-50";
+  "ml-2 sm:mt-4 lg:mt-0 py-2 px-2 sm:px-4 border-[1px] mx-2 rounded-md hover:bg-gray-200 hover:bg-opacity-50";
 
 const WriteFormShowroom = ({
   editorContent,
@@ -141,6 +141,7 @@ const WriteFormShowroom = ({
 
         {/* 구분선 */}
         <div className="border-r-[1px] h-10 my-auto mx-3 "></div>
+
         <button
           onClick={() => {
             toggleStyle("bold");

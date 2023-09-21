@@ -7,7 +7,7 @@ import { LuImage } from "react-icons/lu";
 
 // 버튼효과
 const buttonStyle =
-  "sm:mt-0 py-2 px-2 sm:px-4 border-[1px] mx-2 rounded-md hover:bg-gray-200 hover:bg-opacity-50";
+  "ml-2 lg:mt-0 py-2 px-2 sm:px-4 border-[1px] mx-2 rounded-md hover:bg-gray-200 hover:bg-opacity-50";
 
 const WriteFormTips = ({
   editorContent,
@@ -103,7 +103,7 @@ const WriteFormTips = ({
               onChange={ImageUpload}
             />
           </div>
-          <span className="hidden sm:block pl-4 text-lg font-semibold text-[#808080]">
+          <span className="hidden lg:block pl-4 text-lg font-semibold text-[#808080]">
             이미지 등록하기
           </span>
         </label>
@@ -114,7 +114,7 @@ const WriteFormTips = ({
           <div>
             <LuImageOff size={"25px"} color={"#00647B"} />
           </div>
-          <span className="hidden sm:block pl-4 text-lg font-semibold text-[#808080]">
+          <span className="hidden lg:block pl-4 text-lg font-semibold text-[#808080]">
             이미지 삭제하기
           </span>
         </button>
