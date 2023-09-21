@@ -18,7 +18,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
   const [profileData, setProfileData] = useState({
     nickname: userDetails.nickname,
     profileImg: userDetails.profileImg,
-    myIntro: userDetails.myIntro || '',
+    myIntro: userDetails.myIntro || "",
   });
 
   //최종으로 수정된 프로필정보를 서버에 보냄
@@ -38,17 +38,13 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
 
     try {
       // 닉네임 2글자 이상으로 유효성 넣기 아니면 안넘어가기
-      await api.patch(
-        `/members/${memberId}`,
-        profileData,
-        {
-          headers: {
-            "ngrok-skip-browser-warning": "69420",
-          },
-        }
-      );
+      await api.patch(`/members/${memberId}`, profileData, {
+        headers: {
+          "ngrok-skip-browser-warning": "69420",
+        },
+      });
       localStorage.setItem("nickname", profileData.nickname);
-     // localStorage.setItem("profileImg", profileData.profileImg);
+      // localStorage.setItem("profileImg", profileData.profileImg);
       if (profileData.profileImg === null) {
         localStorage.setItem(
           "profileImg",
@@ -57,18 +53,17 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
       } else {
         localStorage.setItem("profileImg", profileData.profileImg);
       }
-      
+
       // console.log(response.data);
       // console.log(profileData.profileImg);
       alert("Profile updated!");
       navigate("/");
     } catch (error) {
       console.error(error);
-      toast.error('프로필 업데이트에 실패했습니다')
+      toast.error("프로필 업데이트에 실패했습니다");
       navigate("/");
       //alert("Error updating profile");
     }
-    console.log(profileData);
   };
 
   const inputStyle =
@@ -87,8 +82,10 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
       >
         &times;
       </button>
-      <div className="
-      flex flex-col container mx-auto p-4 bg-white opacity-[.9] rounded-lg min-w-[350px] md:min-w-[750px] mb-40">
+      <div
+        className="
+      flex flex-col container mx-auto p-4 bg-white opacity-[.9] rounded-lg min-w-[350px] md:min-w-[750px] mb-40"
+      >
         <div className="flex justify-between">
           <div className="text-3xl font-bold px-2 py-2">{`Hello, ${userDetails.nickname}`}</div>
           <DeleteAccount />
