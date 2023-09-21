@@ -7,6 +7,8 @@ const TipsHeader = ({
   handleInputChange,
   handleSearch,
   isSearch,
+  isTagSearch,
+  tagSearchKeyword,
 }) => {
   const handleAllcontenSearch = async () => {
     const enterKeyEvent = new KeyboardEvent("keydown", {
@@ -26,7 +28,7 @@ const TipsHeader = ({
             Interior Tips
           </h1>
           <h2 className="hidden md:block text-gray-500 font-medium text-lg pl-4  w-max">
-            당신의 삶을 바꿔드립니다. 지금 바로 태그검색!
+            당신의 삶을 바꿔드립니다. 지금 바로 꿀팁검색!
           </h2>
         </div>
 
@@ -53,10 +55,10 @@ const TipsHeader = ({
           value={inputValue}
           onChange={handleInputChange}
           onKeyUp={(e) => handleSearch(e, inputValue)}
-          placeholder="#Tag"
+          placeholder={tagSearchKeyword ? `#${tagSearchKeyword}` : "Search"}
         />
         {/* 검색 후 전체 리스트 조회하는 버튼 */}
-        {isSearch == "/search/" ? (
+        {isSearch == "/search/" || isTagSearch ? (
           <div
             className="ml-3 border-[1px] p-[8px] rounded-md bg-white cursor-pointer"
             onClick={() => {

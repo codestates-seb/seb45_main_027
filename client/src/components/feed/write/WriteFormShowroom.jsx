@@ -12,6 +12,10 @@ import {
 import { LuImageOff } from "react-icons/lu";
 import { LuImage } from "react-icons/lu";
 
+// 버튼효과
+const buttonStyle =
+  "sm:mt-0 py-2 px-2 sm:px-4 border-[1px] mx-2 rounded-md hover:bg-gray-200 hover:bg-opacity-50";
+
 const WriteFormShowroom = ({
   editorContent,
   setEditorContent,
@@ -21,10 +25,6 @@ const WriteFormShowroom = ({
   const [imageSrc, setImageSrc] = useState(null);
   const [tags, setTags] = useState([]);
   const [currentTag, setCurrentTag] = useState({ x: "0%", y: "0%", text: "" });
-
-  // 버튼효과
-  const buttonStyle =
-    "py-2 px-4 border-[1px] mx-2 rounded-md hover:bg-gray-200 hover:bg-opacity-50";
 
   useEffect(() => {
     if (editorContent === DEFAULT_EDITOR_TEXT) {
@@ -108,18 +108,20 @@ const WriteFormShowroom = ({
 
   return (
     <>
-      <div className="flex border-b-[1px] pb-4">
+      <div className="flex border-b-[1px] pb-4 flex-wrap">
         {/* 등록 */}
-        <label className="text-lg font-semibold text-white flex items-center bg-[#F5634A] bg-opacity-40 hover:bg-opacity-20 mx-4 px-5 py-2 rounded-md shadow">
-          <LuImage size={"25px"} color={"#F5634A "} />
-          <input
-            id="imageUpload"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={handleImageUpload}
-          />
-          <span className="pl-4 text-lg font-semibold text-white">
+        <label className="text-lg font-semibold text-white flex items-center bg-[#F5634A] bg-opacity-40 hover:bg-opacity-20 mx-1 sm:mx-4 px-2 sm:px-5 py-2 rounded-md shadow">
+          <div>
+            <LuImage size={"25px"} color={"#F5634A"} />
+            <input
+              id="imageUpload"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageUpload}
+            />
+          </div>
+          <span className="hidden sm:block pl-4 text-lg font-semibold text-white">
             이미지 등록하기
           </span>
         </label>
@@ -127,9 +129,12 @@ const WriteFormShowroom = ({
         {/* 삭제 */}
         <button
           onClick={handleDeleteImageAndTags}
-          className="flex items-center bg-[#F5634A] bg-opacity-40 hover:bg-opacity-20 mx-4 px-5 py-2 rounded-md shadow">
-          <LuImageOff size={"25px"} color={"#F5634A "} />
-          <span className="pl-4 text-lg font-semibold text-white">
+          className="flex items-center bg-[#F5634A] bg-opacity-40 hover:bg-opacity-20 mx-2 sm:mx-4 px-2 sm:px-5 py-2 rounded-md shadow"
+        >
+          <div>
+            <LuImageOff size={"25px"} color={"#F5634A "} />
+          </div>
+          <span className="hidden sm:block pl-4 text-lg font-semibold text-white">
             이미지 삭제하기
           </span>
         </button>
@@ -140,7 +145,8 @@ const WriteFormShowroom = ({
           onClick={() => {
             toggleStyle("bold");
           }}
-          className={buttonStyle}>
+          className={buttonStyle}
+        >
           <FaBold />
         </button>
         <button onClick={() => toggleStyle("italic")} className={buttonStyle}>
@@ -148,12 +154,14 @@ const WriteFormShowroom = ({
         </button>
         <button
           onClick={() => toggleStyle("underline")}
-          className={buttonStyle}>
+          className={buttonStyle}
+        >
           <FaUnderline />
         </button>
         <button
           onClick={() => toggleStyle("strikethrough")}
-          className={buttonStyle}>
+          className={buttonStyle}
+        >
           <FaStrikethrough />
         </button>
       </div>
@@ -174,7 +182,8 @@ const WriteFormShowroom = ({
             <div className="w-full flex justify-center mt-10">
               <button
                 onClick={handlePost}
-                className="flex items-center bg-[#F5634A] bg-opacity-40 hover:bg-opacity-20 mx-4 px-5 py-2 rounded-md shadow">
+                className="flex items-center bg-[#F5634A] bg-opacity-40 hover:bg-opacity-20 mx-4 px-5 py-2 rounded-md shadow"
+              >
                 <span className="px-4 py-2 text-xl font-semibold text-white">
                   이미지 등록하기
                 </span>
@@ -188,7 +197,8 @@ const WriteFormShowroom = ({
           dangerouslySetInnerHTML={{ __html: editorContent }}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className="p-10 m-4 h-full min-h-[600px] text-md rounded-md shadow text-xl focus:outline-none"></div>
+          className="p-10 m-4 h-full min-h-[600px] text-md rounded-md shadow text-xl focus:outline-none"
+        ></div>
       </div>
     </>
   );

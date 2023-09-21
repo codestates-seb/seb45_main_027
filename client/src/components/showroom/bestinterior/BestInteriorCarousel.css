@@ -11,3 +11,18 @@
   max-height: 390px;
   object-fit: cover;
 }
+
+.carousel .control-next.control-arrow:before {
+  border-left: 15px solid #f5634a;
+  border-radius: 2px;
+}
+
+.carousel .control-prev.control-arrow:before {
+  border-right: 15px solid #f5634a;
+  border-radius: 2px;
+}
+
+.carousel .control-arrow,
+.carousel.carousel-slider .control-arrow {
+  opacity: 1;
+}

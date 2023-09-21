@@ -4,8 +4,8 @@ import { toast } from "react-hot-toast";
 import api from "../../../common/tokens";
 
 const CommentLike = ({ comment }) => {
-    const tipReplyId = comment.tipReplyId;
-    const { tipId } = useParams(); // 게시물 번호
+  const tipReplyId = comment.tipReplyId;
+  const { tipId } = useParams(); // 게시물 번호
   // 좋아요 상태
   const [like, setLike] = useState(false);
 
@@ -13,7 +13,7 @@ const CommentLike = ({ comment }) => {
   const patchLike = async () => {
     const configParams = {
       method: "PATCH",
-        url: `/tip/${tipId}/tipreply/${tipReplyId}/tipreplylike`,
+      url: `/tip/${tipId}/tipreply/${tipReplyId}/tipreplylike`,
       headers: {
         "ngrok-skip-browser-warning": "69420",
       },
@@ -34,13 +34,13 @@ const CommentLike = ({ comment }) => {
       setLike(comment.replyLikeYn);
     }
   }, [comment]);
-  console.log(comment.replyLikeYn);
 
   return (
     <>
       <button
         className="flex items-center hover:font-semibold"
-        onClick={patchLike}>
+        onClick={patchLike}
+      >
         <img
           className="w-6 h-6 mr-1"
           src={

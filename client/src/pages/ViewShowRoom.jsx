@@ -15,8 +15,6 @@ const ViewShowRoom = () => {
   // 사이드바 댓글 이동 버튼
   const commentSectionRef = useRef(null);
 
-  console.log(feedData);
-
   const { feedId } = useParams();
   const [response, error, loading] = useAxios({
     method: "GET",

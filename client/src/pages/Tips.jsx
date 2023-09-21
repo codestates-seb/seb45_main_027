@@ -22,16 +22,31 @@ const Tips = () => {
   const target = useRef(null);
   // tip 해시태그 검색을 위해 넘겨받은 keyword를 저장
   const location = useLocation();
+  const [isTagSearch, setIsTagSearch] = useState(false);
+  const [tagSearchKeyword, setTagSearchKeyword] = useState("");
 
   // tip 해시태그 검색 로직 수행
   useEffect(() => {
     if (location.state) {
+      setIsTagSearch(true);
       const tagSearchState = location.state;
       const apiOptions = {
         method: tagSearchState.method,
         url: tagSearchState.url,
         headers: tagSearchState.headers,
       };
+      // url의 tag검색 keyword 추출하는 로직
+      let url = apiOptions.url;
+      const lastIndex = url.lastIndexOf("/");
+      const lastSegment = url.slice(lastIndex + 1);
+      const questionMarkIndex = lastSegment.indexOf("?");
+
+      if (questionMarkIndex !== -1) {
+        const extractedText = lastSegment.slice(0, questionMarkIndex);
+        setTagSearchKeyword(extractedText);
+      } else {
+        setTagSearchKeyword("");
+      }
 
       api(apiOptions)
         .then((res) => {
@@ -56,12 +71,13 @@ const Tips = () => {
 
   useEffect(() => {
     // 해시태그 클릭으로 들어온 경우 초기렌더링 예외처리
-    if (response && !location.state) {
+    if (response && !isTagSearch) {
       if (isFirstPageRendered.current === false) {
         setTipData(response.data.data);
         isFirstPageRendered.current = true;
       } else {
         setTipData((prevData) => [...prevData, ...response.data]);
+        setIsTagSearch(false);
       }
     } else if (error) {
       console.error("Error:", error);
@@ -81,14 +97,14 @@ const Tips = () => {
     };
   }, [viewportWidth]);
 
-  // 로딩시 토스트 및 이미지 처리
-  useEffect(() => {
-    if (!tipData && loading) {
-      toast.loading("로딩중...", { duration: 1000 });
-    } else if (tipData || error) {
-      // toast.dismiss();
-    }
-  }, [loading, error, tipData]);
+  // 초기 로딩시 토스트 및 이미지 처리 (로딩 gif와 중복)
+  // useEffect(() => {
+  //   if (!tipData && loading) {
+  //     toast.loading("로딩중...", { duration: 1000 });
+  //   } else if (tipData || error) {
+  //     // toast.dismiss();
+  //   }
+  // }, [loading, error, tipData]);
 
   // IntersectionObserver를 사용하여 스크롤 감지
   useEffect(() => {
@@ -124,7 +140,14 @@ const Tips = () => {
         }
       };
     }
-  }, [location.state, loading, isLastPage, searchKeyworld, tipData]);
+  }, [
+    location.state,
+    loading,
+    isLastPage,
+    searchKeyworld,
+    tipData,
+    isFirstPageRendered.current,
+  ]);
 
   // 새로운 페이지 데이터를 불러오는 함수
   const loadMoreData = async (url) => {
@@ -152,8 +175,11 @@ const Tips = () => {
   const handleSearch = async (e, inputValue) => {
     // 추후 앤터 누를시 서버와 통신해서 해당 게시물을 보여주는 로직 작성 ****
     page.current = 1;
+    isFirstPageRendered.current = true;
     setIsSearch(`/search/`);
     setSearchKeyworld(inputValue);
+    setIsTagSearch(false);
+    setTagSearchKeyword("");
 
     if (e.key === "Enter") {
       // API 호출을 기다리기 위해 try-catch 블록 내에서 비동기로 처리
@@ -186,7 +212,6 @@ const Tips = () => {
       </div>
     );
   }
-
   return (
     <>
       <Background mainclassName="h-full bg-[#FFFAEE]" divclassName="">
@@ -196,6 +221,8 @@ const Tips = () => {
             handleInputChange={handleInputChange}
             handleSearch={handleSearch}
             isSearch={isSearch}
+            isTagSearch={isTagSearch}
+            tagSearchKeyword={tagSearchKeyword}
           />
           <TipsContent tipData={tipData} setTipData={setTipData} />
         </div>

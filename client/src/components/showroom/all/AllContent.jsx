@@ -3,23 +3,10 @@ import { useNavigate } from "react-router-dom";
 import api from "../../common/tokens";
 import { toast } from "react-hot-toast";
 
-const AllContent = ({ showroomData, setShowroomData }) => {
-  const [bookmarkCount, setBookmarkCount] = useState({});
-
-  console.log(showroomData);
-
+const AllContent = ({ showroomData, setShowroomData, filterLoading }) => {
   const navigate = useNavigate();
   const defalutImage =
     "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png";
-
-  // useEffect(() => {
-  //   // showroomData가 변경될 때마다 bookmarkCount 상태를 업데이트
-  //   const newBookmarkCount = {};
-  //   showroomData.forEach((item) => {
-  //     newBookmarkCount[item.feedId] = item.bookMarkCount;
-  //   });
-  //   setBookmarkCount(newBookmarkCount);
-  // }, [showroomData]);
 
   // 북마크 상태를 변경시켜주는 함수
   const toggleBookmark = async (feedId) => {
@@ -77,6 +64,7 @@ const AllContent = ({ showroomData, setShowroomData }) => {
 
   return (
     <div className="flex-col mx-4">
+      {filterLoading && <div>로딩중</div>}
       <div className="flex justify-between flex-wrap">
         {showroomData.map((item, idx) => (
           <div
