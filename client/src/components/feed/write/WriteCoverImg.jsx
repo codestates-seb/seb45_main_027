@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
+  console.log(btnColor);
   const imageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -37,7 +38,8 @@ const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
   return (
     <div className="w-full h-full flex mt-10">
       <div
-        className={`${bgColor} w-full h-[500px] flex flex-col justify-center items-center text-xl rounded-md shadow`}>
+        className={`${bgColor} w-full h-[500px] flex flex-col justify-center items-center text-xl rounded-md shadow`}
+      >
         {coverImage ? (
           <img
             src={coverImage}
@@ -60,8 +62,9 @@ const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
 
         {!coverImage ? (
           <button
-            className={`${btnColor} flex items-center bg-[#F5634A] hover:bg-opacity-60 mx-4 px-8 py-2.5 rounded-md shadow text-xl text-white font-semibold`}
-            onClick={handleUpload}>
+            className={`${btnColor} flex items-center hover:bg-opacity-60 mx-4 px-8 py-2.5 rounded-md shadow text-xl text-white font-semibold`}
+            onClick={handleUpload}
+          >
             커버사진 추가하기
           </button>
         ) : null}
