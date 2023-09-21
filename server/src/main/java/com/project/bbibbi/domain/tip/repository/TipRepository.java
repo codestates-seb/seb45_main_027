@@ -53,9 +53,19 @@ public interface TipRepository extends JpaRepository<Tip, Long>, TipRepositoryCu
             "order by created_date_time desc", nativeQuery = true)
     List<Tip> findByMemberBookMark(@Param("memberId") long memberId);
 
+//    @Query(value = "select tip.* from (select b.tip_id, row_number() over(order by b.created_date_time desc) as row_num " +
+//            "from (select * from tip where title like %:searchString% or content like %:searchString% ) as b ) as ranked_tip " +
+//            "inner join (select * from tip where title like %:searchString% or content like %:searchString% ) as tip " +
+//            "on ranked_tip.tip_id = tip.tip_id " +
+//            "where ranked_tip.row_num > :page * :size " +
+//            "order by created_date_time desc limit :size ", nativeQuery = true)
+//    List<Tip> findAllSearch (@Param("searchString") String searchString, @Param("page") int page, @Param("size") int size);
+
     @Query(value = "select tip.* from (select b.tip_id, row_number() over(order by b.created_date_time desc) as row_num " +
-            "from (select * from tip where title like %:searchString% or content like %:searchString% ) as b ) as ranked_tip " +
-            "inner join (select * from tip where title like %:searchString% or content like %:searchString% ) as tip " +
+            "from (select cf.* from (select p.*, TRIM(BOTH ' ' FROM REGEXP_REPLACE(p.content, '\\\\<.*?\\\\>', '')) AS clean_content\n" +
+            "\t\t\t\t\t\tfrom tip p ) cf where cf.title like %:searchString% or cf.clean_content like %:searchString% ) as b ) as ranked_tip " +
+            "inner join (select cf.* from (select p.*, TRIM(BOTH ' ' FROM REGEXP_REPLACE(p.content, '\\\\<.*?\\\\>', '')) AS clean_content\n" +
+            "\t\t\t\t\t\tfrom tip p ) cf where cf.title like %:searchString% or cf.clean_content like %:searchString% ) as tip " +
             "on ranked_tip.tip_id = tip.tip_id " +
             "where ranked_tip.row_num > :page * :size " +
             "order by created_date_time desc limit :size ", nativeQuery = true)
@@ -65,8 +75,14 @@ public interface TipRepository extends JpaRepository<Tip, Long>, TipRepositoryCu
     @Query(value = "select * from tip where tip_id in (select a.tip_id from tag a where a.tag_content = :searchTag ) order by created_date_time desc ", nativeQuery = true)
     List<Tip> findAllSearchTag (@Param("searchTag") String searchTag);
 
-    @Query(value = "select count(*) from tip where title like %:searchString% or content like %:searchString% ", nativeQuery = true)
-    Integer findAllSearchCount (@Param("searchString") String searchString);
+//    @Query(value = "select count(*) from tip where title like %:searchString% or content like %:searchString% ", nativeQuery = true)
+//    Integer findAllSearchCount (@Param("searchString") String searchString);
+
+    @Query(value = "select count(*)\n" +
+            "from ( select p.*, TRIM(BOTH ' ' FROM REGEXP_REPLACE(p.content, '\\\\<.*?\\\\>', '')) AS clean_content\n" +
+            "from tip p) pp\n" +
+            "where pp.title like %:searchString% or pp.clean_content like %:searchString% ", nativeQuery = true)
+    Integer findAllCleanSearchCount (@Param("searchString") String searchString);
 
 //    @Query(value = "select feed.* from feed " +
 //            "inner join (select a.feed_id, ( select count(*) from feed_like where feed_id = a.feed_id) as like_count from feed a ) as feed_likecount " +

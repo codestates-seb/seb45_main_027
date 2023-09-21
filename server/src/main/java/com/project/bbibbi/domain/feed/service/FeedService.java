@@ -358,7 +358,7 @@ public class FeedService {
 
         System.out.println("string : "+searchString);
 
-        Integer selectedFeedsCount = feedRepository.findBySearchCount(searchString);
+        Integer selectedFeedsCount = feedRepository.findByCleanSearchCount(searchString);
         //좋아요 개수
         for(Feed feed : selectedFeeds){
             Integer feedLikeCount = feedLikeRepository.feedLikeCount(feed.getFeedId());
@@ -392,40 +392,40 @@ public class FeedService {
 
         }
 
-        for(int i = 0; i < selectedFeeds.size(); i++){
-
-            Feed feed = selectedFeeds.get(i);
-
-            if(feed.getTitle().contains(searchString)){
-                continue;
-            }
-            String originalString = feed.getContent();
-
-            StringBuilder result = new StringBuilder();
-            boolean insideTag = false;
-
-            for(char c : originalString.toCharArray()){
-                if(c == '<'){
-                    insideTag = true;
-                }
-                else if(c == '>'){
-                    insideTag = false;
-                }
-                else if(!insideTag){
-                    result.append(c);
-                }
-            }
-
-            String finalString = result.toString();
-
-            String parameter = searchString;
-
-            if(!finalString.contains(parameter)){
-                selectedFeeds.remove(i);
-                i--;
-            }
-
-        }
+//        for(int i = 0; i < selectedFeeds.size(); i++){
+//
+//            Feed feed = selectedFeeds.get(i);
+//
+//            if(feed.getTitle().contains(searchString)){
+//                continue;
+//            }
+//            String originalString = feed.getContent();
+//
+//            StringBuilder result = new StringBuilder();
+//            boolean insideTag = false;
+//
+//            for(char c : originalString.toCharArray()){
+//                if(c == '<'){
+//                    insideTag = true;
+//                }
+//                else if(c == '>'){
+//                    insideTag = false;
+//                }
+//                else if(!insideTag){
+//                    result.append(c);
+//                }
+//            }
+//
+//            String finalString = result.toString();
+//
+//            String parameter = searchString;
+//
+//            if(!finalString.contains(parameter)){
+//                selectedFeeds.remove(i);
+//                i--;
+//            }
+//
+//        }
 
 
 

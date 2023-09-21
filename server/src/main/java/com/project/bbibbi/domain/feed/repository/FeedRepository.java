@@ -88,9 +88,19 @@ public interface FeedRepository extends JpaRepository<Feed, Long> {
 
     Page<Feed> findByOrderByCreatedDateTimeDesc(Pageable pageable);
 
+//    @Query(value = "select feed.* from (select b.feed_id, row_number() over(order by b.created_date_time desc) as row_num " +
+//            "from (select * from feed where title like %:searchString% or content like %:searchString% ) as b ) as ranked_feed " +
+//            "inner join (select * from feed where title like %:searchString% or content like %:searchString% ) as feed " +
+//            "on ranked_feed.feed_id = feed.feed_id " +
+//            "where ranked_feed.row_num > :page * :size " +
+//            "order by created_date_time desc limit :size ", nativeQuery = true)
+//    List<Feed> findBySearch(@Param("searchString") String searchString,@Param("page") int page,@Param("size") int size);
+
     @Query(value = "select feed.* from (select b.feed_id, row_number() over(order by b.created_date_time desc) as row_num " +
-            "from (select * from feed where title like %:searchString% or content like %:searchString% ) as b ) as ranked_feed " +
-            "inner join (select * from feed where title like %:searchString% or content like %:searchString% ) as feed " +
+            "from (select cf.* from (select p.*, TRIM(BOTH ' ' FROM REGEXP_REPLACE(p.content, '\\\\<.*?\\\\>', '')) AS clean_content\n" +
+            "\t\t\t\t\t\tfrom feed p ) cf where cf.title like %:searchString% or cf.clean_content like %:searchString% ) as b ) as ranked_feed " +
+            "inner join (select cf.* from (select p.*, TRIM(BOTH ' ' FROM REGEXP_REPLACE(p.content, '\\\\<.*?\\\\>', '')) AS clean_content\n" +
+            "\t\t\t\t\t\tfrom feed p ) cf where cf.title like %:searchString% or cf.clean_content like %:searchString% ) as feed " +
             "on ranked_feed.feed_id = feed.feed_id " +
             "where ranked_feed.row_num > :page * :size " +
             "order by created_date_time desc limit :size ", nativeQuery = true)
@@ -104,8 +114,14 @@ public interface FeedRepository extends JpaRepository<Feed, Long> {
 //            "order by created_date_time desc limit :size ", nativeQuery = true)
 //    List<Feed> findBySearch(@Param("searchString") String searchString,@Param("page") int page,@Param("size") int size);
 
-    @Query(value = "select count(*) from feed where title like %:searchString% or content like %:searchString%", nativeQuery = true)
-    Integer findBySearchCount(@Param("searchString") String searchString);
+//    @Query(value = "select count(*) from feed where title like %:searchString% or content like %:searchString%", nativeQuery = true)
+//    Integer findBySearchCount(@Param("searchString") String searchString);
+
+    @Query(value = "select count(*)\n" +
+            "from ( select p.*, TRIM(BOTH ' ' FROM REGEXP_REPLACE(p.content, '\\\\<.*?\\\\>', '')) AS clean_content\n" +
+            "from feed p) pp\n" +
+            "where pp.title like %:searchString% or pp.clean_content like %:searchString% ", nativeQuery = true)
+    Integer findByCleanSearchCount(@Param("searchString") String searchString);
 
     @Query(value = "select feed.* from feed " +
             "inner join (select a.feed_id, ( select count(*) from feed_like where feed_id = a.feed_id) as like_count from feed a ) as feed_likecount " +
