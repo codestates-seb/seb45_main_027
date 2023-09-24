@@ -7,7 +7,7 @@ import ViewCoverImg from "../components/feed/view/ViewCoverImg";
 import Sidebar from "../components/feed/view/Sidebar";
 import ShowroomContents from "../components/feed/view/ShowroomContents";
 import Edit from "../components/feed/view/Edit";
-import Comment from "../components/feed/view/Comment";
+import CommentWrap from "../components/feed/comment/showroom/CommentWrap";
 
 const ViewShowRoom = () => {
   // 받아온 API 공유하기 위한 상태
@@ -24,8 +24,9 @@ const ViewShowRoom = () => {
     },
   });
 
-  // 멤버아이디 (게시글ID(feedId)와 memberId 일치시에만 On)
-  const userId = response?.data?.data?.feedId;
+  // 작정자 멤버아이디 (게시글ID(feedId)와 memberId 일치시에만 On)
+  const userId = response?.data?.data?.memberId;
+
   // 로컬에 저장된 memberID 가져오기
   const memberId = localStorage.getItem("memberId");
 
@@ -56,10 +57,16 @@ const ViewShowRoom = () => {
       />
       <Background
         mainclassName="bg-[#FFFAEE] h-full px-14 md:px-56 pb-40"
-        divclassName="flex-col my-24 md:my-0">
+        divclassName="flex-col my-24 md:my-0"
+      >
         <ShowroomContents setFeedData={setFeedData} feedData={feedData} />
-        {memberId === userId && <Edit />}
-        <Comment feedData={feedData}  ref={commentSectionRef} />
+
+        {memberId == userId && <Edit feedData={feedData} />}
+        <CommentWrap
+          feedData={feedData}
+          setFeedData={setFeedData}
+          ref={commentSectionRef}
+        />
       </Background>
     </div>
   );

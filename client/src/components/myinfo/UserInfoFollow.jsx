@@ -1,48 +1,11 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 import UserInfoFollowList from "./UserInfoFollowList";
-import { toast } from "react-hot-toast";
-import axios from "axios";
+// import { toast } from "react-hot-toast";
 
-const UserInfoFollow = () => {
-  const [followingList, setFollowingList] = useState("");
-  const [followersList, setFollowersList] = useState("");
-  const baseURL = process.env.REACT_APP_API_URL;
-  const { id } = useParams();
-  const accessToken = localStorage.getItem("accessToken");
-  
-
-  useEffect(() => { fetchData(); }, [id]);
-
-  const fetchData = async () => {
-    try {
-      const [followingResponse, followersResponse] = await Promise.all([
-        axios.get(`${baseURL}/follow/from/${id}`, {
-          headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : "",
-            "ngrok-skip-browser-warning": "69420",
-
-          },
-        }),
-        axios.get(`${baseURL}/follow/to/${id}`, {
-          headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : "",
-            "ngrok-skip-browser-warning": "69420",
-          },
-        }),
-      ]);
-
-      setFollowingList(followingResponse.data.data);
-      setFollowersList(followersResponse.data.data);
-
-      // console.log("Following data", followingResponse.data);
-      // console.log("Following data.data", followingResponse.data.data);
-    } catch (err) {
-      console.error("Error: ", err);
-    }
+const UserInfoFollow = ({ followingList, followersList, fetchFollowData }) => {
+  const handleFollowAction = () => {
+    fetchFollowData();
   };
-
-  const handleFollowAction = () => { fetchData();};
 
   const [activeTab, setActiveTab] = useState("following");
   const handleTabChange = (tab) => {
@@ -50,29 +13,34 @@ const UserInfoFollow = () => {
   };
 
   return (
-    <div className="z-50">
-      {followingList && followersList && <div className="flex flex-row md:justify-center p-2 mb-6 text-[#525252] font-medium">
-        <button
-          className={`flex items-center text-base ${
-            activeTab === "following" ? "text-[#00647B]" : ""
-          }`}
-          onClick={() => handleTabChange("following")}
-        >
-          <div className="p-2 hover:rounded-full">Following</div>
-          <div>{followingList.length}</div>
-        </button>
-        <button
-          className={`flex items-center text-base ${
-            activeTab === "followers" ? "text-[#00647B]" : ""
-          }`}
-          onClick={() => handleTabChange("followers")}
-        >
-          <div className="ml-4 p-2 hover:rounded-full">Followers</div>
-          <div>{followersList.length}</div>
-        </button>
-      </div>}
+    <div className="">
+      {followingList && followersList && (
+        <div className="
+        flex flex-row justify-end md:justify-center 
+        py-2 px-4 mb-0 md:mb-6 
+        text-[#525252] text-[10px] md:text-base font-medium">
+          <button
+            className={`flex items-center ${
+              activeTab === "following" ? "text-[#00647B]" : ""
+            }`}
+            onClick={() => handleTabChange("following")}
+          >
+            <div className="p-2 hover:rounded-full">Following</div>
+            <div>{followingList.length}</div>
+          </button>
+          <button
+            className={`flex items-center ${
+              activeTab === "followers" ? "text-[#00647B]" : ""
+            }`}
+            onClick={() => handleTabChange("followers")}
+          >
+            <div className="ml-4 p-2 hover:rounded-full">Followers</div>
+            <div>{followersList.length}</div>
+          </button>
+        </div>
+      )}
       <div
-        className="md:mb-10 md:h-[300px] overflow-auto xl:w-[250px] bg-white opacity-[90%]"
+        className="md:mb-10 md:h-[300px] overflow-auto "
         style={{
           scrollbarWidth: "thin",
         }}

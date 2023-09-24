@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
 import MyInfoPost from "./MyInfoPost";
 import MyInfoBookmark from "./MyInfoBookmark";
 import MyInfoLike from "./MyInfoLike";
 import { toast } from "react-hot-toast";
-import axios from "axios";
+import api from "../common/tokens";
 
 const MyInfoShowroom = ({
   postData = [],
@@ -14,22 +15,24 @@ const MyInfoShowroom = ({
   handleFollowAction,
   label,
 }) => {
-  const baseURL = process.env.REACT_APP_API_URL;
-  const accessToken = localStorage.getItem("accessToken");
+  const navigate = useNavigate();
 
   // 게시글, 북마크, 삭제 부분
   const deletePost = async (itemId, label) => {
-    let url = '';
-    if(label === "showroom") {url = `${baseURL}/feed/${itemId}`;}
-    if(label === "tips") {url = `${baseURL}/tip/${itemId}`;}
+    let url = "";
+    if (label === "showroom") {
+      url = `/feed/${itemId}`;
+    }
+    if (label === "tips") {
+      url = `/tip/${itemId}`;
+    }
     const confirmDeletion = window.confirm(
-      `${itemId} ${label}Are you sure you want to delete this post? This action cannot be undone.`
+      `정말 삭제하시겠습니까? 한 번 삭제된 게시물은 복구할 수 없습니다.`
     );
     if (confirmDeletion) {
       try {
-        await axios.delete(url,{
+        await api.delete(url, {
           headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : "", 
             "ngrok-skip-browser-warning": "69420",
           },
         });
@@ -41,15 +44,18 @@ const MyInfoShowroom = ({
     }
   };
 
-  const deleteBookmark = async(itemId, label) => {
-    let url = '';
-    if(label === "showroom") {url = `${baseURL}/feed/${itemId}/feedBookMark`;}
-    if(label === "tips") {url = `${baseURL}/tip/${itemId}/tipbookmark`;}
+  const deleteBookmark = async (itemId, label) => {
+    let url = "";
+    if (label === "showroom") {
+      url = `/feed/${itemId}/feedBookMark`;
+    }
+    if (label === "tips") {
+      url = `/tip/${itemId}/tipbookmark`;
+    }
 
     try {
-      await axios.patch(url,{
+      await api.patch(url, {
         headers: {
-          Authorization: accessToken ? `Bearer ${accessToken}` : "", 
           "ngrok-skip-browser-warning": "69420",
         },
       });
@@ -60,15 +66,18 @@ const MyInfoShowroom = ({
     }
   };
 
-  const deleteLike = async(itemId, label) => {
-    let url = '';
-    if(label === "showroom") {url = `${baseURL}/feed/${itemId}/feedLike`;}
-    if(label === "tips") {url = `${baseURL}/tip/${itemId}/tiplike`;}
+  const deleteLike = async (itemId, label) => {
+    let url = "";
+    if (label === "showroom") {
+      url = `/feed/${itemId}/feedlike`;
+    }
+    if (label === "tips") {
+      url = `/tip/${itemId}/tiplike`;
+    }
 
     try {
-      await axios.patch(url,{
+      await api.patch(url, {
         headers: {
-          Authorization: accessToken ? `Bearer ${accessToken}` : "", 
           "ngrok-skip-browser-warning": "69420",
         },
       });
@@ -79,11 +88,19 @@ const MyInfoShowroom = ({
     }
   };
 
+  const postNavigate = (itemId, label) => {
+    navigate(`/${label}/${itemId}`);
+  };
+
+  const handleEditNavigate = async (itemId, label) => {
+    navigate(`/${label}/${itemId}/edit`);
+  };
+
   // 페이지네이션 부분
   const [postPage, setPostPage] = useState(1);
   const [bookmarkPage, setBookmarkPage] = useState(1);
   const [likePage, setLikePage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 4;
 
   const visiblePosts = postData
     ? postData.slice((postPage - 1) * itemsPerPage, postPage * itemsPerPage)
@@ -112,14 +129,20 @@ const MyInfoShowroom = ({
     }
   };
 
-  console.log("visiblePosts", visiblePosts);
-  console.log("visibleBookmarks", visibleBookmarks);
-  console.log("visibleLikes", visibleLikes);
+  // console.log("visiblePosts", visiblePosts);
+  // console.log("visibleBookmarks", visibleBookmarks);
+  // console.log("visibleLikes", visibleLikes);
 
+  const noContentStyle =
+    "flex items-center p-28 text-md md:text-2xl text-[#00647B]/90 font-semibold Showcard-Gothic";
 
   return (
     <>
-      <div className="md:min-h-[210px] md:min-w-[400px] flex flex-row flex-wrap items-start">
+      <div
+        className="
+          flex flex-row flex-wrap justify-center 
+          md:h-[180px] lg:h-[200px] xl:h-[230px]"
+      >
         {activeTab === 1 &&
           visiblePosts.map((item, idx) => (
             <MyInfoPost
@@ -129,6 +152,8 @@ const MyInfoShowroom = ({
               title={item.title}
               itemId={item.feedId || item.tipId}
               deletePost={deletePost}
+              postNavigate={postNavigate}
+              handleEditNavigate={handleEditNavigate}
             />
           ))}
         {activeTab === 2 &&
@@ -141,6 +166,7 @@ const MyInfoShowroom = ({
               itemId={item.feedId || item.tipId}
               isBookmarked={item.bookMarkYn}
               deleteBookmark={deleteBookmark}
+              postNavigate={postNavigate}
             />
           ))}
         {activeTab === 3 &&
@@ -153,11 +179,21 @@ const MyInfoShowroom = ({
               itemId={item.feedId || item.tipId}
               isLiked={item.likeYn}
               deleteLike={deleteLike}
+              postNavigate={postNavigate}
             />
           ))}
+        {activeTab === 1 && postData.length === 0 && (
+          <div className={noContentStyle}>No Content!</div>
+        )}
+        {activeTab === 2 && bookmarkData.length === 0 && (
+          <div className={noContentStyle}>No Content!</div>
+        )}
+        {activeTab === 3 && likeData.length === 0 && (
+          <div className={noContentStyle}>No Content!</div>
+        )}
       </div>
       <div>
-        {activeTab === 1 && (
+        {activeTab === 1 && postData.length > 0 && (
           <Pagination
             currentPage={postPage}
             totalPages={Math.ceil(postData.length / itemsPerPage)}
@@ -171,7 +207,7 @@ const MyInfoShowroom = ({
             onPrevPage={() => handlePrevPage(postPage, setPostPage)}
           />
         )}
-        {activeTab === 2 && (
+        {activeTab === 2 && bookmarkData.length > 0 && (
           <Pagination
             currentPage={bookmarkPage}
             totalPages={Math.ceil(bookmarkData.length / itemsPerPage)}
@@ -185,7 +221,7 @@ const MyInfoShowroom = ({
             onPrevPage={() => handlePrevPage(bookmarkPage, setBookmarkPage)}
           />
         )}
-        {activeTab === 3 && (
+        {activeTab === 3 && likeData.length > 0 && (
           <Pagination
             currentPage={likePage}
             totalPages={Math.ceil(likeData.length / itemsPerPage)}

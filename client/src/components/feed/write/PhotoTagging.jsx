@@ -50,59 +50,64 @@ const PhotoTagging = ({
   };
 
   return (
-    <div
-      className="inline-block relative"
-      onMouseEnter={() => setPhotoHovered(true)}
-      onMouseLeave={() => setPhotoHovered(false)}
-    >
-      <img
-        className="max-w-full cursor-crosshair rounded-[10px]"
-        src={imageSrc}
-        alt="Taggable"
-        onClick={handleImageClick}
-      />
-      {tags.map((tag, index) => (
-        <Tag
-          key={index}
-          x={tag.x}
-          y={tag.y}
-          text={tag.text}
-          handleTagDelete={handleTagDelete}
-          photoHovered={photoHovered}
-        />
-      ))}
-      {photoHovered &&
-        inputVisible && ( //사진에 호버, inputVisible이 true일때만 태그인풋 박스 렌더링
-          <div
-            className="absolute"
-            style={{
-              left: inputPosition.x,
-              top: inputPosition.y,
-            }}
-          >
-            <input
-              className="p-2 mr-5 border-none rounded-[5px]"
-              autoFocus
-              type="text"
-              value={currentTag.text}
-              onChange={handleTagInput}
-              placeholder="Enter tag"
-              onKeyDown={handleEnterKey} //엔터클릭시 handleTagSubmit 동작
-            />
-            <button
-              className="py-2 px-4 bg-[#00647b] rounded-[5px] text-white border-none cursor-pointer"
-              onClick={handleTagSubmit}
+    <div className="flex justify-center">
+      <div
+        className="inline-block relative "
+        onMouseEnter={() => setPhotoHovered(true)}
+        onMouseLeave={() => setPhotoHovered(false)}
+      >
+        {imageSrc ? (
+          <img
+            className="max-w-full cursor-crosshair rounded-[10px]"
+            src={imageSrc}
+            alt="사진을 첨부하세요."
+            onClick={handleImageClick}
+          />
+        ) : null}
+
+        {tags.map((tag, index) => (
+          <Tag
+            key={index}
+            x={tag.x}
+            y={tag.y}
+            text={tag.text}
+            handleTagDelete={handleTagDelete}
+            photoHovered={photoHovered}
+          />
+        ))}
+        {photoHovered &&
+          inputVisible && ( //사진에 호버, inputVisible이 true일때만 태그인풋 박스 렌더링
+            <div
+              className="absolute"
+              style={{
+                left: inputPosition.x,
+                top: inputPosition.y,
+              }}
             >
-              Add Tag
-            </button>
-            <button
-              className="py-2 px-4 bg-[#00647b]  rounded-[5px] text-white border-none cursor-pointer ml-[5px] "
-              onClick={handleCloseInput}
-            >
-              Close
-            </button>
-          </div>
-        )}
+              <input
+                className="p-2 mr-5 border-none rounded-[5px]"
+                autoFocus
+                type="text"
+                value={currentTag.text}
+                onChange={handleTagInput}
+                placeholder="Enter tag"
+                onKeyDown={handleEnterKey} //엔터클릭시 handleTagSubmit 동작
+              />
+              <button
+                className="py-2 px-4 bg-[#00647b] rounded-[5px] text-white border-none cursor-pointer"
+                onClick={handleTagSubmit}
+              >
+                Add Tag
+              </button>
+              <button
+                className="py-2 px-4 bg-[#00647b]  rounded-[5px] text-white border-none cursor-pointer ml-[5px] "
+                onClick={handleCloseInput}
+              >
+                Close
+              </button>
+            </div>
+          )}
+      </div>
     </div>
   );
 };

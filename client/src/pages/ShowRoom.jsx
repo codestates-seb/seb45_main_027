@@ -56,11 +56,12 @@ const ShowRoom = () => {
     };
   }, [viewportWidth]);
 
+  // 무한스크롤 구현하면서 필요없어진 코드같음..
   useEffect(() => {
-    if (!showroomData.length && loading) {
+    if (!showroomData && loading) {
       toast.loading("데이터를 불러오는 중입니다...");
-    } else if (showroomData.length || error) {
-      toast.dismiss();
+    } else if (showroomData || error) {
+      // toast.dismiss();
     }
   }, [showroomData, loading, error]);
 
@@ -71,6 +72,7 @@ const ShowRoom = () => {
       setFeedCode("filter");
       setFilterCode(filterCode);
       page.current = 1;
+      isFirstPageRendered.current = true;
 
       const updatedConfigParams = {
         ...configParams,
@@ -78,8 +80,9 @@ const ShowRoom = () => {
       };
 
       const res = await api(updatedConfigParams);
-      toast.dismiss(filterToast); // 필터링 중 토스트 메시지 닫기
+      // toast.dismiss(filterToast); // 필터링 중 토스트 메시지 닫기
       setShowroomData(res.data.data);
+      setIsLastPage(res.data.isLast);
       page.current = 1; // 필터링 시 페이지를 다시 1로 설정
     } catch (error) {
       console.error("Error sending GET request:", error);
@@ -97,6 +100,7 @@ const ShowRoom = () => {
       setFeedCode("filter");
       setFilterCode(filterCode);
       page.current = 1;
+      isFirstPageRendered.current = true;
 
       const updatedConfigParams = {
         ...configParams,
@@ -104,8 +108,9 @@ const ShowRoom = () => {
       };
 
       const res = await api(updatedConfigParams);
-      toast.dismiss(filterToast); // 필터링 중 토스트 메시지 닫기
+      // toast.dismiss(filterToast); // 필터링 중 토스트 메시지 닫기
       setShowroomData(res.data.data);
+      setIsLastPage(res.data.isLast);
       page.current = 1; // 필터링 시 페이지를 다시 1로 설정
     } catch (error) {
       console.error("Error sending GET request:", error);
@@ -119,7 +124,7 @@ const ShowRoom = () => {
   // IntersectionObserver를 사용하여 스크롤 감지
   useEffect(() => {
     // IntersectionObserver를 생성하고 등록
-    if (!isLastPage) {
+    if (!isLastPage && !loading && isFirstPageRendered.current == true) {
       // isLast가 false일 때만 IntersectionObserver 등록
       const newObserver = new IntersectionObserver(
         ([entry]) => {
@@ -151,11 +156,12 @@ const ShowRoom = () => {
   // 새로운 페이지 데이터를 불러오는 함수
   const loadMoreData = async (url) => {
     try {
-      toast.loading("데이터를 불러오는 중입니다..."); // 데이터 로딩 중 토스트 메시지 표시
+      toast.loading("로딩중..."); // 데이터 로딩 중 토스트 메시지 표시
       const res = await api({ ...configParams, url });
       if (res.data.isLast === false) {
         setShowroomData((prevData) => [...prevData, ...res.data.data]);
       } else {
+        setShowroomData((prevData) => [...prevData, ...res.data.data]);
         // 마지막 페이지 설정
         setIsLastPage(res.data.isLast);
       }
@@ -171,6 +177,7 @@ const ShowRoom = () => {
   const handleSearch = async (e, inputValue) => {
     // 추후 앤터 누를시 서버와 통신해서 해당 게시물을 보여주는 로직 작성 ****
     page.current = 1;
+    isFirstPageRendered.current = true;
     setFeedCode("search");
     setFilterCode("");
     setSearchKeyworld(inputValue);
@@ -182,17 +189,32 @@ const ShowRoom = () => {
 
     if (e.key === "Enter") {
       // API 호출을 기다리기 위해 try-catch 블록 내에서 비동기로 처리.
+
+      toast.loading("검색중입니다.");
       try {
         const res = await api(updatedConfigParams);
+        toast.dismiss();
         setShowroomData(res.data.data);
         clearInput();
-        console.log("검색누름");
       } catch (error) {
         console.error("Error sending GET request:", error);
         toast.error("검색 실패");
       }
     }
   };
+
+  if (loading) {
+    return (
+      <div className="bg-[#fdfdfe] w-screen h-[810px]">
+        <div className="flex justify-center h-auto">
+          <img
+            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/loading.gif"
+            alt="로딩중"
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Background mainclassName="h-full bg-[#FFFAEE]">

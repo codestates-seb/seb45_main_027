@@ -1,6 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import PhotoTagging from "./PhotoTagging";
+import ImageEditGuide from "./ImageEditGuide";
 import axios from "axios";
+import {
+  FaBold,
+  FaItalic,
+  FaUnderline,
+  FaStrikethrough,
+  FaTrashAlt,
+} from "react-icons/fa";
+import { LuImageOff } from "react-icons/lu";
+import { LuImage } from "react-icons/lu";
+
+// 버튼효과
+const buttonStyle =
+  "ml-2 sm:mt-4 lg:mt-0 py-2 px-2 sm:px-4 border-[1px] mx-2 rounded-md hover:bg-gray-200 hover:bg-opacity-50";
 
 const WriteFormShowroom = ({
   editorContent,
@@ -9,9 +23,8 @@ const WriteFormShowroom = ({
 }) => {
   const editorRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(null);
-  const [tags, setTags] = useState([]); // 이미지 내 tags 들의 집합
-  const [currentTag, setCurrentTag] = useState({ x: "0%", y: "0%", text: "" }); // 현재 추가하려는 tag
-  // const [editorContent, setEditorContent] = useState(""); // Editor 내용을 관리
+  const [tags, setTags] = useState([]);
+  const [currentTag, setCurrentTag] = useState({ x: "0%", y: "0%", text: "" });
 
   useEffect(() => {
     if (editorContent === DEFAULT_EDITOR_TEXT) {
@@ -43,7 +56,7 @@ const WriteFormShowroom = ({
     if (file) {
       reader.readAsDataURL(file);
     }
-    // S3 이미지 업로드 통신 로직은 API(헤더에 토큰정보전달하는 코드) 쓰면 안됨! - 데이터 형식 이슈
+
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/imageUpload/feedImage`,
@@ -55,18 +68,18 @@ const WriteFormShowroom = ({
     } catch (error) {
       console.error("이미지 업로드에 실패하였습니다.", error);
       window.alert("이미지 업로드에 실패하였습니다.");
-      setImageSrc(null); // coverimage 값 초기화
+      setImageSrc(null);
     }
   };
 
-  // 이미지 및 태그 삭제
   const handleDeleteImageAndTags = () => {
-    // 상위 <div class="relative"> 요소를 삭제합니다.
     const updatedContent = editorContent.replace(
-      /<div class="relative">[\s\S]*?<\/div>/,
+      /<br\s*\/?>\s*<div\s+class="flex justify-center">\s*<div\s+id="contentImage"\s+class="relative mx-5"[\s\S]*?<\/div>\s*<\/div>\s*<br\s*\/?>/g,
       ""
     );
     setEditorContent(updatedContent);
+    setImageSrc(null);
+    setTags([]);
   };
 
   const handlePost = () => {
@@ -76,72 +89,116 @@ const WriteFormShowroom = ({
       text: tag.text,
     }));
 
-    // post요청시 이미지 태그 생성, 이미지 태그 내 태그 삽입
-    const combinedHTML = `<br/><div class="relative"><img src="${imageSrc}" alt="Uploaded Image" contentEditable="false" />${tagsData
+    const combinedHTML = `<br/><div class="flex justify-center"><div id="contentImage" class="relative mx-5" style="display: inline-block; justify-content: center; align-items: center; position: relative; text-align: center;"><img src="${imageSrc}" class="" alt="Uploaded Image" contentEditable="false" />${tagsData
       .map(
         (tag) =>
-          `<span class="bg-[#F5634A] p-2 rounded-xl text-white" style="position: absolute; left: ${tag.x}; top: ${tag.y}" contentEditable="false">${tag.text}</span>`
+          `<span class="bg-[#F5634A] p-2 rounded-xl text-white text-base" style="position: absolute; left: ${tag.x}; top: ${tag.y}; transform: translate(-50%, -50%);" contentEditable="false">${tag.text}</span>`
       )
-      .join("")}</div><br/>`;
+      .join("")}</div></div><br/>`;
 
-    // 에디터 내용에 이미지삽입
     setEditorContent(editorContent + combinedHTML);
-
-    // 이미지 및 태그정보 초기화
     setImageSrc(null);
     setTags([]);
   };
 
+  const toggleStyle = (style) => {
+    // 에디터내 글자 스타일 설정
+    document.execCommand(style, false, null);
+  };
+
   return (
     <>
-      <div className="flex border-b-[1px] pb-4">
-        <label htmlFor="imageUpload" className="cursor-pointer rounded-md">
-          <img
-            className="p-2"
-            src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/gallery.png"
-            alt="gallery"
-          />
+      <div className="flex border-b-[1px] pb-4 flex-wrap">
+        {/* 등록 */}
+        <label className="text-lg font-semibold text-white flex items-center bg-[#F5634A] bg-opacity-40 hover:bg-opacity-20 mx-1 sm:mx-4 px-2 sm:px-5 py-2 rounded-md shadow">
+          <div>
+            <LuImage size={"25px"} color={"#F5634A"} />
+            <input
+              id="imageUpload"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageUpload}
+            />
+          </div>
+          <span className="hidden sm:block pl-4 text-lg font-semibold text-white">
+            이미지 등록하기
+          </span>
         </label>
-        <input
-          id="imageUpload"
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleImageUpload}
-        />
-        <button
-          onClick={handlePost}
-          className="p-2 border-[1px] mx-2 rounded-md"
-        >
-          이미지 등록
-        </button>
+
+        {/* 삭제 */}
         <button
           onClick={handleDeleteImageAndTags}
-          className="p-2 border-[1px] mx-2 rounded-md"
+          className="flex items-center bg-[#F5634A] bg-opacity-40 hover:bg-opacity-20 mx-2 sm:mx-4 px-2 sm:px-5 py-2 rounded-md shadow"
         >
-          이미지 삭제
+          <div>
+            <LuImageOff size={"25px"} color={"#F5634A "} />
+          </div>
+          <span className="hidden sm:block pl-4 text-lg font-semibold text-white">
+            이미지 삭제하기
+          </span>
+        </button>
+
+        {/* 구분선 */}
+        <div className="border-r-[1px] h-10 my-auto mx-3 "></div>
+
+        <button
+          onClick={() => {
+            toggleStyle("bold");
+          }}
+          className={buttonStyle}
+        >
+          <FaBold />
+        </button>
+        <button onClick={() => toggleStyle("italic")} className={buttonStyle}>
+          <FaItalic />
+        </button>
+        <button
+          onClick={() => toggleStyle("underline")}
+          className={buttonStyle}
+        >
+          <FaUnderline />
+        </button>
+        <button
+          onClick={() => toggleStyle("strikethrough")}
+          className={buttonStyle}
+        >
+          <FaStrikethrough />
         </button>
       </div>
 
       <div className="flex-col justify-center content-center">
-        {imageSrc ? (
-          <div className="m-5">
-            <PhotoTagging
-              imageSrc={imageSrc}
-              tags={tags}
-              setTags={setTags}
-              currentTag={currentTag}
-              setCurrentTag={setCurrentTag}
-            />
-          </div>
-        ) : null}
+        <div className="m-4 p-10 flex flex-col border shadow rounded-xl bg-[#F5634A] bg-opacity-10">
+          <ImageEditGuide />
+          {/* {imageSrc && <div>이미지 편집기</div>} */}
+
+          <PhotoTagging
+            imageSrc={imageSrc}
+            tags={tags}
+            setTags={setTags}
+            currentTag={currentTag}
+            setCurrentTag={setCurrentTag}
+          />
+          {imageSrc && (
+            <div className="w-full flex justify-center mt-10">
+              <button
+                onClick={handlePost}
+                className="flex items-center bg-[#F5634A] bg-opacity-40 hover:bg-opacity-20 mx-4 px-5 py-2 rounded-md shadow"
+              >
+                <span className="px-4 py-2 text-xl font-semibold text-white">
+                  이미지 등록하기
+                </span>
+              </button>
+            </div>
+          )}
+        </div>
         <div
           ref={editorRef}
           contentEditable={true}
           dangerouslySetInnerHTML={{ __html: editorContent }}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className="p-2 mt-6 h-full w-full min-h-[600px] text-xl"
+          className="p-10 m-4 h-full min-h-[600px] text-md rounded-md shadow text-xl focus:outline-none"
         ></div>
       </div>
     </>

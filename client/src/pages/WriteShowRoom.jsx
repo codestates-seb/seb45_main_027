@@ -10,7 +10,6 @@ import WriteFormShowroom from "../components/feed/write/WriteFormShowroom";
 import { toast } from "react-hot-toast";
 import api from "../components/common/tokens";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const DEFAULT_EDITOR_TEXT = "내용을 입력해주세요.";
 
@@ -38,12 +37,6 @@ const WriteShowRoom = () => {
     roomCount: null,
     location: null,
   }); // 드랍다운 선택 결과를 담은 상태
-
-  console.log(coverImage);
-  // console.log(title);
-  // console.log(editorContent);
-  // console.log(selectedValues);
-  console.log(selectedValues);
 
   const navigate = useNavigate();
 
@@ -174,8 +167,7 @@ const WriteShowRoom = () => {
       />
       <Background
         mainclassName=" bg-[#FFFAEE] w-full h-full px-14 md:px-56"
-        divclassName="flex-col my-24 md:my-0"
-      >
+        divclassName="flex-col my-24 md:my-0">
         <div className="hidden md:block">
           <WriteBtn
             saveToLocalStorage={saveToLocalStorage}
@@ -203,6 +195,16 @@ const WriteShowRoom = () => {
             editorContent={editorContent}
             setEditorContent={setEditorContent}
             DEFAULT_EDITOR_TEXT={DEFAULT_EDITOR_TEXT}
+          />
+        </div>
+        <div className="-mt-36 mx-2 pb-40">
+          <WriteBtn
+            saveToLocalStorage={saveToLocalStorage}
+            buttonBgColor="bg-[#F5634A]"
+            buttonBorderColor="border-[#F5634A]"
+            buttonTextColor="text-[#F5634A]"
+            Title="Tips"
+            handlePublish={handlePublish}
           />
         </div>
       </Background>

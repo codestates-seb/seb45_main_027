@@ -14,12 +14,16 @@ const MainSection = ({
   intro3,
   paddingX,
   linkTo,
+  pageImg,
+  pageImgStyle,
+  flexWrap,
+  animate,
 }) => {
   return (
     <div id={id}>
       <Background
         mainclassName=""
-        divclassName=""
+        divclassName={flexWrap}
         style={{
           background,
           backgroundPosition: "center",
@@ -34,9 +38,12 @@ const MainSection = ({
           intro3={intro3}
           paddingX={paddingX}
           linkTo={linkTo}
+          pageImg={pageImg}
+          pageImgStyle={pageImgStyle}
+          animate={animate}
         />
-        </Background>
-        <MainSrogan/>
+      </Background>
+      <MainSrogan />
     </div>
   );
 };

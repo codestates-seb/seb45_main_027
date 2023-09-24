@@ -1,61 +1,37 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 import MyInfoShowroom from "./MyInfoShowroom";
-import axios from "axios";
 
-const MyInfoContentList = () => {
-  const { id } = useParams();
-  const accessToken = localStorage.getItem("accessToken");
-  const baseURL = process.env.REACT_APP_API_URL;
-  const [myinfoData, setMyinfoData] = useState("");
-
-
-  const fetchMyinfoData = async () => {
-    try {
-      const response = await axios.get(`${baseURL}/myContent/search/${id}`, {
-        headers: {
-          Authorization: accessToken ? `Bearer ${accessToken}` : "",
-          "ngrok-skip-browser-warning": "69420",
-        },
-      });
-
-      setMyinfoData(response.data.data);
-    } catch (err) {
-      console.log("Error: ", err);
-    }
-  };
-  // console.log("myinfoData.showRoom", myinfoData.showRoom);
-  // console.log("myinfoData.tipContent", myinfoData.tipContent);
-
+const MyInfoContentList = ({ myinfoData, fetchMyinfoData }) => {
   const [activeTab, setActiveTab] = useState(1);
-
-  //useEffect(() => {}, [activeTab]);
 
   const handleTabs = (tabIdx) => {
     setActiveTab(tabIdx);
   };
 
-  useEffect(() => {
+  const handleFollowAction = () => {
     fetchMyinfoData();
-  }, []);
-
-  const handleFollowAction = () => { fetchMyinfoData();};
-
+  };
 
   const tabStyle = (tabIndex) =>
     `${
       activeTab === tabIndex
-        ? "text-[#F5634A] border-[#F5634A]/20"
+        ? "text-[#F5634A] border-[#F5634A]/60"
         : "text-neutral-600"
-    } text-xl font-bold border-b-4 border-transparent cursor-pointer px-4 py-2 mb-[3%] mr-[6%] md:text-xl`;
+    } font-bold border-b-4 border-transparent cursor-pointer px-3 py-2 mb-[4%] mr-[6%] text-md md:text-xl`;
 
   if (!myinfoData) {
     return <div>loading...</div>;
   }
 
   return (
-    <div className="flex-col bg-white rounded-md w-full shadow-md mb-6 pl-[4%] pt-[2%] 2xl:w-[70%] md:min-h-[800px] md:my-[2%] 2xl:min-w-[800px]">
-      <ul className="flex md:mb-[2%]">
+    <div
+      className="
+      flex-col bg-white rounded-md shadow-md 
+      mb-6 md:ml-[2%] md:my-[2%] px-[4%] py-[2%]
+      md:h-[630px] lg:h-[690px] xl:h-[750px]
+      w-full sm:w-[500px] md:w-[580px] lg:w-[700px] xl:w-[850px]"
+    >
+      <ul className="flex ">
         <li className={tabStyle(1)} onClick={() => handleTabs(1)}>
           게시글
         </li>
@@ -69,11 +45,11 @@ const MyInfoContentList = () => {
       <div className="flex flex-col flex-wrap ">
         {myinfoData && myinfoData.showRoom && (
           <>
-            <div className="text-[#F5634A] text-3xl font-bold mb-[2%]">
+            <div className="text-[#F5634A] text-xl md:text-3xl font-semibold my-[2%] Showcard-Gothic ">
               Showroom
             </div>
             <MyInfoShowroom
-              label={'showroom'}
+              label={"showroom"}
               postData={myinfoData.showRoom.post}
               bookmarkData={myinfoData.showRoom.bookMark}
               likeData={myinfoData.showRoom.like}
@@ -84,11 +60,11 @@ const MyInfoContentList = () => {
         )}
         {myinfoData && myinfoData.tipContent && (
           <>
-            <div className="text-[#F5634A] text-3xl font-bold mb-[2%]">
+            <div className="text-[#F5634A] text-xl md:text-3xl font-semibold my-[2%] Showcard-Gothic">
               Tips
             </div>
             <MyInfoShowroom
-              label={'tips'}
+              label={"tips"}
               postData={myinfoData.tipContent.post}
               bookmarkData={myinfoData.tipContent.bookMark}
               likeData={myinfoData.tipContent.like}

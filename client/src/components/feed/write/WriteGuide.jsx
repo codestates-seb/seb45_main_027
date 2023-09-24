@@ -36,7 +36,7 @@ const WriteGuide = ({ Title }) => {
             * 여러분들만의 인테리어/생활 관련 팁을 공유해주세요.
           </li>
           <li className="pb-2">
-            * 사진 첨부 시 용량은 장당 최대 00MB까지 업로드할 수 있고, jpg, png,
+            * 사진 첨부 시 용량은 장당 최대 10MB까지 업로드할 수 있고, jpg, png,
             gif 포맷을 지원합니다.
           </li>
           <li className="pb-2">

@@ -15,6 +15,10 @@ const Main = () => {
       intro3: "회원님의 공간도 자랑할 수 있는!",
       paddingX: "px-[75px]",
       linkTo: "/showroom",
+      pageImg: "asset/FeedPage.png",
+      pageImgStyle: "",
+      flexWrap: "items-center justify-around",
+      animate: "animate__animated animate__backInDown animate__slow",
     },
     {
       id: "main1",
@@ -27,6 +31,10 @@ const Main = () => {
       intro3: "또 보고 싶은 글은 북마크 할 수 있습니다.",
       paddingX: "px-[140px]",
       linkTo: "/tips",
+      pageImg: "asset/TagPage.png",
+      pageImgStyle: "h-[500px]",
+      flexWrap: "items-center justify-around flex-row-reverse ",
+      animate: "animate__animated animate__backInLeft animate__slow",
     },
     {
       id: "main2",
@@ -39,9 +47,13 @@ const Main = () => {
       intro3: "주소와 연락처를 제공해 드립니다.",
       paddingX: "px-[148px]",
       linkTo: "/map",
+      pageImg: "asset/MapPage.png",
+      pageImgStyle: "h-[650px]",
+      flexWrap: "items-center justify-around",
+      animate: "animate__animated animate__backInRight animate__slow",
     },
   ];
-
+const [animatedSection, setAnimatedSection] = useState(null);
   const [isScrolling, setIsScrolling] = useState(false); // 현재 스크롤 중인지 여부를 나타내는 상태
   const index = useRef(0); // 현재 표시되고 있는 섹션의 인덱스를 추적하는 useRef
   const maxIndex = sections.length; // 푸터까지 스크롤 할 수 있게 하기 위해
@@ -73,12 +85,13 @@ const Main = () => {
 
       setTimeout(() => {
         setIsScrolling(false);
-      }, 500); // <- setTimeout
-    }, 200); // <- debounceTimeout
+      },0); // <- setTimeout
+    }, 250); // <- debounceTimeout
   }
 
   // 지정된 섹션으로 스크롤하는 함수
   function scrollToSection() {
+    setAnimatedSection(`main${index.current}`);
     if (index.current === maxIndex) {
       // Scroll to footer
       window.scrollTo({
@@ -108,12 +121,16 @@ const Main = () => {
   return (
     <>
       <div className="w-full overscroll-x-none">
-        {sections.map((section) => (  // index를 사용했었으나 section에 고유 id가 있어서 변경.
-          <MainSection key={section.id} {...section} />
+        {sections.map((section) => (
+          <MainSection
+            key={section.id}
+            {...section}
+            animate={section.id === animatedSection ? section.animate : null}
+          />
         ))}
       </div>
     </>
   );
-};
+}
 
 export default Main;

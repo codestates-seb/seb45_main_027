@@ -56,6 +56,7 @@ const WriteTips = () => {
         setCoverImage(parsedData.coverImage);
         setTitle(parsedData.title);
         setEditorContent(parsedData.editorContent);
+        setTags(parsedData.tags);
         toast.success("작성중인 글을 불러왔습니다.");
       } else {
         // 취소시 삭제
@@ -102,7 +103,7 @@ const WriteTips = () => {
           coverPhoto: coverImage,
           title: title,
           content: editorContent,
-          // tipTags: tags, 서버에서 태그작업중 ***
+          tagContents: tags,
         },
       };
 
@@ -131,9 +132,11 @@ const WriteTips = () => {
       if (editorContent === DEFAULT_EDITOR_TEXT || editorContent === "") {
         toast.error("내용을 입력하세요.", toastStyle);
       }
+      if (tags.length === 0) {
+        toast.error("태그를 삽입해주세요.", toastStyle);
+      }
     }
   };
-
   return (
     <>
       <HeaderMobile
@@ -141,9 +144,8 @@ const WriteTips = () => {
         handlePublish={handlePublish}
       />
       <Background
-        mainclassName="min-h-screen bg-[#FFFAEE] w-full h-full px-14 md:px-56 "
-        divclassName="flex-col my-24 md:my-0"
-      >
+        mainclassName="min-h-screen bg-[#FFFAEE] w-full h-full px-14 md:px-56 rounded-md"
+        divclassName="flex-col my-24 md:my-0">
         <div className="hidden md:block">
           <WriteBtn
             saveToLocalStorage={saveToLocalStorage}
@@ -161,7 +163,7 @@ const WriteTips = () => {
           coverImage={coverImage}
           setCoverImage={setCoverImage}
         />
-        <div className="mt-10 mb-20 p-4 bg-white w-full h-full">
+        <div className="mt-10 mb-20 p-4 bg-white w-full h-full rounded-md">
           <WriteTitle title={title} setTitle={setTitle} />
           <WriteFormTips
             editorContent={editorContent}
@@ -169,6 +171,16 @@ const WriteTips = () => {
             DEFAULT_EDITOR_TEXT={DEFAULT_EDITOR_TEXT}
           />
           <WriteTag tags={tags} setTags={setTags} />
+        </div>
+        <div className="-mt-36 mx-2 pb-40">
+          <WriteBtn
+            saveToLocalStorage={saveToLocalStorage}
+            buttonBgColor="bg-[#00647B]"
+            buttonBorderColor="border-[#00647B]"
+            buttonTextColor="text-[#00647B]"
+            Title="Tips"
+            handlePublish={handlePublish}
+          />
         </div>
       </Background>
     </>

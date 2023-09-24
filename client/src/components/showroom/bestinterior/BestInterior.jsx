@@ -20,22 +20,39 @@ const BestInterior = ({ viewportWidth }) => {
 
   useEffect(() => {
     if (response) {
-      // toast.loading("데이터를 불러오는 중입니다.");
       setBest10Data(response.data.data);
-      console.log(best10Data);
-      // toast.dismiss(); // 로딩 메시지 닫기
     } else if (error) {
       console.error("Error:", error);
     }
   }, [response, error]);
 
+  if (loading) {
+    toast.loading("Best10 데이터를 불러오고 있습니다.");
+  } else {
+    toast.dismiss(); // 로딩 메시지 닫기
+  }
+
   return (
     <div className="flex-col">
-      <BestInteriorHeader />
-      <BestInteriorCarousel
-        viewportWidth={viewportWidth}
-        best10Data={best10Data}
-      />
+      <>
+        <BestInteriorHeader />
+        {loading && (
+          <div className="w-full pb-16 flex items-center justify-center h-[420px]">
+            <div className="m-10 flex justify-center ">
+              <img
+                className="w-20 mb-12 animate__animated animate__wobble animate__infinite animate__slow"
+                src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/logo.png"
+                alt="BIBIloading"
+              />
+            </div>
+          </div>
+        )}
+        <BestInteriorCarousel
+          viewportWidth={viewportWidth}
+          best10Data={best10Data}
+          setBest10Data={setBest10Data}
+        />
+      </>
     </div>
   );
 };

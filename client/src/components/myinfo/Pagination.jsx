@@ -6,8 +6,8 @@ const Pagination = ({ currentPage, totalPages, onNextPage, onPrevPage }) => {
 
   
   return (
-    <div className="mb-2 mr-4 flex justify-end">
-      <button onClick={onPrevPage} className={`px-5 py-1 ${isFirstPage ? "cursor-not-allowed" : ""}`}>
+    <div className="mr-4 flex justify-end">
+      <button onClick={onPrevPage} className={`px-5 py-1 ${isFirstPage ? "cursor-default" : "cursor-pointer"}`}>
         <img
           src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/arrow.png"
           alt="previous"
@@ -17,7 +17,7 @@ const Pagination = ({ currentPage, totalPages, onNextPage, onPrevPage }) => {
 
       <button
         onClick={onNextPage}
-        className={`px-5 py-1 ${isLastPage ? "cursor-not-allowed" : ""}`}
+        className={`px-5 py-1 ${isLastPage ? "cursor-default" : "cursor-pointer"}`}
       >
         <img src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/arrow.png" alt="next" className="h-6 w-3" />
       </button>

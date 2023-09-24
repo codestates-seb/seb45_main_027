@@ -10,19 +10,19 @@ const UserProfileDetails = ({ toggleAccountSettings, profileData }) => {
       {profileData && (
         <>
           <img
-            className="flex items-center rounded-full object-cover w-[75px] h-[75px] m-2.5 md:mt-10 md:mb-6 md:w-[140px] md:h-[140px] xl:w-[160px] xl:h-[160px]"
+            className="flex items-center rounded-full object-cover w-[75px] h-[75px] m-2.5 md:mt-10 md:mb-6 md:w-[120px] md:h-[120px] xl:w-[130px] xl:h-[130px]"
             src={
               profileData.profileImg
                 ? profileData.profileImg
-                : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/user.png"
+                : "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png"
             }
             alt="profile"
           />
           <div className="flex flex-col justify-center items-start md:items-center">
-            <div className="text-md pb-1 md:text-2xl font-bold">
+            <div className="text-md pb-1 md:text-xl font-semibold ">
               {profileData.nickname}
             </div>
-            <div className="text-sm pb-4 md:mx-16 md:my-4 break-all">
+            <div className=" text-xs md:text-sm pb-4 md:mx-16 md:my-4 break-all">
               {profileData.myIntro}
             </div>
             {memberId === id && (

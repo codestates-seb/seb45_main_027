@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../common/tokens";
 import { toast } from "react-hot-toast";
 
-const AllContent = ({ showroomData, setShowroomData }) => {
+const AllContent = ({ showroomData, setShowroomData, filterLoading }) => {
   const navigate = useNavigate();
+  const defalutImage =
+    "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/userImg.png";
 
   // 북마크 상태를 변경시켜주는 함수
   const toggleBookmark = async (feedId) => {
@@ -36,17 +38,21 @@ const AllContent = ({ showroomData, setShowroomData }) => {
           // feedId가 일치하는 요소가 있다면 bookMarkYn 값을 업데이트
           if (response.data.data.bookMarkYn === true) {
             toast.success("북마크가 등록되었습니다!");
+            updatedShowroomData[updatedItemIndex].bookMarkYn = true;
+            // bookmarkCount 상태를 업데이트
+            updatedShowroomData[updatedItemIndex].bookMarkCount += 1;
           } else {
             toast.success("북마크가 해제되었습니다!");
+            updatedShowroomData[updatedItemIndex].bookMarkYn = false;
+            updatedShowroomData[updatedItemIndex].bookMarkCount -= 1;
           }
-          updatedShowroomData[updatedItemIndex].bookMarkYn =
-            response.data.data.bookMarkYn;
           setShowroomData(updatedShowroomData); // 업데이트된 배열을 상태로 설정합니다.
-          console.log(showroomData);
         }
       }
     } catch (error) {
-      toast.error("북마크 처리에 실패하였습니다.");
+      toast.error("로그인이 필요한 서비스 입니다.");
+      localStorage.setItem("prevPath", window.location.pathname);
+      navigate("/login");
       console.error("북마크 토글 실패:", error);
     }
   };
@@ -58,16 +64,12 @@ const AllContent = ({ showroomData, setShowroomData }) => {
 
   return (
     <div className="flex-col mx-4">
-      <div className="flex justify-between flex-wrap">
+      {filterLoading && <div>로딩중</div>}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-20 mr-6">
         {showroomData.map((item, idx) => (
-          <div
-            key={idx}
-            className="flex-col mx-3 mt-3 mb-3 w-full sm:w-[45%] lg:w-[30%] h-[20%]"
-          >
+          <div key={idx} className="flex-col mx-3 mt-3 mb-3 w-full">
             <div className="relative">
               <img
-                // 이미지 들어오면 수정 **
-                // src="./asset/image.png"
                 src={item.coverPhoto}
                 alt="shroomimg"
                 className="aspectRatioImage_4_3 rounded-md cursor-pointer"
@@ -75,7 +77,6 @@ const AllContent = ({ showroomData, setShowroomData }) => {
               />
               <p>
                 <img
-                  // isBookmarked 변수명 수정요함 **
                   src={
                     item.bookMarkYn
                       ? "https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/isBookmarked.png"
@@ -87,30 +88,31 @@ const AllContent = ({ showroomData, setShowroomData }) => {
                 />
               </p>
             </div>
-            <div className="flex-col pt-2 mb-14">
+            <div className="flex-col pt-2 mb-4">
               <div
                 className="flex justify-center my-3 cursor-pointer"
                 onClick={() => handleFeedClick(item.feedId)}
               >
-                <span className="text-3xl font-semibold">{item.title}</span>
+                <span className="text-2xl font-semibold">{item.title}</span>
               </div>
-              <div className="flex justify-center items-center mb-3 text-gray-800">
+              <div className="flex justify-center items-center mb-2 text-gray-800">
                 <img
-                  // 멤버 이미지 수정 **
-                  // src="https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/Wonho.png"
-                  src={item.memberImage}
+                  src={
+                    item.memberImage == null ? defalutImage : item.memberImage
+                  }
                   alt="프로필사진"
                   className="w-6 h-6 rounded-full mr-2"
                 ></img>
-                <span className="text-xl">{item.nickname}</span>
+                <span className="text-xl">{item.nickname} </span>
               </div>
               <div className="flex justify-center text-lg text-gray-500">
-                <div className="mr-10">
-                  {/* 스크랩 수정** */}
+                <div className="mr-3">
                   <span>스크랩 :</span>
-                  <span className="ml-1">{item.bookMarkCount}</span>
+                  <span className="ml-3">{item.bookMarkCount}</span>
                 </div>
-                <div>
+                <div className="border-r-[1px] h-7 my-auto mx-2"></div>
+                {/* 구분선 */}
+                <div className="ml-3">
                   <span>조회수 :</span>
                   <span className="ml-1">{item.views}</span>
                 </div>
@@ -119,6 +121,11 @@ const AllContent = ({ showroomData, setShowroomData }) => {
           </div>
         ))}
       </div>
+      {showroomData.length === 0 ? (
+        <div className=" h-full w-full text-center  p-28 text-3xl md:text-4xl text-[#00647B]/90 font-semibold Showcard-Gothic">
+          No Content
+        </div>
+      ) : null}
     </div>
   );
 };
