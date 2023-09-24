@@ -43,7 +43,7 @@ const CommentInput = ({ feedData, setFeedData }) => {
         });
 
         setInputComment("");
-        toast.success("댓글을 입력하셨습니다.");
+        toast.success("댓글이 정상적으로 등록되었습니다.");
       } else {
         console.error("status code:", res?.status, res?.data);
         toast.error("댓글을 추가할 수 없습니다.");
