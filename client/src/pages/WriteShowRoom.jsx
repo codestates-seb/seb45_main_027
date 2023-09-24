@@ -44,30 +44,32 @@ const WriteShowRoom = () => {
   useEffect(() => {
     const savedData = localStorage.getItem("tempSaveShowroomData");
 
-    if (savedData) {
-      const tempSaveData = JSON.parse(savedData);
-      const createdAtString = tempSaveData.createdAt;
-      const createdAtDate = new Date(createdAtString);
-      const formattedDate = createdAtDate.toLocaleString();
+    setTimeout(() => {
+      if (savedData) {
+        const tempSaveData = JSON.parse(savedData);
+        const createdAtString = tempSaveData.createdAt;
+        const createdAtDate = new Date(createdAtString);
+        const formattedDate = createdAtDate.toLocaleString();
 
-      const userConfirmed = window.confirm(
-        `(${formattedDate}) 
-작성중인 글을 불러오시겠습니까? 
-취소를 누를 경우 작성중인 글은 삭제됩니다.`
-      );
-      if (userConfirmed) {
-        const parsedData = JSON.parse(savedData);
-        setCoverImage(parsedData.coverImage);
-        setTitle(parsedData.title);
-        setEditorContent(parsedData.editorContent);
-        setSelectedValues(parsedData.selectedValues);
-        toast.success("작성중인 글을 불러왔습니다.");
-      } else {
-        // 취소시 삭제
-        localStorage.removeItem("tempSaveShowroomData");
-        toast.error("작성중인 글을 삭제하였습니다.");
+        const userConfirmed = window.confirm(
+          `(${formattedDate}) 
+  작성중인 글을 불러오시겠습니까? 
+  취소를 누를 경우 작성중인 글은 삭제됩니다.`
+        );
+        if (userConfirmed) {
+          const parsedData = JSON.parse(savedData);
+          setCoverImage(parsedData.coverImage);
+          setTitle(parsedData.title);
+          setEditorContent(parsedData.editorContent);
+          setSelectedValues(parsedData.selectedValues);
+          toast.success("작성중인 글을 불러왔습니다.");
+        } else {
+          // 취소시 삭제
+          localStorage.removeItem("tempSaveShowroomData");
+          toast.error("작성중인 글을 삭제하였습니다.");
+        }
       }
-    }
+    }, 300);
   }, []);
 
   // 임시저장 클릭했을때 실행되는 핸들러함수 = > 로컬스토리지에 저장
@@ -167,7 +169,8 @@ const WriteShowRoom = () => {
       />
       <Background
         mainclassName=" bg-[#FFFAEE] w-full h-full px-14 md:px-56"
-        divclassName="flex-col my-24 md:my-0">
+        divclassName="flex-col my-24 md:my-0"
+      >
         <div className="hidden md:block">
           <WriteBtn
             saveToLocalStorage={saveToLocalStorage}
