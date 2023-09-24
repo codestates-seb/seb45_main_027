@@ -13,6 +13,7 @@ const MainWrap = ({
   intro3,
   paddingX,
   linkTo,
+  title2,
 }) => {
   // intro 텍스트를 배열에 담습니다.
   const texts = [intro1, intro2, intro3];
@@ -30,7 +31,8 @@ const MainWrap = ({
     <>
       <div
         className="h-screen w-full sm:w-max flex justify-center md:justify-normal mx-5"
-        style={style}>
+        style={style}
+      >
         <div className="pb-16 flex flex-col items-center justify-end md:justify-center w-full h-full">
           <div>
             <img
@@ -40,19 +42,23 @@ const MainWrap = ({
             />
           </div>
           <div className="flex flex-col items-center bg-[#ffffffc2] w-full h-auto rounded-xl shadow p-20">
-            <span className="text-3xl font-semibold text-gray-700">
+            <span className="text-3xl font-semibold text-gray-700 text-center">
               {mainTitle}
             </span>
-            <span className="Showcard-Gothic text-5xl font-semibold text-[#00647bbd] py-8">
+            <span className="text-3xl font-semibold text-gray-700 text-center mt-2">
+              {title2}
+            </span>
+            <span className="text-center Showcard-Gothic text-5xl font-semibold text-[#00647bbd] py-8 w-full sm:w-[120%] ">
               {subTitle}
             </span>
-            <ul className="text-xl font-semibold text-gray-600 animate-slideOut">
+            <ul className="w-full sm:w-[120%] text-center text-xl font-semibold text-gray-600 animate-slideOut ">
               <li>{texts[currentIndex]}</li>
             </ul>
           </div>
           <Link to={linkTo} className="w-full">
             <button
-              className={`bg-[#ffffffc2] hover:bg-[#F5634A] text-[#00647bbd] hover:text-white w-full h-auto rounded-xl shadow py-5 mt-12 mb-24 ${paddingX}`}>
+              className={` bg-[#ffffffc2] hover:bg-[#F5634A] text-[#00647bbd] hover:text-white w-full h-auto rounded-xl shadow py-5 mt-12 mb-24 ${paddingX}`}
+            >
               <span className="Showcard-Gothic text-3xl font-semibold px-2">
                 Go! {subTitle}!
               </span>

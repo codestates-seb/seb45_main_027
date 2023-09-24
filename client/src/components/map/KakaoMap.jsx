@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import SearchBar from "./SearchBar";
 import "./KaKaoMap.css";
+import toast from "react-hot-toast";
 
 const KakaoMap = ({ viewportWidth }) => {
   const [map, setMap] = useState(null);
@@ -56,6 +57,7 @@ const KakaoMap = ({ viewportWidth }) => {
   };
 
   const handleSearch = (keyword) => {
+    toast.loading("주변 업체를 검색중입니다...", { duration: 800 });
     if (map && currentPosition) {
       clearPreviousSearchResults();
       handleSearchWithinMapArea(keyword);

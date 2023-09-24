@@ -67,8 +67,8 @@ const ShowRoom = () => {
 
   // 필터링 로직 구현 함수1 (공간별, 평수별, 주거 형태별)
   const handleFilterClick = async (filterCode) => {
+    const filterToast = toast.loading("필터링중입니다...");
     try {
-      const filterToast = toast.loading("필터링중입니다...");
       setFeedCode("filter");
       setFilterCode(filterCode);
       page.current = 1;
@@ -80,7 +80,8 @@ const ShowRoom = () => {
       };
 
       const res = await api(updatedConfigParams);
-      // toast.dismiss(filterToast); // 필터링 중 토스트 메시지 닫기
+      toast.dismiss(filterToast); // 필터링 중 토스트 메시지 닫기
+      toast.success("필터링이 완료되었습니다.");
       setShowroomData(res.data.data);
       setIsLastPage(res.data.isLast);
       page.current = 1; // 필터링 시 페이지를 다시 1로 설정
@@ -95,8 +96,8 @@ const ShowRoom = () => {
 
   // 필터링 필터링 로직 구현 함수2(최신순(default), 인기순)
   const handleFilterClick2 = async (filterCode) => {
+    const filterToast = toast.loading("필터링중입니다...");
     try {
-      const filterToast = toast.loading("필터링중입니다...");
       setFeedCode("filter");
       setFilterCode(filterCode);
       page.current = 1;
@@ -108,7 +109,9 @@ const ShowRoom = () => {
       };
 
       const res = await api(updatedConfigParams);
-      // toast.dismiss(filterToast); // 필터링 중 토스트 메시지 닫기
+      toast.dismiss(filterToast); // 필터링 중 토스트 메시지 닫기
+
+      toast.success("필터링이 완료되었습니다.");
       setShowroomData(res.data.data);
       setIsLastPage(res.data.isLast);
       page.current = 1; // 필터링 시 페이지를 다시 1로 설정
@@ -194,6 +197,7 @@ const ShowRoom = () => {
       try {
         const res = await api(updatedConfigParams);
         toast.dismiss();
+        toast.success("검색이 완료되었습니다.");
         setShowroomData(res.data.data);
         clearInput();
       } catch (error) {

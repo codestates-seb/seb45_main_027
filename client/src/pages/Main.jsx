@@ -8,7 +8,8 @@ const Main = () => {
       id: "main0",
       background:
         "url('https://homepagepictures.s3.ap-northeast-2.amazonaws.com/client/public/images/main-bg1.png')",
-      title: "공간별 인테리어 모아보기",
+      title: "공간별 인테리어",
+      title2: "모아보기",
       subTitle: "Show room",
       intro1: "베스트 10곳을 모아서 볼 수 있는!",
       intro2: "원하는 공간만 골라서 볼 수 있는!",
@@ -53,7 +54,7 @@ const Main = () => {
       animate: "animate__animated animate__backInRight animate__slow",
     },
   ];
-const [animatedSection, setAnimatedSection] = useState(null);
+  const [animatedSection, setAnimatedSection] = useState(null);
   const [isScrolling, setIsScrolling] = useState(false); // 현재 스크롤 중인지 여부를 나타내는 상태
   const index = useRef(0); // 현재 표시되고 있는 섹션의 인덱스를 추적하는 useRef
   const maxIndex = sections.length; // 푸터까지 스크롤 할 수 있게 하기 위해
@@ -85,7 +86,7 @@ const [animatedSection, setAnimatedSection] = useState(null);
 
       setTimeout(() => {
         setIsScrolling(false);
-      },0); // <- setTimeout
+      }, 0); // <- setTimeout
     }, 250); // <- debounceTimeout
   }
 
@@ -131,6 +132,6 @@ const [animatedSection, setAnimatedSection] = useState(null);
       </div>
     </>
   );
-}
+};
 
 export default Main;
