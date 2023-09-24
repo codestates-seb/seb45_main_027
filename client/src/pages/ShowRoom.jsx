@@ -159,7 +159,7 @@ const ShowRoom = () => {
   // 새로운 페이지 데이터를 불러오는 함수
   const loadMoreData = async (url) => {
     try {
-      // toast.loading("로딩중..."); // 데이터 로딩 중 토스트 메시지 표시
+      toast.loading("로딩중..."); // 데이터 로딩 중 토스트 메시지 표시
       const res = await api({ ...configParams, url });
       if (res.data.isLast === false) {
         setShowroomData((prevData) => [...prevData, ...res.data.data]);
@@ -168,7 +168,7 @@ const ShowRoom = () => {
         // 마지막 페이지 설정
         setIsLastPage(res.data.isLast);
       }
-      // toast.dismiss(); // 로딩 메시지 닫기
+      toast.dismiss(); // 로딩 메시지 닫기
     } catch (error) {
       console.error("Error loading more data:", error);
       toast.error("데이터를 불러오는 중에 오류가 발생했습니다."); // 에러 시 토스트 메시지 표시
