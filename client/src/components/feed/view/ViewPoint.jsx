@@ -10,8 +10,6 @@ const ViewPoint = ({ feedData }) => {
   );
   const [views, setViews] = useState(feedData.views || "0");
 
-  console.log(feedData.bookMarkCount);
-  console.log(feedData.bookmarkCount);
   useEffect(() => {
     // feedData prop이 변경될 때 상태를 업데이트
     setLikeCount(feedData.likeCount);
