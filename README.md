@@ -13,14 +13,15 @@
 <br>
 
 ## 목차
-- [프로젝트팀 소개](#프로젝트팀-소개)
-- [Stack](#stack)
-- [서론](#서론)
-  - [서비스 개요](#서비스-개요)
-  - [메뉴얼 목적 & 대상 사용자](#메뉴얼-목적-&-대상-사용자)
-- [기본 가이드](#기본-가이드)
-  - [화면 구성](#화면-구성)
-  - [기능 설명](#기능-설명)
+- [프로젝트팀 소개](#-프로젝트팀-소개)
+- [Stack](#-stack)
+- [서론](#-서론)
+  - [서비스 개요](#-서비스-개요)
+  - [메뉴얼 목적 & 대상 사용자](#-메뉴얼-목적-&-대상-사용자)
+- [기본 가이드](#-기본-가이드)
+  - [화면 구성](#-화면-구성)
+  - [기능 설명](#-기능-설명)
+- [Documents](-documents)
 
 
 
@@ -176,18 +177,7 @@
 
 
 #### 반응형 사이트
-- 모바일, 테블릿, 피씨 모두 볼 수 있도록 맞춤 화면 구현하였습니다.
-
-
-<br>
-
-## 
-    
-
-
-
-
-
+- `모바일`, `테블릿`, `피씨` 모두 볼 수 있도록 맞춤 화면 구현하였습니다.
 
 
 <br>
@@ -223,3 +213,185 @@
 </details>
 
 <br>
+
+## 📝 디렉토리구조
+
+```
+seb45_main_027
+├─ README.md
+├─ client
+│  ├─ .env
+│  ├─ src
+│  │  ├─ App.css
+│  │  ├─ App.js
+│  │  ├─ components
+│  │  │  ├─ accountSetting
+│  │  │  │  ├─ ChangePassword.jsx
+│  │  │  │  ├─ DeleteAccount.jsx
+│  │  │  │  ├─ EditProfile.jsx
+│  │  │  │  └─ UserAccount.jsx
+│  │  │  ├─ common
+│  │  │  │  ├─ Background.jsx
+│  │  │  │  ├─ Ex_button.jsx
+│  │  │  │  ├─ scrollToTop.js
+│  │  │  │  └─ tokens.js
+│  │  │  ├─ feed
+│  │  │  │  ├─ comment
+│  │  │  │  │  ├─ showroom
+│  │  │  │  │  │  ├─ CommentDelete.jsx
+│  │  │  │  │  │  ├─ CommentInput.jsx
+│  │  │  │  │  │  ├─ CommentLike.jsx
+│  │  │  │  │  │  ├─ CommentOutput.jsx
+│  │  │  │  │  │  ├─ CommentPagination.jsx
+│  │  │  │  │  │  ├─ CommentPatch.jsx
+│  │  │  │  │  │  ├─ CommentWrap.jsx
+│  │  │  │  │  │  ├─ ReplyDelete.jsx
+│  │  │  │  │  │  ├─ ReplyInput.jsx
+│  │  │  │  │  │  ├─ ReplyOutput.jsx
+│  │  │  │  │  │  └─ ReplyPatch.jsx
+│  │  │  │  │  └─ tips
+│  │  │  │  │     ├─ CommentDeleteTips.jsx
+│  │  │  │  │     ├─ CommentInputTips.jsx
+│  │  │  │  │     ├─ CommentLikeTips.jsx
+│  │  │  │  │     ├─ CommentOutputTips.jsx
+│  │  │  │  │     ├─ CommentPaginationTips.jsx
+│  │  │  │  │     ├─ CommentPatchTips.jsx
+│  │  │  │  │     ├─ CommentWrapTips.jsx
+│  │  │  │  │     ├─ ReplyDeleteTips.jsx
+│  │  │  │  │     ├─ ReplyInputTips.jsx
+│  │  │  │  │     ├─ ReplyOutputTips.jsx
+│  │  │  │  │     └─ ReplyPatchTips.jsx
+│  │  │  │  ├─ view
+│  │  │  │  │  ├─ Edit.jsx
+│  │  │  │  │  ├─ ShowroomContents.jsx
+│  │  │  │  │  ├─ ShowroomUserTop.jsx
+│  │  │  │  │  ├─ Sidebar.jsx
+│  │  │  │  │  ├─ TagForm.jsx
+│  │  │  │  │  ├─ TipsContents.jsx
+│  │  │  │  │  ├─ TipsUserTop.jsx
+│  │  │  │  │  ├─ UserBottom.jsx
+│  │  │  │  │  ├─ ViewCoverImg.jsx
+│  │  │  │  │  ├─ ViewForm.jsx
+│  │  │  │  │  ├─ ViewPoint.jsx
+│  │  │  │  │  └─ ViewTitle.jsx
+│  │  │  │  └─ write
+│  │  │  │     ├─ ImageEditGuide.jsx
+│  │  │  │     ├─ PhotoTagging.jsx
+│  │  │  │     ├─ Tag.jsx
+│  │  │  │     ├─ WriteBtn.jsx
+│  │  │  │     ├─ WriteCoverImg.jsx
+│  │  │  │     ├─ WriteFormShowroom.jsx
+│  │  │  │     ├─ WriteFormTips.jsx
+│  │  │  │     ├─ WriteGuide.jsx
+│  │  │  │     ├─ WriteInformation.jsx
+│  │  │  │     ├─ WriteTag.jsx
+│  │  │  │     └─ WriteTitle.jsx
+│  │  │  ├─ footer
+│  │  │  │  ├─ FooterMobile.jsx
+│  │  │  │  ├─ FooterMobileWrite.jsx
+│  │  │  │  ├─ FooterPc.jsx
+│  │  │  │  └─ HiddenFooter.jsx
+│  │  │  ├─ header
+│  │  │  │  ├─ HeaderMobile.jsx
+│  │  │  │  ├─ HeaderNav.jsx
+│  │  │  │  ├─ HeaderOff.jsx
+│  │  │  │  ├─ HeaderOn.jsx
+│  │  │  │  └─ HeaderPc.jsx
+│  │  │  ├─ main
+│  │  │  │  ├─ MainSection.jsx
+│  │  │  │  ├─ MainSlogan.jsx
+│  │  │  │  └─ MainWrap.jsx
+│  │  │  ├─ map
+│  │  │  │  ├─ KaKaoMap.css
+│  │  │  │  ├─ KakaoMap.jsx
+│  │  │  │  └─ SearchBar.jsx
+│  │  │  ├─ myinfo
+│  │  │  │  ├─ MyInfoBookmark.jsx
+│  │  │  │  ├─ MyInfoContentList.jsx
+│  │  │  │  ├─ MyInfoDummy.js
+│  │  │  │  ├─ MyInfoLayout.jsx
+│  │  │  │  ├─ MyInfoLike.jsx
+│  │  │  │  ├─ MyInfoPost.jsx
+│  │  │  │  ├─ MyInfoShowroom.jsx
+│  │  │  │  ├─ Pagination.jsx
+│  │  │  │  ├─ UserInfoFollow.jsx
+│  │  │  │  ├─ UserInfoFollowList.jsx
+│  │  │  │  ├─ UserProfile.jsx
+│  │  │  │  └─ UserProfileDetails.jsx
+│  │  │  ├─ showroom
+│  │  │  │  ├─ all
+│  │  │  │  │  ├─ All.jsx
+│  │  │  │  │  ├─ AllContent.jsx
+│  │  │  │  │  ├─ AllHeader.jsx
+│  │  │  │  │  └─ HeaderFilter
+│  │  │  │  │     ├─ AllHeaderFilter.jsx
+│  │  │  │  │     ├─ RoomInfoFilter.jsx
+│  │  │  │  │     ├─ RoomSizeFilter.jsx
+│  │  │  │  │     └─ RoomTypeFilter.jsx
+│  │  │  │  └─ bestinterior
+│  │  │  │     ├─ BestInterior.jsx
+│  │  │  │     ├─ BestInteriorCarousel.css
+│  │  │  │     ├─ BestInteriorCarousel.jsx
+│  │  │  │     └─ BestInteriorHeader.jsx
+│  │  │  ├─ signup
+│  │  │  │  ├─ AuthNavigation.jsx
+│  │  │  │  ├─ FormLayout.jsx
+│  │  │  │  ├─ FormValidation.jsx
+│  │  │  │  ├─ OauthLayout.jsx
+│  │  │  │  ├─ ResetPassword.jsx
+│  │  │  │  ├─ SignupAuth.jsx
+│  │  │  │  └─ SignupLoginLayout.jsx
+│  │  │  └─ tips
+│  │  │     ├─ TipsContent.jsx
+│  │  │     ├─ TipsHeader.jsx
+│  │  │     └─ TipsInfo.jsx
+│  │  ├─ context
+│  │  │  └─ AuthContext.jsx
+│  │  ├─ index.css
+│  │  ├─ index.js
+│  │  └─ pages
+│  │     ├─ EditShowRoom.jsx
+│  │     ├─ EditTips.jsx
+│  │     ├─ Login.jsx
+│  │     ├─ Main.jsx
+│  │     ├─ Map.jsx
+│  │     ├─ MyInfo.jsx
+│  │     ├─ ProtectedRoute.jsx
+│  │     ├─ ShowRoom.jsx
+│  │     ├─ Signup.jsx
+│  │     ├─ Tips.jsx
+│  │     ├─ Verify.jsx
+│  │     ├─ ViewShowRoom.jsx
+│  │     ├─ ViewTips.jsx
+│  │     ├─ WriteShowRoom.jsx
+│  │     └─ WriteTips.jsx
+│  └─ tailwind.config.js
+└─ server
+   ├─ build.gradle
+   ├─ gradle
+   │  └─ wrapper
+   │     ├─ gradle-wrapper.jar
+   │     └─ gradle-wrapper.properties
+   ├─ gradlew
+   ├─ gradlew.bat
+   ├─ settings.gradle
+   └─ src
+      ├─ main
+      │  ├─ java
+      │  │  └─ com
+      │  │     └─ project
+      │  │        └─ bbibbi
+      │  │           └─ BbibbiApplication.java
+      │  └─ resources
+      │     ├─ application.yml
+      │     ├─ application_h2.yml
+      │     ├─ application_rds.yml
+      │     └─ application_server.yml
+      └─ test
+         └─ java
+            └─ com
+               └─ project
+                  └─ bbibbi
+                     └─ BbibbiApplicationTests.java
+
+```
