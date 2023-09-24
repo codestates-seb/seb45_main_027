@@ -22,7 +22,7 @@
 <br>
 
 
-## Stack
+## ⚒️ Stack
 ### **Front-End**
 
 <img src="https://img.shields.io/badge/visual studio code-007ACC?style=flat&logo=visualstudiocode&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/>  <img src="https://img.shields.io/badge/react router-CA4245?style=flat&logo=reactrouter&logoColor=white"/> <img src="https://img.shields.io/badge/axios-5A29E4?style=flat&logo=axios&logoColor=white"/> <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=flat&logo=Tailwind CSS&logoColor=white"/>
@@ -32,16 +32,16 @@
 
 <br>
 
-## 서론
+## 📚 서론
 
-### 서비스 개요
+### 📗 서비스 개요
 
 - 인테리어 추천 커뮤니티 웹사이트는 인테리어에 관심있는 사용자들을 위한 다기능 온라인 플랫폼입니다.
 커뮤니티 기반의 정보 공유와 함께, 해시태그 기능을 통해 특정 주제나 제품에 대한 정보를 쉽게 검색하고 모아볼 수 있습니다.
 추가적으로 GPS를 활용한 지역 기반 인테리어 가게 추천, 북마크와 기능, 그리고 팔로우와 팔로워 기능을 제공하여 사용자 간의 소통과 정보 공유를 촉진합니다.
 
 
-### 메뉴얼 목적 & 대상 사용자
+### 📕 메뉴얼 목적 & 대상 사용자
 - 본 서비스는 사용자들의 편리한 사용을 위해 이 메뉴얼을 작성하였습니다.
 인테리어에 관심이 많고 커뮤니케이션을 중요시하는 사용자를 주요 대상으로 하고 있습니다.
 블로그나 카페와 같이 정보 공유와 소통이 활발한 온라인 공간을 찾고 있는 사용자에게 이 웹사이트는 다음과 같은 기능과 가치를 제공합니다.
@@ -62,23 +62,58 @@
 
 <br>
 
-## 기본 가이드
-### 홈페이지 둘러보기
-|**`메인 페이지`**|**`회원가입`**|**`로그인`**|
-|---|---|---|
-|<img src="client/public/asset/main.webp" alt="">|<img src="client/public/asset/singup.webp" alt="">|<img src="client/public/asset/login.webp" alt="">|
+## 🔎 기본 가이드
+### 🎥 홈페이지 둘러보기
+|**`메인 페이지`**|
+|---|
+|<img src="client/public/asset/main.webp" alt="">|
 
-|**`베스트 인테리어`**|**`인테리어 작성창`**|**`인테리어 상세보기`**|
-|---|---|---|
-|<img src="client/public/asset/showroom.webp" alt="">|<img src="client/public/asset/showroomWrite.webp" alt="">|<img src="client/public/asset/showroomView.webp" alt="">|
+|**`회원가입`**|**`로그인`**|
+|---|---|
+|<img src="client/public/asset/singup.webp" alt="">|<img src="client/public/asset/login.webp" alt="">|
 
-|**`팁`**|**`팁 작성창`**|**`팁 상세보기`**|
-|---|---|---|
-|<img src="client/public/asset/tip.webp" alt="">|<img src="client/public/asset/tipWrite.webp" alt="">|<img src="client/public/asset/tipView.webp" alt="">|
+<br>
 
-|**`맵`**|**`나의 프로필`**|**`다른사람 프로필`**|
-|---|---|---|
-|<img src="client/public/asset/map.webp" alt="">|<img src="client/public/asset/myinfo.webp" alt="">|<img src="client/public/asset/userinfo.webp" alt="">|
+---
+
+<br>
+
+|**`베스트 인테리어`**|
+|---|
+|<img src="client/public/asset/showroom.webp" alt="">|
+
+|**`인테리어 작성창`**|**`인테리어 상세보기`**|
+|---|---|
+|<img src="client/public/asset/showroomWrite.webp" alt="">|<img src="client/public/asset/showroomView.webp" alt="">|
+
+<br>
+
+---
+
+<br>
+
+|**`팁`**|
+|---|
+|<img src="client/public/asset/tip.webp" alt="">|
+
+|**`팁 작성창`**|**`팁 상세보기`**|
+|---|---|
+|<img src="client/public/asset/tipWrite.webp" alt="">|<img src="client/public/asset/tipView.webp" alt="">|
+
+<br>
+
+---
+
+<br>
+
+
+|**`맵`**|
+|---|
+|<img src="client/public/asset/map.webp" alt="">|
+
+|**`나의 프로필`**|**`다른사람 프로필`**|
+|---|---|
+|<img src="client/public/asset/myinfo.webp" alt="">|<img src="client/public/asset/userinfo.webp" alt="">|
 
 
 
