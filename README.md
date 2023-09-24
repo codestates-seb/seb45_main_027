@@ -12,6 +12,23 @@
 
 <br>
 
+## 목차
+- [프로젝트팀 소개](#-프로젝트팀-소개)
+- [Stack](#%EF%B8%8F-stack)
+- [서론](#-서론)
+  - [서비스 개요](#-서비스-개요)
+  - [메뉴얼 목적 & 대상 사용자](#-메뉴얼-목적--대상-사용자)
+- [기본 가이드](#-기본-가이드)
+  - [화면 구성](#-화면-구성)
+  - [기능 설명](#-기능-설명)
+- [Documents](#-documents)
+- [디렉토리구조](#-디렉토리구조)
+
+
+
+
+<br>
+
 ## 🧑‍💻 프로젝트팀 소개
 |<center>윤 예빈</center>|<center>최 유리</center>|<center>이 원호</center>|<center>신 선호</center>|<center>박 두산</center>|<center>임 한준</center>|<center>안 형섭</center>|
 |---|---|---|---|---|---|---|
@@ -22,7 +39,7 @@
 <br>
 
 
-## Stack
+## ⚒️ Stack
 ### **Front-End**
 
 <img src="https://img.shields.io/badge/visual studio code-007ACC?style=flat&logo=visualstudiocode&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/>  <img src="https://img.shields.io/badge/react router-CA4245?style=flat&logo=reactrouter&logoColor=white"/> <img src="https://img.shields.io/badge/axios-5A29E4?style=flat&logo=axios&logoColor=white"/> <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=flat&logo=Tailwind CSS&logoColor=white"/>
@@ -32,16 +49,16 @@
 
 <br>
 
-## 서론
+## 📚 서론
 
-### 서비스 개요
+### 📗 서비스 개요
 
 - 인테리어 추천 커뮤니티 웹사이트는 인테리어에 관심있는 사용자들을 위한 다기능 온라인 플랫폼입니다.
 커뮤니티 기반의 정보 공유와 함께, 해시태그 기능을 통해 특정 주제나 제품에 대한 정보를 쉽게 검색하고 모아볼 수 있습니다.
 추가적으로 GPS를 활용한 지역 기반 인테리어 가게 추천, 북마크와 기능, 그리고 팔로우와 팔로워 기능을 제공하여 사용자 간의 소통과 정보 공유를 촉진합니다.
 
 
-### 메뉴얼 목적 & 대상 사용자
+### 📕 메뉴얼 목적 & 대상 사용자
 - 본 서비스는 사용자들의 편리한 사용을 위해 이 메뉴얼을 작성하였습니다.
 인테리어에 관심이 많고 커뮤니케이션을 중요시하는 사용자를 주요 대상으로 하고 있습니다.
 블로그나 카페와 같이 정보 공유와 소통이 활발한 온라인 공간을 찾고 있는 사용자에게 이 웹사이트는 다음과 같은 기능과 가치를 제공합니다.
@@ -62,45 +79,106 @@
 
 <br>
 
-## 기본 가이드
-### 홈페이지 둘러보기
-|**`메인 페이지`**|**`회원가입`**|**`로그인`**|
-|---|---|---|
-|<img src="client/public/asset/main.webp" alt="">|<img src="client/public/asset/singup.webp" alt="">|<img src="client/public/asset/login.webp" alt="">|
-
-|**`베스트 인테리어`**|**`인테리어 작성창`**|**`인테리어 상세보기`**|
-|---|---|---|
-|<img src="client/public/asset/showroom.webp" alt="">|<img src="client/public/asset/showroomWrite.webp" alt="">|<img src="client/public/asset/showroomView.webp" alt="">|
-
-|**`팁`**|**`팁 작성창`**|**`팁 상세보기`**|
-|---|---|---|
-|<img src="client/public/asset/tip.webp" alt="">|<img src="client/public/asset/tipWrite.webp" alt="">|<img src="client/public/asset/tipView.webp" alt="">|
-
-|**`맵`**|**`나의 프로필`**|**`다른사람 프로필`**|
-|---|---|---|
-|<img src="client/public/asset/map.webp" alt="">|<img src="client/public/asset/myinfo.webp" alt="">|<img src="client/public/asset/userinfo.webp" alt="">|
-
-
+## 🔎 기본 가이드
+### 🎥 화면 구성
+|기능별|화면|
+|---|---|
+|**`메인 페이지`**|<img src="client/public/asset/main.webp" alt="">|
+|**`회원가입`**|<img src="client/public/asset/singup.webp" alt="">|
+|**`로그인`**|<img src="client/public/asset/login.webp" alt="">|
+|**`베스트 인테리어`**|<img src="client/public/asset/showroom.webp" alt="">|
+|**`인테리어 작성창`**|<img src="client/public/asset/showroomWrite.webp" alt="">|
+|**`인테리어 상세보기`**|<img src="client/public/asset/showroomView.webp" alt="">|
+|**`팁`**|<img src="client/public/asset/tip.webp" alt="">|
+|**`팁 작성창`**|<img src="client/public/asset/tipWrite.webp" alt="">|
+|**`팁 상세보기`**|<img src="client/public/asset/tipView.webp" alt="">|
+|**`맵`**|<img src="client/public/asset/map.webp" alt="">|
+|**`나의 프로필`**|<img src="client/public/asset/myinfo.webp" alt="">|
+|**`다른사람 프로필`**|<img src="client/public/asset/userinfo.webp" alt="">|
 
 <br>
 
-## 기능 설명
-### 인테리어 추천 커뮤니티
-### 꿀팁 정보 공유 커뮤니티
-### 주변 인테리어 가게 검색
-### 회원정보 기능
-### 커뮤니케이션 공통 기능
-### 반응형 사이트
-
-<br>
-
-## 
-    
+### 💡 기능 설명
 
 
+#### 인테리어 추천 커뮤니티
+- `전체글 조회`
+  - 인테리어 게시글은 무한스크롤을 적용해, 실시간으로 정보를 받아 볼 수 있습니다.
 
 
+- `검색어로 검색`
+  - 검색어가 제목, 본문이 포함되어있다면 조회 가능합니다.
 
+
+- `필터별 조회`
+  - 필터별로 조회할 수 있습니다.
+
+
+- `이미지 태그`
+  - 게시글 작성시 작성자가 이미지에 태그를 붙여 저 직관적으로 정보를 공유 할 수 있습니다.
+
+
+#### 꿀팁 정보 공유 커뮤니티
+- `해시태그 등록`
+  - 작성한 글의 주제와 관련된 해시태그를 등록할 수 있습니다.
+
+
+- `해시태그 클릭/검색`
+  - 해시 태그 클릭시 해당 태그가 포함된 글을 모아볼 수 있습니다.
+
+
+#### 주변 인테리어 가게 검색
+- `GPS`
+  - 현재 위치 기반 정보를 이용 주변 인테리어 스토어 검색 기능
+
+
+- `검색기능`
+  - 원하는 가게에 이름을 검색하면 조회하는 기능
+
+
+#### 회원정보 기능
+- `회원가입 기능`
+  - 커뮤니티 관련 기능을 추가적으로 이용하기 위해 회원가입을 제공해 회원의 데이터들을 바탕으로 각 회원이 원하는 정보들만 모아 편리하게 사용 가능하게 해줍니다.
+
+
+- `로그인 기능`
+  - 로그인 회원만  커뮤니티 활동 가능
+
+
+- `내 정보 관리`
+  - 프로필 개성에 맞게 꾸며 게시글만이 아니라 내 소개글이나 자신의 이미지를 등을 활용해 자신만의 특색을 드러낼 수 있습니다.
+
+
+- `회원탈퇴기능`
+  - 본 서비스를 더 이상 사용하고 싶지 않거나, 자신의 정보들을 더 이상 제공하고 싶지 않을 경우에는 보다 쉽게 회원탈퇴의 기능을 지원
+
+- `비밀번호 관리`
+  - 비밀번호 초기화 
+  - 비밀번호변경 
+
+
+#### 커뮤니케이션 공통 기능
+- `좋아요 / 북마크`
+  - **좋아요** <br>
+  다른 사용자가 작성한 게시글이나 댓글에 긍정적인 피드백을 주는 기능입니다. 이 기능을 사용하면 작성자는 작성자의 게시글이나 댓글 공감과 반응을 파악할 수 있습니다.
+
+
+  - **북마크** <br>
+  특정한 게시글들을 나중에 닷 찾아보기 쉽게 저장하는 기능합니다. 
+  
+  - 해당 **좋아요 / 북마크** 기능은 마이 페이지에서 모아 볼 수 있습니다.
+
+
+- `팔로우 / 팔로워`
+  - 마음에 드는 사용자들을 팔로우/언팔로우 할 수 있이며, 마이페이지에서 모아서 볼 수 있습니다.
+
+
+- `댓글 / 답글`
+  - 게시글에 공감하거나 정보를 얻었다면 댓글과 답글을 통해 작성자 및 다른 이용자들과 자유롭게 소통할 수 있습니다.
+
+
+#### 반응형 사이트
+- `모바일`, `테블릿`, `피씨` 모두 볼 수 있도록 맞춤 화면 구현하였습니다.
 
 
 <br>
@@ -136,3 +214,185 @@
 </details>
 
 <br>
+
+## 📝 디렉토리구조
+
+```
+seb45_main_027
+├─ README.md
+├─ client
+│  ├─ .env
+│  ├─ src
+│  │  ├─ App.css
+│  │  ├─ App.js
+│  │  ├─ components
+│  │  │  ├─ accountSetting
+│  │  │  │  ├─ ChangePassword.jsx
+│  │  │  │  ├─ DeleteAccount.jsx
+│  │  │  │  ├─ EditProfile.jsx
+│  │  │  │  └─ UserAccount.jsx
+│  │  │  ├─ common
+│  │  │  │  ├─ Background.jsx
+│  │  │  │  ├─ Ex_button.jsx
+│  │  │  │  ├─ scrollToTop.js
+│  │  │  │  └─ tokens.js
+│  │  │  ├─ feed
+│  │  │  │  ├─ comment
+│  │  │  │  │  ├─ showroom
+│  │  │  │  │  │  ├─ CommentDelete.jsx
+│  │  │  │  │  │  ├─ CommentInput.jsx
+│  │  │  │  │  │  ├─ CommentLike.jsx
+│  │  │  │  │  │  ├─ CommentOutput.jsx
+│  │  │  │  │  │  ├─ CommentPagination.jsx
+│  │  │  │  │  │  ├─ CommentPatch.jsx
+│  │  │  │  │  │  ├─ CommentWrap.jsx
+│  │  │  │  │  │  ├─ ReplyDelete.jsx
+│  │  │  │  │  │  ├─ ReplyInput.jsx
+│  │  │  │  │  │  ├─ ReplyOutput.jsx
+│  │  │  │  │  │  └─ ReplyPatch.jsx
+│  │  │  │  │  └─ tips
+│  │  │  │  │     ├─ CommentDeleteTips.jsx
+│  │  │  │  │     ├─ CommentInputTips.jsx
+│  │  │  │  │     ├─ CommentLikeTips.jsx
+│  │  │  │  │     ├─ CommentOutputTips.jsx
+│  │  │  │  │     ├─ CommentPaginationTips.jsx
+│  │  │  │  │     ├─ CommentPatchTips.jsx
+│  │  │  │  │     ├─ CommentWrapTips.jsx
+│  │  │  │  │     ├─ ReplyDeleteTips.jsx
+│  │  │  │  │     ├─ ReplyInputTips.jsx
+│  │  │  │  │     ├─ ReplyOutputTips.jsx
+│  │  │  │  │     └─ ReplyPatchTips.jsx
+│  │  │  │  ├─ view
+│  │  │  │  │  ├─ Edit.jsx
+│  │  │  │  │  ├─ ShowroomContents.jsx
+│  │  │  │  │  ├─ ShowroomUserTop.jsx
+│  │  │  │  │  ├─ Sidebar.jsx
+│  │  │  │  │  ├─ TagForm.jsx
+│  │  │  │  │  ├─ TipsContents.jsx
+│  │  │  │  │  ├─ TipsUserTop.jsx
+│  │  │  │  │  ├─ UserBottom.jsx
+│  │  │  │  │  ├─ ViewCoverImg.jsx
+│  │  │  │  │  ├─ ViewForm.jsx
+│  │  │  │  │  ├─ ViewPoint.jsx
+│  │  │  │  │  └─ ViewTitle.jsx
+│  │  │  │  └─ write
+│  │  │  │     ├─ ImageEditGuide.jsx
+│  │  │  │     ├─ PhotoTagging.jsx
+│  │  │  │     ├─ Tag.jsx
+│  │  │  │     ├─ WriteBtn.jsx
+│  │  │  │     ├─ WriteCoverImg.jsx
+│  │  │  │     ├─ WriteFormShowroom.jsx
+│  │  │  │     ├─ WriteFormTips.jsx
+│  │  │  │     ├─ WriteGuide.jsx
+│  │  │  │     ├─ WriteInformation.jsx
+│  │  │  │     ├─ WriteTag.jsx
+│  │  │  │     └─ WriteTitle.jsx
+│  │  │  ├─ footer
+│  │  │  │  ├─ FooterMobile.jsx
+│  │  │  │  ├─ FooterMobileWrite.jsx
+│  │  │  │  ├─ FooterPc.jsx
+│  │  │  │  └─ HiddenFooter.jsx
+│  │  │  ├─ header
+│  │  │  │  ├─ HeaderMobile.jsx
+│  │  │  │  ├─ HeaderNav.jsx
+│  │  │  │  ├─ HeaderOff.jsx
+│  │  │  │  ├─ HeaderOn.jsx
+│  │  │  │  └─ HeaderPc.jsx
+│  │  │  ├─ main
+│  │  │  │  ├─ MainSection.jsx
+│  │  │  │  ├─ MainSlogan.jsx
+│  │  │  │  └─ MainWrap.jsx
+│  │  │  ├─ map
+│  │  │  │  ├─ KaKaoMap.css
+│  │  │  │  ├─ KakaoMap.jsx
+│  │  │  │  └─ SearchBar.jsx
+│  │  │  ├─ myinfo
+│  │  │  │  ├─ MyInfoBookmark.jsx
+│  │  │  │  ├─ MyInfoContentList.jsx
+│  │  │  │  ├─ MyInfoDummy.js
+│  │  │  │  ├─ MyInfoLayout.jsx
+│  │  │  │  ├─ MyInfoLike.jsx
+│  │  │  │  ├─ MyInfoPost.jsx
+│  │  │  │  ├─ MyInfoShowroom.jsx
+│  │  │  │  ├─ Pagination.jsx
+│  │  │  │  ├─ UserInfoFollow.jsx
+│  │  │  │  ├─ UserInfoFollowList.jsx
+│  │  │  │  ├─ UserProfile.jsx
+│  │  │  │  └─ UserProfileDetails.jsx
+│  │  │  ├─ showroom
+│  │  │  │  ├─ all
+│  │  │  │  │  ├─ All.jsx
+│  │  │  │  │  ├─ AllContent.jsx
+│  │  │  │  │  ├─ AllHeader.jsx
+│  │  │  │  │  └─ HeaderFilter
+│  │  │  │  │     ├─ AllHeaderFilter.jsx
+│  │  │  │  │     ├─ RoomInfoFilter.jsx
+│  │  │  │  │     ├─ RoomSizeFilter.jsx
+│  │  │  │  │     └─ RoomTypeFilter.jsx
+│  │  │  │  └─ bestinterior
+│  │  │  │     ├─ BestInterior.jsx
+│  │  │  │     ├─ BestInteriorCarousel.css
+│  │  │  │     ├─ BestInteriorCarousel.jsx
+│  │  │  │     └─ BestInteriorHeader.jsx
+│  │  │  ├─ signup
+│  │  │  │  ├─ AuthNavigation.jsx
+│  │  │  │  ├─ FormLayout.jsx
+│  │  │  │  ├─ FormValidation.jsx
+│  │  │  │  ├─ OauthLayout.jsx
+│  │  │  │  ├─ ResetPassword.jsx
+│  │  │  │  ├─ SignupAuth.jsx
+│  │  │  │  └─ SignupLoginLayout.jsx
+│  │  │  └─ tips
+│  │  │     ├─ TipsContent.jsx
+│  │  │     ├─ TipsHeader.jsx
+│  │  │     └─ TipsInfo.jsx
+│  │  ├─ context
+│  │  │  └─ AuthContext.jsx
+│  │  ├─ index.css
+│  │  ├─ index.js
+│  │  └─ pages
+│  │     ├─ EditShowRoom.jsx
+│  │     ├─ EditTips.jsx
+│  │     ├─ Login.jsx
+│  │     ├─ Main.jsx
+│  │     ├─ Map.jsx
+│  │     ├─ MyInfo.jsx
+│  │     ├─ ProtectedRoute.jsx
+│  │     ├─ ShowRoom.jsx
+│  │     ├─ Signup.jsx
+│  │     ├─ Tips.jsx
+│  │     ├─ Verify.jsx
+│  │     ├─ ViewShowRoom.jsx
+│  │     ├─ ViewTips.jsx
+│  │     ├─ WriteShowRoom.jsx
+│  │     └─ WriteTips.jsx
+│  └─ tailwind.config.js
+└─ server
+   ├─ build.gradle
+   ├─ gradle
+   │  └─ wrapper
+   │     ├─ gradle-wrapper.jar
+   │     └─ gradle-wrapper.properties
+   ├─ gradlew
+   ├─ gradlew.bat
+   ├─ settings.gradle
+   └─ src
+      ├─ main
+      │  ├─ java
+      │  │  └─ com
+      │  │     └─ project
+      │  │        └─ bbibbi
+      │  │           └─ BbibbiApplication.java
+      │  └─ resources
+      │     ├─ application.yml
+      │     ├─ application_h2.yml
+      │     ├─ application_rds.yml
+      │     └─ application_server.yml
+      └─ test
+         └─ java
+            └─ com
+               └─ project
+                  └─ bbibbi
+                     └─ BbibbiApplicationTests.java
+
+```
