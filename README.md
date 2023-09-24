@@ -96,6 +96,13 @@
 |**`나의 프로필`**|<img src="client/public/asset/myinfo.webp" alt="">|
 |**`다른사람 프로필`**|<img src="client/public/asset/userinfo.webp" alt="">|
 
+### 반응형
+||화면|
+|---|---|
+|**`모바일`**|<img src="client/public/asset/모바일.webp" alt="">|
+|**`테블릿`**|<img src="client/public/asset/테블릿.webp" alt="">|
+|**`피씨`**|<img src="client/public/asset/피씨.webp" alt="">|
+ 
 <br>
 
 ### 💡 기능 설명
