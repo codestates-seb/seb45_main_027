@@ -96,6 +96,13 @@
 |**`나의 프로필`**|<img src="client/public/asset/myinfo.webp" alt="">|
 |**`다른사람 프로필`**|<img src="client/public/asset/userinfo.webp" alt="">|
 
+### 반응형
+||화면|
+|---|---|
+|**`모바일`**|<img src="client/public/asset/모바일.webp" alt="">|
+|**`테블릿`**|<img src="client/public/asset/테블릿.webp" alt="">|
+|**`피씨`**|<img src="client/public/asset/피씨.webp" alt="">|
+ 
 <br>
 
 ### 💡 기능 설명
@@ -177,7 +184,7 @@
   - 게시글에 공감하거나 정보를 얻었다면 댓글과 답글을 통해 작성자 및 다른 이용자들과 자유롭게 소통할 수 있습니다.
 
 
-#### 반응형 사이트
+#### 🎀반응형 사이트
 - `모바일`, `테블릿`, `피씨` 모두 볼 수 있도록 맞춤 화면 구현하였습니다.
 
 
@@ -215,7 +222,7 @@
 
 <br>
 
-## 📝 디렉토리구조
+## 🪢 디렉토리구조
 
 ```
 seb45_main_027
@@ -368,31 +375,522 @@ seb45_main_027
 │  │     └─ WriteTips.jsx
 │  └─ tailwind.config.js
 └─ server
-   ├─ build.gradle
-   ├─ gradle
-   │  └─ wrapper
-   │     ├─ gradle-wrapper.jar
-   │     └─ gradle-wrapper.properties
-   ├─ gradlew
-   ├─ gradlew.bat
-   ├─ settings.gradle
-   └─ src
-      ├─ main
-      │  ├─ java
-      │  │  └─ com
-      │  │     └─ project
-      │  │        └─ bbibbi
-      │  │           └─ BbibbiApplication.java
-      │  └─ resources
-      │     ├─ application.yml
-      │     ├─ application_h2.yml
-      │     ├─ application_rds.yml
-      │     └─ application_server.yml
-      └─ test
-         └─ java
-            └─ com
-               └─ project
-                  └─ bbibbi
-                     └─ BbibbiApplicationTests.java
-
+    │  .gitignore
+    │  build.gradle
+    │  gradlew
+    │  gradlew.bat
+    │  settings.gradle
+    │
+    ├─gradle
+    │  └─wrapper
+    │          gradle-wrapper.jar
+    │          gradle-wrapper.properties
+    │
+    └─src
+        ├─main
+        │  ├─java
+        │  │  └─com
+        │  │      └─project
+        │  │          └─bbibbi
+        │  │              │  BbibbiApplication.java
+        │  │              │
+        │  │              ├─auth
+        │  │              │  ├─config
+        │  │              │  │      SecurityConfig.java
+        │  │              │  │
+        │  │              │  ├─controller
+        │  │              │  │  │  AuthController.java
+        │  │              │  │  │  TestController.java
+        │  │              │  │  │
+        │  │              │  │  └─dto
+        │  │              │  │          AuthEmailCheckApiRequest.java
+        │  │              │  │          AuthEmailSendApiRequest.java
+        │  │              │  │          AuthEmailSendPasswordApiRequest.java
+        │  │              │  │          OauthJoinApiRequest.java
+        │  │              │  │
+        │  │              │  ├─jwt
+        │  │              │  │  ├─dto
+        │  │              │  │  │      LoginDto.java
+        │  │              │  │  │      Token.java
+        │  │              │  │  │
+        │  │              │  │  ├─filter
+        │  │              │  │  │      CustomJsonUsernamePasswordAuthenticationFilter.java
+        │  │              │  │  │      JwtAuthenticationProcessingFilter.java
+        │  │              │  │  │
+        │  │              │  │  ├─handler
+        │  │              │  │  │      CustomAccessDeniedHandler.java
+        │  │              │  │  │      LoginFailureHandler.java
+        │  │              │  │  │      LoginSuccessHandler.java
+        │  │              │  │  │      MemberAuthenticationEntryPoint.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          CustomJwtUserDetails.java
+        │  │              │  │          CustomJwtUserDetailsService.java
+        │  │              │  │          JwtService.java
+        │  │              │  │
+        │  │              │  ├─oauth
+        │  │              │  │  │  MemberProfile.java
+        │  │              │  │  │  Provider.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      OAuthAttributes.java
+        │  │              │  │  │
+        │  │              │  │  ├─handler
+        │  │              │  │  │      OAuthLoginFailureHandler.java
+        │  │              │  │  │      OAuthLoginSuccessHandler.java
+        │  │              │  │  │
+        │  │              │  │  ├─oauthUserInfo
+        │  │              │  │  │      CustomOAuth2User.java
+        │  │              │  │  │      KakaoOAuth2UserInfo.java
+        │  │              │  │  │      NaverOAuth2UserInfo.java
+        │  │              │  │  │      OAuth2UserInfo.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          CustomOAuthUserService.java
+        │  │              │  │
+        │  │              │  ├─oauth2
+        │  │              │  │  ├─domain
+        │  │              │  │  │  │  AuthCodeRequestUrlProvider.java
+        │  │              │  │  │  │  OauthServerType.java
+        │  │              │  │  │  │
+        │  │              │  │  │  └─authcode
+        │  │              │  │  │          AuthCodeRequestUrlProviderComposite.java
+        │  │              │  │  │
+        │  │              │  │  ├─infra
+        │  │              │  │  │      KakaoAuthCodeRequestUrlProvider.java
+        │  │              │  │  │
+        │  │              │  │  ├─presentation
+        │  │              │  │  │      OauthServerTypeConverter.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          OauthService.java
+        │  │              │  │
+        │  │              │  └─utils
+        │  │              │          ErrorResponder.java
+        │  │              │          loginUtils.java
+        │  │              │          NicknameUtil.java
+        │  │              │          PasswordUtil.java
+        │  │              │
+        │  │              ├─domain
+        │  │              │  ├─feed
+        │  │              │  │  ├─controller
+        │  │              │  │  │      FeedController.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      FeedImageDto.java
+        │  │              │  │  │      FeedImageTagDto.java
+        │  │              │  │  │      FeedPatchDto.java
+        │  │              │  │  │      FeedPostDto.java
+        │  │              │  │  │      FeedResponseDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      Feed.java
+        │  │              │  │  │      FeedImage.java
+        │  │              │  │  │      FeedImageTag.java
+        │  │              │  │  │
+        │  │              │  │  ├─mapper
+        │  │              │  │  │      FeedMapper.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      FeedImageRepository.java
+        │  │              │  │  │      FeedImageTagRepository.java
+        │  │              │  │  │      FeedRepository.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          FeedService.java
+        │  │              │  │
+        │  │              │  ├─feedBookmark
+        │  │              │  │  ├─controller
+        │  │              │  │  │      FeedBookMarkController.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      FeedBookMarkRequestDto.java
+        │  │              │  │  │      FeedBookMarkResponseDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      FeedBookMark.java
+        │  │              │  │  │
+        │  │              │  │  ├─mapper
+        │  │              │  │  │      FeedBookMarkMapper.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      FeedBookMarkRepository.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          FeedBookMarkService.java
+        │  │              │  │
+        │  │              │  ├─feedComment
+        │  │              │  │  ├─controller
+        │  │              │  │  │      FeedCommentController.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      FeedCommentDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      FeedComment.java
+        │  │              │  │  │
+        │  │              │  │  ├─exception
+        │  │              │  │  │      FeedCommentNotFoundException.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      FeedCommentRepository.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          FeedCommentService.java
+        │  │              │  │
+        │  │              │  ├─feedlike
+        │  │              │  │  ├─controller
+        │  │              │  │  │      FeedLikeController.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      FeedLikeRequestDto.java
+        │  │              │  │  │      FeedLikeResponseDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      FeedLike.java
+        │  │              │  │  │
+        │  │              │  │  ├─mapper
+        │  │              │  │  │      FeedLikeMapper.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      FeedLikeRepository.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          FeedLikeService.java
+        │  │              │  │
+        │  │              │  ├─feedReply
+        │  │              │  │  ├─controller
+        │  │              │  │  │      FeedReplyController.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      FeedReplyRequestDto.java
+        │  │              │  │  │      FeedReplyResponseDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      FeedReply.java
+        │  │              │  │  │
+        │  │              │  │  ├─FeedReplyNotFoundException
+        │  │              │  │  │      FeedReplyNotFoundException.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      FeedReplyRepository.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          FeedReplyService.java
+        │  │              │  │
+        │  │              │  ├─feedReplyLike
+        │  │              │  │  ├─controller
+        │  │              │  │  │      FeedReplyLikeController.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      FeedReplyLikeRequestDto.java
+        │  │              │  │  │      FeedReplyLikeResponseDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      FeedReplyLike.java
+        │  │              │  │  │
+        │  │              │  │  ├─mapper
+        │  │              │  │  │      FeedReplyLikeMapper.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      FeedReplyLikeRepository.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          FeedReplyLikeService.java
+        │  │              │  │
+        │  │              │  ├─follow
+        │  │              │  │  ├─controller
+        │  │              │  │  │      FollowController.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      FollowListResponseDto.java
+        │  │              │  │  │      FollowResponseDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      Follow.java
+        │  │              │  │  │      FollowPK.java
+        │  │              │  │  │
+        │  │              │  │  ├─mapper
+        │  │              │  │  │      FollowMapper.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      FollowRepository.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          FollowService.java
+        │  │              │  │
+        │  │              │  ├─member
+        │  │              │  │  ├─controller
+        │  │              │  │  │  │  MemberController.java
+        │  │              │  │  │  │
+        │  │              │  │  │  └─dto
+        │  │              │  │  │          MemberCreateApiRequest.java
+        │  │              │  │  │          MemberFindPasswordApiRequest.java
+        │  │              │  │  │          MemberProfile.java
+        │  │              │  │  │          MemberUpdateApiRequest.java
+        │  │              │  │  │          MemberUpdatePasswordApiRequest.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      Member.java
+        │  │              │  │  │      MyInfo.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      MemberRepository.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │      │  MemberService.java
+        │  │              │  │      │
+        │  │              │  │      └─dto
+        │  │              │  │          ├─request
+        │  │              │  │          │      MemberCreateServiceRequest.java
+        │  │              │  │          │      MemberFindPasswordServiceRequest.java
+        │  │              │  │          │      MemberUpdatePasswordApiServiceRequest.java
+        │  │              │  │          │      MemberUpdateServiceRequest.java
+        │  │              │  │          │
+        │  │              │  │          └─response
+        │  │              │  │                  MemberResponse.java
+        │  │              │  │
+        │  │              │  ├─myContent
+        │  │              │  │  ├─controller
+        │  │              │  │  │      MyContentController.java
+        │  │              │  │  │
+        │  │              │  │  └─dto
+        │  │              │  │          MyContentResponseDto.java
+        │  │              │  │          ShowRoomDto.java
+        │  │              │  │          TipContentDto.java
+        │  │              │  │
+        │  │              │  ├─tip
+        │  │              │  │  ├─controller
+        │  │              │  │  │      TipController.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      TipPatchDto.java
+        │  │              │  │  │      TipPostDto.java
+        │  │              │  │  │      TipResponseDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      Tip.java
+        │  │              │  │  │
+        │  │              │  │  ├─mapper
+        │  │              │  │  │      TipMapper.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      TipRepository.java
+        │  │              │  │  │      TipRepositoryCustom.java
+        │  │              │  │  │      TipRepositoryImpl.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          TipService.java
+        │  │              │  │
+        │  │              │  ├─tipBookmark
+        │  │              │  │  ├─controller
+        │  │              │  │  │      TipBookmarkController.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      TipBookmarkRequestDto.java
+        │  │              │  │  │      TipBookmarkResponseDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      TipBookmark.java
+        │  │              │  │  │
+        │  │              │  │  ├─mapper
+        │  │              │  │  │      TipBookmarkMapper.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      TipBookmarkRepository.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          TipBookmarkService.java
+        │  │              │  │
+        │  │              │  ├─tipComment
+        │  │              │  │  ├─controller
+        │  │              │  │  │      TipCommentController.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      TipCommentDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      TipComment.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      TipCommentRepository.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          TipCommentService.java
+        │  │              │  │
+        │  │              │  ├─tipImage
+        │  │              │  │  ├─dto
+        │  │              │  │  │      TipImageDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      TipImage.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      TipImageRepository.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          TipImageService.java
+        │  │              │  │
+        │  │              │  ├─tipLike
+        │  │              │  │  ├─controller
+        │  │              │  │  │      TipLikeController.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      TipLikeRequestDto.java
+        │  │              │  │  │      TipLikeResponseDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      TipLike.java
+        │  │              │  │  │
+        │  │              │  │  ├─mapper
+        │  │              │  │  │      TipLikeMapper.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      TipLikeRepository.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          TipLikeService.java
+        │  │              │  │
+        │  │              │  ├─tipReply
+        │  │              │  │  ├─controller
+        │  │              │  │  │      TipReplyController.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      TipReplyRequestDto.java
+        │  │              │  │  │      TipReplyResponseDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      TipReply.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      TipReplyRepository.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          TipReplyService.java
+        │  │              │  │
+        │  │              │  ├─tipReplyLike
+        │  │              │  │  ├─controller
+        │  │              │  │  │      TipReplyLikeController.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      TipReplyLikeRequestDto.java
+        │  │              │  │  │      TipReplyLikeResponseDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─entity
+        │  │              │  │  │      TipReplyLike.java
+        │  │              │  │  │
+        │  │              │  │  ├─mapper
+        │  │              │  │  │      TipReplyLikeMapper.java
+        │  │              │  │  │
+        │  │              │  │  ├─repository
+        │  │              │  │  │      TipReplyLikeRepository.java
+        │  │              │  │  │
+        │  │              │  │  └─service
+        │  │              │  │          TipReplyLikeService.java
+        │  │              │  │
+        │  │              │  └─tipTag
+        │  │              │      ├─dto
+        │  │              │      │      TagDto.java
+        │  │              │      │
+        │  │              │      ├─entity
+        │  │              │      │      Tag.java
+        │  │              │      │      TipTag.java
+        │  │              │      │
+        │  │              │      ├─repository
+        │  │              │      │      TagRepository.java
+        │  │              │      │      TipTagRepository.java
+        │  │              │      │
+        │  │              │      └─service
+        │  │              │              TagService.java
+        │  │              │              TipTagService.java
+        │  │              │
+        │  │              └─global
+        │  │                  │  ErrorResponse.java
+        │  │                  │
+        │  │                  ├─entity
+        │  │                  │      BaseEntity.java
+        │  │                  │      BaseEnum.java
+        │  │                  │      Location.java
+        │  │                  │      Role.java
+        │  │                  │      RoomCount.java
+        │  │                  │      RoomInfo.java
+        │  │                  │      RoomSize.java
+        │  │                  │      RoomType.java
+        │  │                  │      SocialType.java
+        │  │                  │
+        │  │                  ├─exception
+        │  │                  │  ├─businessexception
+        │  │                  │  │  │  BusinessException.java
+        │  │                  │  │  │
+        │  │                  │  │  ├─emailexception
+        │  │                  │  │  │      EmailException.java
+        │  │                  │  │  │      EmailSendException.java
+        │  │                  │  │  │
+        │  │                  │  │  ├─memberexception
+        │  │                  │  │  │      MemberAccessDeniedException.java
+        │  │                  │  │  │      MemberDuplicateException.java
+        │  │                  │  │  │      MemberException.java
+        │  │                  │  │  │      MemberExistNicknameException.java
+        │  │                  │  │  │      MemberlExistEmailException.java
+        │  │                  │  │  │      MemberNotFoundException.java
+        │  │                  │  │  │      MemberNotLoginException.java
+        │  │                  │  │  │      MemberPasswordException.java
+        │  │                  │  │  │      NicknameDuplicateException.java
+        │  │                  │  │  │
+        │  │                  │  │  ├─passwordException
+        │  │                  │  │  │      PasswordException.java
+        │  │                  │  │  │      PasswordSendException.java
+        │  │                  │  │  │
+        │  │                  │  │  └─requestexception
+        │  │                  │  │          RequestContentTypeException.java
+        │  │                  │  │          RequestException.java
+        │  │                  │  │          RequestTypeException.java
+        │  │                  │  │
+        │  │                  │  ├─exceptionhandler
+        │  │                  │  │      RestControllerAdvice.java
+        │  │                  │  │
+        │  │                  │  └─tipexception
+        │  │                  │          TipCommentNotFoundException.java
+        │  │                  │          TipException.java
+        │  │                  │          TipNotFoundException.java
+        │  │                  │          TipReplyNotFoundException.java
+        │  │                  │
+        │  │                  ├─imageupload
+        │  │                  │      ImageUploadController.java
+        │  │                  │      S3Config.java
+        │  │                  │      S3Uploader.java
+        │  │                  │
+        │  │                  ├─mail
+        │  │                  │  ├─config
+        │  │                  │  │      MailConfig.java
+        │  │                  │  │
+        │  │                  │  └─service
+        │  │                  │          MailService.java
+        │  │                  │
+        │  │                  ├─querydsl
+        │  │                  │      QuerydslConfiguration.java
+        │  │                  │
+        │  │                  ├─response
+        │  │                  │      ApiPageResponse.java
+        │  │                  │      ApiSingleResponse.java
+        │  │                  │      MultiResponseDto.java
+        │  │                  │      PageAbleResponseDto.java
+        │  │                  │      SingleResponseDto.java
+        │  │                  │
+        │  │                  └─utils
+        │  │                          CustomBeanUtils.java
+        │  │
+        │  └─resources
+        │        application.yml
+        │        application_h2.yml
+        │        application_rds.yml
+        │        application_server.yml
+        │
+        └─test
+            └─java
+                └─com
+                    └─project
+                        └─bbibbi
+                              BbibbiApplicationTests.java
+	
 ```
