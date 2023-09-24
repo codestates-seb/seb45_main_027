@@ -163,7 +163,7 @@ const WriteTips = () => {
           coverImage={coverImage}
           setCoverImage={setCoverImage}
         />
-        <div className="mt-10 mb-20 p-4 bg-white w-full h-full rounded-md">
+        <div className="mt-10 mb-20 p-4 bg-white w-full h-full rounded-md z-20">
           <WriteTitle title={title} setTitle={setTitle} />
           <WriteFormTips
             editorContent={editorContent}
@@ -172,7 +172,7 @@ const WriteTips = () => {
           />
           <WriteTag tags={tags} setTags={setTags} />
         </div>
-        <div className="-mt-36 mx-2 pb-40">
+        <div className="-mt-36 mx-2 pb-40 z-0">
           <WriteBtn
             saveToLocalStorage={saveToLocalStorage}
             buttonBgColor="bg-[#00647B]"
