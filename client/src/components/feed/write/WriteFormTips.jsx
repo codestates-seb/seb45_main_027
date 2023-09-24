@@ -54,7 +54,6 @@ const WriteFormTips = ({
         `${process.env.REACT_APP_API_URL}/imageUpload/tipImage`,
         formData
       );
-      console.log("S3 업로드 성공");
       setImageSrc(response.data);
       // 에디터에 이미지 추가
       const currentEditorContent = editorRef.current.innerHTML;
