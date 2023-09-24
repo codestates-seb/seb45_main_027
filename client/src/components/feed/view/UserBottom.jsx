@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxios from "../../../hooks/useAxios";
-import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const buttonStyle = "flex items-center justify-center h-full";
 
@@ -25,6 +25,11 @@ const UserBottom = ({ feedData, setFollow, follow, res }) => {
   const toggleFollow = () => {
     patchFetchData();
     setFollow(!follow);
+    if (follow === true) {
+      toast.error("팔로우를 취소하였습니다.");
+    } else {
+      toast.success("팔로우에 등록하였습니다.");
+    }
   };
 
   useEffect(() => {
@@ -32,7 +37,6 @@ const UserBottom = ({ feedData, setFollow, follow, res }) => {
       setFollow(feedData.followYn);
     }
   }, [feedData]);
-
 
   return (
     <div className="flex justify-between py-12 border-b">
@@ -57,7 +61,8 @@ const UserBottom = ({ feedData, setFollow, follow, res }) => {
               onClick={() => {
                 navigate(`/myinfo/${feedData.memberId}`);
               }}
-              className="text-xl font-semibold cursor-pointer">
+              className="text-xl font-semibold cursor-pointer"
+            >
               {feedData.nickname}
             </div>
             {(memberWhether ? memberId != frommemberId : memberId === "") &&

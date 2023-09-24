@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxios from "../../../hooks/useAxios";
+import toast from "react-hot-toast";
 
 const buttonStyle =
   "flex items-center justify-center rounded-lg shadow h-full px-5 py-4";
@@ -32,6 +33,11 @@ const ShowroomUserTop = ({ feedData, setFollow, follow }) => {
   const toggleFollow = () => {
     patchFetchData();
     setFollow(!follow);
+    if (follow === true) {
+      toast.error("팔로우를 취소하였습니다.");
+    } else {
+      toast.success("팔로우에 등록하였습니다.");
+    }
   };
 
   // 팔로우 받아온 요청 상태 저장
