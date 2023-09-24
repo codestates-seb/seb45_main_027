@@ -56,7 +56,7 @@ const UserAccount = ({ toggleAccountSettings, userDetails }) => {
 
       // console.log(response.data);
       // console.log(profileData.profileImg);
-      alert("Profile updated!");
+      alert("프로필을 업데이트 하였습니다.");
       navigate("/");
     } catch (error) {
       console.error(error);
