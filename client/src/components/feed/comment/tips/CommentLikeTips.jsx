@@ -22,7 +22,11 @@ const CommentLike = ({ comment }) => {
       const response = await api(configParams);
       if (response && response.status === 200) {
         setLike(!like);
-        toast.success("클릭하셨습니다.");
+        if (like === true) {
+          toast.error("UNLIKE...");
+        } else {
+          toast.success("LIKE!");
+        }
       }
     } catch (err) {
       toast.error("오류가 발생했습니다.");

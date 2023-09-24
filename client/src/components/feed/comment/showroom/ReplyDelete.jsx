@@ -10,34 +10,38 @@ const ReplyDelete = ({ comment, commentsData, setFeedData, feedData }) => {
 
   // DELETE 요청
   const deleteReply = async () => {
-    const configParams = {
-      method: "DELETE",
-      url: `/feed/${feedId}/feedReply/${feedReplyId}/feedComment/${commentId}`,
+    const shouldDelete = window.confirm("정말로 삭제하시겠습니까?");
 
-      headers: {
-        "ngrok-skip-browser-warning": "69420",
-      },
-    };
+    if (shouldDelete) {
+      const configParams = {
+        method: "DELETE",
+        url: `/feed/${feedId}/feedReply/${feedReplyId}/feedComment/${commentId}`,
 
-    try {
-      const res = await api(configParams);
-      if (res && res.status === 200) {
-        // feedData를 복사해서 업데이트
-        const updatedFeedData = JSON.parse(JSON.stringify(feedData));
+        headers: {
+          "ngrok-skip-browser-warning": "69420",
+        },
+      };
 
-        updatedFeedData.replies.forEach((reply) => {
-          if (reply.feedReplyId === feedReplyId) {
-            reply.comments = reply.comments.filter(
-              (comment) => comment.feedCommentId !== commentId
-            ); // 답글을 삭제
-          }
-        });
-        setFeedData(updatedFeedData); // 상태를 업데이트
-        toast.success("답글을 삭제했습니다.")
+      try {
+        const res = await api(configParams);
+        if (res && res.status === 200) {
+          // feedData를 복사해서 업데이트
+          const updatedFeedData = JSON.parse(JSON.stringify(feedData));
+
+          updatedFeedData.replies.forEach((reply) => {
+            if (reply.feedReplyId === feedReplyId) {
+              reply.comments = reply.comments.filter(
+                (comment) => comment.feedCommentId !== commentId
+              ); // 답글을 삭제
+            }
+          });
+          setFeedData(updatedFeedData); // 상태를 업데이트
+          toast.success("답글을 삭제했습니다.");
+        }
+      } catch (err) {
+        console.error("err comment:", err);
+        toast.error("답글을 삭제할 수 없습니다.");
       }
-    } catch (err) {
-      console.error("err comment:", err);
-      toast.error("답글을 삭제할 수 없습니다.");
     }
   };
 
@@ -47,7 +51,8 @@ const ReplyDelete = ({ comment, commentsData, setFeedData, feedData }) => {
         className="mx-1 hover:font-semibold"
         onClick={() => {
           deleteReply();
-        }}>
+        }}
+      >
         삭제하기
       </button>
     </div>

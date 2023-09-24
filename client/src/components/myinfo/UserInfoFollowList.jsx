@@ -33,12 +33,16 @@ const UserInfoFollowList = ({ userList, onFollowAction, activeTab }) => {
     }
 
     try {
-      await api.patch(url, {
+      const res = await api.patch(url, {
         headers: {
           "ngrok-skip-browser-warning": "69420",
         },
       });
-
+      if (res.data.data.followYn === true) {
+        toast.success("팔로우에 등록하였습니다.");
+      } else {
+        toast.error("팔로우를 취소하였습니다.");
+      }
       onFollowAction();
     } catch {
       console.log("error");
@@ -81,7 +85,7 @@ const UserInfoFollowList = ({ userList, onFollowAction, activeTab }) => {
             }}
           >
             <span className="bg-[#00647B]/80 rounded-full p-[2px] md:p-1.5">
-              {user.followYn ? "Following" : "Follow"}
+              {user.followYn ? "UnFollow" : "Follow"}
             </span>
           </button>
         </div>

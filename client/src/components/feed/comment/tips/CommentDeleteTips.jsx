@@ -14,33 +14,36 @@ const CommentDelete = ({
 
   // DELETE 요청
   const deleteComment = async (tipReplyId) => {
-    const configParams = {
-      method: "DELETE",
-      url: `/tip/${tipId}/tipreply/${tipReplyId}`,
-      headers: {
-        "ngrok-skip-browser-warning": "69420",
-      },
-    };
+    const shouldDelete = window.confirm("정말로 삭제하시겠습니까?");
+    if (shouldDelete) {
+      const configParams = {
+        method: "DELETE",
+        url: `/tip/${tipId}/tipreply/${tipReplyId}`,
+        headers: {
+          "ngrok-skip-browser-warning": "69420",
+        },
+      };
 
-    try {
-      const res = await api(configParams);
-      if (res && res.status === 200) {
-        setReplies((prevReplies) =>
-          prevReplies.filter((reply) => reply.tipReplyId !== tipReplyId)
-        );
+      try {
+        const res = await api(configParams);
+        if (res && res.status === 200) {
+          setReplies((prevReplies) =>
+            prevReplies.filter((reply) => reply.tipReplyId !== tipReplyId)
+          );
 
-        setFeedData((prevFeedData) => ({
-          ...prevFeedData,
-          replies: prevFeedData.replies.filter(
-            (reply) => reply.tipReplyId !== tipReplyId
-          ),
-        }));
+          setFeedData((prevFeedData) => ({
+            ...prevFeedData,
+            replies: prevFeedData.replies.filter(
+              (reply) => reply.tipReplyId !== tipReplyId
+            ),
+          }));
 
-        toast.success("댓글이 삭제되었습니다.");
+          toast.success("댓글을 삭제하였습니다.");
+        }
+      } catch (err) {
+        console.error("err comment:", err);
+        toast.error("댓글을 삭제할 수 없습니다.");
       }
-    } catch (err) {
-      console.error("err comment:", err);
-      toast.error("댓글을 삭제할 수 없습니다.");
     }
   };
 
@@ -50,7 +53,8 @@ const CommentDelete = ({
         className="mx-2 hover:font-semibold"
         onClick={() => {
           deleteComment(comment.tipReplyId);
-        }}>
+        }}
+      >
         삭제하기
       </button>
     </div>

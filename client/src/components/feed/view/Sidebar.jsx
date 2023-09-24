@@ -32,6 +32,11 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
 
       // 좋아요 상태 업데이트
       setLike(response.data.data.likeYn);
+      if (response.data.data.likeYn === true) {
+        toast.success("좋아요를 등록하였습니다!");
+      } else {
+        toast.error("좋아요를 취소하였습니다.");
+      }
 
       // 애니메이션 클래스 설정
       setAnimationLike("animate__bounceIn");
@@ -59,6 +64,7 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
   const toggleBookmark = async () => {
     try {
       // PATCH 요청 보내기
+
       const response = await api.patch(
         someCondition
           ? `/feed/${feedId}/feedBookMark`
@@ -75,6 +81,14 @@ const Sidebar = ({ commentSectionRef, setFeedData, feedData }) => {
       setBookmark(
         response.data.data.bookMarkYn || response.data.data.bookmarkYn
       );
+      if (
+        response.data.data.bookMarkYn === true ||
+        response.data.data.bookmarkYn === true
+      ) {
+        toast.success("북마크가 등록되었습니다!");
+      } else {
+        toast.error("북마크가 해제되었습니다!");
+      }
 
       // 애니메이션 클래스 설정
       setAnimationBookmark("animate__bounceIn");

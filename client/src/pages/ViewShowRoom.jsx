@@ -42,7 +42,7 @@ const ViewShowRoom = () => {
     if (!feedData && loading) {
       toast.loading("로딩중...");
     } else if (feedData || error) {
-      toast.dismiss();
+      // toast.dismiss();
     }
   }, [feedData, loading, error]);
 
