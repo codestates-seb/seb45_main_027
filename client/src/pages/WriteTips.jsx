@@ -36,34 +36,35 @@ const WriteTips = () => {
   // 로컬스토리지에 임시저장값이 있으면 해당값 불러오기 위한 useEffect
   useEffect(() => {
     const savedData = localStorage.getItem("tempSaveTipData");
+    setTimeout(() => {
+      if (savedData) {
+        const tempSaveData = JSON.parse(savedData);
+        const createdAtString = tempSaveData.createdAt;
+        const createdAtDate = new Date(createdAtString);
+        const formattedDate = createdAtDate.toLocaleString();
 
-    if (savedData) {
-      const tempSaveData = JSON.parse(savedData);
-      const createdAtString = tempSaveData.createdAt;
-      const createdAtDate = new Date(createdAtString);
-      const formattedDate = createdAtDate.toLocaleString();
-
-      const userConfirmed = window.confirm(
-        `(${formattedDate}) 
-
-작성중인 글을 불러오시겠습니까? 
-
-취소를 누를 경우 작성중인 글은 삭제됩니다.
-`
-      );
-      if (userConfirmed) {
-        const parsedData = JSON.parse(savedData);
-        setCoverImage(parsedData.coverImage);
-        setTitle(parsedData.title);
-        setEditorContent(parsedData.editorContent);
-        setTags(parsedData.tags);
-        toast.success("작성중인 글을 불러왔습니다.");
-      } else {
-        // 취소시 삭제
-        localStorage.removeItem("tempSaveTipData");
-        toast.error("작성중인 글을 삭제하였습니다.");
+        const userConfirmed = window.confirm(
+          `(${formattedDate}) 
+  
+  작성중인 글을 불러오시겠습니까? 
+  
+  취소를 누를 경우 작성중인 글은 삭제됩니다.
+  `
+        );
+        if (userConfirmed) {
+          const parsedData = JSON.parse(savedData);
+          setCoverImage(parsedData.coverImage);
+          setTitle(parsedData.title);
+          setEditorContent(parsedData.editorContent);
+          setTags(parsedData.tags);
+          toast.success("작성중인 글을 불러왔습니다.");
+        } else {
+          // 취소시 삭제
+          localStorage.removeItem("tempSaveTipData");
+          toast.error("작성중인 글을 삭제하였습니다.");
+        }
       }
-    }
+    }, 300);
   }, []);
 
   // 임시저장 클릭했을때 실행되는 핸들러함수 = > 로컬스토리지에 저장
@@ -145,7 +146,8 @@ const WriteTips = () => {
       />
       <Background
         mainclassName="min-h-screen bg-[#FFFAEE] w-full h-full px-14 md:px-56 rounded-md"
-        divclassName="flex-col my-24 md:my-0">
+        divclassName="flex-col my-24 md:my-0"
+      >
         <div className="hidden md:block">
           <WriteBtn
             saveToLocalStorage={saveToLocalStorage}
@@ -163,7 +165,7 @@ const WriteTips = () => {
           coverImage={coverImage}
           setCoverImage={setCoverImage}
         />
-        <div className="mt-10 mb-20 p-4 bg-white w-full h-full rounded-md">
+        <div className="mt-10 mb-20 p-4 bg-white w-full h-full rounded-md  z-20">
           <WriteTitle title={title} setTitle={setTitle} />
           <WriteFormTips
             editorContent={editorContent}
@@ -172,7 +174,7 @@ const WriteTips = () => {
           />
           <WriteTag tags={tags} setTags={setTags} />
         </div>
-        <div className="-mt-36 mx-2 pb-40">
+        <div className="-mt-36 mx-2 pb-40 z-0">
           <WriteBtn
             saveToLocalStorage={saveToLocalStorage}
             buttonBgColor="bg-[#00647B]"

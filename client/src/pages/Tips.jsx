@@ -183,15 +183,16 @@ const Tips = () => {
 
     if (e.key === "Enter") {
       // API 호출을 기다리기 위해 try-catch 블록 내에서 비동기로 처리
+
+      toast.loading("검색중입니다.");
       try {
         const updatedConfigParams = {
           ...configParams,
           url: `/tip${isSearch}${searchKeyworld}?page=${page.current}`,
         };
-        toast.loading("검색중입니다.");
         const res = await api(updatedConfigParams);
         toast.dismiss();
-
+        toast.success("검색이 완료되었습니다.");
         setTipData(res.data.data);
         setIsLastPage(res.data.isLast);
         clearInput();

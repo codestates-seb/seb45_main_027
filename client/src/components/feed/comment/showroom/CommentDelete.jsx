@@ -13,34 +13,46 @@ const CommentDelete = ({
   const { feedId } = useParams(); // 게시물 번호
 
   // DELETE 요청
-  const deleteComment = async (feedReplyId) => {
-    const configParams = {
-      method: "DELETE",
-      url: `/feed/${feedId}/feedReply/${feedReplyId}`,
-      headers: {
-        "ngrok-skip-browser-warning": "69420",
-      },
-    };
+  const deleteComment = (feedReplyId) => {
+    const shouldDelete = window.confirm("정말로 삭제하시겠습니까?");
 
-    try {
-      const res = await api(configParams);
-      if (res && res.status === 200) {
-        setReplies((prevReplies) =>
-          prevReplies.filter((reply) => reply.feedReplyId !== feedReplyId)
-        );
+    if (shouldDelete) {
+      const configParams = {
+        method: "DELETE",
+        url: `/feed/${feedId}/feedReply/${feedReplyId}`,
+        headers: {
+          "ngrok-skip-browser-warning": "69420",
+        },
+      };
 
-        setFeedData((prevFeedData) => ({
-          ...prevFeedData,
-          replies: prevFeedData.replies.filter(
-            (reply) => reply.feedReplyId !== feedReplyId
-          ),
-        }));
+      try {
+        api(configParams)
+          .then((res) => {
+            if (res && res.status === 200) {
+              setReplies((prevReplies) =>
+                prevReplies.filter((reply) => reply.feedReplyId !== feedReplyId)
+              );
 
-        toast.success("댓글이 삭제되었습니다.");
+              setFeedData((prevFeedData) => ({
+                ...prevFeedData,
+                replies: prevFeedData.replies.filter(
+                  (reply) => reply.feedReplyId !== feedReplyId
+                ),
+              }));
+
+              toast.success("댓글을 삭제하였습니다.");
+            } else {
+              toast.error("댓글을 삭제할 수 없습니다.");
+            }
+          })
+          .catch((err) => {
+            console.error("err comment:", err);
+            toast.error("댓글을 삭제할 수 없습니다.");
+          });
+      } catch (error) {
+        console.error("err comment:", error);
+        toast.error("댓글을 삭제할 수 없습니다.");
       }
-    } catch (err) {
-      console.error("err comment:", err);
-      toast.error("댓글을 삭제할 수 없습니다.");
     }
   };
 

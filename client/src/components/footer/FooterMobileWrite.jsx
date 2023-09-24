@@ -1,13 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const liPoint= "flex flex-col items-center w-12"
-
+const liPoint = "flex flex-col items-center w-12";
 
 const FooterMobileWrite = () => {
   return (
     <footer>
-      <div className="flex justify-center border py-4 fixed bottom-0 w-full bg-white">
+      <div className="flex justify-center border py-4 fixed bottom-0 w-full bg-white z-50">
         <ul className="flex items-center justify-around w-11/12 text-gray-400 font-medium">
           {/* 좋아요*/}
           <li className={liPoint}>

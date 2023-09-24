@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import BestInteriorHeader from "./BestInteriorHeader";
 import BestInteriorCarousel from "./BestInteriorCarousel";
 import useAxios from "../../../hooks/useAxios";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 const BestInterior = ({ viewportWidth }) => {
   const [best10Data, setBest10Data] = useState([]);
@@ -19,17 +19,17 @@ const BestInterior = ({ viewportWidth }) => {
   const [response, error, loading] = useAxios(configParams);
 
   useEffect(() => {
+    toast.loading("Best10 데이터를 불러오고 있습니다.");
     if (response) {
       setBest10Data(response.data.data);
+      toast.dismiss();
     } else if (error) {
       console.error("Error:", error);
     }
   }, [response, error]);
 
   if (loading) {
-    toast.loading("Best10 데이터를 불러오고 있습니다.");
-  } else {
-    toast.dismiss(); // 로딩 메시지 닫기
+    <div className="w-full pb-16 flex items-center justify-center h-[420px]"></div>;
   }
 
   return (

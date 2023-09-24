@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
-  console.log(btnColor);
   const imageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -21,8 +20,6 @@ const WriteCoverImg = ({ bgColor, btnColor, coverImage, setCoverImage }) => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/imageUpload/coverImage`, formData)
       .then((response) => {
-        console.log(response.data);
-        console.log("S3업로드 성공");
         setCoverImage(response.data);
       })
       .catch((error) => {

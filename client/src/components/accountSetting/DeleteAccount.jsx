@@ -6,15 +6,15 @@ import api from "../common/tokens";
 const DeleteAccount = () => {
   const navigate = useNavigate();
   const memberId = localStorage.getItem("memberId");
-  
+
   const handleAccountDeletion = async () => {
     const confirmDeletion = window.confirm(
-      "Are you sure you want to delete your account? This action cannot be undone."
+      "계정을 정말 삭제하시겠습니까? \n확인을 누른경우 취소할 수 없습니다."
     );
 
     if (confirmDeletion) {
       try {
-        await api.delete(`/members/${memberId}`,{
+        await api.delete(`/members/${memberId}`, {
           headers: {
             "ngrok-skip-browser-warning": "69420",
           },
@@ -23,7 +23,7 @@ const DeleteAccount = () => {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("memberId");
-        alert("Account deleted!");
+        alert("계정을 성공적으로 삭제하였습니다.");
         navigate("/");
       } catch (error) {
         console.log("Account deletion failed:", error);

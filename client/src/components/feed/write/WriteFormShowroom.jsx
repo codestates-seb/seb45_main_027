@@ -63,7 +63,6 @@ const WriteFormShowroom = ({
         formData
       );
 
-      console.log("S3 업로드 성공");
       setImageSrc(response.data);
     } catch (error) {
       console.error("이미지 업로드에 실패하였습니다.", error);

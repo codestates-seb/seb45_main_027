@@ -60,7 +60,7 @@ const handleTokenRefresh = async (error) => {
     }
   } else {
     window.dispatchEvent(new Event("logoutEvent"));
-    console.log("리프레시 토큰 없음");
+    console.log("리프레시이 유효하지 않습니다.");
   }
 };
 

@@ -8,6 +8,7 @@ const MainSection = ({
   id,
   background,
   title,
+  title2,
   subTitle,
   intro1,
   intro2,
@@ -29,9 +30,11 @@ const MainSection = ({
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-        }}>
+        }}
+      >
         <MainWrap
           mainTitle={title}
+          title2={title2}
           subTitle={subTitle}
           intro1={intro1}
           intro2={intro2}
