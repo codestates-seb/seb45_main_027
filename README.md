@@ -78,9 +78,9 @@
 
 |**`맵`**|**`나의 프로필`**|**`다른사람 프로필`**|
 |---|---|---|
-|<img src="client/public/asset/map.webp" alt="">|<img src="client/public/asset/map.webp" alt="">|<img src="client/public/asset/map.webp" alt="">|
+|<img src="client/public/asset/map.webp" alt="">|<img src="client/public/asset/myinfo.webp" alt="">|<img src="client/public/asset/userinfo.webp" alt="">|
 
-    
+
 
 <br>
 
