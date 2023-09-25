@@ -58,7 +58,7 @@ const ReplyOutput = ({ commentsData, feedData, setFeedData }) => {
               {/* 작성날짜 */}
               <div className="flex items-center text-gray-500 font-medium text-base">
                 {/* 작성날짜 */}
-                <span className="mr-1">
+                <span className="mr-1 hidden sm:block">
                   {comment.createdDateTime.split("T")[0]}
                 </span>
               </div>

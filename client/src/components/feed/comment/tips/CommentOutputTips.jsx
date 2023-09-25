@@ -74,7 +74,7 @@ const CommentOutput = ({ feedData, setFeedData, children }) => {
                   {/* 작성날짜, 좋아요, 답글 */}
                   <div className="flex items-center text-gray-500 font-medium text-base">
                     {/* 작성날짜 */}
-                    <span className="mr-2.5">
+                    <span className="mr-2.5 hidden sm:block">
                       {comment.createdDateTime.split("T")[0]}
                     </span>
                     {memberId /* 좋아요 */ && (
